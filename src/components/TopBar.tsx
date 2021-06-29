@@ -109,16 +109,16 @@ export const TopBar = (): ReactElement => {
           </a>
         </Link>
         <div className={classes.toolbarContent}>
+          <Link href="/cfb">
+            <Button variant="text" color="inherit">
+              <ViewHeadlineIcon />
+              &nbsp;NCAA FB
+            </Button>
+          </Link>
           <Link href="/blog">
             <Button variant="text" color="inherit">
               <ViewHeadlineIcon />
               &nbsp;Blog
-            </Button>
-          </Link>
-          <Link href="/topics">
-            <Button variant="text" color="inherit">
-              <CodeIcon />
-              &nbsp;Topics
             </Button>
           </Link>
         </div>

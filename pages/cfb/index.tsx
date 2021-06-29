@@ -36,10 +36,10 @@ export default function LandingPage() {
   return (
       <>
         <Head>
-          <title>{NAME}: Building the SportsDataverse</title>
+          <title>{NAME}: The Game on Paper</title>
           <meta
             name="description"
-            content={`${NAME} is the homepage of the SportsDataverse.`}
+            content={`${NAME}: The Game on Paper.`}
           />
         </Head>
         <Grid container>
@@ -47,7 +47,7 @@ export default function LandingPage() {
             <Box p={5}>
               <Typography variant={large ? 'h1' : 'h4'}>{NAME_AND_DOMAIN}</Typography>
               <Typography className={styles.secondHeading} variant={large ? 'h3' : 'h6'}>
-              Building the SportsDataverse.
+              The Game on Paper.
               </Typography>
             </Box>
           </Grid>
@@ -62,7 +62,7 @@ export default function LandingPage() {
             {data
               ? data.map(project => (
                   <p key={project}>
-                    <Link href="[year]/[game_id]" as={`/${project}`}>
+                    <Link href="cfb/[year]/[game_id]" as={`/${project}`}>
                       <a>{project}</a>
                     </Link>
                   </p>

@@ -31,10 +31,10 @@ export default function LandingPage(props) {
   return (
       <>
         <Head>
-          <title>{NAME}: Building the SportsDataverse</title>
+          <title>{NAME}: The Game on Paper</title>
           <meta
             name="description"
-            content={`${NAME} is the homepage of the SportsDataverse.`}
+            content={`${NAME}: The Game on Paper.`}
           />
         </Head>
         <Grid container>
@@ -42,7 +42,7 @@ export default function LandingPage(props) {
             <Box p={5}>
               <Typography variant={large ? 'h1' : 'h4'}>{NAME_AND_DOMAIN}</Typography>
               <Typography className={styles.secondHeading} variant={large ? 'h3' : 'h6'}>
-              Building the SportsDataverse.
+              The Game on Paper.
               </Typography>
             </Box>
           </Grid>
