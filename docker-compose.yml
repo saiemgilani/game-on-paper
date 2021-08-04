@@ -1,0 +1,33 @@
+version: "3.8"
+services:
+    frontend:
+        image: "gop-frontend"
+        build:
+            context: ./frontend
+            dockerfile: Dockerfile
+        ports:
+            - 3000:3000
+        depends_on:
+            - python
+        links:
+            - python
+        stdin_open: true
+        volumes:
+            - ./frontend:/src/app/frontend
+            - /src/app/frontend/node_modules
+        environment:
+            PORT: 3000
+            RDATA_BASE_URL: "http://python:7000"
+            NODE_DEBUG: "[frontend]"
+
+    python:
+        image: "gop-python"
+        build:
+            context: ./api
+            dockerfile: Dockerfile
+        volumes:
+            - ./api:/src/app/api
+        environment:
+            PORT: 7000
+        ports:
+            - 7000:7000
