@@ -3,20 +3,9 @@ const globby = require('globby')
 const matter = require('gray-matter')
 
 async function generateSiteMap() {
-  const patterns = ['pages/**/*.tsx', '!pages/_*.tsx', `!pages/**/\\[*\\].tsx`, '!pages/404.tsx', 'posts/*.md']
+  const patterns = ['pages/**/*.tsx', '!pages/_*.tsx', `!pages/**/\\[*\\].tsx`, '!pages/404.tsx']
   let pages = await globby(patterns)
 
-  const fileNames = fs.readdirSync('posts')
-  const topics = Array.from(
-    new Set(
-      fileNames.reduce((prev, fn) => {
-        const fileContents = fs.readFileSync('posts/' + fn, 'utf8')
-        const matterResult = matter(fileContents)
-        const topics = matterResult.data.topics.split(',')
-        return [...prev, ...topics]
-      }, []),
-    ),
-  )
 
   pages = [...pages, ...topics.map((t) => `/topics/${t.replace(' ', '-')}`)]
 
@@ -29,7 +18,6 @@ async function generateSiteMap() {
           .replace('pages', '')
           .replace('.tsx', '')
           .replace('.md', '')
-          .replace('posts/', '/blog/')
           .replace('/landing', '')
         const route = path === '/landing' ? '' : path
         return `
