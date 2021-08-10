@@ -43,7 +43,7 @@ const columns = {
   "field_pos_avg_start" : "Avg Starting FP",
   "field_pos_avg_starting_predicted_pts" : "&emsp;&emsp;Predicted Points"
 }
-export default function gamePage() {
+export default function GamePage() {
   const id =
     typeof window !== 'undefined' ? window.location.pathname.slice(1) : ''
   const { data } = useRequest(
@@ -56,16 +56,19 @@ export default function gamePage() {
         }
       : null
   )
-
   return (
     <div style={{ textAlign: 'center' }}>
 
       {data ? (
+          
         <><h1>
           <img width="35px" src={`https://a.espncdn.com/i/teamlogos/ncaa/500/${data.gameInfo.competitors[1].team.id}.png`}/> {data.plays[0].awayTeamName}  @
           <img width="35px" src={`https://a.espncdn.com/i/teamlogos/ncaa/500/${data.gameInfo.competitors[0].team.id}.png`}/> {data.plays[0].homeTeamName} </h1>
         <div>
           <p>Game Id: {data.plays[0].homeTeamName} </p>
+        </div>
+        <div>
+            {data.boxscore.teams.team}
         </div>
         </>
       ) : (

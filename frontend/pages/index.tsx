@@ -7,15 +7,15 @@ import { makeStyles } from "@material-ui/core/styles";
 // @material-ui/icons
 
 // core components
-import { Footer } from "../src/components/Footer";
+import { Footer } from "../components/Footer";
 import { Grid, Typography } from '@material-ui/core'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import Box from '@material-ui/core/Box'
-import Button from "../src/components/CustomButtons/Button.js";
-import Parallax from "../src/components/Parallax/Parallax.js";
+import Button from "../components/CustomButtons/Button.js";
+import Parallax from "../components/Parallax/Parallax.js";
 import Head from 'next/head'
 import styles from '../styles/Shared.module.css'
-import { NAME, NAME_AND_DOMAIN } from '../src/types/constants'
+import { NAME, NAME_AND_DOMAIN } from '../types/constants'
 
 // Sections for this page
 import NodePackageSection from "../pages-sections/LandingPage-Sections/NodePackageSection.js";
@@ -31,7 +31,7 @@ export default function LandingPage(props) {
   return (
       <>
         <Head>
-          <title>{NAME}: The Game on Paper</title>
+          <title>{NAME}: Game on Paper</title>
           <meta
             name="description"
             content={`${NAME}: The Game on Paper.`}
@@ -40,13 +40,10 @@ export default function LandingPage(props) {
         <Grid container>
           <Grid item xs={12} className={styles.headings}>
             <Box p={5}>
-              <Typography variant={large ? 'h1' : 'h4'}>{NAME_AND_DOMAIN}</Typography>
-              <Typography className={styles.secondHeading} variant={large ? 'h3' : 'h6'}>
-              The Game on Paper.
-              </Typography>
+              <Typography variant={large ? 'h2' : 'h4'}>Game on Paper</Typography>
             </Box>
           </Grid>
-          </Grid>
+        </Grid>
       <Footer />
     </>
   );

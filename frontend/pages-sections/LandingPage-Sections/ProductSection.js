@@ -11,7 +11,7 @@ import GridContainer from "../../src/components/Grid/GridContainer.js";
 import GridItem from "../../src/components/Grid/GridItem.js";
 import InfoArea from "../../src/components/InfoArea/InfoArea.js";
 
-import styles from '../../styles/Shared.module.css'
+import styles from '../styles/Shared.module.css'
 
 const useStyles = makeStyles(styles);
 

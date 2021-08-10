@@ -1,12 +1,11 @@
 import React, { FC, ReactElement } from 'react'
 import styles from '../styles/404.module.css'
-import { PageHeading } from '../src/components/PageHeading'
+import { PageHeading } from '../components/PageHeading'
 import { Typography } from '@material-ui/core'
-import { GetStaticPropsResult } from 'next'
 
 type FourOFourProps = { }
 
-export const FourOFour: FC<FourOFourProps> = ({}): ReactElement => {
+export const FourOFour: FC<FourOFourProps> = (): ReactElement => {
   return (
     <div className={styles.error}>
       <div className={styles.container}>

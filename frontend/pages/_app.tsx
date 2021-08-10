@@ -1,8 +1,8 @@
-import { ThemeProvider } from '../src/theme'
+import { ThemeProvider } from '../theme'
 import React, { useEffect, useState } from 'react'
 import { AppProps } from 'next/app'
-import TopBar from '../src/components/TopBar'
-import { Footer } from '../src/components/Footer'
+import TopBar from '../components/TopBar'
+import { Footer } from '../components/Footer'
 import styles from '../styles/App.module.css'
 
 const MyApp = ({ Component, pageProps }: AppProps): React.ReactNode => {

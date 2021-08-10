@@ -1,29 +1,19 @@
 import React from "react";
 // nodejs library that concatenates classes
 import classNames from "classnames";
-// @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import Link from 'next/link'
-
 import useRequest from '../../libs/useRequest'
-// @material-ui/icons
-
 // core components
-import { Footer } from "../../src/components/Footer";
+import { Footer } from "../../components/Footer";
 import { Grid, Typography } from '@material-ui/core'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import Box from '@material-ui/core/Box'
-import Button from "../../src/components/CustomButtons/Button.js";
-import Parallax from "../../src/components/Parallax/Parallax.js";
+import Button from "../../components/CustomButtons/Button.js";
+import Parallax from "../../components/Parallax/Parallax.js";
 import Head from 'next/head'
 import styles from '../../styles/Shared.module.css'
-import { NAME, NAME_AND_DOMAIN } from '../../src/types/constants'
-
-// Sections for this page
-// import NodePackageSection from "../../pages-sections/LandingPage-Sections/NodePackageSection.js";
-// import ProductSection from "../../pages-sections/LandingPage-Sections/ProductSection.js";
-// import PackageSection from "../../pages-sections/LandingPage-Sections/PackageSection.js";
-// import WorkSection from "../../pages-sections/LandingPage-Sections/WorkSection.js";
+import { NAME, NAME_AND_DOMAIN } from '../../types/constants'
 
 
 
@@ -36,7 +26,7 @@ export default function LandingPage() {
   return (
       <>
         <Head>
-          <title>{NAME}: The Game on Paper</title>
+          <title>Game on Paper</title>
           <meta
             name="description"
             content={`${NAME}: The Game on Paper.`}
@@ -45,9 +35,8 @@ export default function LandingPage() {
         <Grid container>
           <Grid item xs={12} className={styles.headings}>
             <Box p={5}>
-              <Typography variant={large ? 'h1' : 'h4'}>{NAME_AND_DOMAIN}</Typography>
-              <Typography className={styles.secondHeading} variant={large ? 'h3' : 'h6'}>
-              The Game on Paper.
+              <Typography variant={large ? 'h2' : 'h4'}>
+              Game on Paper
               </Typography>
             </Box>
           </Grid>
@@ -57,7 +46,13 @@ export default function LandingPage() {
           </div>
         </div>
         <div style={{ textAlign: 'center' }}>
-          <h1>Trending Projects</h1>
+          <div>
+            <p>
+              <Link href="cfb/scoreboard" >
+                <a>Scoreboard</a>
+              </Link>
+            </p>
+          </div>
           <div>
             {data
               ? data.map(project => (

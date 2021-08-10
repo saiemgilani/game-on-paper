@@ -1,6 +1,6 @@
 import React, { FC, ReactElement } from 'react'
 import { Grid, Typography } from '@material-ui/core'
-import styles from '../../styles/Shared.module.css'
+import styles from '../styles/Shared.module.css'
 import Box from '@material-ui/core/Box'
 
 type PageHeadingProps = {

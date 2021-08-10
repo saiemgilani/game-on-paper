@@ -1,9 +1,7 @@
 
 import axios from 'axios'
 
-const projects = [
-  'saiemgilani/cfbfastR-raw', 'cfb/2020/401212523.json','saiemgilani/kenpomR-data', 'saiemgilani/wehoop', 'saiemgilani/cfbrecruitR'
-]
+const pages = ['cfb/2020/401212523.json']
 
 const handler = async (req, res): Promise<void> => {
   if (req.query.id) {
@@ -16,7 +14,7 @@ const handler = async (req, res): Promise<void> => {
     })
     return
   }
-    res.json(projects)
+    res.json(pages)
 
 }
 

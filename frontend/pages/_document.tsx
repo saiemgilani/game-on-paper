@@ -1,8 +1,8 @@
 import React from 'react'
 import Document, { Html, Head, Main, NextScript } from 'next/document'
 import { ServerStyleSheets } from '@material-ui/core/styles'
-import { darkTheme as theme } from '../src/theme'
-import { NAME } from '../src/types/constants'
+import { darkTheme as theme } from '../theme'
+import { NAME } from '../types/constants'
 
 export default class MyDocument extends Document {
   render(): React.ReactElement {

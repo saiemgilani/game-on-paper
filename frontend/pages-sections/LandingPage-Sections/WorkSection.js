@@ -10,7 +10,7 @@ import GridItem from "../../src/components/Grid/GridItem.js";
 import CustomInput from "../../src/components/CustomInput/CustomInput.js";
 import Button from "../../src/components/CustomButtons/Button.js";
 
-import styles from '../../styles/Shared.module.css'
+import styles from '../styles/Shared.module.css'
 
 const useStyles = makeStyles(styles);
 

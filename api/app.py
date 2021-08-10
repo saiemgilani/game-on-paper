@@ -4,10 +4,12 @@ import httpx
 import json
 import uvicorn
 import numpy as np
-from fastapi import FastAPI, HTTPException, Request
+from fastapi import FastAPI, HTTPException, Request, Query
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
+from fastapi.middleware.cors import CORSMiddleware
 from play_handler import PlayProcess
+from schedule_handler import ScheduleProcess
 
 app = FastAPI(
     title="Vercel FastAPI template",
@@ -17,7 +19,20 @@ app = FastAPI(
     openapi_url='/api/openapi.json',
     redoc_url=None
 )
-
+origins = [
+    "http://localhost.gameonpaper.com",
+    "https://localhost.gameonpaper.com",
+    "http://localhost",
+    "http://localhost:3000",
+    "http://localhost:7000"
+]
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.get("/cfb/game/{gameId}")
@@ -208,6 +223,42 @@ def get_cfb_game(request: Request, gameId: str) -> Optional[None]:
         "gameInfo" : np.array(pbp['gameInfo']).tolist(),
         "season" : np.array(pbp['season']).tolist()
     }
+
+@app.get("/cfb/scoreboard")
+def get_cfb_scoreboard(request: Request,
+                        dates:Optional[str] = Query(None),
+                        week:Optional[str] = Query(None)) -> Optional[None]:
+
+    headers = {"accept": "application/json"}
+    # gameId = request.get_json(force=True)['gameId']
+    processed_data = ScheduleProcess(dates = dates, week = week)
+    pbp = processed_data.cfb_schedule()
+    tmp_json = pbp
+    
+    return tmp_json
+
+
+@app.get("/mbb/scoreboard")
+def get_mbb_scoreboard(request: Request) -> Optional[None]:
+
+    headers = {"accept": "application/json"}
+    # gameId = request.get_json(force=True)['gameId']
+    processed_data = ScheduleProcess()
+    pbp = processed_data.mbb_schedule()
+    tmp_json = pbp
+    
+    return tmp_json
+
+@app.get("/nba/scoreboard")
+def get_nba_scoreboard(request: Request ) -> Optional[None]:
+
+    headers = {"accept": "application/json"}
+    # gameId = request.get_json(force=True)['gameId']
+    processed_data = ScheduleProcess()
+    pbp = processed_data.nba_schedule()
+    tmp_json = pbp
+    
+    return tmp_json
 
 if __name__ == "__main__":
   uvicorn.run("app:app", host="0.0.0.0", port=7000, reload=True)

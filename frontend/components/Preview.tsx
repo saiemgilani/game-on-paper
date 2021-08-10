@@ -2,7 +2,7 @@ import React, { FC, ReactElement } from 'react'
 import { PostData } from '../types/posts'
 import { Grid } from '@material-ui/core'
 import PreviewCard from './PreviewCard'
-import { paddedItem } from '../../styles/shared'
+import { paddedItem } from '../styles/shared'
 
 type PreviewProps = {
   posts: PostData[]

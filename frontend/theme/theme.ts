@@ -1,7 +1,8 @@
-import { createMuiTheme, ThemeOptions } from '@material-ui/core'
+import { ThemeOptions } from '@material-ui/core'
 
+import { createTheme } from '@material-ui/core/styles'
 export const paletteColorsDark = {
-  primary: '#240226',
+  primary: '#7B1729',
   secondary: '#FFFFFF',
   card: '#FFFFFF',
   error: '#E44C65',
@@ -10,7 +11,7 @@ export const paletteColorsDark = {
 }
 
 export const paletteColorsLight = {
-  primary: '#99649D',
+  primary: '#FF5151',
   secondary: '#FFFFFF',
   card: '#FFFFFF',
   error: '#E44C65',
@@ -24,7 +25,9 @@ const options = (dark: boolean): ThemeOptions => {
     palette: {
       type: dark ? 'dark' : 'light',
       primary: {
+        light: paletteColors.primary,
         main: paletteColors.primary,
+        dark: paletteColors.primary,
       },
       secondary: {
         main: paletteColors.secondary,
@@ -94,7 +97,7 @@ const options = (dark: boolean): ThemeOptions => {
   }
 }
 
-export const darkTheme = createMuiTheme(options(true))
-export const lightTheme = createMuiTheme(options(false))
+export const darkTheme = createTheme(options(true))
+export const lightTheme = createTheme(options(false))
 
 export default darkTheme

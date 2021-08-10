@@ -7,13 +7,17 @@ import CodeIcon from '@material-ui/icons/Code'
 import IconButton from "@material-ui/core/IconButton";
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
+import SportsFootballIcon from '@material-ui/icons/SportsFootball';
 import AppBar from '@material-ui/core/AppBar'
 import useScrollTrigger from '@material-ui/core/useScrollTrigger'
 import { makeStyles } from '@material-ui/core/styles'
 import { ToggleThemeContext } from '../theme'
 import Link from 'next/link'
+import Image from 'next/image'
 import { Tooltip } from '@material-ui/core'
 import { NAME_AND_DOMAIN } from '../types/constants'
+
+import logo from '../public/logo/logo.png'
 import {
   container,
   hexToRGBAlpha,
@@ -27,7 +31,7 @@ import {
   transition,
   boxShadow,
   drawerWidth
-} from "../../assets/jss/nextjs-material-kit.js";
+} from "../assets/jss/nextjs-material-kit.js";
 const useStyles = makeStyles({
   appBar: {
     display: "flex",
@@ -65,11 +69,11 @@ const useStyles = makeStyles({
     paddingLeft: '5%',
   },
   toolbarContent: {
-    paddingLeft: 70,
+    paddingLeft: '5%',
   },
   toolbarRight: {
     right: 0,
-    position: 'absolute',
+    position: 'relative',
     paddingRight: '5%',
   },
   container: {
@@ -93,32 +97,21 @@ export const TopBar = (): ReactElement => {
       <Toolbar className={classes.toolbar}>
         <Link href="/">
           <a>
-            <img
-              src="/logo/logo.png"
-              height="25px"
-              alt="sportsdataverse.org"
-              style={{ paddingRight: 10, verticalAlign: 'bottom' }}
-            />
+          <Image
+            src={logo}
+            width={35}
+            height={35}
+            alt='Game on Paper' />
           </a>
         </Link>
         <Link href="/">
-          <a>
-            <Typography variant="h6" style={!isDark ? { color: '#fff' } : {}}>
-              {NAME_AND_DOMAIN}
-            </Typography>
-          </a>
+            &nbsp;Game on Paper
         </Link>
         <div className={classes.toolbarContent}>
           <Link href="/cfb">
             <Button variant="text" color="inherit">
-              <ViewHeadlineIcon />
-              &nbsp;NCAA FB
-            </Button>
-          </Link>
-          <Link href="/blog">
-            <Button variant="text" color="inherit">
-              <ViewHeadlineIcon />
-              &nbsp;Blog
+              <SportsFootballIcon />
+              CFB
             </Button>
           </Link>
         </div>

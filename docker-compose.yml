@@ -1,10 +1,35 @@
 version: "3.8"
 services:
+    nginx:
+        # image: linuxserver/letsencrypt
+        container_name: nginx
+        build:
+            context: ./nginx
+            dockerfile: Dockerfile
+        ports:
+        - 8080:8080
+        restart: unless-stopped
+        volumes:
+          - ./nginx.conf:/config/nginx/nginx.conf
+          - ./prod.conf:/config/nginx/site-confs/default
+        environment:
+          - PUID=1050
+          - PGID=1050
+          - EMAIL=${LETSENCRYPT_EMAIL}
+          - URL=cfbmodels.com
+          - SUBDOMAINS=${SUBDOMAIN}
+          - ONLY_SUBDOMAINS=true
+          - TZ=America/New_York
+        depends_on:
+          - python
+          - frontend
     frontend:
         image: "gop-frontend"
+        container_name: frontend
         build:
             context: ./frontend
             dockerfile: Dockerfile
+        restart: unless-stopped
         ports:
             - 3000:3000
         depends_on:
@@ -22,9 +47,11 @@ services:
 
     python:
         image: "gop-python"
+        container_name: python
         build:
             context: ./api
             dockerfile: Dockerfile
+        restart: unless-stopped
         volumes:
             - ./api:/src/app/api
         environment:
