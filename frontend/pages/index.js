@@ -25,7 +25,7 @@ export default function Home() {
     setWeekComposite(`${sznType};${wk}`)
 
     console.log(`${season}, Week Composite ${weekComposite}`)
-    window.location.href = `https://gameonpaper.com/cfb/year/${season}/type/${sznType}/week/${wk}`
+    // window.location.href = `https://gameonpaper.com/cfb/year/${szn}/type/${sznType}/week/${wk}`
   }
 
   return (
