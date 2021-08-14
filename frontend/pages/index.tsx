@@ -11,17 +11,11 @@ import { Footer } from "../components/Footer";
 import { Grid, Typography } from '@material-ui/core'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import Box from '@material-ui/core/Box'
-import Button from "../components/CustomButtons/Button.js";
-import Parallax from "../components/Parallax/Parallax.js";
 import Head from 'next/head'
 import styles from '../styles/Shared.module.css'
 import { NAME, NAME_AND_DOMAIN } from '../types/constants'
 
 // Sections for this page
-import NodePackageSection from "../pages-sections/LandingPage-Sections/NodePackageSection.js";
-import ProductSection from "../pages-sections/LandingPage-Sections/ProductSection.js";
-import PackageSection from "../pages-sections/LandingPage-Sections/PackageSection.js";
-import WorkSection from "../pages-sections/LandingPage-Sections/WorkSection.js";
 
 
 

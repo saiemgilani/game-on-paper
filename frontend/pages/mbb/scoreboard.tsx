@@ -5,7 +5,7 @@ import classNames from "classnames";
 import { makeStyles } from "@material-ui/core/styles";
 import Link from 'next/link'
 import useRequest from '../../libs/useRequest'
-import useCFBScoreboardApi from '../../hooks/useCFBScoreboardApi'
+import useMBBScoreboardApi from '../../hooks/useMBBScoreboardApi'
 // core components
 import { Footer } from "../../components/Footer";
 import { Grid, Typography } from '@material-ui/core'
@@ -69,9 +69,9 @@ export default function LandingPage() {
   
   
   const [season, setSeason] = useState('2020');  
-  const [cfbScoreboardData] = useCFBScoreboardApi({season})
+  const [mbbScoreboardData] = useMBBScoreboardApi({season})
 
-  const data = cfbScoreboardData
+  const data = mbbScoreboardData
   const classes = useStyles()
   console.log(data)
   return (
@@ -87,7 +87,7 @@ export default function LandingPage() {
           <Grid item xs={12} className={styles.headings}>
             <Box p={5}>
               <Typography variant={large ? 'h4' : 'h6'}>
-                College Football Scoreboard
+                Men's College Basketball Scoreboard
               </Typography>
             </Box>
           </Grid>

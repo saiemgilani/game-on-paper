@@ -8,6 +8,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import SportsFootballIcon from '@material-ui/icons/SportsFootball';
+import SportsBasketballIcon from '@material-ui/icons/SportsBasketball';
 import AppBar from '@material-ui/core/AppBar'
 import useScrollTrigger from '@material-ui/core/useScrollTrigger'
 import { makeStyles } from '@material-ui/core/styles'
@@ -112,6 +113,12 @@ export const TopBar = (): ReactElement => {
             <Button variant="text" color="inherit">
               <SportsFootballIcon />
               CFB
+            </Button>
+          </Link>
+          <Link href="/mbb">
+            <Button variant="text" color="inherit">
+              <SportsBasketballIcon />
+              MBB
             </Button>
           </Link>
         </div>
