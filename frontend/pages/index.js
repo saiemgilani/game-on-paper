@@ -7,46 +7,11 @@ import Container from 'react-bootstrap/Container';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
-let range = (start, end) => Array.from(Array(end + 1).keys()).slice(start); 
-
-function SeasonSelect() {
-  let [season, setSeason] = useState("Choose Season...")
-
-  let handleSeasonChange = (e) => {
-    setSeason(e.target.value)
-    console.log(e.target.value)
-  }
-
-  let yrRange = range(2002, 2021).reverse();
-  console.log(yrRange)
-  return (
-    <Form.Select size="lg" id="yearSelect" onChange={handleSeasonChange}>
-        <option value="-1">Choose Season...</option>
-        {yrRange.map((yr) => <option key={yr} value={yr}>{yr}</option>)}
-    </Form.Select>
-  );
-}
-
-function WeekSelect() {
-  let [week, setWeek] = useState("Choose Week...")
-
-  let handleWeekChange = (e) => {
-    setWeek(e.target.value)
-    console.log(e.target.value)
-  }
-
-  let weekRange = range(1, 15);
-  console.log(weekRange)
-  return (
-    <Form.Select size="lg" id="weekSelect" onChange={handleWeekChange}>
-        <option value="-1">Choose Week...</option>
-        {weekRange.map((wk) => <option key={wk} value={wk}>{wk}</option>)}
-    </Form.Select>
-  );
-}
+import SeasonSelect from '../components/SeasonSelect';
 
 export default function Home() {
+  const [season, setSeason] = useState(2021);
+  const [weekComposite, setWeekComposite] = useState("2;-1");  
 
   let handleIDSubmit = (e) => {
     e.preventDefault()
@@ -55,8 +20,16 @@ export default function Home() {
     window.location.href = `https://gameonpaper.com/cfb/game/${gameId}`
   }
 
+  let handleSeasonSelectChange = (szn, sznType, wk) => {
+    setSeason(szn)
+    setWeekComposite(`${sznType};${wk}`)
+
+    console.log(`${season}, Week Composite ${weekComposite}`)
+    window.location.href = `https://gameonpaper.com/cfb/year/${season}/type/${sznType}/week/${wk}`
+  }
+
   return (
-    <div className="container">
+    <Container>
       <Head>
         <meta charSet="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -81,21 +54,7 @@ export default function Home() {
         <Row className="mb-1">
             <h3 className="text-center"> -- OR -- </h3>
         </Row>
-        <Form id="dropdown-form" className="gx-3 row-cols-sm-auto mb-3 align-items-center form-picker">
-          <Row>
-            <Col xs="auto" className="mb-xs-3 mb-sm-0">
-              <SeasonSelect />
-            </Col>
-            <Col xs="auto" className="mb-xs-3 mb-sm-0">
-              <WeekSelect />
-            </Col>
-            <Col xs="auto" className="mb-xs-3 mb-sm-0">
-              <Button size="lg" variant="primary" type="submit">
-                View
-              </Button>
-            </Col>
-          </Row>
-        </Form>
+        <SeasonSelect season={season} week={weekComposite} callback={handleSeasonSelectChange}/>
       </main>
 
       <footer>
@@ -163,6 +122,6 @@ export default function Home() {
           text-align: center;
         }
       `}</style>
-    </div>
+    </Container>
   )
 }
