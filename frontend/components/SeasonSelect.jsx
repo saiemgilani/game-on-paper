@@ -3,25 +3,28 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
-const weekData = require('../assets/schedule.json'); 
+const weekData = require('../assets/schedule.json');
 const availYearKeys = Object.keys(weekData).reverse(); 
 
 let range = (start, end) => Array.from(Array(end + 1).keys()).slice(start); 
 let yrRange = range(2002, 2021).reverse();
 
 export default class SeasonSelect extends React.Component {
-    state = {}
-
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
-            season: 2021,
+            season: props.season || 2021,
+            weekOptions: this.populateWeekSelect(props.season || 2021),
             weekComposite: "2;-1",
             week: -1,
-            seasonType: 2,
-            weekOptions: this.populateWeekSelect(2021)
+            seasonType: 2
         }
-    };
+
+        this.updateWeekComposite = this.updateWeekComposite.bind(this);
+        this.handleWeekChange = this.handleWeekChange.bind(this);
+        this.handleSeasonChange = this.handleSeasonChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
 
     updateWeekComposite(result) {
         var cleanWeekItems = result.split(';')
@@ -31,17 +34,18 @@ export default class SeasonSelect extends React.Component {
             week: cleanWeekItems[1],
             seasonType: cleanWeekItems[0]
         })
-    };
+    }
 
     handleWeekChange(e) {
         // e.preventDefault()
-        updateWeekComposite(e.target.value)
-    };
+        console.log(e.target.value)
+        this.updateWeekComposite(e.target.value)
+    }
 
     handleSubmit(e) {
         e.preventDefault()
-        props.callback(this.state.season, this.state.seasonType, this.state.week)
-    };
+        this.props.callback(this.state.season, this.state.seasonType, this.state.week)
+    }
 
     populateWeekSelect(szn) {
         var options = []
@@ -62,7 +66,7 @@ export default class SeasonSelect extends React.Component {
                 console.log("adding week: " + wk.label);
                 if (!wk.label.includes("Bowls")) {
                     let text = wk.label;
-                    let value = `${wk.type};${wk.value}`
+                    let value = `2;${wk.value}`
                     
                     options.push(<option key={value} value={value}>{text}</option>);
                 }
@@ -71,16 +75,16 @@ export default class SeasonSelect extends React.Component {
             options.push(<option key="3;1" value="3;1">Bowls</option>);
         }
         return options;
-    };
+    }
 
     handleSeasonChange(e) {
         // e.preventDefault()
-        updateWeekComposite("2;-1")
+        this.updateWeekComposite("2;-1")
         this.setState({
             season: e.target.value,
             weekOptions: this.populateWeekSelect(this.state.season)
         })
-    };
+    }
 
     render() {
         return (
@@ -93,7 +97,7 @@ export default class SeasonSelect extends React.Component {
                     </Col>
                     <Col xs="auto">
                         <Form.Select size="lg" id="weekSelect" onChange={this.handleWeekChange} value={this.state.weekComposite}>
-                            <option value="-1">Choose Week...</option>
+                            <option value="2;-1">Choose Week...</option>
                             {this.state.weekOptions}
                         </Form.Select>
                     </Col>
