@@ -23,7 +23,7 @@ function SeasonSelect() {
   return (
     <Form.Select size="lg" id="yearSelect" onChange={handleSeasonChange}>
         <option value="-1">Choose Season...</option>
-        {yrRange.forEach((yr) => <option value={yr}>{yr}</option>)}
+        {yrRange.map((yr) => <option key={yr} value={yr}>{yr}</option>)}
     </Form.Select>
   );
 }
@@ -41,7 +41,7 @@ function WeekSelect() {
   return (
     <Form.Select size="lg" id="weekSelect" onChange={handleWeekChange}>
         <option value="-1">Choose Week...</option>
-        {weekRange.forEach((wk) => <option value={wk}>{wk}</option>)}
+        {weekRange.map((wk) => <option key={wk} value={wk}>{wk}</option>)}
     </Form.Select>
   );
 }
