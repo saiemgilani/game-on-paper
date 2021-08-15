@@ -12,7 +12,6 @@ import { Grid, Typography } from '@material-ui/core'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import Box from '@material-ui/core/Box'
 import Head from 'next/head'
-import styles from '../styles/Shared.module.css'
 import { NAME, NAME_AND_DOMAIN } from '../types/constants'
 
 // Sections for this page
@@ -32,13 +31,12 @@ export default function LandingPage(props) {
           />
         </Head>
         <Grid container>
-          <Grid item xs={12} className={styles.headings}>
+          <Grid item xs={12}>
             <Box p={5}>
               <Typography variant={large ? 'h2' : 'h4'}>Game on Paper</Typography>
             </Box>
           </Grid>
         </Grid>
-      <Footer />
     </>
   );
 }

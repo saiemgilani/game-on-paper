@@ -12,27 +12,13 @@ import SportsBasketballIcon from '@material-ui/icons/SportsBasketball';
 import AppBar from '@material-ui/core/AppBar'
 import useScrollTrigger from '@material-ui/core/useScrollTrigger'
 import { makeStyles } from '@material-ui/core/styles'
-import { ToggleThemeContext } from '../theme'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Tooltip } from '@material-ui/core'
 import { NAME_AND_DOMAIN } from '../types/constants'
 
 import logo from '../public/logo/logo.png'
-import {
-  container,
-  hexToRGBAlpha,
-  defaultFont,
-  primaryColor,
-  infoColor,
-  successColor,
-  warningColor,
-  dangerColor,
-  roseColor,
-  transition,
-  boxShadow,
-  drawerWidth
-} from "../assets/jss/nextjs-material-kit.js";
+
 const useStyles = makeStyles({
   appBar: {
     display: "flex",
@@ -40,9 +26,9 @@ const useStyles = makeStyles({
     borderRadius: "3px",
     padding: "0.625rem 0",
     marginBottom: "20px",
-    color: "#7B1729",
+    color: '#000000',
     width: "100%",
-    backgroundColor: "#7B1729",
+    textColor: '#000000',
     boxShadow:
       "0 4px 18px 0px rgba(0, 0, 0, 0.12), 0 7px 10px -5px rgba(0, 0, 0, 0.15)",
     transition: "all 150ms ease 0s",
@@ -67,6 +53,8 @@ const useStyles = makeStyles({
     transition: 'transform .5s',
   },
   toolbar: {
+    color: '#000000',
+    backgroundColor: "#F2F2F2",
     paddingLeft: '5%',
   },
   toolbarContent: {
@@ -77,21 +65,15 @@ const useStyles = makeStyles({
     position: 'relative',
     paddingRight: '5%',
   },
-  container: {
-    ...container,
-    minHeight: "50px",
-    flex: "1",
-    alignItems: "center",
-    justifyContent: "space-between",
-    display: "flex",
-    flexWrap: "nowrap"
+  button:{
+    color: '#000000',
+    textColor: '#000000',
   },
 })
 
 export const TopBar = (): ReactElement => {
   const trigger = useScrollTrigger()
   const classes = useStyles()
-  const { toggleTheme, isDark } = useContext(ToggleThemeContext)
 
   return (
     <AppBar className={trigger ? classes.hide : classes.show} position="sticky">
@@ -105,9 +87,9 @@ export const TopBar = (): ReactElement => {
             alt='Game on Paper' />
           </a>
         </Link>
-        <Link href="/">
-            &nbsp;Game on Paper
-        </Link>
+        <Button variant="text" color="inherit">
+              Game on Paper
+        </Button>
         <div className={classes.toolbarContent}>
           <Link href="/cfb">
             <Button variant="text" color="inherit">
@@ -121,13 +103,6 @@ export const TopBar = (): ReactElement => {
               MBB
             </Button>
           </Link>
-        </div>
-        <div className={classes.toolbarRight}>
-          <Tooltip title="Toggle Theme">
-            <Button variant="text" color="inherit" onClick={toggleTheme}>
-              {isDark ? <SunIcon /> : <MoonIcon />}
-            </Button>
-          </Tooltip>
         </div>
       </Toolbar>
     </AppBar>

@@ -12,7 +12,6 @@ import { Grid, Typography } from '@material-ui/core'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import Box from '@material-ui/core/Box'
 import Head from 'next/head'
-import styles from '../../../styles/Shared.module.css'
 import { NAME, NAME_AND_DOMAIN } from '../../../types/constants'
 import axios from 'axios';
 import { ContactsOutlined } from '@material-ui/icons';
@@ -48,16 +47,12 @@ export default function CFBGamePage() {
           />
         </Head>
         <Grid container>
-          <Grid item xs={12} className={styles.headings}>
+          <Grid item xs={12}>
             <Box p={5}>
               <Typography variant={large ? 'h1' : 'h4'}>Game on Paper</Typography>
             </Box>
           </Grid>
-          </Grid>
-        <div className={classNames(styles.main, styles.mainRaised)}>
-          <div className={styles.headings}>
-          </div>
-        </div>
+        </Grid>
         <div style={{ textAlign: 'center' }}>
           <h1>Trending Projects</h1>
           <TeamBoxScore
@@ -65,8 +60,6 @@ export default function CFBGamePage() {
           columns={columns}
           />
         </div>
-        <Footer />
-
       </>
     );
   }

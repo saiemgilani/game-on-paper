@@ -22,14 +22,13 @@ const useStyles = makeStyles((theme) => ({
   card: {
     width: 400,
     [theme.breakpoints.down('md')]: {
-      width: 430,
+      width: 600,
     },
     [theme.breakpoints.down('sm')]: {
-      width: 450,
+      width: 300,
     },
     [theme.breakpoints.down('xs')]: {
-      width: 300,
-      height: 500,
+      width: 400,
     },
     [theme.breakpoints.up('lg')]: {
       width: 410,

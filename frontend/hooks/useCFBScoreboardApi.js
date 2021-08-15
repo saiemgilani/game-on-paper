@@ -13,8 +13,8 @@ function useCFBScoreboardApi(dates,week) {
           dates: dates,
           week: week
       }
-      const res = await axios.get(baseUrl,params);
-    
+      const res = await axios.get(baseUrl,{params});
+    console.log(res.data)
       setCFBScoreboardData(res.data);
 
     };
