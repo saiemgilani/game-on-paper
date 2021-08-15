@@ -1,4 +1,5 @@
-import {homepage} from '../package.json';
+
+export const homepage = 'https://gameonpaper.com'
 
 export const origin = new URL(homepage);
 const localApiOrigin = new URL('http://localhost:3000');
