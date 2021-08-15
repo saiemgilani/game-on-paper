@@ -1,13 +1,9 @@
 import React from "react";
 import { useEffect, useState } from "react";
-// nodejs library that concatenates classes
-import classNames from "classnames";
 import { makeStyles } from "@material-ui/core/styles";
 import Link from 'next/link'
-import useRequest from '../../libs/useRequest'
 import useMBBScoreboardApi from '../../hooks/useMBBScoreboardApi'
 // core components
-import { Footer } from "../../components/Footer";
 import { Grid, Typography } from '@material-ui/core'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import Box from '@material-ui/core/Box'

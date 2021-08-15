@@ -1,12 +1,25 @@
 import React, { FC, ReactElement } from 'react'
-import { Typography } from '@material-ui/core'
-
+import { Grid, Typography } from '@material-ui/core'
+import { makeStyles } from "@material-ui/core/styles";
+const useStyles = makeStyles((theme) => ({
+  footer: {
+    position: 'absolute',
+    padding: '1.5rem',
+    width: '100%',
+    height: '2.5rem',            /* Footer height */
+  },
+}))
 export const Footer: FC = ({}): ReactElement => {
+  const classes = useStyles()
   return (
-    <div>
-      <Typography style={{ textAlign: 'center' }}>
-        Built by <a href="http://www.github.com/saiemgilani" target="_blank" rel="noreferrer">Akshay Easwaran</a>, <a href="http://www.github.com/saiemgilani" target="_blank" rel="noreferrer">Saiem Gilani</a> and others.
-      </Typography>
-    </div>
+    <Grid container>
+      <Grid item xs={12}>
+      <div className={classes.footer}>
+        <Typography style={{ textAlign: 'center' }}>
+          Built by <a href="http://www.github.com/saiemgilani" target="_blank" rel="noreferrer">Akshay Easwaran</a>, <a href="http://www.github.com/saiemgilani" target="_blank" rel="noreferrer">Saiem Gilani</a> and others.
+        </Typography>
+      </div>
+    </Grid>
+  </Grid>
   )
 }

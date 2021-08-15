@@ -1,6 +1,9 @@
 import React from "react";
 // nodejs library that concatenates classes
 import Link from 'next/link'
+import Button from '@material-ui/core/Button'
+import SportsFootballIcon from '@material-ui/icons/SportsFootball';
+import SportsBasketballIcon from '@material-ui/icons/SportsBasketball';
 import useRequest from '../../libs/useRequest'
 // core components
 import { Footer } from "../../components/Footer";
@@ -30,8 +33,8 @@ export default function LandingPage() {
         <Grid container>
           <Grid item xs={12}>
             <Box p={5}>
-              <Typography variant={large ? 'h2' : 'h4'} style={{ textAlign: 'center' }}>
-              Game on Paper
+              <Typography variant={large ? 'h4' : 'h4'} style={{ textAlign: 'center' }}>
+              College Football
               </Typography>
             </Box>
           </Grid>
@@ -39,21 +42,12 @@ export default function LandingPage() {
         <div style={{ textAlign: 'center' }}>
           <div>
             <p>
-              <Link href="cfb/scoreboard" >
-                <a>Scoreboard</a>
-              </Link>
+            <Link href="cfb/scoreboard" >
+              <Button variant="text" color="inherit">
+                <SportsFootballIcon /> <Typography variant={large ? 'h6' : 'h6'} >Scoreboard</Typography>
+              </Button>
+            </Link>
             </p>
-          </div>
-          <div>
-            {data
-              ? data.map(project => (
-                  <p key={project}>
-                    <Link href="cfb/[year]/[game_id]" as={`/${project}`}>
-                      <a>{project}</a>
-                    </Link>
-                  </p>
-                ))
-              : 'loading...'}
           </div>
         </div>
 

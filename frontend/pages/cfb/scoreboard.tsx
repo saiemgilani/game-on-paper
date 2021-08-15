@@ -7,7 +7,6 @@ import Link from 'next/link'
 import useRequest from '../../libs/useRequest'
 import useCFBScoreboardApi from '../../hooks/useCFBScoreboardApi'
 // core components
-import { Footer } from "../../components/Footer";
 import { Grid, Typography } from '@material-ui/core'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import Box from '@material-ui/core/Box'

@@ -14,8 +14,6 @@ import Box from '@material-ui/core/Box'
 import Head from 'next/head'
 import { NAME, NAME_AND_DOMAIN } from '../../../types/constants'
 import axios from 'axios';
-import { ContactsOutlined } from '@material-ui/icons';
-import { useTable } from 'react-table'
 
 const renameKeys = (keysMap, obj) =>
   Object.keys(obj).reduce(
@@ -53,12 +51,16 @@ export default function CFBGamePage() {
             </Box>
           </Grid>
         </Grid>
+        <Grid container>
+          <Grid item xs={12}>
         <div style={{ textAlign: 'center' }}>
           <TeamBoxScore
           data={data}
           columns={columns}
           />
         </div>
+          </Grid>
+        </Grid>
       </>
     );
   }

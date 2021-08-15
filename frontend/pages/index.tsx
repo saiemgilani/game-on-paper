@@ -1,7 +1,9 @@
 import React from "react";
 // nodejs library that concatenates classes
-import classNames from "classnames";
 import Link from 'next/link'
+import Button from '@material-ui/core/Button'
+import SportsFootballIcon from '@material-ui/icons/SportsFootball';
+import SportsBasketballIcon from '@material-ui/icons/SportsBasketball';
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -38,21 +40,28 @@ export default function LandingPage(props) {
             </Box>
           </Grid>
         </Grid>
-        
         <Grid container>
-          <Grid item xs={12}>
+          <Grid item xs={6} style={{ textAlign: 'center' }}>
             <Box p={5}>
               <Link href="cfb/scoreboard" >
-                <a><Typography variant={large ? 'h2' : 'h4'} style={{ textAlign: 'center' }}>Scoreboard</Typography></a>
+              <Button variant="text" color="inherit">
+              <SportsFootballIcon />
+              <Typography variant={large ? 'h6' : 'h6'} >College Football</Typography>
+              </Button> 
               </Link>
             </Box>
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={6} style={{ textAlign: 'center' }}>
             <Box p={5}>
-              <Typography variant={large ? 'h2' : 'h4'} style={{ textAlign: 'center' }}>Game on Paper</Typography>
+              <Link href="mbb/scoreboard" >
+              <Button variant="text" color="inherit">
+              <SportsBasketballIcon />
+                <Typography variant={large ? 'h6' : 'h6'} >Men's College Basketball</Typography>
+              </Button> 
+              </Link>
             </Box>
-          </Grid>
         </Grid>
+      </Grid>
     </>
   );
 }
