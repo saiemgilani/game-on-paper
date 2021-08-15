@@ -48,7 +48,7 @@ export const TeamBoxScore: FC<TeamBoxScoreProps> = ({ columns, data }): ReactEle
                         <td
                         key={cell.getCellProps()}
                         style={{
-                            padding: '10px',
+                            padding: '3px',
                             border: 'solid 1px gray',
                             background: 'white',
                             color: 'black'

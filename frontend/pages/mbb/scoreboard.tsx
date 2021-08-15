@@ -113,7 +113,7 @@ export default function LandingPage() {
         <Grid container direction={"row"} justifyContent={'space-between'}>
         {data.map((d) =>(
             <Grid item xs={6} md = {4} lg={4} key={d}>
-              <Link href={`/cfb/game/${d.id}`}>
+              <Link href={`/mbb/game/${d.id}`}>
                   <Card className={classes.card} elevation={3} style={{}}>
                       <CardContent>
                       <Typography variant={large ? 'h6' : 'h6'} color="textPrimary">{<Image loader={myLoader} src={d['away.id']} width={30} height={30}  alt={d['away.location']}/>} {d['away.location']} 

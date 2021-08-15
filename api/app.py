@@ -9,6 +9,7 @@ from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.middleware.cors import CORSMiddleware
 from play_handler import PlayProcess
+from hoops_handler import HoopsProcess
 from schedule_handler import ScheduleProcess
 
 app = FastAPI(
@@ -235,6 +236,15 @@ def get_cfb_scoreboard(request: Request,
     tmp_json = schedule
     return tmp_json
 
+@app.get("/mbb/game/{gameId}")
+def get_mbb_game(request: Request, gameId: str) -> Optional[None]:
+
+    headers = {"accept": "application/json"}
+    # gameId = request.get_json(force=True)['gameId']
+    processed_data = HoopsProcess(gameId = gameId)
+    pbp = processed_data.mbb_pbp()
+    tmp_json = pbp
+    return tmp_json
 
 @app.get("/mbb/scoreboard")
 def get_mbb_scoreboard(request: Request,
@@ -254,6 +264,16 @@ def get_nba_scoreboard(request: Request,
     processed_data = ScheduleProcess(dates = dates)
     schedule = processed_data.nba_schedule()
     tmp_json = schedule
+    return tmp_json
+
+@app.get("/nba/game/{gameId}")
+def get_nba_game(request: Request, gameId: str) -> Optional[None]:
+
+    headers = {"accept": "application/json"}
+    # gameId = request.get_json(force=True)['gameId']
+    processed_data = HoopsProcess(gameId = gameId)
+    pbp = processed_data.nba_pbp()
+    tmp_json = pbp
     return tmp_json
 
 if __name__ == "__main__":
