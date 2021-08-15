@@ -104,8 +104,12 @@ class ScheduleProcess(object):
         return ev
 
     def mbb_calendar(self):
+
         season = self.season
-        url = "http://site.api.espn.com/apis/site/v2/sports/basketball/mens-college-basketball/scoreboard?dates={}".format(season)
+        dates = self.dates
+        if dates is None:
+            dates = ''
+        url = "http://site.api.espn.com/apis/site/v2/sports/basketball/mens-college-basketball/scoreboard?dates={}".format(dates)
         resp = self.download(url=url)
         txt = json.loads(resp)['leagues'][0]['calendar']
         datenum = list(map(lambda x: x[:10].replace("-",""),txt))
@@ -130,15 +134,17 @@ class ScheduleProcess(object):
         return df
 
     def mbb_schedule(self):
-        year = self.season
-        url = "http://site.api.espn.com/apis/site/v2/sports/basketball/mens-college-basketball/scoreboard?"
+        season = self.season
+        dates = self.dates
+        if dates is None:
+            dates = ''
+        url = "http://site.api.espn.com/apis/site/v2/sports/basketball/mens-college-basketball/scoreboard?limit=1000&dates={}".format(dates)
         resp = self.download(url=url)
         txt = json.loads(resp)['leagues'][0]['calendar']
     #     print(len(txt))
         txt = list(map(lambda x: x[:10].replace("-",""),txt))
 
         ev = pd.DataFrame()
-        
         if resp is not None:
             events_txt = json.loads(resp)
 
@@ -163,13 +169,15 @@ class ScheduleProcess(object):
                         del event['competitions'][0][k]
 
                 ev = ev.append(pd.json_normalize(event['competitions'][0]))
-            
         ev = json.loads(pd.DataFrame(ev).to_json(orient='records'))
 
         return ev
 
     def nba_calendar(self):
         season = self.season
+        dates = self.dates
+        if dates is None:
+            dates = ''
         url = "http://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates={}".format(season)
         resp = self.download(url=url)
         txt = json.loads(resp)['leagues'][0]['calendar']
@@ -195,9 +203,12 @@ class ScheduleProcess(object):
 
     def nba_schedule(self):
         season = self.season
-        ev = pd.DataFrame()
+        dates = self.dates
+        if dates is None:
+            dates = ''
 
-        url = "http://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?limit=1000"
+        url = "http://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?limit=1000&dates={}".format(dates)
+        ev = pd.DataFrame()
         resp = self.download(url=url)
 
         if resp is not None:
@@ -205,12 +216,6 @@ class ScheduleProcess(object):
 
             events = events_txt['events']
             for event in events:
-                bad_keys = ['linescores', 'statistics', 'leaders',  'records']
-                for k in bad_keys:
-                    if k in event['competitions'][0]['competitors'][0].keys():
-                        del event['competitions'][0]['competitors'][0][k]
-                    if k in event['competitions'][0]['competitors'][1].keys():
-                        del event['competitions'][0]['competitors'][1][k]
                 if 'links' in event['competitions'][0]['competitors'][0]['team'].keys():
                     del event['competitions'][0]['competitors'][0]['team']['links']
                 if 'links' in event['competitions'][0]['competitors'][1]['team'].keys():
@@ -224,7 +229,7 @@ class ScheduleProcess(object):
                 else:
                     event['competitions'][0]['home'] = event['competitions'][0]['competitors'][1]['team']
 
-                del_keys = ['competitors', 'broadcasts','geoBroadcasts', 'headlines']
+                del_keys = ['broadcasts','geoBroadcasts', 'headlines']
                 for k in del_keys:
                     if k in event['competitions'][0].keys():
                         del event['competitions'][0][k]

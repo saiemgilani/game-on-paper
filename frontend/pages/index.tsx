@@ -1,6 +1,7 @@
 import React from "react";
 // nodejs library that concatenates classes
 import classNames from "classnames";
+import Link from 'next/link'
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -31,6 +32,21 @@ export default function LandingPage(props) {
           />
         </Head>
         <Grid container>
+          <Grid item xs={12}>
+            <Box p={5}>
+              <Typography variant={large ? 'h2' : 'h4'} style={{ textAlign: 'center' }}>Game on Paper</Typography>
+            </Box>
+          </Grid>
+        </Grid>
+        
+        <Grid container>
+          <Grid item xs={12}>
+            <Box p={5}>
+              <Link href="cfb/scoreboard" >
+                <a><Typography variant={large ? 'h2' : 'h4'} style={{ textAlign: 'center' }}>Scoreboard</Typography></a>
+              </Link>
+            </Box>
+          </Grid>
           <Grid item xs={12}>
             <Box p={5}>
               <Typography variant={large ? 'h2' : 'h4'} style={{ textAlign: 'center' }}>Game on Paper</Typography>

@@ -230,34 +230,30 @@ def get_cfb_scoreboard(request: Request,
                         week:Optional[str] = Query(None)) -> Optional[None]:
 
     headers = {"accept": "application/json"}
-    # gameId = request.get_json(force=True)['gameId']
     processed_data = ScheduleProcess(dates = dates, week = week)
-    pbp = processed_data.cfb_schedule()
-    tmp_json = pbp
-    
+    schedule = processed_data.cfb_schedule()
+    tmp_json = schedule
     return tmp_json
 
 
 @app.get("/mbb/scoreboard")
-def get_mbb_scoreboard(request: Request) -> Optional[None]:
+def get_mbb_scoreboard(request: Request,
+                        dates:Optional[str] = Query(None)) -> Optional[None]:
 
     headers = {"accept": "application/json"}
-    # gameId = request.get_json(force=True)['gameId']
-    processed_data = ScheduleProcess()
-    pbp = processed_data.mbb_schedule()
-    tmp_json = pbp
-    
+    processed_data = ScheduleProcess(dates = dates)
+    schedule = processed_data.mbb_schedule()
+    tmp_json = schedule
     return tmp_json
 
 @app.get("/nba/scoreboard")
-def get_nba_scoreboard(request: Request ) -> Optional[None]:
+def get_nba_scoreboard(request: Request,
+                        dates:Optional[str] = Query(None)) -> Optional[None]:
 
     headers = {"accept": "application/json"}
-    # gameId = request.get_json(force=True)['gameId']
-    processed_data = ScheduleProcess()
-    pbp = processed_data.nba_schedule()
-    tmp_json = pbp
-    
+    processed_data = ScheduleProcess(dates = dates)
+    schedule = processed_data.nba_schedule()
+    tmp_json = schedule
     return tmp_json
 
 if __name__ == "__main__":
