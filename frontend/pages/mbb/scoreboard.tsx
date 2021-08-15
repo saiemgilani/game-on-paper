@@ -12,7 +12,6 @@ import { Grid, Typography } from '@material-ui/core'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import Box from '@material-ui/core/Box'
 import Head from 'next/head'
-import styles from '../../styles/Shared.module.css'
 import { NAME, NAME_AND_DOMAIN } from '../../types/constants'
 import { ScoreCard } from "../../components/ScoreCard";
 import { useTable } from 'react-table'
@@ -28,7 +27,7 @@ import SeasonSelectorCFB from '../../components/SeasonSelectorCFB';
 
 const useStyles = makeStyles((theme) => ({
   card: {
-    width: 400,
+    width: 300,
     [theme.breakpoints.down('md')]: {
       width: 300,
     },
@@ -39,20 +38,34 @@ const useStyles = makeStyles((theme) => ({
       width: 300,
     },
     [theme.breakpoints.up('lg')]: {
-      width: 200,
+      width: 400,
     },
     [theme.breakpoints.up('xl')]: {
-      width: 200,
+      width: 400,
     },
     height: 200,
     margin: 10,
     position: 'relative',
     cursor: 'pointer',
-    backgroundColor: theme.palette.primary.light,
+    backgroundColor: '#ffffff',
     color: theme.palette.text.secondary,
   },
   media: {
     height: 35,
+  },
+  hscore:{
+    right: 5,
+    top: 58,
+    padding: 5,
+    fontSize: '1.1rem',
+    position: 'absolute',
+  },
+  ascore:{
+    right: 5,
+    top: 18,
+    padding: 5,
+    fontSize: '1.1rem',
+    position: 'absolute',
   },
   actions: {
     right: 5,
@@ -84,16 +97,16 @@ export default function LandingPage() {
           />
         </Head>
         <Grid container>
-          <Grid item xs={12} className={styles.headings}>
+          <Grid item xs={12}>
             <Box p={5}>
-              <Typography variant={large ? 'h4' : 'h6'}>
+              <Typography variant={large ? 'h4' : 'h6'} style={{ textAlign: 'center' }}>
                 Men's College Basketball Scoreboard
               </Typography>
             </Box>
           </Grid>
         </Grid>
-        <div className={classNames(styles.main, styles.mainRaised)}>
-          <div className={styles.headings}>
+        <div>
+          <div>
             <SeasonSelectorCFB
                 season={season}
                 setSeason={setSeason}
@@ -101,38 +114,44 @@ export default function LandingPage() {
           </div>
         </div>
         <div>
+        <Grid container direction={"row"} justifyContent={'space-between'}>
         {data.map((d) =>(
-            <Link href={`/cfb/game/${d.id}`}>
-                <Card className={classes.card} elevation={3} style={{}}>
-                    <CardContent>
-                    <Typography variant="body1" color="textPrimary" component="p">
-                        {<Image loader={myLoader} src={d['away.id']} width={30} height={30} />} {d['away.location']} 
-                    </Typography>
-                    <Typography variant="body1" color="textPrimary" component="p">
-                        {<Image loader={myLoader} src={d['home.id']} width={30} height={30} />} {d['home.location']}
-                    </Typography>
-                    <Box pt={3}>
-                        <Button size="small" variant="text" className={classes.actions}>
-                        Boxscore <ChevronRight  />
-                        </Button>
-                    </Box>
-                    </CardContent>
-                </Card>
-            </Link>
+            <Grid item xs={6} md = {4} lg={4} key={d}>
+              <Link href={`/cfb/game/${d.id}`}>
+                  <Card className={classes.card} elevation={3} style={{}}>
+                      <CardContent>
+                      <Typography variant={large ? 'h6' : 'h6'} color="textPrimary">{<Image loader={myLoader} src={d['away.id']} width={30} height={30}  alt={d['away.location']}/>} {d['away.location']} 
+                          <Button size="small" variant="text" className={classes.hscore}>
+                          {d['competitors'][1]['score']}
+                          </Button>
+                      </Typography>
+                      <Typography variant={large ? 'h6' : 'h6'} color="textPrimary">{<Image loader={myLoader} src={d['home.id']} width={30} height={30}  alt={d['home.location']}/>} {d['home.location']} 
+                          <Button size="small" variant="text" className={classes.ascore}>
+                          {d['competitors'][0]['score']}
+                          </Button>
+                      </Typography>
+                      <Box pt={3}>
+                          <Button size="small" variant="text" className={classes.actions}>
+                          Boxscore <ChevronRight  />
+                          </Button>
+                      </Box>
+                      </CardContent>
+                  </Card>
+              </Link>
+            </Grid>
         ))}
+        </Grid>
         </div>
         <div style={{ textAlign: 'center' }}>
           <div>
             <p>
-            <Link href="/cfb">
+            <Link href="/mbb">
                 <a>Back</a>
             </Link>
             </p>
           </div>
         </div>
-        <Footer />
 
       </>
     );
   }
-

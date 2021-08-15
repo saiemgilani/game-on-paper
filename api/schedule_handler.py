@@ -144,12 +144,6 @@ class ScheduleProcess(object):
 
             events = events_txt['events']
             for event in events:
-                bad_keys = ['linescores', 'statistics', 'leaders',  'records']
-                for k in bad_keys:
-                    if k in event['competitions'][0]['competitors'][0].keys():
-                        del event['competitions'][0]['competitors'][0][k]
-                    if k in event['competitions'][0]['competitors'][1].keys():
-                        del event['competitions'][0]['competitors'][1][k]
                 if 'links' in event['competitions'][0]['competitors'][0]['team'].keys():
                     del event['competitions'][0]['competitors'][0]['team']['links']
                 if 'links' in event['competitions'][0]['competitors'][1]['team'].keys():
@@ -163,7 +157,7 @@ class ScheduleProcess(object):
                 else: 
                     event['competitions'][0]['home'] = event['competitions'][0]['competitors'][1]['team']
 
-                del_keys = ['competitors', 'broadcasts','geoBroadcasts', 'headlines']
+                del_keys = ['broadcasts','geoBroadcasts', 'headlines']
                 for k in del_keys:
                     if k in event['competitions'][0].keys():
                         del event['competitions'][0][k]

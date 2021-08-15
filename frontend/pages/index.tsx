@@ -33,7 +33,7 @@ export default function LandingPage(props) {
         <Grid container>
           <Grid item xs={12}>
             <Box p={5}>
-              <Typography variant={large ? 'h2' : 'h4'}>Game on Paper</Typography>
+              <Typography variant={large ? 'h2' : 'h4'} style={{ textAlign: 'center' }}>Game on Paper</Typography>
             </Box>
           </Grid>
         </Grid>

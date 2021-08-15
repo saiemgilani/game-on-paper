@@ -117,16 +117,16 @@ export default function LandingPage() {
         
         <Grid container direction={"row"} justifyContent={'space-between'}>
         {data.map((d) =>(
-            <Grid item xs={6} md = {4} lg={4}>
+            <Grid item xs={6} md = {4} lg={4} key={d}>
               <Link href={`/cfb/game/${d.id}`}>
                   <Card className={classes.card} elevation={3} style={{}}>
                       <CardContent>
-                      <Typography variant={large ? 'h6' : 'h6'} color="textPrimary">{<Image loader={myLoader} src={d['away.id']} width={30} height={30} />} {d['away.location']} 
+                      <Typography variant={large ? 'h6' : 'h6'} color="textPrimary">{<Image loader={myLoader} src={d['away.id']} width={30} height={30}  alt={d['away.location']}/>} {d['away.location']} 
                           <Button size="small" variant="text" className={classes.hscore}>
                           {d['competitors'][1]['score']}
                           </Button>
                       </Typography>
-                      <Typography variant={large ? 'h6' : 'h6'} color="textPrimary">{<Image loader={myLoader} src={d['home.id']} width={30} height={30} />} {d['home.location']} 
+                      <Typography variant={large ? 'h6' : 'h6'} color="textPrimary">{<Image loader={myLoader} src={d['home.id']} width={30} height={30}  alt={d['home.location']}/>} {d['home.location']} 
                           <Button size="small" variant="text" className={classes.ascore}>
                           {d['competitors'][0]['score']}
                           </Button>

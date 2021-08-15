@@ -1,7 +1,5 @@
 import React from "react";
 // nodejs library that concatenates classes
-import classNames from "classnames";
-import { makeStyles } from "@material-ui/core/styles";
 import Link from 'next/link'
 import useRequest from '../../libs/useRequest'
 // core components

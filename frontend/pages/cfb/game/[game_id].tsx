@@ -49,12 +49,11 @@ export default function CFBGamePage() {
         <Grid container>
           <Grid item xs={12}>
             <Box p={5}>
-              <Typography variant={large ? 'h1' : 'h4'}>Game on Paper</Typography>
+              <Typography variant={large ? 'h4' : 'h4'} style={{ textAlign: 'center' }}>Game on Paper</Typography>
             </Box>
           </Grid>
         </Grid>
         <div style={{ textAlign: 'center' }}>
-          <h1>Trending Projects</h1>
           <TeamBoxScore
           data={data}
           columns={columns}

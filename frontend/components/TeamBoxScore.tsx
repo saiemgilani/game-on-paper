@@ -1,9 +1,10 @@
 
 import { useTable } from 'react-table'
+import React, { FC, ReactElement } from 'react'
 
 type TeamBoxScoreProps = {
-  columns: columnData[],
-  data: Data[]
+  columns: any[],
+  data: any[]
 }
 export const TeamBoxScore: FC<TeamBoxScoreProps> = ({ columns, data }): ReactElement => {
     const {
@@ -20,11 +21,11 @@ export const TeamBoxScore: FC<TeamBoxScoreProps> = ({ columns, data }): ReactEle
                     marginLeft: 'auto',
                     marginRight: 'auto'}}>
             <thead>
-            {headerGroups.map(headerGroup => (
-                <tr {...headerGroup.getHeaderGroupProps()}>
-                {headerGroup.headers.map(column => (
+            {headerGroups.map((headerGroup) => (
+                <tr key={headerGroup.getHeaderGroupProps()}>
+                {headerGroup.headers.map((column) => (
                     <th
-                    {...column.getHeaderProps()}
+                    key={column.getHeaderProps()}
                     style={{
                         background: 'aliceblue',
                         color: 'black',
@@ -38,14 +39,14 @@ export const TeamBoxScore: FC<TeamBoxScoreProps> = ({ columns, data }): ReactEle
             ))}
             </thead>
             <tbody {...getTableBodyProps()}>
-            {rows.map(row => {
+            {rows.map((row) => {
                 prepareRow(row)
                 return (
-                <tr {...row.getRowProps()}>
-                    {row.cells.map(cell => {
+                <tr key={row.getRowProps()}>
+                    {row.cells.map((cell) => {
                     return (
                         <td
-                        {...cell.getCellProps()}
+                        key={cell.getCellProps()}
                         style={{
                             padding: '10px',
                             border: 'solid 1px gray',
