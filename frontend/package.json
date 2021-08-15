@@ -8,7 +8,9 @@
     "start": "next start"
   },
   "dependencies": {
+    "axios": "^0.21.1",
     "bootstrap": "5.0.2",
+    "luxon": "^2.0.2",
     "next": "^11.0.0",
     "react": "17.0.2",
     "react-bootstrap": "^2.0.0-beta.4",

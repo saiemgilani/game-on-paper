@@ -8,6 +8,12 @@ import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import SeasonSelect from '../components/SeasonSelect';
+import dynamic from 'next/dynamic';
+const Scoreboard = dynamic(
+  () => import('../components/Scoreboard'),
+  { loading: () => <p>...</p> }
+)
+import axios from 'axios';
 
 export default class Home extends React.Component {
 
@@ -21,6 +27,56 @@ export default class Home extends React.Component {
     this.handleIDSubmit = this.handleIDSubmit.bind(this);
   }
 
+  componentDidMount() {
+    this.handleGameRetrieval(this.state.season, this.state.weekComposite.split(";")[0], this.state.weekComposite.split(";")[1]).then(data => {
+      this.setState({
+        games: data
+      })
+    })
+  }
+
+  async handleGameRetrieval(season, seasonType, week) {
+    try {
+      const baseUrl = 'https://cdn.espn.com/core/college-football/schedule';
+
+        const params = {
+            year: season,
+            week: week > 0 ? parseInt(week) : 1,
+            group: 80,
+            seasontype: seasonType || 2,
+            xhr: 1,
+            render: 'false',
+            userab: 18
+        }
+
+        console.log("making request to espn with params: " + JSON.stringify(params))
+
+        const res = await axios.get(baseUrl, {
+            params
+        });
+        let espnContent = res.data;
+        if (espnContent == null) {
+            throw Error(`Data not available for ESPN's schedule endpoint.`)
+        }
+
+        if (typeof espnContent == 'str' && espnContent.toLocaleLowerCase().includes("<html>")) {
+            throw Error("Data returned from ESPN was HTML file, not valid JSON.")
+        }
+
+        var result = []
+        // console.log(espnContent)
+        Object.entries(espnContent.content.schedule).forEach(([date, schedule]) => {
+            if (schedule != null && schedule.games != null) {
+                result = result.concat(schedule.games)
+            }
+        })
+        return result
+    } catch(err) {
+      console.error(err)
+    }
+    return []
+  }
+
   handleIDSubmit(e) {
     e.preventDefault()
     let gameId = e.target[0].value;
@@ -32,13 +88,19 @@ export default class Home extends React.Component {
     this.setState({
       season: szn,
       weekComposite: `${sznType};${wk}`
-    }, () => {
+    }, async () => {
       console.log(`${this.state.season}, Week Composite ${this.state.weekComposite}`)
-      window.location.href = `https://gameonpaper.com/cfb/year/${this.state.season}/type/${sznType}/week/${wk}`
+      let gameData = await this.handleGameRetrieval(this.state.season, this.state.weekComposite.split(";")[0], this.state.weekComposite.split(";")[1])
+      console.log(`Found ${gameData.length} games to update`)
+      this.setState({
+        games: gameData
+      })
+      // // window.location.href = `https://gameonpaper.com/cfb/year/${this.state.season}/type/${sznType}/week/${wk}`
     })
   }
 
   render() {
+    console.log("Track Home render() method");
     return (
       <Container>
         <Head>
@@ -66,6 +128,10 @@ export default class Home extends React.Component {
               <h3 className="text-center"> -- OR -- </h3>
           </Row>
           <SeasonSelect season={this.state.season} week={this.state.weekComposite} callback={this.handleSeasonSelectChange}/>
+          <Row>
+              <hr className="mb-3"/>
+          </Row>
+          <Scoreboard games={this.state.games} />
         </main>
   
         <footer>
