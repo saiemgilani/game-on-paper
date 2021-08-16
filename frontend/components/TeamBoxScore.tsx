@@ -18,8 +18,10 @@ export const TeamBoxScore: FC<TeamBoxScoreProps> = ({ columns, data }): ReactEle
     <div>
         <table {...getTableProps()} 
             style={{border: 'solid 1px black', 
+                    background: '#F2F2F2',
                     marginLeft: 'auto',
-                    marginRight: 'auto'}}>
+                    marginRight: 'auto',
+                    padding: '3px',}}>
             <thead>
             {headerGroups.map((headerGroup) => (
                 <tr key={headerGroup.getHeaderGroupProps()}>
@@ -27,9 +29,10 @@ export const TeamBoxScore: FC<TeamBoxScoreProps> = ({ columns, data }): ReactEle
                     <th
                     key={column.getHeaderProps()}
                     style={{
-                        background: 'aliceblue',
+                        background: '#F2F2F2',
                         color: 'black',
                         fontWeight: 'bold',
+                        padding: '3px',
                     }}
                     >
                     {column.render('Header')}

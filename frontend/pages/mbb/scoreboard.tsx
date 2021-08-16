@@ -24,13 +24,13 @@ import SeasonSelectorCFB from '../../components/SeasonSelectorCFB';
 const useStyles = makeStyles((theme) => ({
   card: {
     width: 300,
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('xs')]: {
       width: 300,
     },
     [theme.breakpoints.down('sm')]: {
       width: 300,
     },
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('md')]: {
       width: 300,
     },
     [theme.breakpoints.up('lg')]: {
@@ -73,11 +73,9 @@ const useStyles = makeStyles((theme) => ({
 const myLoader = ({ src }) => {
   return `https://a.espncdn.com/i/teamlogos/ncaa/500/${src}.png`
 }
-export default function LandingPage() {
+export default function MBBScoreboardPage() {
   const large = useMediaQuery('(min-width:700px)')
-  
-  
-  const [season, setSeason] = useState('2020');  
+  const [season, setSeason] = useState('2020');
   const [mbbScoreboardData] = useMBBScoreboardApi({season})
 
   const data = mbbScoreboardData
@@ -112,7 +110,7 @@ export default function LandingPage() {
         <div>
         <Grid container direction={"row"} justifyContent={'space-between'}>
         {data.map((d) =>(
-            <Grid item xs={6} md = {4} lg={4} key={d}>
+            <Grid item xs={12} sm={6} md={4} lg={4} key={d}>
               <Link href={`/mbb/game/${d.id}`}>
                   <Card className={classes.card} elevation={3} style={{}}>
                       <CardContent>
@@ -128,7 +126,7 @@ export default function LandingPage() {
                       </Typography>
                       <Box pt={3}>
                           <Button size="small" variant="text" className={classes.actions}>
-                          Boxscore <ChevronRight  />
+                          Stats <ChevronRight  />
                           </Button>
                       </Box>
                       </CardContent>

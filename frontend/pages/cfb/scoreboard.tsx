@@ -27,13 +27,13 @@ import SeasonSelectorCFB from '../../components/SeasonSelectorCFB';
 const useStyles = makeStyles((theme) => ({
   card: {
     width: 300,
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('xs')]: {
       width: 300,
     },
     [theme.breakpoints.down('sm')]: {
       width: 300,
     },
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('md')]: {
       width: 300,
     },
     [theme.breakpoints.up('lg')]: {
@@ -76,11 +76,10 @@ const useStyles = makeStyles((theme) => ({
 const myLoader = ({ src }) => {
   return `https://a.espncdn.com/i/teamlogos/ncaa/500/${src}.png`
 }
-export default function LandingPage() {
+export default function CFBScoreboardPage() {
   const large = useMediaQuery('(min-width:700px)')
-  
   const seasons = '2020'
-  const [season, setSeason] = useState('2020');  
+  const [season, setSeason] = useState('2020');
   const [cfbScoreboardData] = useCFBScoreboardApi(seasons, 1)
 
   const data = cfbScoreboardData
@@ -113,43 +112,36 @@ export default function LandingPage() {
           </div>
         </div>
         <div>
-        
-        <Grid container direction={"row"} justifyContent={'space-between'}>
-        {data.map((d) =>(
-            <Grid item xs={6} md = {4} lg={4} key={d}>
-              <Link href={`/cfb/game/${d.id}`}>
-                  <Card className={classes.card} elevation={3} style={{}}>
-                      <CardContent>
-                      <Typography variant={large ? 'h6' : 'h6'} color="textPrimary">{<Image loader={myLoader} src={d['away.id']} width={30} height={30}  alt={d['away.location']}/>} {d['away.location']} 
-                          <Button size="small" variant="text" className={classes.hscore}>
-                          {d['competitors'][1]['score']}
-                          </Button>
-                      </Typography>
-                      <Typography variant={large ? 'h6' : 'h6'} color="textPrimary">{<Image loader={myLoader} src={d['home.id']} width={30} height={30}  alt={d['home.location']}/>} {d['home.location']} 
-                          <Button size="small" variant="text" className={classes.ascore}>
-                          {d['competitors'][0]['score']}
-                          </Button>
-                      </Typography>
-                      <Box pt={3}>
-                          <Button size="small" variant="text" className={classes.actions}>
-                          Boxscore <ChevronRight  />
-                          </Button>
-                      </Box>
-                      </CardContent>
-                  </Card>
-              </Link>
-            </Grid>
-        ))}
-        </Grid>
+          <Grid container direction={"row"} justifyContent={'space-between'}>
+          {data.map((d) =>(
+              <Grid item xs={12} sm={6} md={4} lg={4} key={d}>
+                <Link href={`/cfb/game/${d.id}`}>
+                    <Card className={classes.card} elevation={3} style={{}}>
+                        <CardContent>
+                        <Typography variant={large ? 'h6' : 'h6'} color="textPrimary">{<Image loader={myLoader} src={d['away.id']} width={30} height={30}  alt={d['away.location']}/>} {d['away.location']} 
+                            <Button size="small" variant="text" className={classes.hscore}>
+                            {d['competitors'][1]['score']}
+                            </Button>
+                        </Typography>
+                        <Typography variant={large ? 'h6' : 'h6'} color="textPrimary">{<Image loader={myLoader} src={d['home.id']} width={30} height={30}  alt={d['home.location']}/>} {d['home.location']} 
+                            <Button size="small" variant="text" className={classes.ascore}>
+                            {d['competitors'][0]['score']}
+                            </Button>
+                        </Typography>
+                        <Box pt={3}>
+                            <Button size="small" variant="text" className={classes.actions}>
+                            Stats <ChevronRight  />
+                            </Button>
+                        </Box>
+                        </CardContent>
+                    </Card>
+                </Link>
+              </Grid>
+          ))}
+          </Grid>
         </div>
         <div style={{ textAlign: 'center' }}>
-          <div>
-            <p>
-            <Link href="/cfb">
-                <a>Back</a>
-            </Link>
-            </p>
-          </div>
+            <Link href="/cfb">Back</Link>
         </div>
 
       </>

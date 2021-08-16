@@ -7,11 +7,8 @@ import CardContent from '@material-ui/core/CardContent'
 import CardMedia from '@material-ui/core/CardMedia'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
-import { PostData } from '../types/posts'
 import { ScoreData } from '../types/scores'
-import { Box } from '@material-ui/core'
 import Link from 'next/link'
-import ChevronRight from '@material-ui/icons/ChevronRight'
 
 type ScoreCardProps = {
   score: ScoreData
