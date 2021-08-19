@@ -1,20 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const CFBWeekSelector = ({ week, setWeek}) => {
-    const weeks = [
+const CFBWeekSelector = ({ seasonType, week, setWeek}) => {
+    let weeks;
+    weeks = [
     '1','2','3',
     '4','5','6','7',
     '8','9','10','11',
-    '12','13','14','15',
-    '16','17','18']
+    '12','13','14','15','16',
+    'Bowls']
+    const wk = seasonType==='Post'? 'Bowls':week;
   return (
     <form>
       <label htmlFor="weekselector">
         Week{' '}
         <select
           id="weekselector"
-          value={week}
+          value={wk}
           onChange={e => {
             const week = e.target.value;
             setWeek(week);
@@ -32,6 +34,7 @@ const CFBWeekSelector = ({ week, setWeek}) => {
 };
 
 CFBWeekSelector.propTypes = {
+  seasonType: PropTypes.string.isRequired,
   week: PropTypes.string.isRequired,
   setWeek: PropTypes.func.isRequired,
 };

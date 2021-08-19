@@ -2,9 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Link from 'next/link'
-import { useRouteMatch } from 'react-router-dom';
-import useRequest from '../../libs/useRequest'
-import useCFBScoreboardApi from '../../hooks/useCFBScoreboardApi'
+import useNBAScoreboardApi from '../../hooks/useNBAScoreboardApi'
 // core components
 import { Grid, Typography } from '@material-ui/core'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
@@ -14,16 +12,10 @@ import { NAME, NAME_AND_DOMAIN } from '../../types/constants'
 import { ScoreCard } from "../../components/ScoreCard";
 import { useTable } from 'react-table'
 import Button from '@material-ui/core/Button'
-import Card from '@material-ui/core/Card'
-import CardActionArea from '@material-ui/core/CardActionArea'
-import CardActions from '@material-ui/core/CardActions'
-import CardContent from '@material-ui/core/CardContent'
-import CardMedia from '@material-ui/core/CardMedia'
-import ChevronRight from '@material-ui/icons/ChevronRight'
 import Image from 'next/image'
-import CFBSeasonTypeSelector from '../../components/CFBSeasonTypeSelector';
-import CFBWeekSelector from '../../components/CFBWeekSelector';
-import CFBSeasonSelector from '../../components/CFBSeasonSelector';
+import MBBYearSelector from '../../components/MBBYearSelector';
+import MBBMonthSelector from '../../components/MBBMonthSelector';
+import MBBDaySelector from '../../components/MBBDaySelector';
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -51,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.text.secondary,
   },
   media: {
-    height: 30,
+    height: 35,
   },
   hscore:{
     right: 5,
@@ -75,27 +67,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 const myLoader = ({ src }) => {
-  return `https://a.espncdn.com/i/teamlogos/ncaa/500/${src}.png`
+  return `https://a.espncdn.com/i/teamlogos/nba/500/${src}.png`
 }
-export default function CFBScoreboardPage() {
+export default function NBAScoreboardPage() {
   const large = useMediaQuery('(min-width:700px)')
-  const seasons = '2020'
-  const [season, setSeason] = useState('2021');
-  const [week, setWeek] = useState('1');
-  const [seasonType, setSeasonType] = useState('Regular');
-  const [cfbScoreboardData] = useCFBScoreboardApi(season, week, seasonType)
+  const [year, setYear] = useState('2020');
+  const [month, setMonth] = useState('11');
+  const [day, setDay] = useState('');
+  const [nbaScoreboardData] = useNBAScoreboardApi(year, month, day)
 
-  const data = cfbScoreboardData
-  const acc = data.reduce((acc, x) => {
-    console.log(x['status.type.name'] === 'STATUS_CANCELED')
-     if(x['status.type.name'] === 'STATUS_CANCELED' || x['status.type.name'] === 'STATUS_POSTPONED') {return acc}
-     else{
-       acc.push(x)
-       return acc
-    }
-  }, [])
+  const data = nbaScoreboardData
   const classes = useStyles()
-  console.log(acc)
+  console.log(data)
   return (
       <>
         <Head>
@@ -109,49 +92,53 @@ export default function CFBScoreboardPage() {
           <Grid item xs={12}>
             <Box p={5}>
               <Typography variant={large ? 'h4' : 'h6'} style={{ textAlign: 'center' }}>
-                College Football Scoreboard
+                NBA Scoreboard
               </Typography>
             </Box>
           </Grid>
         </Grid>
         <Grid container direction={"row"} alignContent={'center'} justifyContent={'center'} spacing = {1}>
           <Grid item >
-            <CFBSeasonSelector
-                season={season}
-                setSeason={setSeason}/>
+            <MBBYearSelector
+                year={year}
+                setYear={setYear}/>
           </Grid>
           <Grid item >
-            <CFBWeekSelector
-                seasonType={seasonType}
-                week={week}
-                setWeek={setWeek}/>
+            <MBBMonthSelector
+                month={month}
+                setMonth={setMonth}/>
           </Grid>
           <Grid item >
-            <CFBSeasonTypeSelector
-                week={week}
-                seasonType={seasonType}
-                setSeasonType={setSeasonType}/>
+            <MBBDaySelector
+                day={day}
+                month={month}
+                year={year}
+                setDay={setDay}/>
           </Grid>
         </Grid>
         <div>
-          <Grid container direction={"row"} justifyContent={'space-between'}>
-          {acc.map((d, idx) =>(
-            
+        <Grid container direction={"row"} justifyContent={'space-between'}>
+          {data.map((d, idx) =>(
               <Grid item xs={12} sm={6} md={4} lg={4} key={idx}>
-                <ScoreCard 
-                  score={d} 
-                  noMargin={false} 
+                <ScoreCard
+                  score={d}
+                  noMargin={false}
                   loader={myLoader}
-                  sport={'cfb'}/>
+                  sport={'nba'}/>
               </Grid>
           ))}
-          </Grid>
+        </Grid>
         </div>
         <div style={{ textAlign: 'center' }}>
-            <Link href="/cfb">Back</Link>
+          <div>
+            <p>
+            <Link href="/nba">
+                <a>Back</a>
+            </Link>
+            </p>
+          </div>
         </div>
 
       </>
     );
   }
-
