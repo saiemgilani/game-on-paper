@@ -3,23 +3,23 @@ import axios from 'axios';
 
 import {localPyApiOrigin} from '../utils/config';
 
-function useMBBScoreboardApi(dates,week) {
+function useMBBScoreboardApi(year,month,day) {
   const [mbbScoreboardData, setMBBScoreboardData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       const baseUrl = `${localPyApiOrigin}/mbb/scoreboard`;
+      console.log(year+month+day);
       const params = {
-          dates: dates,
-          week: week
+          dates: year+month+day
       }
-      const res = await axios.get(baseUrl,params);
+      const res = await axios.get(baseUrl,{params});
     
       setMBBScoreboardData(res.data);
 
     };
     fetchData();
-  }, []);
+  }, [year,month,day]);
 
   return [mbbScoreboardData];
 }

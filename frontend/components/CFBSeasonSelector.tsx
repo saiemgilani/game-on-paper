@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const SeasonSelectorCFB = ({ season, setSeason}) => {
+const CFBSeasonSelector = ({ season, setSeason}) => {
     const seasons = [
     '2021','2020','2019',
     '2018','2017','2016','2015',
@@ -31,9 +31,9 @@ const SeasonSelectorCFB = ({ season, setSeason}) => {
   );
 };
 
-SeasonSelectorCFB.propTypes = {
+CFBSeasonSelector.propTypes = {
   season: PropTypes.string.isRequired,
   setSeason: PropTypes.func.isRequired,
 };
 
-export default SeasonSelectorCFB;
+export default CFBSeasonSelector;

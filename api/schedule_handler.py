@@ -138,7 +138,7 @@ class ScheduleProcess(object):
         dates = self.dates
         if dates is None:
             dates = ''
-        url = "http://site.api.espn.com/apis/site/v2/sports/basketball/mens-college-basketball/scoreboard?limit=1000&dates={}".format(dates)
+        url = "http://site.api.espn.com/apis/site/v2/sports/basketball/mens-college-basketball/scoreboard?limit=300&dates={}".format(dates)
         resp = self.download(url=url)
         txt = json.loads(resp)['leagues'][0]['calendar']
     #     print(len(txt))

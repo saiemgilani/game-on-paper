@@ -22,7 +22,7 @@ import CardMedia from '@material-ui/core/CardMedia'
 import ChevronRight from '@material-ui/icons/ChevronRight'
 import Image from 'next/image'
 import CFBWeekSelector from '../../components/CFBWeekSelector';
-import SeasonSelectorCFB from '../../components/SeasonSelectorCFB';
+import CFBSeasonSelector from '../../components/CFBSeasonSelector';
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.text.secondary,
   },
   media: {
-    height: 35,
+    height: 30,
   },
   hscore:{
     right: 5,
@@ -79,8 +79,8 @@ const myLoader = ({ src }) => {
 export default function CFBScoreboardPage() {
   const large = useMediaQuery('(min-width:700px)')
   const seasons = '2020'
-  const [season, setSeason] = useState('2020');
-  const [week, setWeek] = useState('1');
+  const [season, setSeason] = useState('2021');
+  const [week, setWeek] = useState('');
   const [cfbScoreboardData] = useCFBScoreboardApi(season, week)
 
   const data = cfbScoreboardData
@@ -104,24 +104,27 @@ export default function CFBScoreboardPage() {
             </Box>
           </Grid>
         </Grid>
-        <Grid container direction={"row"} justifyContent={'space-evenly'}>
-          <Grid item>
-            <SeasonSelectorCFB
+        <Grid container direction={"row"} alignContent={'center'} justifyContent={'center'} spacing = {1}>
+          <Grid item >
+            <CFBSeasonSelector
                 season={season}
                 setSeason={setSeason}/>
           </Grid>
-          <Grid item>
+          <Grid item >
             <CFBWeekSelector
                 week={week}
                 setWeek={setWeek}/>
           </Grid>
-          
         </Grid>
         <div>
           <Grid container direction={"row"} justifyContent={'space-between'}>
           {data.map((d, idx) =>(
               <Grid item xs={12} sm={6} md={4} lg={4} key={idx}>
-                <ScoreCard score={d} noMargin={false} loader={myLoader}/>
+                <ScoreCard 
+                  score={d} 
+                  noMargin={false} 
+                  loader={myLoader}
+                  sport={'cfb'}/>
               </Grid>
           ))}
           </Grid>

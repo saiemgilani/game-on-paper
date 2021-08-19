@@ -19,7 +19,9 @@ import CardContent from '@material-ui/core/CardContent'
 import CardMedia from '@material-ui/core/CardMedia'
 import ChevronRight from '@material-ui/icons/ChevronRight'
 import Image from 'next/image'
-import SeasonSelectorCFB from '../../components/SeasonSelectorCFB';
+import MBBYearSelector from '../../components/MBBYearSelector';
+import MBBMonthSelector from '../../components/MBBMonthSelector';
+import MBBDaySelector from '../../components/MBBDaySelector';
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -75,8 +77,10 @@ const myLoader = ({ src }) => {
 }
 export default function MBBScoreboardPage() {
   const large = useMediaQuery('(min-width:700px)')
-  const [season, setSeason] = useState('2020');
-  const [mbbScoreboardData] = useMBBScoreboardApi({season})
+  const [year, setYear] = useState('2020');
+  const [month, setMonth] = useState('11');
+  const [day, setDay] = useState('');
+  const [mbbScoreboardData] = useMBBScoreboardApi(year, month,day)
 
   const data = mbbScoreboardData
   const classes = useStyles()
@@ -99,42 +103,37 @@ export default function MBBScoreboardPage() {
             </Box>
           </Grid>
         </Grid>
-        <div>
-          <div>
-            <SeasonSelectorCFB
-                season={season}
-                setSeason={setSeason}
-            />
-          </div>
-        </div>
+        <Grid container direction={"row"} alignContent={'center'} justifyContent={'center'} spacing = {1}>
+          <Grid item >
+            <MBBYearSelector
+                year={year}
+                setYear={setYear}/>
+          </Grid>
+          <Grid item >
+            <MBBMonthSelector
+                month={month}
+                setMonth={setMonth}/>
+          </Grid>
+          <Grid item >
+            <MBBDaySelector
+                day={day}
+                month={month}
+                year={year}
+                setDay={setDay}/>
+          </Grid>
+        </Grid>
         <div>
         <Grid container direction={"row"} justifyContent={'space-between'}>
-        {data.map((d) =>(
-            <Grid item xs={12} sm={6} md={4} lg={4} key={d}>
-              <Link href={`/mbb/game/${d.id}`}>
-                  <Card className={classes.card} elevation={3} style={{}}>
-                      <CardContent>
-                      <Typography variant={large ? 'h6' : 'h6'} color="textPrimary">{<Image loader={myLoader} src={d['away.id']} width={30} height={30}  alt={d['away.location']}/>} {d['away.location']} 
-                          <Button size="small" variant="text" className={classes.hscore}>
-                          {d['competitors'][1]['score']}
-                          </Button>
-                      </Typography>
-                      <Typography variant={large ? 'h6' : 'h6'} color="textPrimary">{<Image loader={myLoader} src={d['home.id']} width={30} height={30}  alt={d['home.location']}/>} {d['home.location']} 
-                          <Button size="small" variant="text" className={classes.ascore}>
-                          {d['competitors'][0]['score']}
-                          </Button>
-                      </Typography>
-                      <Box pt={3}>
-                          <Button size="small" variant="text" className={classes.actions}>
-                          Stats <ChevronRight  />
-                          </Button>
-                      </Box>
-                      </CardContent>
-                  </Card>
-              </Link>
-            </Grid>
-        ))}
-        </Grid>
+          {data.map((d, idx) =>(
+              <Grid item xs={12} sm={6} md={4} lg={4} key={idx}>
+                <ScoreCard
+                  score={d}
+                  noMargin={false}
+                  loader={myLoader}
+                  sport={'mbb'}/>
+              </Grid>
+          ))}
+          </Grid>
         </div>
         <div style={{ textAlign: 'center' }}>
           <div>
