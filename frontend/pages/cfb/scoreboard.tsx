@@ -1,9 +1,8 @@
 import React from "react";
 import { useEffect, useState } from "react";
-// nodejs library that concatenates classes
-import classNames from "classnames";
 import { makeStyles } from "@material-ui/core/styles";
 import Link from 'next/link'
+import { useRouteMatch } from 'react-router-dom';
 import useRequest from '../../libs/useRequest'
 import useCFBScoreboardApi from '../../hooks/useCFBScoreboardApi'
 // core components
@@ -22,6 +21,7 @@ import CardContent from '@material-ui/core/CardContent'
 import CardMedia from '@material-ui/core/CardMedia'
 import ChevronRight from '@material-ui/icons/ChevronRight'
 import Image from 'next/image'
+import CFBWeekSelector from '../../components/CFBWeekSelector';
 import SeasonSelectorCFB from '../../components/SeasonSelectorCFB';
 
 const useStyles = makeStyles((theme) => ({
@@ -80,7 +80,8 @@ export default function CFBScoreboardPage() {
   const large = useMediaQuery('(min-width:700px)')
   const seasons = '2020'
   const [season, setSeason] = useState('2020');
-  const [cfbScoreboardData] = useCFBScoreboardApi(seasons, 1)
+  const [week, setWeek] = useState('1');
+  const [cfbScoreboardData] = useCFBScoreboardApi(season, week)
 
   const data = cfbScoreboardData
   const classes = useStyles()
@@ -103,39 +104,24 @@ export default function CFBScoreboardPage() {
             </Box>
           </Grid>
         </Grid>
-        <div>
-          <div>
+        <Grid container direction={"row"} justifyContent={'space-evenly'}>
+          <Grid item>
             <SeasonSelectorCFB
                 season={season}
-                setSeason={setSeason}
-            />
-          </div>
-        </div>
+                setSeason={setSeason}/>
+          </Grid>
+          <Grid item>
+            <CFBWeekSelector
+                week={week}
+                setWeek={setWeek}/>
+          </Grid>
+          
+        </Grid>
         <div>
           <Grid container direction={"row"} justifyContent={'space-between'}>
-          {data.map((d) =>(
-              <Grid item xs={12} sm={6} md={4} lg={4} key={d}>
-                <Link href={`/cfb/game/${d.id}`}>
-                    <Card className={classes.card} elevation={3} style={{}}>
-                        <CardContent>
-                        <Typography variant={large ? 'h6' : 'h6'} color="textPrimary">{<Image loader={myLoader} src={d['away.id']} width={30} height={30}  alt={d['away.location']}/>} {d['away.location']} 
-                            <Button size="small" variant="text" className={classes.hscore}>
-                            {d['competitors'][1]['score']}
-                            </Button>
-                        </Typography>
-                        <Typography variant={large ? 'h6' : 'h6'} color="textPrimary">{<Image loader={myLoader} src={d['home.id']} width={30} height={30}  alt={d['home.location']}/>} {d['home.location']} 
-                            <Button size="small" variant="text" className={classes.ascore}>
-                            {d['competitors'][0]['score']}
-                            </Button>
-                        </Typography>
-                        <Box pt={3}>
-                            <Button size="small" variant="text" className={classes.actions}>
-                            Stats <ChevronRight  />
-                            </Button>
-                        </Box>
-                        </CardContent>
-                    </Card>
-                </Link>
+          {data.map((d, idx) =>(
+              <Grid item xs={12} sm={6} md={4} lg={4} key={idx}>
+                <ScoreCard score={d} noMargin={false} loader={myLoader}/>
               </Grid>
           ))}
           </Grid>

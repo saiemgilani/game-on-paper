@@ -3,14 +3,14 @@ import axios from 'axios';
 
 import {localPyApiOrigin} from '../utils/config';
 
-function useCFBScoreboardApi(dates,week) {
+function useCFBScoreboardApi(season,week) {
   const [cfbScoreboardData, setCFBScoreboardData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       const baseUrl = `${localPyApiOrigin}/cfb/scoreboard`;
       const params = {
-          dates: dates,
+          dates: season,
           week: week
       }
       const res = await axios.get(baseUrl,{params});
@@ -19,7 +19,7 @@ function useCFBScoreboardApi(dates,week) {
 
     };
     fetchData();
-  }, []);
+  }, [season,week]);
 
   return [cfbScoreboardData];
 }

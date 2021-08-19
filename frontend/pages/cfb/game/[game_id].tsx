@@ -27,14 +27,14 @@ const renameKeys = (keysMap, obj) =>
 export default function CFBGamePage() {
   const gameId =
     typeof window !== 'undefined' ? window.location.pathname.slice(1) : ''
-    
-  const [cfbGameData,cfbGameCols] = useCFBGameApi(gameId)
+  const [cfbGameData,cfbGameCols,cfbPlayerData] = useCFBGameApi(gameId)
 
   const large = useMediaQuery('(min-width:700px)')
   const data = cfbGameData
- 
+  const playerData = cfbPlayerData
+  console.log(playerData)
   const columns = cfbGameCols
-  
+
   return (
       <>
         <Head>

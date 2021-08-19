@@ -7,66 +7,90 @@ import CardContent from '@material-ui/core/CardContent'
 import CardMedia from '@material-ui/core/CardMedia'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
+import ChevronRight from '@material-ui/icons/ChevronRight'
+import Box from '@material-ui/core/Box'
+import Image from 'next/image'
 import { ScoreData } from '../types/scores'
 import Link from 'next/link'
 
 type ScoreCardProps = {
   score: ScoreData
+  loader: any
   noMargin?: boolean
 }
 
 const useStyles = makeStyles((theme) => ({
   card: {
-    width: 400,
-    [theme.breakpoints.down('md')]: {
-      width: 600,
+    width: 300,
+    [theme.breakpoints.down('xs')]: {
+      width: 300,
     },
     [theme.breakpoints.down('sm')]: {
       width: 300,
     },
-    [theme.breakpoints.down('xs')]: {
-      width: 400,
+    [theme.breakpoints.down('md')]: {
+      width: 300,
     },
     [theme.breakpoints.up('lg')]: {
-      width: 410,
+      width: 400,
     },
     [theme.breakpoints.up('xl')]: {
-      width: 450,
+      width: 400,
     },
-    height: 430,
-    margin: 'auto',
+    height: 200,
+    margin: 10,
     position: 'relative',
     cursor: 'pointer',
-    backgroundColor: theme.palette.primary.light,
+    backgroundColor: '#ffffff',
     color: theme.palette.text.secondary,
   },
   media: {
     height: 35,
   },
+  hscore:{
+    right: 5,
+    top: 58,
+    padding: 5,
+    fontSize: '1.1rem',
+    position: 'absolute',
+  },
+  ascore:{
+    right: 5,
+    top: 18,
+    padding: 5,
+    fontSize: '1.1rem',
+    position: 'absolute',
+  },
   actions: {
-    right: 20,
-    bottom: 10,
-    padding: 10,
+    right: 5,
+    bottom: 5,
+    padding: 5,
     position: 'absolute',
   },
 }))
-export const ScoreCard: FC<ScoreCardProps> = ({ score, noMargin }): ReactElement => {
+export const ScoreCard: FC<ScoreCardProps> = ({ score, loader, noMargin }): ReactElement => {
   const classes = useStyles()
 
   return (
     <Link href={`/cfb/game/${score.id}`}>
-      <Card className={classes.card} elevation={3} style={noMargin ? { margin: 0 } : {}}>
-        <CardActionArea>
-          <CardMedia className={classes.media} image={`${score}`} title={score.title} />
-        </CardActionArea>
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
-            {score.title}
+      <Card className={classes.card} elevation={3} style={{}}>
+          <CardContent>
+          <Typography variant={'h6'} color="textPrimary">{<Image loader={loader} src={score['away.id']} width={30} height={30}  alt={score['away.location']}/>} {score['away.location']} 
+              <Button size="small" variant="text" className={classes.hscore}>
+              {score['competitors'][1]['score']}
+              </Button>
           </Typography>
-          <Typography variant="body2" color="textPrimary" component="p">
-            {score.description}
+          <Typography variant={'h6'} color="textPrimary">{<Image loader={loader} src={score['home.id']} width={30} height={30}  alt={score['home.location']}/>} {score['home.location']} 
+              <Button size="small" variant="text" className={classes.ascore}>
+              {score['competitors'][0]['score']}
+              </Button>
           </Typography>
-        </CardContent>
+          <Box pt={3}>
+              <Button size="small" variant="text" className={classes.actions}>
+              Stats <ChevronRight  />
+              </Button>
+          </Box>
+          </CardContent>
       </Card>
     </Link>
   )
