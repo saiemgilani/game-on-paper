@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 const MBBDaySelector = ({year, month, day, setDay}) => {
     let days;
+    console.log(month)
     switch(month) {
         case '01':
         case '03':
@@ -19,6 +20,7 @@ const MBBDaySelector = ({year, month, day, setDay}) => {
                     '20','21','22','23',
                     '24','25','26','27',
                     '28','29','30','31']
+            break;
         case '04':
         case '06':
         case '09':
@@ -30,11 +32,10 @@ const MBBDaySelector = ({year, month, day, setDay}) => {
                     '16','17','18','19',
                     '20','21','22','23',
                     '24','25','26','27',
-                    '28','29','30','31']
+                    '28','29','30']
             break;
         case '02':
-            if (((year % 4 == 0) && !(year % 100 == 0))
-                || (year % 400 == 0))
+            if (((year % 4 == 0) && !(year % 100 == 0))|| (year % 400 == 0))
                 days = ['01','02','03',
                         '04','05','06','07',
                         '08','09','10','11',
