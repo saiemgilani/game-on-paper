@@ -80,8 +80,7 @@ export default function NBAScoreboardPage() {
 
   const data = nbaScoreboardData
   const acc = data.reduce((acc, x) => {
-    console.log(x['status.type.name'] === 'STATUS_CANCELED')
-     if(x['status.type.name'] === 'STATUS_CANCELED' || x['status.type.name'] === 'STATUS_POSTPONED') {
+    if(x['status.type.name'] === 'STATUS_CANCELED' || x['status.type.name'] === 'STATUS_POSTPONED') {
       return acc
     } else{
       acc.push(x)
@@ -124,11 +123,6 @@ export default function NBAScoreboardPage() {
                 month={month}
                 year={year}
                 setDay={setDay}/>
-          </Grid>
-          <Grid item >
-            <SeasonTypeSelector
-                seasonType={seasonType}
-                setSeasonType={setSeasonType}/>
           </Grid>
         </Grid>
         <div>

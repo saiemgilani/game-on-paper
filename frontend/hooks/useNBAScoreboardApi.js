@@ -9,11 +9,9 @@ function useNBAScoreboardApi(year, month, day, seasonType) {
   useEffect(() => {
     const fetchData = async () => {
       const baseUrl = `${localPyApiOrigin}/nba/scoreboard`;
-      let stype = seasonType === 'Regular' ? '2' : '3';
       console.log(year+month+day);
       const params = {
-          dates: year+month+day,
-          seasontype: stype
+          dates: year+month+day
       }
       const res = await axios.get(baseUrl,{params});
 
