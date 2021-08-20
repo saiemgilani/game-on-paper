@@ -87,14 +87,15 @@ class ScheduleProcess(object):
 
 
     def mbb_schedule(self):
-        dates = self.dates
-        if dates is None:
+        if self.dates is None:
             dates = ''
+        else:
+            dates = '&dates=' + self.dates
         if self.season_type is None:
             season_type = ''
         else:
-            season_type = 'seasontype=' + self.season_type
-        url = "http://site.api.espn.com/apis/site/v2/sports/basketball/mens-college-basketball/scoreboard?limit=300&dates={}&{}".format(dates,season_type)
+            season_type = '&seasontype=' + self.season_type
+        url = "http://site.api.espn.com/apis/site/v2/sports/basketball/mens-college-basketball/scoreboard?limit=300{}{}".format(dates,season_type)
         resp = self.download(url=url)
         txt = json.loads(resp)['leagues'][0]['calendar']
     #     print(len(txt))

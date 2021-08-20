@@ -1,16 +1,30 @@
 import React, { ReactElement, useContext } from 'react'
-import Toolbar from '@material-ui/core/Toolbar'
+import AppBar from '@material-ui/core/AppBar';
+import Box from "@material-ui/core/Box";
+import Container from "@material-ui/core/Container";
+import Divider from "@material-ui/core/Divider";
+import Hidden from "@material-ui/core/Hidden";
+import IconButton from "@material-ui/core/IconButton";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import Menu from "@material-ui/core/Menu";
+import Toolbar from "@material-ui/core/Toolbar";
+// @material-ui/icons components
+import Clear from "@material-ui/icons/Clear";
+import Favorite from "@material-ui/icons/Favorite";
+import MenuIcon from "@material-ui/icons/Menu";
+import Settings from "@material-ui/icons/Settings";
+import VolumeUp from "@material-ui/icons/VolumeUp";
+import Typography from '@material-ui/core/Typography';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import useScrollTrigger from '@material-ui/core/useScrollTrigger';
+import Button from '@material-ui/core/Button'
 import SunIcon from '@material-ui/icons/WbSunnyOutlined'
 import ViewHeadlineIcon from '@material-ui/icons/ViewHeadline'
 import MoonIcon from '@material-ui/icons/Brightness2Outlined'
 import CodeIcon from '@material-ui/icons/Code'
-import IconButton from "@material-ui/core/IconButton";
-import Typography from '@material-ui/core/Typography'
-import Button from '@material-ui/core/Button'
 import SportsFootballIcon from '@material-ui/icons/SportsFootball';
 import SportsBasketballIcon from '@material-ui/icons/SportsBasketball';
-import AppBar from '@material-ui/core/AppBar'
-import useScrollTrigger from '@material-ui/core/useScrollTrigger'
 import { makeStyles } from '@material-ui/core/styles'
 import { ToggleThemeContext } from '../theme'
 import Link from 'next/link'
@@ -19,6 +33,15 @@ import { Tooltip } from '@material-ui/core'
 import { NAME_AND_DOMAIN } from '../types/constants'
 
 import logo from '../public/logo/logo.png'
+
+interface Props {
+  /**
+   * Injected by the documentation to work in an iframe.
+   * You won't need it on your project.
+   */
+  window?: () => Window;
+  children: ReactElement;
+}
 
 const useStyles = makeStyles((theme) =>({
   appBar: {

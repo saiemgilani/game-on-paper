@@ -15,9 +15,7 @@ import { NAME, NAME_AND_DOMAIN } from '../../types/constants'
 
 
 export default function LandingPage() {
-  const { data } = useRequest({
-    url: '/api/sports'
-  })
+
   const large = useMediaQuery('(min-width:700px)')
 
   return (

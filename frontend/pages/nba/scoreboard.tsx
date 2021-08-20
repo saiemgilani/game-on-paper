@@ -13,9 +13,10 @@ import { ScoreCard } from "../../components/ScoreCard";
 import { useTable } from 'react-table'
 import Button from '@material-ui/core/Button'
 import Image from 'next/image'
-import MBBYearSelector from '../../components/MBBYearSelector';
-import MBBMonthSelector from '../../components/MBBMonthSelector';
-import MBBDaySelector from '../../components/MBBDaySelector';
+import YearSelector from '../../components/YearSelector';
+import MonthSelector from '../../components/MonthSelector';
+import DaySelector from '../../components/DaySelector';
+import SeasonTypeSelector from '../../components/SeasonTypeSelector';
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -74,11 +75,20 @@ export default function NBAScoreboardPage() {
   const [year, setYear] = useState('2020');
   const [month, setMonth] = useState('11');
   const [day, setDay] = useState('');
-  const [nbaScoreboardData] = useNBAScoreboardApi(year, month, day)
+  const [seasonType, setSeasonType] = useState('Regular');
+  const [nbaScoreboardData] = useNBAScoreboardApi(year, month, day, seasonType)
 
   const data = nbaScoreboardData
+  const acc = data.reduce((acc, x) => {
+    console.log(x['status.type.name'] === 'STATUS_CANCELED')
+     if(x['status.type.name'] === 'STATUS_CANCELED' || x['status.type.name'] === 'STATUS_POSTPONED') {
+      return acc
+    } else{
+      acc.push(x)
+      return acc
+    }
+  }, [])
   const classes = useStyles()
-  console.log(data)
   return (
       <>
         <Head>
@@ -99,26 +109,31 @@ export default function NBAScoreboardPage() {
         </Grid>
         <Grid container direction={"row"} alignContent={'center'} justifyContent={'center'} spacing = {1}>
           <Grid item >
-            <MBBYearSelector
+            <YearSelector
                 year={year}
                 setYear={setYear}/>
           </Grid>
           <Grid item >
-            <MBBMonthSelector
+            <MonthSelector
                 month={month}
                 setMonth={setMonth}/>
           </Grid>
           <Grid item >
-            <MBBDaySelector
+            <DaySelector
                 day={day}
                 month={month}
                 year={year}
                 setDay={setDay}/>
           </Grid>
+          <Grid item >
+            <SeasonTypeSelector
+                seasonType={seasonType}
+                setSeasonType={setSeasonType}/>
+          </Grid>
         </Grid>
         <div>
         <Grid container direction={"row"} justifyContent={'space-between'}>
-          {data.map((d, idx) =>(
+          {acc.map((d, idx) =>(
               <Grid item xs={12} sm={6} md={4} lg={4} key={idx}>
                 <ScoreCard
                   score={d}

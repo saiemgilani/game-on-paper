@@ -253,7 +253,7 @@ def get_mbb_scoreboard(request: Request,
                         seasontype:Optional[str] = Query(None)) -> Optional[None]:
 
     headers = {"accept": "application/json"}
-    processed_data = ScheduleProcess(dates = dates, season_type = seasontype)
+    processed_data = ScheduleProcess(dates = dates)
     schedule = processed_data.mbb_schedule()
     tmp_json = schedule
     return tmp_json

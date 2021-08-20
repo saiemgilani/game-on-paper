@@ -17,16 +17,13 @@ import axios from 'axios';
 
 
 export default function NBAGamePage() {
-  const gameId =
-    typeof window !== 'undefined' ? window.location.pathname.slice(1) : ''
-    
+  const gameId = typeof window !== 'undefined' ? window.location.pathname.slice(1) : ''
   const [nbaGameData,nbaGameCols] = useNBAGameApi(gameId)
 
   const large = useMediaQuery('(min-width:700px)')
   const data = nbaGameData
- 
   const columns = nbaGameCols
-  
+
   return (
       <>
         <Head>

@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const MBBMonthSelector = ({ month, setMonth}) => {
+const MonthSelector = ({ month, setMonth}) => {
     const months = [
+    '',
     '01','02','03',
     '04','05','06','07',
     '08','09','10','11',
@@ -30,9 +31,9 @@ const MBBMonthSelector = ({ month, setMonth}) => {
   );
 };
 
-MBBMonthSelector.propTypes = {
+MonthSelector.propTypes = {
   month: PropTypes.string.isRequired,
   setMonth: PropTypes.func.isRequired,
 };
 
-export default MBBMonthSelector;
+export default MonthSelector;
