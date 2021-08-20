@@ -3,8 +3,8 @@ import axios from 'axios';
 
 import {localPyApiOrigin} from '../utils/config';
 
-function useNBAScoreboardApi(year, month, day) {
-  const [nbaScoreboardData, setNBAScoreboardData] = useState([]);
+function useWNBAScoreboardApi(year, month, day) {
+  const [wnbaScoreboardData, setWNBAScoreboardData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -15,13 +15,13 @@ function useNBAScoreboardApi(year, month, day) {
       }
       const res = await axios.get(baseUrl,{params});
 
-      setNBAScoreboardData(res.data);
+      setWNBAScoreboardData(res.data);
 
     };
     fetchData();
   }, [year, month, day]);
 
-  return [nbaScoreboardData];
+  return [wnbaScoreboardData];
 }
 
-export default useNBAScoreboardApi;
+export default useWNBAScoreboardApi;

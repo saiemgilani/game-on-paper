@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Link from 'next/link'
-import useNBAScoreboardApi from '../../hooks/useNBAScoreboardApi'
+import useWNBAScoreboardApi from '../../hooks/useWNBAScoreboardApi'
 // core components
 import { Grid, Typography } from '@material-ui/core'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
@@ -68,17 +68,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 const myLoader = ({ src }) => {
-  return `https://a.espncdn.com/i/teamlogos/nba/500/${src}.png`
+  return `https://a.espncdn.com/i/teamlogos/wnba/500/${src}.png`
 }
-export default function NBAScoreboardPage() {
+export default function WNBAScoreboardPage() {
   const large = useMediaQuery('(min-width:700px)')
   const [year, setYear] = useState('2020');
   const [month, setMonth] = useState('11');
   const [day, setDay] = useState('');
   const [seasonType, setSeasonType] = useState('Regular');
-  const [nbaScoreboardData] = useNBAScoreboardApi(year, month, day)
+  const [wnbaScoreboardData] = useWNBAScoreboardApi(year, month, day)
 
-  const data = nbaScoreboardData
+  const data = wnbaScoreboardData
   const acc = data.reduce((acc, x) => {
     if(x['status.type.name'] === 'STATUS_CANCELED' || x['status.type.name'] === 'STATUS_POSTPONED') {
       return acc
@@ -101,7 +101,7 @@ export default function NBAScoreboardPage() {
           <Grid item xs={12}>
             <Box p={5}>
               <Typography variant={large ? 'h4' : 'h6'} style={{ textAlign: 'center' }}>
-                NBA Scoreboard
+                WNBA Scoreboard
               </Typography>
             </Box>
           </Grid>
@@ -133,7 +133,7 @@ export default function NBAScoreboardPage() {
                   score={d}
                   noMargin={false}
                   loader={myLoader}
-                  sport={'nba'}/>
+                  sport={'wnba'}/>
               </Grid>
           ))}
         </Grid>
@@ -141,7 +141,7 @@ export default function NBAScoreboardPage() {
         <div style={{ textAlign: 'center' }}>
           <div>
             <p>
-            <Link href="/nba">
+            <Link href="/wnba">
                 <a>Back</a>
             </Link>
             </p>

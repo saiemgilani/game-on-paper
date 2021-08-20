@@ -26,8 +26,9 @@ origins = [
     "http://localhost.gameonpaper.com",
     "https://localhost.gameonpaper.com",
     "http://localhost",
+    "{}:{}".format(config['HOST'],config['PORT']),
     "http://localhost:3000",
-    "http://localhost:7000"
+    "http://localhost:{}".format(config['PORT'])
 ]
 app.add_middleware(
     CORSMiddleware,

@@ -15,9 +15,7 @@ import { NAME, NAME_AND_DOMAIN } from '../../types/constants'
 
 
 export default function LandingPage() {
-
   const large = useMediaQuery('(min-width:700px)')
-
   return (
       <>
         <Head>
@@ -39,7 +37,7 @@ export default function LandingPage() {
         <div style={{ textAlign: 'center' }}>
           <div>
             <p>
-            <Link href="mbb/scoreboard" >
+            <Link href="nba/scoreboard" >
               <Button variant="text" color="inherit">
                 <SportsBasketballIcon /> <Typography variant={large ? 'h6' : 'h6'} >Scoreboard</Typography>
               </Button>

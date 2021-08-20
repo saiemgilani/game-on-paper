@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Link from 'next/link'
-import useNBAScoreboardApi from '../../hooks/useNBAScoreboardApi'
+import useWBBScoreboardApi from '../../hooks/useWBBScoreboardApi'
 // core components
 import { Grid, Typography } from '@material-ui/core'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
@@ -12,11 +12,10 @@ import { NAME, NAME_AND_DOMAIN } from '../../types/constants'
 import { ScoreCard } from "../../components/ScoreCard";
 import { useTable } from 'react-table'
 import Button from '@material-ui/core/Button'
-import Image from 'next/image'
 import YearSelector from '../../components/YearSelector';
 import MonthSelector from '../../components/MonthSelector';
 import DaySelector from '../../components/DaySelector';
-import SeasonTypeSelector from '../../components/SeasonTypeSelector';
+// import SeasonTypeSelector from '../../components/SeasonTypeSelector';
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -68,18 +67,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 const myLoader = ({ src }) => {
-  return `https://a.espncdn.com/i/teamlogos/nba/500/${src}.png`
+  return `https://a.espncdn.com/i/teamlogos/ncaa/500/${src}.png`
 }
-export default function NBAScoreboardPage() {
+export default function WBBScoreboardPage() {
   const large = useMediaQuery('(min-width:700px)')
-  const [year, setYear] = useState('2020');
-  const [month, setMonth] = useState('11');
+  const [year, setYear] = useState('');
+  const [month, setMonth] = useState('');
   const [day, setDay] = useState('');
-  const [seasonType, setSeasonType] = useState('Regular');
-  const [nbaScoreboardData] = useNBAScoreboardApi(year, month, day)
 
-  const data = nbaScoreboardData
+  const [wbbScoreboardData] = useWBBScoreboardApi(year, month, day)
+
+  const data = wbbScoreboardData
   const acc = data.reduce((acc, x) => {
+    //** console.log(x['status.type.name'] === 'STATUS_CANCELED') **//
     if(x['status.type.name'] === 'STATUS_CANCELED' || x['status.type.name'] === 'STATUS_POSTPONED') {
       return acc
     } else{
@@ -101,7 +101,7 @@ export default function NBAScoreboardPage() {
           <Grid item xs={12}>
             <Box p={5}>
               <Typography variant={large ? 'h4' : 'h6'} style={{ textAlign: 'center' }}>
-                NBA Scoreboard
+                Women's College Basketball Scoreboard
               </Typography>
             </Box>
           </Grid>
@@ -124,6 +124,11 @@ export default function NBAScoreboardPage() {
                 year={year}
                 setDay={setDay}/>
           </Grid>
+          {/* <Grid item >
+          <SeasonTypeSelector
+                seasonType={seasonType}
+                setSeasonType={setSeasonType}/>
+          </Grid> */}
         </Grid>
         <div>
         <Grid container direction={"row"} justifyContent={'space-between'}>
@@ -133,15 +138,15 @@ export default function NBAScoreboardPage() {
                   score={d}
                   noMargin={false}
                   loader={myLoader}
-                  sport={'nba'}/>
+                  sport={'mbb'}/>
               </Grid>
           ))}
-        </Grid>
+          </Grid>
         </div>
         <div style={{ textAlign: 'center' }}>
           <div>
             <p>
-            <Link href="/nba">
+            <Link href="/wbb">
                 <a>Back</a>
             </Link>
             </p>

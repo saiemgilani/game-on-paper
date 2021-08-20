@@ -5,6 +5,7 @@ const useStyles = makeStyles((theme) => ({
   footer: {
     position: 'absolute',
     padding: '1.5rem',
+    bottom:10,
     width: '100%',
     height: '2.5rem',            /* Footer height */
   },
@@ -15,7 +16,7 @@ export const Footer: FC = ({}): ReactElement => {
     <Grid container>
       <Grid item xs={12}>
       <div className={classes.footer}>
-        <Typography style={{ textAlign: 'center' }}>
+        <Typography style={{ textAlign: 'center'}}>
           Built by <a href="http://www.github.com/saiemgilani" target="_blank" rel="noreferrer">Akshay Easwaran</a>, <a href="http://www.github.com/saiemgilani" target="_blank" rel="noreferrer">Saiem Gilani</a> and others.
         </Typography>
       </div>

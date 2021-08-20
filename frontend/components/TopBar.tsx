@@ -25,6 +25,7 @@ import MoonIcon from '@material-ui/icons/Brightness2Outlined'
 import CodeIcon from '@material-ui/icons/Code'
 import SportsFootballIcon from '@material-ui/icons/SportsFootball';
 import SportsBasketballIcon from '@material-ui/icons/SportsBasketball';
+import useMediaQuery from '@material-ui/core/useMediaQuery'
 import { makeStyles } from '@material-ui/core/styles'
 import { ToggleThemeContext } from '../theme'
 import Link from 'next/link'
@@ -45,11 +46,11 @@ interface Props {
 
 const useStyles = makeStyles((theme) =>({
   appBar: {
-    display: "flex",
+    display: "absolute",
     border: "0",
-    borderRadius: "3px",
-    padding: "0.625rem 0",
-    marginBottom: "20px",
+    borderRadius: "0px",
+    padding: "0",
+    marginBottom: "0px",
     color: '#000000',
     width: "100%",
     textColor: '#000000',
@@ -58,9 +59,7 @@ const useStyles = makeStyles((theme) =>({
     transition: "all 150ms ease 0s",
     alignItems: "center",
     flexFlow: "row nowrap",
-    justifyContent: "flex-start",
-    position: "relative",
-    zIndex: "unset"
+    position: "absolute"
   },
   absolute: {
     position: "absolute"
@@ -77,17 +76,18 @@ const useStyles = makeStyles((theme) =>({
     transition: 'transform .5s',
   },
   toolbar: {
+    display: "absolute",
+    width: "100%",
     backgroundColor: theme.palette.primary.main,
     color: theme.palette.text.primary,
-    paddingLeft: '2%',
   },
   toolbarContent: {
-    paddingLeft: '2%',
+    display: "absolute",
+    width: "100%",
   },
   toolbarRight: {
-    right: 0,
-    position: 'relative',
-    paddingRight: '2%',
+    display: "absolute",
+    width: "100%"
   },
   button:{
     color: '#000000',
@@ -99,6 +99,7 @@ export const TopBar = (): ReactElement => {
   const trigger = useScrollTrigger()
   const classes = useStyles()
   const { toggleTheme, isDark } = useContext(ToggleThemeContext)
+  const large = useMediaQuery('(min-width:700px)')
 
   return (
     <AppBar className={trigger ? classes.hide : classes.show} position="sticky">
@@ -113,22 +114,10 @@ export const TopBar = (): ReactElement => {
           </a>
         </Link>
         <Button variant="text" color="inherit">
-              Game on Paper
+        <Typography variant={large ? 'h4' : 'h6'} style={{ textAlign: 'center' }}>
+          Game on Paper
+        </Typography>
         </Button>
-        <div className={classes.toolbarContent}>
-          <Link href="/cfb">
-            <Button variant="text" color="inherit">
-              <SportsFootballIcon />
-              CFB
-            </Button>
-          </Link>
-          <Link href="/mbb">
-            <Button variant="text" color="inherit">
-              <SportsBasketballIcon />
-              MBB
-            </Button>
-          </Link>
-        </div>
         <div className={classes.toolbarRight}>
           <Tooltip title="Toggle Theme">
             <Button variant="text" color="inherit" onClick={toggleTheme}>
