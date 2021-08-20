@@ -2,7 +2,7 @@
 export const homepage = 'https://gameonpaper.com'
 export const origin = new URL(homepage);
 const localApiOrigin = new URL('http://localhost:3000');
-export const pyOrigin = `${PY_HOST}:7000`;
+export const pyOrigin = `${process.env.NEXT_PUBLIC_PY_HOST}:7000`;
 export const localPyApiOrigin = 'http://localhost:7000';
 
 
