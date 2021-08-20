@@ -30,7 +30,6 @@ const CFBSeasonTypeSelector = ({ week, seasonType, setSeasonType}) => {
 };
 
 CFBSeasonTypeSelector.propTypes = {
-    
   week: PropTypes.string.isRequired,
   seasonType: PropTypes.string.isRequired,
   setSeasonType: PropTypes.func.isRequired,

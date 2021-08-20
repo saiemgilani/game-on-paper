@@ -3,11 +3,11 @@ import { ThemeOptions } from '@material-ui/core'
 import { createTheme } from '@material-ui/core/styles'
 export const paletteColorsDark = {
   primary: '#5A5B5B',
-  secondary: '#F2F2F2',
-  card: '#F2F2F2',
+  secondary: '#5A5B5B',
+  card: '#5A5B5B',
   error: '#E44C65',
   background: '#36393F',
-  text: '#FEF4E8',
+  text: '#F2F2F2',
 }
 
 export const paletteColorsLight = {
@@ -52,10 +52,10 @@ const options = (dark: boolean): ThemeOptions => {
         letterSpacing: '-1.5px',
       },
       h2: { fontFamily: 'Roboto Slab', fontWeight: 400, fontSize: '48px', lineHeight: '40px', letterSpacing: '-0.5px' },
-      h3: { fontFamily: 'Roboto Slab', fontSize: '36px', lineHeight: '40px' },
-      h4: { fontFamily: 'Roboto Slab', fontSize: '34px', lineHeight: '45px', letterSpacing: '0.25px' },
-      h5: { fontFamily: 'Chivo', fontSize: '24px', lineHeight: '32px' },
-      h6: { fontFamily: 'Chivo', fontWeight: 500, fontSize: '20px', lineHeight: '26px', letterSpacing: '0.15px' },
+      h3: { fontFamily: 'Roboto Slab', fontSize: '36px' },
+      h4: { fontFamily: 'Roboto Slab', fontWeight: 400, fontSize: '1.1rem' },
+      h5: { fontFamily: 'Chivo', fontWeight: 500, fontSize: '1.1rem'},
+      h6: { fontFamily: 'Roboto Slab', fontWeight: 500, fontSize: '1.1rem' },
       subtitle1: { fontFamily: 'Roboto Slab', fontSize: '16px', lineHeight: '19px', letterSpacing: '0.15px' },
       subtitle2: {
         fontFamily: 'Roboto Slab',

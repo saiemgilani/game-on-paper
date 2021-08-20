@@ -136,11 +136,10 @@ export default function CFBScoreboardPage() {
         <div>
           <Grid container direction={"row"} justifyContent={'space-between'}>
           {acc.map((d, idx) =>(
-            
               <Grid item xs={12} sm={6} md={4} lg={4} key={idx}>
-                <ScoreCard 
-                  score={d} 
-                  noMargin={false} 
+                <ScoreCard
+                  score={d}
+                  noMargin={false}
                   loader={myLoader}
                   sport={'cfb'}/>
               </Grid>

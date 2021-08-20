@@ -12,6 +12,7 @@ import SportsBasketballIcon from '@material-ui/icons/SportsBasketball';
 import AppBar from '@material-ui/core/AppBar'
 import useScrollTrigger from '@material-ui/core/useScrollTrigger'
 import { makeStyles } from '@material-ui/core/styles'
+import { ToggleThemeContext } from '../theme'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Tooltip } from '@material-ui/core'
@@ -19,7 +20,7 @@ import { NAME_AND_DOMAIN } from '../types/constants'
 
 import logo from '../public/logo/logo.png'
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) =>({
   appBar: {
     display: "flex",
     border: "0",
@@ -53,27 +54,28 @@ const useStyles = makeStyles({
     transition: 'transform .5s',
   },
   toolbar: {
-    color: '#000000',
-    backgroundColor: "#F2F2F2",
-    paddingLeft: '5%',
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.text.primary,
+    paddingLeft: '2%',
   },
   toolbarContent: {
-    paddingLeft: '5%',
+    paddingLeft: '2%',
   },
   toolbarRight: {
     right: 0,
     position: 'relative',
-    paddingRight: '5%',
+    paddingRight: '2%',
   },
   button:{
     color: '#000000',
     textColor: '#000000',
   },
-})
+}))
 
 export const TopBar = (): ReactElement => {
   const trigger = useScrollTrigger()
   const classes = useStyles()
+  const { toggleTheme, isDark } = useContext(ToggleThemeContext)
 
   return (
     <AppBar className={trigger ? classes.hide : classes.show} position="sticky">
@@ -103,6 +105,13 @@ export const TopBar = (): ReactElement => {
               MBB
             </Button>
           </Link>
+        </div>
+        <div className={classes.toolbarRight}>
+          <Tooltip title="Toggle Theme">
+            <Button variant="text" color="inherit" onClick={toggleTheme}>
+              {isDark ? <SunIcon /> : <MoonIcon />}
+            </Button>
+          </Tooltip>
         </div>
       </Toolbar>
     </AppBar>

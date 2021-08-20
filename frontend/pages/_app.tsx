@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { AppProps } from 'next/app'
 import TopBar from '../components/TopBar'
 import { Footer } from '../components/Footer'
+import { ThemeProvider } from '../theme'
 
 const MyApp = ({ Component, pageProps }: AppProps): React.ReactNode => {
   const [style, setStyle] = useState<React.CSSProperties>({ visibility: 'hidden' })
@@ -17,11 +18,13 @@ const MyApp = ({ Component, pageProps }: AppProps): React.ReactNode => {
   return (
     <>
       <div>
+        <ThemeProvider>
           <div>
             <TopBar />
             <Component {...pageProps} />
           </div>
           <Footer />
+        </ThemeProvider>
       </div>
     </>
   )

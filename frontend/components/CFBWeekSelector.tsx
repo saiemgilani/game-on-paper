@@ -9,7 +9,7 @@ const CFBWeekSelector = ({ seasonType, week, setWeek}) => {
     '8','9','10','11',
     '12','13','14','15','16',
     'Bowls']
-    const wk = seasonType==='Post'? 'Bowls':week;
+    const wk = seasonType==='Post'? '1':week;
   return (
     <form>
       <label htmlFor="weekselector">

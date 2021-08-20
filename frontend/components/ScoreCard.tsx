@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
     height: 200,
     margin: 10,
     position: 'relative',
-    backgroundColor: '#ffffff',
+    backgroundColor: theme.palette.secondary.main,
     color: theme.palette.text.secondary,
   },
   media: {
@@ -49,14 +49,14 @@ const useStyles = makeStyles((theme) => ({
   },
   hscore:{
     right: 5,
-    top: 58,
+    top: 45,
     padding: 5,
     fontSize: '1.1rem',
     position: 'absolute',
   },
   ascore:{
     right: 5,
-    top: 18,
+    top: 8,
     padding: 5,
     fontSize: '1.1rem',
     position: 'absolute',
@@ -76,7 +76,7 @@ export const ScoreCard: FC<ScoreCardProps> = ({ score, loader, sport, noMargin }
           <CardContent>
           <Grid container spacing={1}>
             <Grid item> 
-              {<Image loader={loader} src={score['competitors'][1]['team']['id']} width={35} height={35}   alt={score['competitors'][1]['team']['shortDisplayName']}/>} 
+              {<Image loader={loader} src={score['competitors'][1]['team']['id']} width={30} height={30}   alt={score['competitors'][1]['team']['shortDisplayName']}/>} 
             </Grid>
             <Grid item> 
               <Typography variant={'h6'} color="textPrimary" >
@@ -91,7 +91,7 @@ export const ScoreCard: FC<ScoreCardProps> = ({ score, loader, sport, noMargin }
           </Grid>
           <Grid container spacing={1}>
             <Grid item> 
-            {<Image loader={loader} src={score['competitors'][0]['team']['id']} width={35} height={35}  alt={score['competitors'][0]['team']['shortDisplayName']}/>} 
+            {<Image loader={loader} src={score['competitors'][0]['team']['id']} width={30} height={30}  alt={score['competitors'][0]['team']['shortDisplayName']}/>} 
             </Grid>
             <Grid item> 
             <Typography variant={'h6'} color="textPrimary">
