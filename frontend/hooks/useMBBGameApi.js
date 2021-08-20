@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import axios from 'axios';
 
-import {localPyApiOrigin} from '../utils/config';
+import {pyApiOrigin} from '../utils/config';
 
 function useMBBGameApi(gameId) {
   const [mbbGameData, setMBBGameData] = useState([]);
@@ -9,7 +9,7 @@ function useMBBGameApi(gameId) {
 
   useEffect(() => {
     const fetchData = async () => {
-      const baseUrl = `${localPyApiOrigin}/${gameId}`;
+      const baseUrl = `${pyApiOrigin}/${gameId}`;
       const res = await axios.get(baseUrl);
       const columns = [{Header: 'Stat', accessor: 'Stat'}];
       const tms = res.data.boxscore.teams.map(d => 

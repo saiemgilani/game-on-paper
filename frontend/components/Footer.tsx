@@ -3,7 +3,7 @@ import { Grid, Typography } from '@material-ui/core'
 import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles((theme) => ({
   footer: {
-    position: 'absolute',
+    position: 'relative',
     padding: '1.5rem',
     bottom:10,
     width: '100%',

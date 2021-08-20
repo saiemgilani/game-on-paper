@@ -52,9 +52,9 @@ const options = (dark: boolean): ThemeOptions => {
         letterSpacing: '-1.5px',
       },
       h2: { fontFamily: 'Roboto Slab', fontWeight: 400, fontSize: '48px', lineHeight: '40px', letterSpacing: '-0.5px' },
-      h3: { fontFamily: 'Roboto Slab', fontSize: '36px' },
-      h4: { fontFamily: 'Roboto Slab', fontWeight: 400, fontSize: '1.1rem' },
-      h5: { fontFamily: 'Chivo', fontWeight: 500, fontSize: '1.1rem'},
+      h3: { fontFamily: 'Roboto Slab', fontWeight: 500, fontSize: '1.7rem' },
+      h4: { fontFamily: 'Roboto Slab', fontWeight: 500, fontSize: '1.3rem' },
+      h5: { fontFamily: 'Chivo', fontWeight: 700, fontSize: '1.3rem'},
       h6: { fontFamily: 'Roboto Slab', fontWeight: 500, fontSize: '1.1rem' },
       subtitle1: { fontFamily: 'Roboto Slab', fontSize: '16px', lineHeight: '19px', letterSpacing: '0.15px' },
       subtitle2: {

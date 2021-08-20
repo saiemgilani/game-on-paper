@@ -1,14 +1,14 @@
 import {useEffect, useState} from 'react';
 import axios from 'axios';
 
-import {localPyApiOrigin} from '../utils/config';
+import {pyApiOrigin} from '../utils/config';
 
 function useMBBScoreboardApi(year, month, day) {
   const [mbbScoreboardData, setMBBScoreboardData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      const baseUrl = `${localPyApiOrigin}/mbb/scoreboard`;
+      const baseUrl = `${pyApiOrigin}/mbb/scoreboard`;
       // let stype = seasonType === 'Regular' ? '2' : '3';
       let dt = year+month+day
       console.log(year+month+day);

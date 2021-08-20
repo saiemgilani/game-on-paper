@@ -43,7 +43,7 @@ export default function LandingPage(props) {
           </Grid>
         </Grid>
         <Grid container>
-          <Grid item xs={6} style={{ textAlign: 'center' }}>
+          <Grid item xs={12} sm={6} style={{ textAlign: 'center' }}>
             <Box p={5}>
               <Link href="cfb/scoreboard" >
               <Button variant="text" color="inherit">
@@ -53,7 +53,7 @@ export default function LandingPage(props) {
               </Link>
             </Box>
           </Grid>
-          <Grid item xs={6} style={{ textAlign: 'center' }}>
+          <Grid item xs={12} sm={6} style={{ textAlign: 'center' }}>
             <Box p={5}>
               <Link href="mbb/scoreboard" >
               <Button variant="text" color="inherit">

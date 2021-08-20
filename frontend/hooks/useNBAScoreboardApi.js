@@ -1,14 +1,14 @@
 import {useEffect, useState} from 'react';
 import axios from 'axios';
 
-import {localPyApiOrigin} from '../utils/config';
+import {pyApiOrigin} from '../utils/config';
 
 function useNBAScoreboardApi(year, month, day) {
   const [nbaScoreboardData, setNBAScoreboardData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      const baseUrl = `${localPyApiOrigin}/nba/scoreboard`;
+      const baseUrl = `${pyApiOrigin}/nba/scoreboard`;
       console.log(year+month+day);
       const params = {
           dates: year+month+day

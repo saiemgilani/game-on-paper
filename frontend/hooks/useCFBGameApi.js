@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import axios from 'axios';
 
-import {localPyApiOrigin} from '../utils/config';
+import {pyApiOrigin} from '../utils/config';
 function espnCfbTeamBox(res) {
   const columns = [{Header: 'Stat', accessor: 'Stat'}];
 
@@ -48,7 +48,7 @@ function useCFBGameApi(gameId) {
 
   useEffect(() => {
     const fetchData = async () => {
-      const baseUrl = `${localPyApiOrigin}/${gameId}`;
+      const baseUrl = `${pyApiOrigin}/${gameId}`;
       const res = await axios.get(baseUrl);
 
       const espnTBox = espnCfbTeamBox(res)

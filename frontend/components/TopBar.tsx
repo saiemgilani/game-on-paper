@@ -46,11 +46,11 @@ interface Props {
 
 const useStyles = makeStyles((theme) =>({
   appBar: {
-    display: "absolute",
+    display: "flex",
     border: "0",
-    borderRadius: "0px",
-    padding: "0",
-    marginBottom: "0px",
+    borderRadius: "3px",
+    padding: "0.625rem 0",
+    marginBottom: "20px",
     color: '#000000',
     width: "100%",
     textColor: '#000000',
@@ -58,8 +58,14 @@ const useStyles = makeStyles((theme) =>({
       "0 4px 18px 0px rgba(0, 0, 0, 0.12), 0 7px 10px -5px rgba(0, 0, 0, 0.15)",
     transition: "all 150ms ease 0s",
     alignItems: "center",
+    alignContent: "center",
     flexFlow: "row nowrap",
-    position: "absolute"
+    justifyContent: "center",
+    position: "absolute",
+    zIndex: "unset"
+  },
+  header:{
+    width: "100%",
   },
   absolute: {
     position: "absolute"
@@ -72,22 +78,25 @@ const useStyles = makeStyles((theme) =>({
     transition: 'transform .5s',
   },
   hide: {
-    transform: 'translateY(-110%)',
+    transform: 'translateY(-20%)',
     transition: 'transform .5s',
   },
   toolbar: {
-    display: "absolute",
-    width: "100%",
+    alignItems: "center",
+    flexFlow: "row nowrap",
+    justifyContent: "center",
+    position: "relative",
     backgroundColor: theme.palette.primary.main,
     color: theme.palette.text.primary,
+    paddingLeft: '2%',
   },
   toolbarContent: {
-    display: "absolute",
-    width: "100%",
+    paddingLeft: '2%',
   },
   toolbarRight: {
-    display: "absolute",
-    width: "100%"
+    right: 0,
+    position: 'absolute',
+    paddingRight: '2%',
   },
   button:{
     color: '#000000',
@@ -113,11 +122,9 @@ export const TopBar = (): ReactElement => {
             alt='Game on Paper' />
           </a>
         </Link>
-        <Button variant="text" color="inherit">
-        <Typography variant={large ? 'h4' : 'h6'} style={{ textAlign: 'center' }}>
+        <Typography variant={large ? 'h3' : 'h6'} style={{ textAlign: 'center' }}>
           Game on Paper
         </Typography>
-        </Button>
         <div className={classes.toolbarRight}>
           <Tooltip title="Toggle Theme">
             <Button variant="text" color="inherit" onClick={toggleTheme}>
