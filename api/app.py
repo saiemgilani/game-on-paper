@@ -11,6 +11,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from play_handler import PlayProcess
 from hoops_handler import HoopsProcess
 from schedule_handler import ScheduleProcess
+from dotenv import load_dotenv, dotenv_values
+config = dotenv_values('.env.development.local')
 
 app = FastAPI(
     title="Vercel FastAPI template",
@@ -280,4 +282,4 @@ def get_nba_game(request: Request, gameId: str) -> Optional[None]:
     return tmp_json
 
 if __name__ == "__main__":
-  uvicorn.run("app:app", host="0.0.0.0", port=7000, reload=True)
+  uvicorn.run("app:app", host=config['HOST'], port=config['PORT'], reload=True)
