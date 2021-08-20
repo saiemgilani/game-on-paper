@@ -26,9 +26,9 @@ origins = [
     "http://localhost.gameonpaper.com",
     "https://localhost.gameonpaper.com",
     "http://localhost",
-    "{}:{}".format(config['HOST'],config['PORT']),
+    "{}:{}".format(config['HOST'],config['PY_PORT']),
     "http://localhost:3000",
-    "http://localhost:{}".format(config['PORT'])
+    "http://localhost:{}".format(config['PY_PORT'])
 ]
 app.add_middleware(
     CORSMiddleware,
@@ -283,4 +283,4 @@ def get_nba_game(request: Request, gameId: str) -> Optional[None]:
     return tmp_json
 
 if __name__ == "__main__":
-  uvicorn.run("app:app", host=config['HOST'], port=config['PORT'], reload=True)
+  uvicorn.run("app:app", host=config['HOST'], port=int(config['PY_PORT']), reload=True)
