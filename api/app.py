@@ -29,7 +29,6 @@ origins = [
     "https://thegameonpaper.com",
     "https://www.thegameonpaper.com",
     "http://localhost",
-    "{}:{}".format(config['HOST'],config['PY_PORT']),
     "http://localhost:3000",
     "http://localhost:7000"
 ]
