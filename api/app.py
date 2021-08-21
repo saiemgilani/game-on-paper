@@ -26,6 +26,7 @@ origins = [
     "http://localhost.gameonpaper.com",
     "https://localhost.gameonpaper.com",
     "http://localhost.thegameonpaper.com",
+    "https://localhost.thegameonpaper.com",
     "https://thegameonpaper.com",
     "https://www.thegameonpaper.com",
     "http://localhost",
