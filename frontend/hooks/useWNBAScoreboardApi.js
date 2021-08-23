@@ -8,7 +8,7 @@ function useWNBAScoreboardApi(year, month, day) {
 
   useEffect(() => {
     const fetchData = async () => {
-      const baseUrl = `${pyApiOrigin}/nba/scoreboard`;
+      const baseUrl = `${pyApiOrigin}/wnba/scoreboard`;
       console.log(year+month+day);
       const params = {
           dates: year+month+day

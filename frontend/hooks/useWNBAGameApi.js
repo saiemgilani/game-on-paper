@@ -21,8 +21,8 @@ function useWNBAGameApi(gameId) {
       )
       const away = columns.map(d=>d.Header)[1]
       const home = columns.map(d=>d.Header)[2]
-      const boxDA = boxData.slice(0,23)
-      const boxDH = boxData.slice(23,46)
+      const boxDA = boxData.slice(0,20)
+      const boxDH = boxData.slice(20,40)
       boxDA.map(d=>d[away] = d.Location)
       boxDH.map(d=>d[home] = d.Location)
       boxDA.forEach((value,key)=> boxDA[key][home]=boxDH[key][home])

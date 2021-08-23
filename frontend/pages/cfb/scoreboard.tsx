@@ -74,8 +74,8 @@ const useStyles = makeStyles((theme) => ({
     position: 'absolute',
   },
 }))
-const myLoader = ({ src }) => {
-  return `https://a.espncdn.com/i/teamlogos/ncaa/500/${src}.png`
+const myLoader = ({ src, width }) => {
+  return `https://a.espncdn.com/i/teamlogos/ncaa/500/${src}.png?w=${width}`
 }
 export default function CFBScoreboardPage() {
   const large = useMediaQuery('(min-width:700px)')
@@ -139,6 +139,7 @@ export default function CFBScoreboardPage() {
               <Grid item xs={12} sm={6} md={4} lg={4} key={idx}>
                 <ScoreCard
                   score={d}
+                  loader={myLoader}
                   noMargin={false}
                   sport={'cfb'}/>
               </Grid>

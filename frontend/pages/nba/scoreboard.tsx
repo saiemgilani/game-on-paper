@@ -67,8 +67,8 @@ const useStyles = makeStyles((theme) => ({
     position: 'absolute',
   },
 }))
-const myLoader = ({ src }) => {
-  return `https://a.espncdn.com/i/teamlogos/nba/500/${src}.png`
+const myLoader = ({ src, width }) => {
+  return `https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/${src}.png?w=${width}`
 }
 export default function NBAScoreboardPage() {
   const large = useMediaQuery('(min-width:700px)')
@@ -131,6 +131,7 @@ export default function NBAScoreboardPage() {
               <Grid item xs={12} sm={6} md={4} lg={4} key={idx}>
                 <ScoreCard
                   score={d}
+                  loader={myLoader}
                   noMargin={false}
                   sport={'nba'}/>
               </Grid>

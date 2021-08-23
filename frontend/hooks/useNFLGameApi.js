@@ -14,8 +14,8 @@ function espnNflTeamBox(res) {
   )
   const away = columns.map(d=>d.Header)[1]
   const home = columns.map(d=>d.Header)[2]
-  const boxDA = boxData.slice(0,15)
-  const boxDH = boxData.slice(15,30)
+  const boxDA = boxData.slice(0,25)
+  const boxDH = boxData.slice(25,50)
   boxDA.map(d=>d[away] = d.Location)
   boxDH.map(d=>d[home] = d.Location)
   boxDA.forEach((value,key)=> boxDA[key][home]=boxDH[key][home])
@@ -43,8 +43,8 @@ function espnNflPlayerBox(res) {
 function useNFLGameApi(gameId) {
   const [nflGameData, setNFLGameData] = useState([]);
   const [nflGameCols, setNFLGameCols] = useState([]);
-  const [nflPlayerData, setNFLPlayerData] = useState([]);
-  const [nflPlayerCols, setNFLPlayerCols] = useState([]);
+  // const [nflPlayerData, setNFLPlayerData] = useState([]);
+  // const [nflPlayerCols, setNFLPlayerCols] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -54,15 +54,11 @@ function useNFLGameApi(gameId) {
       const espnTBox = espnNflTeamBox(res)
       setNFLGameCols(espnTBox[0])
       setNFLGameData(espnTBox[1]);
-      const espnPBox = espnNflPlayerBox(res)
-      setNFLPlayerCols(espnPBox[0])
-      setNFLPlayerData(espnPBox[1]);
-
     };
     fetchData();
   }, [gameId]);
 
-  return [nflGameData,nflGameCols,nflPlayerData,nflPlayerCols];
+  return [nflGameData,nflGameCols];
 }
 
 export default useNFLGameApi;
