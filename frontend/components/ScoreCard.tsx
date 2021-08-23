@@ -15,6 +15,7 @@ import Link from 'next/link'
 
 type ScoreCardProps = {
   score: ScoreData
+  loader: any
   sport: string
   noMargin?: boolean
 }
@@ -67,15 +68,19 @@ const useStyles = makeStyles((theme) => ({
     position: 'absolute',
   },
 }))
-export const ScoreCard: FC<ScoreCardProps> = ({ score,  sport, noMargin }): ReactElement => {
+export const ScoreCard: FC<ScoreCardProps> = ({ score,  sport, loader, noMargin }): ReactElement => {
   const classes = useStyles()
-
+  const pros = ['wnba','nba','nfl']
+  const proSport = pros.includes(sport)
+  const src1 = proSport ? score['competitors'][1]['team']['abbreviation'] : score['competitors'][1]['team']['id']
+  const src2 = proSport ? score['competitors'][0]['team']['abbreviation'] : score['competitors'][0]['team']['id']
+  console.log()
   return (
       <Card className={classes.card} elevation={3} style={{}}>
           <CardContent>
           <Grid container spacing={1}>
             <Grid item> 
-              {<Image src={score['competitors'][1]['team']['logo']} width={30} height={30}   alt={score['competitors'][1]['team']['shortDisplayName']}/>} 
+              {<Image loader={loader} src={src1} width={30} height={30}   alt={score['competitors'][1]['team']['shortDisplayName']}/>} 
             </Grid>
             <Grid item> 
               <Typography variant={'h6'} color="textPrimary" >
@@ -90,7 +95,7 @@ export const ScoreCard: FC<ScoreCardProps> = ({ score,  sport, noMargin }): Reac
           </Grid>
           <Grid container spacing={1}>
             <Grid item> 
-            {<Image src={score['competitors'][0]['team']['logo']} width={30} height={30}  alt={score['competitors'][0]['team']['shortDisplayName']}/>} 
+            {<Image loader={loader} src={src2} width={30} height={30}  alt={score['competitors'][0]['team']['shortDisplayName']}/>} 
             </Grid>
             <Grid item> 
             <Typography variant={'h6'} color="textPrimary">

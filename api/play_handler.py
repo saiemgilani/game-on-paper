@@ -722,6 +722,481 @@ class PlayProcess(object):
         self.json = pbp_json
         return pbp_json
 
+    def nfl_pbp(self):
+        """nfl_pbp()
+        Pull the game by id
+        Data from API endpoints:
+        * nfl/playbyplay
+        * nfl/summary
+        """
+        # play by play
+        pbp_url = "http://cdn.espn.com/core/nfl/playbyplay?gameId={}&xhr=1&render=false&userab=18".format(self.gameId)
+        pbp_resp = self.download(url=pbp_url)
+        pbp_txt = {}
+        pbp_txt['scoringPlays'] = np.array([])
+        pbp_txt['winprobability'] = np.array([])
+        pbp_txt['standings'] = np.array([])
+        pbp_txt['videos'] = np.array([])
+        pbp_txt['broadcasts'] = np.array([])
+        pbp_txt['pickcenter'] = np.array([])
+        pbp_txt['espnWP'] = np.array([])
+        pbp_txt['gameInfo'] = np.array([])
+        pbp_txt['season'] = np.array([])
+        
+        pbp_txt = json.loads(pbp_resp)['gamepackageJSON']
+        
+        pbp_txt['timeouts'] = {}
+        # summary endpoint for pickcenter array
+        summary_url = "http://site.api.espn.com/apis/site/v2/sports/football/nfl/summary?event={}".format(self.gameId)
+        summary_resp = self.download(summary_url)
+        summary = json.loads(summary_resp)
+        summary_txt = summary['pickcenter']
+        # ESPN's win probability
+        wp = "winprobability"
+        if wp in summary:
+            espnWP = summary["winprobability"]
+        else:
+            espnWP = np.array([])
+
+        if 'news' in pbp_txt.keys():
+            del pbp_txt['news']
+        if 'shop' in pbp_txt.keys():
+            del pbp_txt['shop']
+        pbp_txt['gameInfo'] = pbp_txt['header']['competitions'][0]
+        pbp_txt['season'] = pbp_txt['header']['season']
+        pbp_txt['pickcenter'] = summary_txt
+        pbp_txt['espnWP'] = espnWP
+        # Home and Away identification variables
+        homeTeamId = int(pbp_txt['header']['competitions'][0]['competitors'][0]['team']['id'])
+        awayTeamId = int(pbp_txt['header']['competitions'][0]['competitors'][1]['team']['id'])
+        homeTeamMascot = str(pbp_txt['header']['competitions'][0]['competitors'][0]['team']['name'])
+        awayTeamMascot = str(pbp_txt['header']['competitions'][0]['competitors'][1]['team']['name'])
+        homeTeamName = str(pbp_txt['header']['competitions'][0]['competitors'][0]['team']['location'])
+        awayTeamName = str(pbp_txt['header']['competitions'][0]['competitors'][1]['team']['location'])
+        homeTeamAbbrev = str(pbp_txt['header']['competitions'][0]['competitors'][0]['team']['abbreviation'])
+        awayTeamAbbrev = str(pbp_txt['header']['competitions'][0]['competitors'][1]['team']['abbreviation'])
+        homeTeamNameAlt = re.sub("Stat(.+)", "St", str(homeTeamName))
+        awayTeamNameAlt = re.sub("Stat(.+)", "St", str(awayTeamName))
+
+        pbp_txt['plays'] = pd.DataFrame()
+        pbp_txt['plays']['season'] = pbp_txt['header']['season']['year']
+        pbp_txt['plays']['seasonType'] = pbp_txt['header']['season']['type']
+        pbp_txt['plays']["awayTeamId"] = awayTeamId
+        pbp_txt['plays']["awayTeamName"] = str(awayTeamName)
+        pbp_txt['plays']["awayTeamMascot"] = str(awayTeamMascot)
+        pbp_txt['plays']["awayTeamAbbrev"] = str(awayTeamAbbrev)
+        pbp_txt['plays']["awayTeamNameAlt"] = str(awayTeamNameAlt)
+        pbp_txt['plays']["homeTeamId"] = homeTeamId
+        pbp_txt['plays']["homeTeamName"] = str(homeTeamName)
+        pbp_txt['plays']["homeTeamMascot"] = str(homeTeamMascot)
+        pbp_txt['plays']["homeTeamAbbrev"] = str(homeTeamAbbrev)
+        pbp_txt['plays']["homeTeamNameAlt"] = str(homeTeamNameAlt)
+        if len(pbp_txt['espnWP']) > 1:
+            pbp_txt['espnWP'] = espnWP
+        else:
+            pbp_txt['espnWP'] = espnWP
+        # Spread definition
+        pbp_txt['plays']["homeTeamSpread"] = 2.5
+        if len(pbp_txt['pickcenter']) > 1:
+            if 'spread' in pbp_txt['pickcenter'][1].keys():
+                gameSpread =  pbp_txt['pickcenter'][1]['spread']
+                homeFavorite = pbp_txt['pickcenter'][1]['homeTeamOdds']['favorite']
+            else:
+                gameSpread =  pbp_txt['pickcenter'][0]['spread']
+                homeFavorite = pbp_txt['pickcenter'][0]['homeTeamOdds']['favorite']
+
+        else:
+            gameSpread = 2.5
+            homeFavorite = True
+        pbp_txt['plays']["gameSpread"] = abs(gameSpread)
+        pbp_txt['plays']["homeTeamSpread"] = np.where(homeFavorite == True, abs(gameSpread), -1*abs(gameSpread))
+        pbp_txt['homeTeamSpread'] = np.where(homeFavorite == True, abs(gameSpread), -1*abs(gameSpread))
+        pbp_txt['plays']["homeFavorite"] = homeFavorite
+        pbp_txt['plays']["gameSpread"] = gameSpread
+        pbp_txt['plays']["homeFavorite"] = homeFavorite
+        # negotiating the drive meta keys into columns after unnesting drive plays
+        # concatenating the previous and current drives categories when necessary
+        if 'drives' in pbp_txt.keys():
+            prev_drives = pd.json_normalize(
+                data = pbp_txt['drives']['previous'],
+                record_path = 'plays',
+                meta = ['id', 'displayResult','isScore',
+                        ['team','shortDisplayName'],
+                        ['team','displayName'],
+                        ['team','name'],
+                        ['team','abbreviation'],
+                        'yards','offensivePlays','result',
+                        'description',
+                        'shortDisplayResult',
+                        ['timeElapsed','displayValue'],
+                        ['start','period','number'],
+                        ['start','period','type'],
+                        ['start','yardLine'],
+                        ['start','clock','displayValue'],
+                        ['start','text'],
+                        ['end','period','number'],
+                        ['end','period','type'],
+                        ['end','yardLine'],
+                        ['end','clock','displayValue']],
+                meta_prefix = 'drive.', errors = 'ignore')
+
+            if len(pbp_txt['drives'].keys()) > 1:
+                curr_drives = pd.json_normalize(
+                    data = pbp_txt['drives']['current'],
+                    record_path = 'plays',
+                    meta = ['id', 'displayResult','isScore',
+                            ['team','shortDisplayName'],
+                            ['team','displayName'],
+                            ['team','name'],
+                            ['team','abbreviation'],
+                            'yards','offensivePlays','result',
+                            'description',
+                            'shortDisplayResult',
+                            ['timeElapsed','displayValue'],
+                            ['start','period','number'],
+                            ['start','period','type'],
+                            ['start','yardLine'],
+                            ['start','clock','displayValue'],
+                            ['start','text'],
+                            ['end','period','number'],
+                            ['end','period','type'],
+                            ['end','yardLine'],
+                            ['end','clock','displayValue']],
+                    meta_prefix = 'drive.', errors = 'ignore')
+                pbp_txt['plays'] = pd.concat([curr_drives, prev_drives], ignore_index=True)
+            else:
+                pbp_txt['plays'] = prev_drives
+
+            pbp_txt['plays'] = pbp_txt['plays'].to_dict(orient='records')
+            pbp_txt['plays'] = pd.DataFrame(pbp_txt['plays'])
+            pbp_txt['plays']['season'] = pbp_txt['header']['season']['year']
+            pbp_txt['plays']['seasonType'] = pbp_txt['header']['season']['type']
+            pbp_txt['plays']["homeTeamId"] = homeTeamId
+            pbp_txt['plays']["awayTeamId"] = awayTeamId
+            pbp_txt['plays']["homeTeamName"] = str(homeTeamName)
+            pbp_txt['plays']["awayTeamName"] = str(awayTeamName)
+            pbp_txt['plays']["homeTeamMascot"] = str(homeTeamMascot)
+            pbp_txt['plays']["awayTeamMascot"] = str(awayTeamMascot)
+            pbp_txt['plays']["homeTeamAbbrev"] = str(homeTeamAbbrev)
+            pbp_txt['plays']["awayTeamAbbrev"] = str(awayTeamAbbrev)
+            pbp_txt['plays']["homeTeamNameAlt"] = str(homeTeamNameAlt)
+            pbp_txt['plays']["awayTeamNameAlt"] = str(awayTeamNameAlt)
+            pbp_txt['plays']['period.number'] = pbp_txt['plays']['period.number'].apply(lambda x: int(x))
+            #----- Figuring out Timeouts ---------
+            pbp_txt['timeouts'] = {}
+            pbp_txt['timeouts'][homeTeamId] = {"1": [], "2": []}
+            pbp_txt['timeouts'][awayTeamId] = {"1": [], "2": []}
+
+            pbp_txt['plays']["homeTeamSpread"] = 2.5
+            if len(pbp_txt['pickcenter']) > 1:
+                if 'spread' in pbp_txt['pickcenter'][1].keys():
+                    gameSpread =  pbp_txt['pickcenter'][1]['spread']
+                    homeFavorite = pbp_txt['pickcenter'][1]['homeTeamOdds']['favorite']
+                else:
+                    gameSpread =  pbp_txt['pickcenter'][0]['spread']
+                    homeFavorite = pbp_txt['pickcenter'][0]['homeTeamOdds']['favorite']
+
+            else:
+                gameSpread = 2.5
+                homeFavorite = True
+            pbp_txt['plays']["gameSpread"] = abs(gameSpread)
+            pbp_txt['plays']["homeTeamSpread"] = np.where(homeFavorite == True, abs(gameSpread), -1*abs(gameSpread))
+            pbp_txt['homeTeamSpread'] = np.where(homeFavorite == True, abs(gameSpread), -1*abs(gameSpread))
+            pbp_txt['plays']["homeFavorite"] = homeFavorite
+            pbp_txt['plays']["gameSpread"] = gameSpread
+            pbp_txt['plays']["homeFavorite"] = homeFavorite
+
+            #----- Time ---------------
+            pbp_txt['plays']['clock.mm'] = pbp_txt['plays']['clock.displayValue'].str.split(pat=':')
+            pbp_txt['plays'][['clock.minutes','clock.seconds']] = pbp_txt['plays']['clock.mm'].to_list()
+            pbp_txt['plays']['half'] = np.where(pbp_txt['plays']['period.number'] <= 2, "1","2")
+            pbp_txt['plays']['lag_half'] = pbp_txt['plays']['half'].shift(1)
+            pbp_txt['plays']['lead_half'] = pbp_txt['plays']['half'].shift(-1)
+            pbp_txt['plays']['start.TimeSecsRem'] = np.where(
+                pbp_txt['plays']['period.number'].isin([1,3]),
+                900 + 60*pbp_txt['plays']['clock.minutes'].astype(int) + pbp_txt['plays']['clock.seconds'].astype(int),
+                60*pbp_txt['plays']['clock.minutes'].astype(int) + pbp_txt['plays']['clock.seconds'].astype(int)
+            )
+            pbp_txt['plays']['start.adj_TimeSecsRem'] = np.select(
+                [
+                    pbp_txt['plays']['period.number'] == 1,
+                    pbp_txt['plays']['period.number'] == 2,
+                    pbp_txt['plays']['period.number'] == 3,
+                    pbp_txt['plays']['period.number'] == 4
+                ],
+                [
+                    2700 + 60*pbp_txt['plays']['clock.minutes'].astype(int)+pbp_txt['plays']['clock.seconds'].astype(int),
+                    1800 + 60*pbp_txt['plays']['clock.minutes'].astype(int)+pbp_txt['plays']['clock.seconds'].astype(int),
+                    900 + 60*pbp_txt['plays']['clock.minutes'].astype(int)+pbp_txt['plays']['clock.seconds'].astype(int),
+                    60*pbp_txt['plays']['clock.minutes'].astype(int)+pbp_txt['plays']['clock.seconds'].astype(int)
+                ], default = 60*pbp_txt['plays']['clock.minutes'].astype(int) + pbp_txt['plays']['clock.seconds'].astype(int)
+            )
+            # Pos Team - Start and End Id
+            pbp_txt['plays']['game_play_number'] = np.arange(len(pbp_txt['plays']))+1
+            pbp_txt['plays']['text'] = pbp_txt['plays']['text'].astype(str)
+            pbp_txt['plays']['id'] = pbp_txt['plays']['id'].apply(lambda x: int(x))
+            pbp_txt['plays']["start.team.id"] = pbp_txt['plays']["start.team.id"].fillna(method='ffill').apply(lambda x: int(x))
+            pbp_txt['plays']["end.team.id"] = pbp_txt['plays']["end.team.id"].fillna(value=pbp_txt['plays']["start.team.id"]).apply(lambda x: int(x))
+            pbp_txt['plays']['start.pos_team.id'] = np.select(
+                [
+                    (pbp_txt['plays']['type.text'].isin(kickoff_vec)) &
+                    (pbp_txt['plays']['start.team.id'].astype(int) == pbp_txt['plays']['homeTeamId'].astype(int)),
+                    (pbp_txt['plays']['type.text'].isin(kickoff_vec)) &
+                    (pbp_txt['plays']['start.team.id'].astype(int) == pbp_txt['plays']['awayTeamId'].astype(int))
+                ],
+                [
+                    pbp_txt['plays']['awayTeamId'].astype(int),
+                    pbp_txt['plays']['homeTeamId'].astype(int)
+                ], default = pbp_txt['plays']['start.team.id'].astype(int)
+            )
+            pbp_txt['plays']['start.def_pos_team.id'] = np.where(
+                pbp_txt['plays']['start.pos_team.id'].astype(int) == pbp_txt['plays']['homeTeamId'].astype(int),
+                pbp_txt['plays']['awayTeamId'].astype(int), pbp_txt['plays']['homeTeamId'].astype(int)
+            )
+            pbp_txt['plays']["end.def_team.id"] = np.where(
+                pbp_txt['plays']["end.team.id"].astype(int) == pbp_txt['plays']['homeTeamId'].astype(int),
+                pbp_txt['plays']['awayTeamId'].astype(int), pbp_txt['plays']['homeTeamId'].astype(int)
+            )
+            pbp_txt['plays']['end.pos_team.id'] = pbp_txt['plays']['end.team.id'].apply(lambda x: int(x))
+            pbp_txt['plays']['end.def_pos_team.id'] = pbp_txt['plays']['end.def_team.id'].apply(lambda x: int(x))
+            pbp_txt['plays']['start.pos_team.name'] = np.where(
+                pbp_txt['plays']['start.pos_team.id'].astype(int) == pbp_txt['plays']['homeTeamId'].astype(int),
+                pbp_txt['plays']['homeTeamName'],pbp_txt['plays']['awayTeamName']
+            )
+            pbp_txt['plays']['start.def_pos_team.name'] = np.where(
+                pbp_txt['plays']['start.pos_team.id'].astype(int) == pbp_txt['plays']['homeTeamId'].astype(int),
+                pbp_txt['plays']['awayTeamName'], pbp_txt['plays']['homeTeamName']
+            )
+            pbp_txt['plays']['end.pos_team.name'] = np.where(
+                pbp_txt['plays']['end.pos_team.id'].astype(int) == pbp_txt['plays']['homeTeamId'].astype(int),
+                pbp_txt['plays']['homeTeamName'],pbp_txt['plays']['awayTeamName']
+            )
+            pbp_txt['plays']['end.def_pos_team.name'] = np.where(
+                pbp_txt['plays']['end.pos_team.id'].astype(int) == pbp_txt['plays']['homeTeamId'].astype(int),
+                pbp_txt['plays']['awayTeamName'], pbp_txt['plays']['homeTeamName']
+            )
+            pbp_txt['plays']['start.is_home'] = np.where(
+                pbp_txt['plays']["start.pos_team.id"].astype(int) == pbp_txt['plays']['homeTeamId'].astype(int),
+                True, False
+            )
+            pbp_txt['plays']['end.is_home'] = np.where(
+                pbp_txt['plays']["end.pos_team.id"].astype(int) == pbp_txt['plays']['homeTeamId'].astype(int),
+                True, False
+            )
+            pbp_txt['plays']['homeTimeoutCalled'] = np.where(
+                (pbp_txt['plays']['type.text']=='Timeout') &
+                ((pbp_txt['plays']['text'].str.lower().str.contains(str(homeTeamAbbrev),case=False))|
+                 (pbp_txt['plays']['text'].str.lower().str.contains(str(homeTeamName), case=False))|
+                 (pbp_txt['plays']['text'].str.lower().str.contains(str(homeTeamMascot), case=False))|
+                 (pbp_txt['plays']['text'].str.lower().str.contains(str(homeTeamNameAlt), case=False))),
+                True, False
+            )
+            pbp_txt['plays']['awayTimeoutCalled'] = np.where(
+                (pbp_txt['plays']['type.text']=='Timeout') &
+                ((pbp_txt['plays']['text'].str.lower().str.contains(str(awayTeamAbbrev),case=False))|
+                 (pbp_txt['plays']['text'].str.lower().str.contains(str(awayTeamName), case=False))|
+                 (pbp_txt['plays']['text'].str.lower().str.contains(str(awayTeamMascot), case=False))|
+                 (pbp_txt['plays']['text'].str.lower().str.contains(str(awayTeamNameAlt), case=False))),
+                True, False
+            )
+            pbp_txt['timeouts'][homeTeamId]["1"] = pbp_txt['plays'].loc[
+                        (pbp_txt['plays']['homeTimeoutCalled'] == True) &
+                        (pbp_txt['plays']['period.number'] <= 2)].reset_index()['id']
+            pbp_txt['timeouts'][homeTeamId]["2"] = pbp_txt['plays'].loc[
+                        (pbp_txt['plays']['homeTimeoutCalled'] == True) &
+                        (pbp_txt['plays']['period.number'] > 2)
+                        ].reset_index()['id']
+            pbp_txt['timeouts'][awayTeamId]["1"] = pbp_txt['plays'].loc[
+                        (pbp_txt['plays']['awayTimeoutCalled'] == True) &
+                        (pbp_txt['plays']['period.number'] <= 2)
+                        ].reset_index()['id']
+            pbp_txt['timeouts'][awayTeamId]["2"] = pbp_txt['plays'].loc[
+                        (pbp_txt['plays']['awayTimeoutCalled'] == True) &
+                        (pbp_txt['plays']['period.number'] > 2)
+                        ].reset_index()['id']
+
+            pbp_txt['timeouts'][homeTeamId]["1"] = pbp_txt['timeouts'][homeTeamId]["1"].apply(lambda x: int(x))
+            pbp_txt['timeouts'][homeTeamId]["2"] = pbp_txt['timeouts'][homeTeamId]["2"].apply(lambda x: int(x))
+            pbp_txt['timeouts'][awayTeamId]["1"] = pbp_txt['timeouts'][awayTeamId]["1"].apply(lambda x: int(x))
+            pbp_txt['timeouts'][awayTeamId]["2"] = pbp_txt['timeouts'][awayTeamId]["2"].apply(lambda x: int(x))
+            pbp_txt['plays']['end.homeTeamTimeouts'] = 3 - pbp_txt['plays'].apply(
+                lambda x: ((pbp_txt['timeouts'][homeTeamId]["1"] <= x['id']) & (x['period.number'] <= 2))|
+                        ((pbp_txt['timeouts'][homeTeamId]["2"] <= x['id']) & (x['period.number'] > 2)), axis = 1
+            ).apply(lambda x: int(x.sum()), axis=1)
+            pbp_txt['plays']['end.awayTeamTimeouts'] = 3 - pbp_txt['plays'].apply(
+                lambda x: ((pbp_txt['timeouts'][awayTeamId]["1"] <= x['id']) & (x['period.number'] <= 2))|
+                        ((pbp_txt['timeouts'][awayTeamId]["2"] <= x['id']) & (x['period.number'] > 2)), axis = 1
+            ).apply(lambda x: int(x.sum()), axis=1)
+            pbp_txt['plays']['start.homeTeamTimeouts'] = pbp_txt['plays']['end.homeTeamTimeouts'].shift(1)
+            pbp_txt['plays']['start.awayTeamTimeouts'] = pbp_txt['plays']['end.awayTeamTimeouts'].shift(1)
+            pbp_txt['plays']['start.homeTeamTimeouts'] = np.where(
+                (pbp_txt['plays']['game_play_number'] == 1) |
+                ((pbp_txt['plays']['half'] == "2") & (pbp_txt['plays']['lag_half'] == "1")),
+                3, pbp_txt['plays']['start.homeTeamTimeouts']
+            )
+            pbp_txt['plays']['start.awayTeamTimeouts'] = np.where(
+                (pbp_txt['plays']['game_play_number'] == 1)|
+                ((pbp_txt['plays']['half'] == "2") & (pbp_txt['plays']['lag_half'] == "1")),
+                3, pbp_txt['plays']['start.awayTeamTimeouts']
+            )
+            pbp_txt['plays']['start.homeTeamTimeouts'] = pbp_txt['plays']['start.homeTeamTimeouts'].apply(lambda x: int(x))
+            pbp_txt['plays']['start.awayTeamTimeouts'] = pbp_txt['plays']['start.awayTeamTimeouts'].apply(lambda x: int(x))
+            pbp_txt['plays']['end.TimeSecsRem'] = pbp_txt['plays']['start.TimeSecsRem'].shift(1)
+            pbp_txt['plays']['end.adj_TimeSecsRem'] = pbp_txt['plays']['start.adj_TimeSecsRem'].shift(1)
+            pbp_txt['plays']['end.TimeSecsRem'] = np.where(
+                (pbp_txt['plays']['game_play_number'] == 1)|
+                ((pbp_txt['plays']['half'] == "2") & (pbp_txt['plays']['lag_half'] == "1")),
+                1800, pbp_txt['plays']['end.TimeSecsRem']
+            )
+            pbp_txt['plays']['end.adj_TimeSecsRem'] = np.select(
+                [
+                    (pbp_txt['plays']['game_play_number'] == 1),
+                    ((pbp_txt['plays']['half'] == "2") & (pbp_txt['plays']['lag_half'] == "1"))
+                ],
+                [
+                    3600, 
+                    1800
+                ], default = pbp_txt['plays']['end.adj_TimeSecsRem']
+            )
+            pbp_txt['plays']['start.posTeamTimeouts'] = np.where(
+                pbp_txt['plays']['start.pos_team.id'] == pbp_txt['plays']['homeTeamId'],
+                pbp_txt['plays']['start.homeTeamTimeouts'],
+                pbp_txt['plays']['start.awayTeamTimeouts']
+            )
+            pbp_txt['plays']['start.defPosTeamTimeouts'] = np.where(
+                pbp_txt['plays']['start.def_pos_team.id'] == pbp_txt['plays']['homeTeamId'],
+                pbp_txt['plays']['start.homeTeamTimeouts'],
+                pbp_txt['plays']['start.awayTeamTimeouts']
+            )
+            pbp_txt['plays']['end.posTeamTimeouts'] = np.where(
+                pbp_txt['plays']['end.pos_team.id'] == pbp_txt['plays']['homeTeamId'],
+                pbp_txt['plays']['end.homeTeamTimeouts'],
+                pbp_txt['plays']['end.awayTeamTimeouts']
+            )
+            pbp_txt['plays']['end.defPosTeamTimeouts'] = np.where(
+                pbp_txt['plays']['end.def_pos_team.id'] == pbp_txt['plays']['homeTeamId'],
+                pbp_txt['plays']['end.homeTeamTimeouts'],
+                pbp_txt['plays']['end.awayTeamTimeouts']
+            )
+            pbp_txt['firstHalfKickoffTeamId'] = np.where(
+                (pbp_txt['plays']['game_play_number'] == 1) &
+                (pbp_txt['plays']['type.text'].isin(kickoff_vec)) &
+                (pbp_txt['plays']['start.team.id'] == pbp_txt['plays']['homeTeamId']),
+                pbp_txt['plays']['homeTeamId'],
+                pbp_txt['plays']['awayTeamId']
+            )
+            pbp_txt['plays']['firstHalfKickoffTeamId'] = pbp_txt['firstHalfKickoffTeamId']
+            pbp_txt['plays']['period'] = pbp_txt['plays']['period.number']
+            pbp_txt['plays']['start.yard'] = np.where(
+                (pbp_txt['plays']['start.team.id'] == homeTeamId),
+                100 - pbp_txt['plays']['start.yardLine'],
+                pbp_txt['plays']['start.yardLine']
+            )
+            pbp_txt['plays']['start.yardsToEndzone'] = np.where(
+                pbp_txt['plays']['start.yardLine'].isna() == False,
+                pbp_txt['plays']['start.yardsToEndzone'],
+                pbp_txt['plays']['start.yard']
+            )
+            pbp_txt['plays']['start.yardsToEndzone'] = np.where(
+                pbp_txt['plays']['start.yardsToEndzone'] == 0,
+                pbp_txt['plays']['start.yard'],
+                pbp_txt['plays']['start.yardsToEndzone']
+            )
+            pbp_txt['plays']['end.yard'] = np.where(
+                (pbp_txt['plays']['end.team.id'] == homeTeamId),
+                100 - pbp_txt['plays']['end.yardLine'],
+                pbp_txt['plays']['end.yardLine']
+            )
+            pbp_txt['plays']['end.yard'] = np.where(
+                (pbp_txt['plays']['type.text'] == "Penalty") &
+                (pbp_txt['plays']["text"].str.contains("declined", case=False, flags=0, na=False, regex=True)),
+                pbp_txt['plays']['start.yard'],
+                pbp_txt['plays']['end.yard']
+            )
+            pbp_txt['plays']['end.yardsToEndzone'] = np.where(
+                pbp_txt['plays']['end.yardLine'].isna() == False,
+                pbp_txt['plays']['end.yardsToEndzone'],
+                pbp_txt['plays']['end.yard']
+            )
+            pbp_txt['plays']['end.yardsToEndzone'] = np.where(
+                (pbp_txt['plays']['type.text'] == "Penalty") &
+                (pbp_txt['plays']["text"].str.contains("declined", case=False, flags=0, na=False, regex=True)),
+                pbp_txt['plays']['start.yardsToEndzone'],
+                pbp_txt['plays']['end.yardsToEndzone']
+            )
+            pbp_txt['timeouts'][homeTeamId]["1"] = np.array(pbp_txt['timeouts'][homeTeamId]["1"]).tolist()
+            pbp_txt['timeouts'][homeTeamId]["2"] = np.array(pbp_txt['timeouts'][homeTeamId]["2"]).tolist()
+            pbp_txt['timeouts'][awayTeamId]["1"] = np.array(pbp_txt['timeouts'][awayTeamId]["1"]).tolist()
+            pbp_txt['timeouts'][awayTeamId]["2"] = np.array(pbp_txt['timeouts'][awayTeamId]["2"]).tolist()
+            if 'scoringType.displayName' in pbp_txt['plays'].keys():
+                pbp_txt['plays']['type.text'] = np.where(
+                    pbp_txt['plays']['scoringType.displayName']=='Field Goal',
+                    'Field Goal Good', pbp_txt['plays']['type.text']
+                )
+                pbp_txt['plays']['type.text'] = np.where(
+                    pbp_txt['plays']['scoringType.displayName']=='Extra Point',
+                    'Extra Point Good', pbp_txt['plays']['type.text']
+                )
+                
+            pbp_txt['plays']['playType'] = np.where(
+                pbp_txt['plays']['type.text'].isna() == False,
+                pbp_txt['plays']['type.text'], "Unknown"
+            )
+            pbp_txt['plays']['type.text'] = np.where(
+                    pbp_txt['plays']['text'].str.lower().str.contains("extra point", case=False) &
+                    pbp_txt['plays']['text'].str.lower().str.contains("no good", case=False),
+                    'Extra Point Missed', pbp_txt['plays']['type.text']
+                )
+            pbp_txt['plays']['type.text'] = np.where(
+                pbp_txt['plays']['text'].str.lower().str.contains("extra point", case=False) &
+                pbp_txt['plays']['text'].str.lower().str.contains("blocked", case=False),
+                'Extra Point Missed', pbp_txt['plays']['type.text']
+            )
+            pbp_txt['plays']['type.text'] = np.where(
+                pbp_txt['plays']['text'].str.lower().str.contains("field goal", case=False) &
+                pbp_txt['plays']['text'].str.lower().str.contains("blocked", case=False),
+                'Blocked Field Goal', pbp_txt['plays']['type.text']
+            )
+            pbp_txt['plays']['type.text'] = np.where(
+                pbp_txt['plays']['text'].str.lower().str.contains("field goal", case=False) &
+                pbp_txt['plays']['text'].str.lower().str.contains("no good", case=False),
+                'Field Goal Missed', pbp_txt['plays']['type.text']
+            )
+            del pbp_txt['plays']['clock.mm']
+        else:
+            pbp_txt['drives']={}
+        
+        if 'scoringPlays' not in pbp_txt.keys():
+            pbp_txt['scoringPlays']=np.array([])
+        if 'winprobability' not in pbp_txt.keys():
+            pbp_txt['winprobability'] = np.array([])
+        if 'standings' not in pbp_txt.keys():
+            pbp_txt['standings'] = np.array([])
+        if 'videos' not in pbp_txt.keys():
+            pbp_txt['videos'] = np.array([])
+        if 'broadcasts' not in pbp_txt.keys():
+            pbp_txt['broadcasts'] = np.array([])  
+        self.plays_json = pbp_txt['plays']
+        pbp_json = {
+            "drives" : pbp_txt['drives'],
+            "scoringPlays" : np.array(pbp_txt['scoringPlays']).tolist(),
+            "winprobability" : np.array(pbp_txt['winprobability']).tolist(),
+            "boxscore" : pbp_txt['boxscore'],
+            "header" : pbp_txt['header'],
+            "homeTeamSpread" : np.array(pbp_txt['homeTeamSpread']).tolist(),
+            "broadcasts" : np.array(pbp_txt['broadcasts']).tolist(),
+            "videos" : np.array(pbp_txt['videos']).tolist(),
+            "standings" : pbp_txt['standings'],
+            "timeouts" : pbp_txt['timeouts'],
+            "pickcenter" : np.array(pbp_txt['pickcenter']).tolist(),
+            "espnWP" : np.array(pbp_txt['espnWP']).tolist(),
+            "gameInfo" : np.array(pbp_txt['gameInfo']).tolist(),
+            "season" : np.array(pbp_txt['season']).tolist()
+        }
+        self.json = pbp_json
+        return pbp_json
+
+
 
     def __setup_penalty_data(self, play_df):
         """
@@ -1308,7 +1783,7 @@ class PlayProcess(object):
                 (play_df["text"].str.contains("Two-Point", case=False, flags=0, na=False, regex=True)),
                 "Two-Point Conversion Missed", play_df['type.text']
         )
-        play_df = self.__setup_penalty_data__(play_df)
+        play_df = self.__setup_penalty_data(play_df)
     #--------------------------------------------------
         #--- Sacks ----
         play_df['sack'] = np.select(
@@ -2228,7 +2703,7 @@ class PlayProcess(object):
 
         dtest_start_touchback = xgb.DMatrix(start_touchback_data)
         EP_start_touchback_parts = ep_model.predict(dtest_start_touchback)
-        EP_start_touchback = self.__calculate_ep_exp_val__(EP_start_touchback_parts)
+        EP_start_touchback = self.__calculate_ep_exp_val(EP_start_touchback_parts)
 
         start_data = play_df[ep_start_columns]
         start_data.columns = ep_final_names
@@ -2236,7 +2711,7 @@ class PlayProcess(object):
 
         dtest_start = xgb.DMatrix(start_data)
         EP_start_parts = ep_model.predict(dtest_start)
-        EP_start = self.__calculate_ep_exp_val__(EP_start_parts)
+        EP_start = self.__calculate_ep_exp_val(EP_start_parts)
 
         play_df.loc[play_df["end.TimeSecsRem"] <= 0, "end.TimeSecsRem"] = 0
         play_df.loc[play_df["end.TimeSecsRem"] <= 0, "end.yardsToEndzone"] = 99
@@ -2253,7 +2728,7 @@ class PlayProcess(object):
         dtest_end = xgb.DMatrix(end_data)
         EP_end_parts = ep_model.predict(dtest_end)
 
-        EP_end = self.__calculate_ep_exp_val__(EP_end_parts)
+        EP_end = self.__calculate_ep_exp_val(EP_end_parts)
 
         play_df["EP_start_touchback"] = EP_start_touchback
         play_df['EP_start'] = EP_start
@@ -2814,13 +3289,13 @@ class PlayProcess(object):
 
     def run_processing_pipeline(self):
         if (self.ran_pipeline == False):
-            self.plays_json = self.__clean_pbp_data__(self.plays_json)
-            self.plays_json = self.__add_yardage_cols__(self.plays_json)
-            self.plays_json = self.__add_player_cols__(self.plays_json)
-            self.plays_json = self.__after_cols__(self.plays_json)
-            self.plays_json = self.__process_epa__(self.plays_json)
-            self.plays_json = self.__process_wpa__(self.plays_json)
-            self.plays_json = self.__add_drive_data__(self.plays_json)
+            self.plays_json = self.__clean_pbp_data(self.plays_json)
+            self.plays_json = self.__add_yardage_cols(self.plays_json)
+            self.plays_json = self.__add_player_cols(self.plays_json)
+            self.plays_json = self.__after_cols(self.plays_json)
+            self.plays_json = self.__process_epa(self.plays_json)
+            self.plays_json = self.__process_wpa(self.plays_json)
+            self.plays_json = self.__add_drive_data(self.plays_json)
             self.plays_json = self.plays_json.replace({np.nan: None})
             self.ran_pipeline = True
         else:

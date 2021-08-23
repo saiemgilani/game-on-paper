@@ -67,13 +67,13 @@ const useStyles = makeStyles((theme) => ({
     position: 'absolute',
   },
 }))
-const myLoader = ({ src }) => {
-  return `https://a.espncdn.com/i/teamlogos/wnba/500/${src}.png`
+const myLoader = ({ src, width}) => {
+  return `https://a.espncdn.com/i/teamlogos/wnba/500/${src}.png?w=${width}`
 }
 export default function WNBAScoreboardPage() {
   const large = useMediaQuery('(min-width:700px)')
-  const [year, setYear] = useState('2021');
-  const [month, setMonth] = useState('07');
+  const [year, setYear] = useState('');
+  const [month, setMonth] = useState('');
   const [day, setDay] = useState('');
   const [seasonType, setSeasonType] = useState('Regular');
   const [wnbaScoreboardData] = useWNBAScoreboardApi(year, month, day)
@@ -131,6 +131,7 @@ export default function WNBAScoreboardPage() {
               <Grid item xs={12} sm={6} md={4} lg={4} key={idx}>
                 <ScoreCard
                   score={d}
+                  loader={myLoader}
                   noMargin={false}
                   sport={'wnba'}/>
               </Grid>
