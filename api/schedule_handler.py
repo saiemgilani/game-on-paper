@@ -85,6 +85,48 @@ class ScheduleProcess(object):
         ev = json.loads(pd.DataFrame(ev).to_json(orient='records'))
         return ev
 
+    def nfl_schedule(self):
+        if self.week is None:
+            week = ''
+        else:
+            week = '&week=' + self.week
+        if self.dates is None:
+            dates = ''
+        else:
+            dates = '&dates=' + self.dates
+        if self.season_type is None:
+            season_type = ''
+        else:
+            season_type = '&seasontype=' + self.season_type
+        ev = pd.DataFrame()
+        url = "http://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?limit=300{}{}{}".format(dates,week,season_type)
+        resp = self.download(url=url)
+        if resp is not None:
+            events_txt = json.loads(resp)
+
+            events = events_txt['events']
+            for event in events:
+                if 'links' in event['competitions'][0]['competitors'][0]['team'].keys():
+                    del event['competitions'][0]['competitors'][0]['team']['links']
+                if 'links' in event['competitions'][0]['competitors'][1]['team'].keys():
+                    del event['competitions'][0]['competitors'][1]['team']['links']    
+                if event['competitions'][0]['competitors'][0]['homeAway']=='home':
+                    event['competitions'][0]['home'] = event['competitions'][0]['competitors'][0]['team']    
+                else: 
+                    event['competitions'][0]['away'] = event['competitions'][0]['competitors'][0]['team']
+                if event['competitions'][0]['competitors'][1]['homeAway']=='away':
+                    event['competitions'][0]['away'] = event['competitions'][0]['competitors'][1]['team']
+                else: 
+                    event['competitions'][0]['home'] = event['competitions'][0]['competitors'][1]['team']
+
+                del_keys = ['broadcasts','geoBroadcasts', 'headlines']
+                for k in del_keys:
+                    if k in event['competitions'][0].keys():
+                        del event['competitions'][0][k]
+
+                ev = ev.append(pd.json_normalize(event['competitions'][0]))
+        ev = json.loads(pd.DataFrame(ev).to_json(orient='records'))
+        return ev
 
     def mbb_schedule(self):
         if self.dates is None:

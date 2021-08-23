@@ -49,7 +49,17 @@ export default function LandingPage(props) {
               <Button variant="text" color="inherit">
               <SportsFootballIcon />
               <Typography variant={large ? 'h6' : 'h6'} >College Football</Typography>
-              </Button> 
+              </Button>
+              </Link>
+            </Box>
+          </Grid>
+          <Grid item xs={12} sm={6} style={{ textAlign: 'center' }}>
+            <Box p={5}>
+              <Link href="nfl/scoreboard" >
+              <Button variant="text" color="inherit">
+              <SportsFootballIcon />
+                <Typography variant={large ? 'h6' : 'h6'} >NFL</Typography>
+              </Button>
               </Link>
             </Box>
           </Grid>
@@ -59,10 +69,40 @@ export default function LandingPage(props) {
               <Button variant="text" color="inherit">
               <SportsBasketballIcon />
                 <Typography variant={large ? 'h6' : 'h6'} >Men's College Basketball</Typography>
-              </Button> 
+              </Button>
               </Link>
             </Box>
-        </Grid>
+          </Grid>
+          <Grid item xs={12} sm={6} style={{ textAlign: 'center' }}>
+            <Box p={5}>
+              <Link href="nba/scoreboard" >
+              <Button variant="text" color="inherit">
+              <SportsBasketballIcon />
+                <Typography variant={large ? 'h6' : 'h6'} >NBA</Typography>
+              </Button>
+              </Link>
+            </Box>
+          </Grid>
+          <Grid item xs={12} sm={6} style={{ textAlign: 'center' }}>
+            <Box p={5}>
+              <Link href="wbb/scoreboard" >
+              <Button variant="text" color="inherit">
+              <SportsBasketballIcon />
+                <Typography variant={large ? 'h6' : 'h6'} >Women's College Basketball</Typography>
+              </Button>
+              </Link>
+            </Box>
+          </Grid>
+          <Grid item xs={12} sm={6} style={{ textAlign: 'center' }}>
+            <Box p={5}>
+              <Link href="wnba/scoreboard" >
+              <Button variant="text" color="inherit">
+              <SportsBasketballIcon />
+                <Typography variant={large ? 'h6' : 'h6'} >WNBA</Typography>
+              </Button>
+              </Link>
+            </Box>
+          </Grid>
       </Grid>
     </>
   );

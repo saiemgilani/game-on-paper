@@ -244,6 +244,19 @@ def get_cfb_scoreboard(request: Request,
     tmp_json = schedule
     return tmp_json
 
+@app.get("/py/nfl/scoreboard")
+def get_nfl_scoreboard(request: Request,
+                        dates:Optional[str] = Query(None),
+                        week:Optional[str] = Query(None),
+                        seasontype:Optional[str] = Query(None)) -> Optional[None]:
+
+    headers = {"accept": "application/json"}
+    processed_data = ScheduleProcess(dates = dates, week = week, season_type = seasontype)
+    schedule = processed_data.nfl_schedule()
+    tmp_json = schedule
+    return tmp_json
+
+
 @app.get("/py/mbb/game/{gameId}")
 def get_mbb_game(request: Request, gameId: str) -> Optional[None]:
 

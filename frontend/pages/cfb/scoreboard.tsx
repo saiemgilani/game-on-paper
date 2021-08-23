@@ -140,7 +140,6 @@ export default function CFBScoreboardPage() {
                 <ScoreCard
                   score={d}
                   noMargin={false}
-                  loader={myLoader}
                   sport={'cfb'}/>
               </Grid>
           ))}

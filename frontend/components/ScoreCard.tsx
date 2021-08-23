@@ -15,7 +15,6 @@ import Link from 'next/link'
 
 type ScoreCardProps = {
   score: ScoreData
-  loader: any
   sport: string
   noMargin?: boolean
 }
@@ -68,7 +67,7 @@ const useStyles = makeStyles((theme) => ({
     position: 'absolute',
   },
 }))
-export const ScoreCard: FC<ScoreCardProps> = ({ score, loader, sport, noMargin }): ReactElement => {
+export const ScoreCard: FC<ScoreCardProps> = ({ score,  sport, noMargin }): ReactElement => {
   const classes = useStyles()
 
   return (
@@ -76,7 +75,7 @@ export const ScoreCard: FC<ScoreCardProps> = ({ score, loader, sport, noMargin }
           <CardContent>
           <Grid container spacing={1}>
             <Grid item> 
-              {<Image loader={loader} src={score['competitors'][1]['team']['id']} width={30} height={30}   alt={score['competitors'][1]['team']['shortDisplayName']}/>} 
+              {<Image src={score['competitors'][1]['team']['logo']} width={30} height={30}   alt={score['competitors'][1]['team']['shortDisplayName']}/>} 
             </Grid>
             <Grid item> 
               <Typography variant={'h6'} color="textPrimary" >
@@ -91,7 +90,7 @@ export const ScoreCard: FC<ScoreCardProps> = ({ score, loader, sport, noMargin }
           </Grid>
           <Grid container spacing={1}>
             <Grid item> 
-            {<Image loader={loader} src={score['competitors'][0]['team']['id']} width={30} height={30}  alt={score['competitors'][0]['team']['shortDisplayName']}/>} 
+            {<Image src={score['competitors'][0]['team']['logo']} width={30} height={30}  alt={score['competitors'][0]['team']['shortDisplayName']}/>} 
             </Grid>
             <Grid item> 
             <Typography variant={'h6'} color="textPrimary">

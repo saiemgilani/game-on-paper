@@ -132,7 +132,6 @@ export default function NBAScoreboardPage() {
                 <ScoreCard
                   score={d}
                   noMargin={false}
-                  loader={myLoader}
                   sport={'nba'}/>
               </Grid>
           ))}

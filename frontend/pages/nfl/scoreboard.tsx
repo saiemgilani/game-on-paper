@@ -2,7 +2,9 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Link from 'next/link'
-import useWNBAScoreboardApi from '../../hooks/useWNBAScoreboardApi'
+import { useRouteMatch } from 'react-router-dom';
+import useRequest from '../../libs/useRequest'
+import useNFLScoreboardApi from '../../hooks/useNFLScoreboardApi'
 // core components
 import { Grid, Typography } from '@material-ui/core'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
@@ -12,11 +14,16 @@ import { NAME, NAME_AND_DOMAIN } from '../../types/constants'
 import { ScoreCard } from "../../components/ScoreCard";
 import { useTable } from 'react-table'
 import Button from '@material-ui/core/Button'
+import Card from '@material-ui/core/Card'
+import CardActionArea from '@material-ui/core/CardActionArea'
+import CardActions from '@material-ui/core/CardActions'
+import CardContent from '@material-ui/core/CardContent'
+import CardMedia from '@material-ui/core/CardMedia'
+import ChevronRight from '@material-ui/icons/ChevronRight'
 import Image from 'next/image'
-import YearSelector from '../../components/YearSelector';
-import MonthSelector from '../../components/MonthSelector';
-import DaySelector from '../../components/DaySelector';
-import SeasonTypeSelector from '../../components/SeasonTypeSelector';
+import CFBSeasonTypeSelector from '../../components/CFBSeasonTypeSelector';
+import CFBWeekSelector from '../../components/CFBWeekSelector';
+import CFBSeasonSelector from '../../components/CFBSeasonSelector';
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -44,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.text.secondary,
   },
   media: {
-    height: 35,
+    height: 30,
   },
   hscore:{
     right: 5,
@@ -68,26 +75,27 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 const myLoader = ({ src }) => {
-  return `https://a.espncdn.com/i/teamlogos/wnba/500/${src}.png`
+  return `https://a.espncdn.com/i/teamlogos/nfl/500/${src}.png`
 }
-export default function WNBAScoreboardPage() {
+export default function NFLScoreboardPage() {
   const large = useMediaQuery('(min-width:700px)')
-  const [year, setYear] = useState('2021');
-  const [month, setMonth] = useState('07');
-  const [day, setDay] = useState('');
+  const seasons = '2020'
+  const [season, setSeason] = useState('2021');
+  const [week, setWeek] = useState('1');
   const [seasonType, setSeasonType] = useState('Regular');
-  const [wnbaScoreboardData] = useWNBAScoreboardApi(year, month, day)
+  const [nflScoreboardData] = useNFLScoreboardApi(season, week, seasonType)
 
-  const data = wnbaScoreboardData
+  const data = nflScoreboardData
   const acc = data.reduce((acc, x) => {
-    if(x['status.type.name'] === 'STATUS_CANCELED' || x['status.type.name'] === 'STATUS_POSTPONED') {
-      return acc
-    } else{
-      acc.push(x)
-      return acc
+    console.log(x['status.type.name'] === 'STATUS_CANCELED')
+     if(x['status.type.name'] === 'STATUS_CANCELED' || x['status.type.name'] === 'STATUS_POSTPONED') {return acc}
+     else{
+       acc.push(x)
+       return acc
     }
   }, [])
   const classes = useStyles()
+  console.log(acc)
   return (
       <>
         <Head>
@@ -101,52 +109,47 @@ export default function WNBAScoreboardPage() {
           <Grid item xs={12}>
             <Box p={5}>
               <Typography variant={large ? 'h4' : 'h6'} style={{ textAlign: 'center' }}>
-                WNBA Scoreboard
+                NFL Scoreboard
               </Typography>
             </Box>
           </Grid>
         </Grid>
         <Grid container direction={"row"} alignContent={'center'} justifyContent={'center'} spacing = {1}>
           <Grid item >
-            <YearSelector
-                year={year}
-                setYear={setYear}/>
+            <CFBSeasonSelector
+                season={season}
+                setSeason={setSeason}/>
           </Grid>
           <Grid item >
-            <MonthSelector
-                month={month}
-                setMonth={setMonth}/>
+            <CFBWeekSelector
+                seasonType={seasonType}
+                week={week}
+                setWeek={setWeek}/>
           </Grid>
           <Grid item >
-            <DaySelector
-                day={day}
-                month={month}
-                year={year}
-                setDay={setDay}/>
+            <CFBSeasonTypeSelector
+                week={week}
+                seasonType={seasonType}
+                setSeasonType={setSeasonType}/>
           </Grid>
         </Grid>
         <div>
-        <Grid container direction={"row"} justifyContent={'space-between'}>
+          <Grid container direction={"row"} justifyContent={'space-between'}>
           {acc.map((d, idx) =>(
               <Grid item xs={12} sm={6} md={4} lg={4} key={idx}>
                 <ScoreCard
                   score={d}
                   noMargin={false}
-                  sport={'wnba'}/>
+                  sport={'nfl'}/>
               </Grid>
           ))}
-        </Grid>
+          </Grid>
         </div>
         <div style={{ textAlign: 'center' }}>
-          <div>
-            <p>
-            <Link href="/wnba">
-                <a>Back</a>
-            </Link>
-            </p>
-          </div>
+            <Link href="/nfl">Back</Link>
         </div>
 
       </>
     );
   }
+

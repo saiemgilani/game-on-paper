@@ -723,7 +723,7 @@ class PlayProcess(object):
         return pbp_json
 
 
-    def __setup_penalty_data__(self, play_df):
+    def __setup_penalty_data(self, play_df):
         """
         Creates the following columns in play_df:
             * Penalty flag
@@ -912,7 +912,7 @@ class PlayProcess(object):
         play_df['yds_penalty'] = play_df.yds_penalty.str.replace( "yards\\)|Yards\\)|yds\\)|Yds\\)", "").str.replace( "\\(", "")
         return play_df
 
-    def __clean_pbp_data__(self, play_df):
+    def __clean_pbp_data(self, play_df):
         """
         Creates the following columns in play_df:
             * id, drive_id, game_id
@@ -1457,7 +1457,7 @@ class PlayProcess(object):
         )
         return play_df
 
-    def __add_yardage_cols__(self, play_df):
+    def __add_yardage_cols(self, play_df):
         play_df['yds_rushed'] = None
         play_df['yds_rushed'] = np.select(
             [
@@ -1643,7 +1643,7 @@ class PlayProcess(object):
         )
         return play_df
 
-    def __add_player_cols__(self, play_df):
+    def __add_player_cols(self, play_df):
         play_df['rush_player'] = None
         play_df['receiver_player'] = None
         play_df['pass_player'] = None
@@ -2060,7 +2060,7 @@ class PlayProcess(object):
         
         return play_df
 
-    def __after_cols__(self, play_df):
+    def __after_cols(self, play_df):
         play_df['new_down'] =  np.select(
             [
                 (play_df["type.text"] == "Timeout"),
@@ -2206,10 +2206,10 @@ class PlayProcess(object):
         )
         return play_df
 
-    def __calculate_ep_exp_val__(self, matrix):
+    def __calculate_ep_exp_val(self, matrix):
         return matrix[:,0] * ep_class_to_score_mapping[0] + matrix[:,1] * ep_class_to_score_mapping[1] + matrix[:,2] * ep_class_to_score_mapping[2] + matrix[:,3] * ep_class_to_score_mapping[3] + matrix[:,4] * ep_class_to_score_mapping[4] + matrix[:,5] * ep_class_to_score_mapping[5] + matrix[:,6] * ep_class_to_score_mapping[6]
 
-    def __process_epa__(self, play_df):
+    def __process_epa(self, play_df):
         play_df.loc[play_df["type.text"].isin(kickoff_vec), "down"] = 1
         play_df.loc[play_df["type.text"].isin(kickoff_vec), "start.down"] = 1
         play_df.loc[play_df["type.text"].isin(kickoff_vec), "down_1"] = True
@@ -2483,7 +2483,7 @@ class PlayProcess(object):
         )
         return play_df
 
-    def __process_wpa__(self, play_df):
+    def __process_wpa(self, play_df):
         #---- prepare variables for wp_before calculations ----
         play_df['start.ExpScoreDiff_touchback'] = np.select(
             [
@@ -2642,7 +2642,7 @@ class PlayProcess(object):
 
         return play_df
 
-    def __add_drive_data__(self, play_df):
+    def __add_drive_data(self, play_df):
         base_groups = play_df.groupby(['drive.id'])
         play_df['drive_start'] = np.where(
             play_df['start.pos_team.id'] == play_df["homeTeamId"],

@@ -137,7 +137,6 @@ export default function MBBScoreboardPage() {
                 <ScoreCard
                   score={d}
                   noMargin={false}
-                  loader={myLoader}
                   sport={'mbb'}/>
               </Grid>
           ))}
