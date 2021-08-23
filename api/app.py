@@ -18,8 +18,8 @@ app = FastAPI(
     title="Vercel FastAPI template",
     description="A starter template for FastAPI backends in Vercel deployments",
     version="0.1.0",
-    docs_url='/api',
-    openapi_url='/api/openapi.json',
+    docs_url='/py/api',
+    openapi_url='/py/api/openapi.json',
     redoc_url=None
 )
 origins = [
@@ -31,6 +31,7 @@ origins = [
     "https://www.thegameonpaper.com",
     "http://localhost",
     "http://localhost:3000",
+    "https://localhost:3000",
     "http://localhost:7000"
 ]
 app.add_middleware(
@@ -42,7 +43,7 @@ app.add_middleware(
 )
 
 
-@app.get("/cfb/game/{gameId}")
+@app.get("/py/cfb/game/{gameId}")
 def get_cfb_game(request: Request, gameId: str) -> Optional[None]:
 
     headers = {"accept": "application/json"}
@@ -231,7 +232,7 @@ def get_cfb_game(request: Request, gameId: str) -> Optional[None]:
         "season" : np.array(pbp['season']).tolist()
     }
 
-@app.get("/cfb/scoreboard")
+@app.get("/py/cfb/scoreboard")
 def get_cfb_scoreboard(request: Request,
                         dates:Optional[str] = Query(None),
                         week:Optional[str] = Query(None),
@@ -243,7 +244,7 @@ def get_cfb_scoreboard(request: Request,
     tmp_json = schedule
     return tmp_json
 
-@app.get("/mbb/game/{gameId}")
+@app.get("/py/mbb/game/{gameId}")
 def get_mbb_game(request: Request, gameId: str) -> Optional[None]:
 
     headers = {"accept": "application/json"}
@@ -253,7 +254,7 @@ def get_mbb_game(request: Request, gameId: str) -> Optional[None]:
     tmp_json = pbp
     return tmp_json
 
-@app.get("/mbb/scoreboard")
+@app.get("/py/mbb/scoreboard")
 def get_mbb_scoreboard(request: Request,
                         dates:Optional[str] = Query(None),
                         seasontype:Optional[str] = Query(None)) -> Optional[None]:
@@ -264,7 +265,7 @@ def get_mbb_scoreboard(request: Request,
     tmp_json = schedule
     return tmp_json
 
-@app.get("/nba/scoreboard")
+@app.get("/py/nba/scoreboard")
 def get_nba_scoreboard(request: Request,
                         dates:Optional[str] = Query(None),
                         seasontype:Optional[str] = Query(None)) -> Optional[None]:
@@ -275,7 +276,7 @@ def get_nba_scoreboard(request: Request,
     tmp_json = schedule
     return tmp_json
 
-@app.get("/nba/game/{gameId}")
+@app.get("/py/nba/game/{gameId}")
 def get_nba_game(request: Request, gameId: str) -> Optional[None]:
 
     headers = {"accept": "application/json"}
@@ -284,6 +285,49 @@ def get_nba_game(request: Request, gameId: str) -> Optional[None]:
     pbp = processed_data.nba_pbp()
     tmp_json = pbp
     return tmp_json
+
+@app.get("/py/wbb/game/{gameId}")
+def get_wbb_game(request: Request, gameId: str) -> Optional[None]:
+
+    headers = {"accept": "application/json"}
+    # gameId = request.get_json(force=True)['gameId']
+    processed_data = HoopsProcess(gameId = gameId)
+    pbp = processed_data.wbb_pbp()
+    tmp_json = pbp
+    return tmp_json
+
+@app.get("/py/wbb/scoreboard")
+def get_wbb_scoreboard(request: Request,
+                        dates:Optional[str] = Query(None),
+                        seasontype:Optional[str] = Query(None)) -> Optional[None]:
+
+    headers = {"accept": "application/json"}
+    processed_data = ScheduleProcess(dates = dates)
+    schedule = processed_data.wbb_schedule()
+    tmp_json = schedule
+    return tmp_json
+
+@app.get("/py/wnba/scoreboard")
+def get_wnba_scoreboard(request: Request,
+                        dates:Optional[str] = Query(None),
+                        seasontype:Optional[str] = Query(None)) -> Optional[None]:
+
+    headers = {"accept": "application/json"}
+    processed_data = ScheduleProcess(dates = dates, season_type = seasontype)
+    schedule = processed_data.wnba_schedule()
+    tmp_json = schedule
+    return tmp_json
+
+@app.get("/py/wnba/game/{gameId}")
+def get_wnba_game(request: Request, gameId: str) -> Optional[None]:
+
+    headers = {"accept": "application/json"}
+    # gameId = request.get_json(force=True)['gameId']
+    processed_data = HoopsProcess(gameId = gameId)
+    pbp = processed_data.wnba_pbp()
+    tmp_json = pbp
+    return tmp_json
+
 
 if __name__ == "__main__":
   uvicorn.run("app:app", host='0.0.0.0', port=7000, reload=True)

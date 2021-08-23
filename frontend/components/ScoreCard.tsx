@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
     height: 200,
     margin: 10,
     position: 'relative',
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: theme.palette.primary.main,
     color: theme.palette.text.secondary,
   },
   media: {

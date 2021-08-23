@@ -98,7 +98,7 @@ class ScheduleProcess(object):
         url = "http://site.api.espn.com/apis/site/v2/sports/basketball/mens-college-basketball/scoreboard?limit=300{}{}".format(dates,season_type)
         resp = self.download(url=url)
         txt = json.loads(resp)['leagues'][0]['calendar']
-    #     print(len(txt))
+
         txt = list(map(lambda x: x[:10].replace("-",""),txt))
 
         ev = pd.DataFrame()
@@ -138,7 +138,7 @@ class ScheduleProcess(object):
         if season_type is None:
             season_type = ''
 
-        url = "http://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard??limit=300&dates={}&seasontype={}".format(dates,season_type)
+        url = "http://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?limit=300&dates={}&seasontype={}".format(dates,season_type)
         ev = pd.DataFrame()
         resp = self.download(url=url)
 
@@ -168,6 +168,91 @@ class ScheduleProcess(object):
                 ev = ev.append(pd.json_normalize(event['competitions'][0]))
         ev = json.loads(pd.DataFrame(ev).to_json(orient='records'))
         return ev
+
+
+    def wbb_schedule(self):
+        if self.dates is None:
+            dates = ''
+        else:
+            dates = '&dates=' + self.dates
+        if self.season_type is None:
+            season_type = ''
+        else:
+            season_type = '&seasontype=' + self.season_type
+        url = "http://site.api.espn.com/apis/site/v2/sports/basketball/womens-college-basketball/scoreboard?limit=300{}{}".format(dates,season_type)
+        resp = self.download(url=url)
+        txt = json.loads(resp)['leagues'][0]['calendar']
+    #     print(len(txt))
+        txt = list(map(lambda x: x[:10].replace("-",""),txt))
+
+        ev = pd.DataFrame()
+        if resp is not None:
+            events_txt = json.loads(resp)
+
+            events = events_txt['events']
+            for event in events:
+                if 'links' in event['competitions'][0]['competitors'][0]['team'].keys():
+                    del event['competitions'][0]['competitors'][0]['team']['links']
+                if 'links' in event['competitions'][0]['competitors'][1]['team'].keys():
+                    del event['competitions'][0]['competitors'][1]['team']['links']    
+                if event['competitions'][0]['competitors'][0]['homeAway']=='home':
+                    event['competitions'][0]['home'] = event['competitions'][0]['competitors'][0]['team']    
+                else: 
+                    event['competitions'][0]['away'] = event['competitions'][0]['competitors'][0]['team']
+                if event['competitions'][0]['competitors'][1]['homeAway']=='away':
+                    event['competitions'][0]['away'] = event['competitions'][0]['competitors'][1]['team']
+                else: 
+                    event['competitions'][0]['home'] = event['competitions'][0]['competitors'][1]['team']
+
+                del_keys = ['broadcasts','geoBroadcasts', 'headlines']
+                for k in del_keys:
+                    if k in event['competitions'][0].keys():
+                        del event['competitions'][0][k]
+
+                ev = ev.append(pd.json_normalize(event['competitions'][0]))
+        ev = json.loads(pd.DataFrame(ev).to_json(orient='records'))
+
+        return ev
+
+    def wnba_schedule(self):
+        dates = self.dates
+        if dates is None:
+            dates = ''
+        season_type = self.season_type
+        if season_type is None:
+            season_type = ''
+
+        url = "http://site.api.espn.com/apis/site/v2/sports/basketball/wnba/scoreboard?limit=300&dates={}&seasontype={}".format(dates,season_type)
+        ev = pd.DataFrame()
+        resp = self.download(url=url)
+
+        if resp is not None:
+            events_txt = json.loads(resp)
+
+            events = events_txt['events']
+            for event in events:
+                if 'links' in event['competitions'][0]['competitors'][0]['team'].keys():
+                    del event['competitions'][0]['competitors'][0]['team']['links']
+                if 'links' in event['competitions'][0]['competitors'][1]['team'].keys():
+                    del event['competitions'][0]['competitors'][1]['team']['links']
+                if event['competitions'][0]['competitors'][0]['homeAway']=='home':
+                    event['competitions'][0]['home'] = event['competitions'][0]['competitors'][0]['team']
+                else:
+                    event['competitions'][0]['away'] = event['competitions'][0]['competitors'][0]['team']
+                if event['competitions'][0]['competitors'][1]['homeAway']=='away':
+                    event['competitions'][0]['away'] = event['competitions'][0]['competitors'][1]['team']
+                else:
+                    event['competitions'][0]['home'] = event['competitions'][0]['competitors'][1]['team']
+
+                del_keys = ['broadcasts','geoBroadcasts', 'headlines']
+                for k in del_keys:
+                    if k in event['competitions'][0].keys():
+                        del event['competitions'][0][k]
+
+                ev = ev.append(pd.json_normalize(event['competitions'][0]))
+        ev = json.loads(pd.DataFrame(ev).to_json(orient='records'))
+        return ev
+
 
     def cfb_calendar(self):
         season = self.season

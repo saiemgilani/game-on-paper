@@ -1,6 +1,7 @@
 import { ThemeOptions } from '@material-ui/core'
 
 import { createTheme } from '@material-ui/core/styles'
+
 export const paletteColorsDark = {
   primary: '#5A5B5B',
   secondary: '#5A5B5B',
@@ -13,11 +14,13 @@ export const paletteColorsDark = {
 export const paletteColorsLight = {
   primary: '#F2F2F2',
   secondary: '#FFFFFF',
-  card: '#FFFFFF',
+  card: '#F2F2F2',
   error: '#E44C65',
   background: '#FFFFFF',
   text: '#050505',
 }
+
+
 
 const options = (dark: boolean): ThemeOptions => {
   const paletteColors = dark ? paletteColorsDark : paletteColorsLight
