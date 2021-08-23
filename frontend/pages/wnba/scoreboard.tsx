@@ -72,8 +72,8 @@ const myLoader = ({ src }) => {
 }
 export default function WNBAScoreboardPage() {
   const large = useMediaQuery('(min-width:700px)')
-  const [year, setYear] = useState('2021');
-  const [month, setMonth] = useState('07');
+  const [year, setYear] = useState('');
+  const [month, setMonth] = useState('');
   const [day, setDay] = useState('');
   const [seasonType, setSeasonType] = useState('Regular');
   const [wnbaScoreboardData] = useWNBAScoreboardApi(year, month, day)

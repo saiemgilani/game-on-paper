@@ -72,8 +72,8 @@ const myLoader = ({ src }) => {
 }
 export default function NBAScoreboardPage() {
   const large = useMediaQuery('(min-width:700px)')
-  const [year, setYear] = useState('2020');
-  const [month, setMonth] = useState('11');
+  const [year, setYear] = useState('');
+  const [month, setMonth] = useState('');
   const [day, setDay] = useState('');
   const [seasonType, setSeasonType] = useState('Regular');
   const [nbaScoreboardData] = useNBAScoreboardApi(year, month, day)

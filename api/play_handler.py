@@ -943,7 +943,7 @@ class PlayProcess(object):
         play_df['down_3_end'] = (play_df["end.down"] == 3)
         play_df['down_4_end'] = (play_df["end.down"] == 4)
 
-    #--- Touchdown, Fumble, Special Teams flags -----------------
+        #--- Touchdown, Fumble, Special Teams flags -----------------
         play_df["scoring_play"] = np.where(play_df["type.text"].isin(scores_vec), True, False)
         play_df["td_play"] = play_df.text.str.contains(r"touchdown|for a TD", case=False, flags=0, na=False, regex=True)
         play_df["touchdown"] = play_df["type.text"].str.contains("touchdown", case=False, flags=0, na=False, regex=True)
@@ -1040,7 +1040,7 @@ class PlayProcess(object):
                 ))
             ), True, False
         )
-    #-------------------------
+        #-------------------------
         play_df['pos_team'] = play_df['start.pos_team.id']
         play_df['def_pos_team'] = play_df['start.def_pos_team.id']
         play_df['is_home'] = (play_df.pos_team == play_df["homeTeamId"])
@@ -1114,7 +1114,7 @@ class PlayProcess(object):
         play_df['end.pos_team_receives_2H_kickoff'] = (play_df["end.pos_team.id"] == play_df.firstHalfKickoffTeamId)
         play_df['change_of_poss'] = np.where(play_df["start.pos_team.id"] == play_df["end.pos_team.id"], False, True)
         play_df['change_of_poss'] = np.where(play_df['change_of_poss'].isna(), 0, play_df['change_of_poss'])
-    #--------------------------------------------------
+        #--------------------------------------------------
         ## Fix Strip-Sacks to Fumbles----
         play_df['type.text'] = np.where(
             (play_df.fumble_vec == True) & (play_df["pass"] == True) &
@@ -1309,7 +1309,7 @@ class PlayProcess(object):
                 "Two-Point Conversion Missed", play_df['type.text']
         )
         play_df = self.__setup_penalty_data__(play_df)
-    #--------------------------------------------------
+        #--------------------------------------------------
         #--- Sacks ----
         play_df['sack'] = np.select(
             [
@@ -1367,7 +1367,7 @@ class PlayProcess(object):
         play_df['fg_made'] = (play_df["type.text"] == "Field Goal Good")
         play_df['yds_fg'] = play_df["text"].str.extract(r"(\\d{0,2}\s?)Yd|(\\d{0,2}\s?)Yard FG|(\\d{0,2}\s?)Field|(\\d{0,2}\s?)Yard Field", 
                                                         flags=re.IGNORECASE).bfill(axis=1)[0].astype(float)
-    #--------------------------------------------------
+        #--------------------------------------------------
         play_df['start.yardsToEndzone'] = np.where(
             play_df['fg_attempt'] == True,
             play_df['yds_fg'] - 17, play_df["start.yardsToEndzone"]
@@ -1430,7 +1430,7 @@ class PlayProcess(object):
             (~play_df['type.text'].isin(['Timeout','Extra Point Good','Extra Point Missed','Two-Point Pass','Two-Point Rush'])), 
             True, False
         )
-    #--------------------------------------------------
+        #--------------------------------------------------
         #--- Change of pos_team by lead('pos_team', 1)----
         play_df['change_of_pos_team'] = np.where(
             (play_df.pos_team == play_df.lead_pos_team) & (~(play_df.lead_play_type.isin(["End Period", "End of Half"])) | play_df.lead_play_type.isna() == True),
@@ -2402,7 +2402,7 @@ class PlayProcess(object):
             default = (play_df['EP_end'] - play_df['EP_start'])
         )
         play_df['def_EPA'] = -1*play_df['EPA']
-    #----- EPA Summary flags ------
+        #----- EPA Summary flags ------
         play_df['EPA_scrimmage'] = np.select(
             [
                 (play_df.scrimmage_play == True)

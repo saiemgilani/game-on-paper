@@ -80,8 +80,8 @@ const myLoader = ({ src }) => {
 export default function CFBScoreboardPage() {
   const large = useMediaQuery('(min-width:700px)')
   const seasons = '2020'
-  const [season, setSeason] = useState('2021');
-  const [week, setWeek] = useState('1');
+  const [season, setSeason] = useState('');
+  const [week, setWeek] = useState('');
   const [seasonType, setSeasonType] = useState('Regular');
   const [cfbScoreboardData] = useCFBScoreboardApi(season, week, seasonType)
 
