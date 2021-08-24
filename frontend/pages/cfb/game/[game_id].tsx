@@ -8,13 +8,21 @@ import useCFBGameApi from '../../../hooks/useCFBGameApi'
 // core components
 import { Footer } from "../../../components/Footer";
 import { TeamBoxScore } from "../../../components/TeamBoxScore";
+import { MaterialTable } from "../../../components/MaterialTable";
+import { CollegeGameHeader } from "../../../components/CollegeGameHeader";
 import { Grid, Typography } from '@material-ui/core'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import Box from '@material-ui/core/Box'
 import Head from 'next/head'
+import { ScoreData } from '../../../types/scores'
 import { NAME, NAME_AND_DOMAIN } from '../../../types/constants'
 import axios from 'axios';
-
+type GameProps = {
+  score: ScoreData
+  loader: any
+  sport: string
+  noMargin?: boolean
+}
 const renameKeys = (keysMap, obj) =>
   Object.keys(obj).reduce(
     (acc, key) => ({
@@ -24,17 +32,21 @@ const renameKeys = (keysMap, obj) =>
     {}
   );
 
+const myLoader = ({ src, width }) => {
+  return `https://a.espncdn.com/i/teamlogos/ncaa/500/${src}.png?w=${width}`
+}
 export default function CFBGamePage() {
   const gameId =
     typeof window !== 'undefined' ? window.location.pathname.slice(1) : ''
-  const [cfbGameData,cfbGameCols,cfbPlayerData] = useCFBGameApi(gameId)
+  const [cfbGameData,cfbGameCols,cfbPlayerData,cfbPlayerCols,cfbGameHeader] = useCFBGameApi(gameId)
 
   const large = useMediaQuery('(min-width:700px)')
   const data = cfbGameData
   const playerData = cfbPlayerData
-  console.log(playerData)
   const columns = cfbGameCols
-
+  const pros = ['wnba','nba','nfl']
+  const proSport = pros.includes('cfb')
+  console.log(cfbGameHeader)
   return (
       <>
         <Head>
@@ -44,23 +56,25 @@ export default function CFBGamePage() {
             content={`${NAME}: Game on Paper`}
           />
         </Head>
-        <Grid container>
-          <Grid item xs={12}>
-            <Box p={5}>
-              <Typography variant={large ? 'h4' : 'h4'} style={{ textAlign: 'center' }}>Game on Paper</Typography>
-            </Box>
-          </Grid>
-        </Grid>
-        <Grid container>
-          <Grid item xs={12}>
         <div style={{ textAlign: 'center' }}>
-          <TeamBoxScore
-          data={data}
-          columns={columns}
-          />
-        </div>
+          <Grid container style={{justifyContent: 'center'}}>
+              <CollegeGameHeader 
+              score={cfbGameHeader}
+              sport={'cfb'}
+              loader={myLoader}
+              />
           </Grid>
-        </Grid>
+        </div>
+        <div style={{ textAlign: 'center' }}>
+          <Grid container>
+            <Grid item xs={12}>
+              <TeamBoxScore
+              data={data}
+              columns={columns}
+              />
+            </Grid>
+          </Grid>
+        </div>
       </>
     );
   }

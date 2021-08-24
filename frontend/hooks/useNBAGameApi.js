@@ -2,10 +2,13 @@ import {useEffect, useState} from 'react';
 import axios from 'axios';
 
 import {pyApiOrigin} from '../utils/config';
-
+function espnNbaGameHeader(res) {
+  return res.data.header.competitions[0].competitors
+}
 function useNBAGameApi(gameId) {
   const [nbaGameData, setNBAGameData] = useState([]);
   const [nbaGameCols, setNBAGameCols] = useState([]);
+  const [nbaGameHeader, setNBAGameHeader] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,12 +33,12 @@ function useNBAGameApi(gameId) {
       console.log(boxDA)
       setNBAGameCols(columns)
       setNBAGameData(boxDA);
-
+      setNBAGameHeader(espnNbaGameHeader(res))
     };
     fetchData();
   }, [gameId]);
 
-  return [nbaGameData,nbaGameCols];
+  return [nbaGameData,nbaGameCols,nbaGameHeader];
 }
 
 export default useNBAGameApi;

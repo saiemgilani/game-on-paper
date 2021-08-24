@@ -40,11 +40,15 @@ function espnNflPlayerBox(res) {
   return res.data.boxScore.players
 }
 
+function espnNflGameHeader(res) {
+  return res.data.header.competitions[0].competitors
+}
 function useNFLGameApi(gameId) {
   const [nflGameData, setNFLGameData] = useState([]);
   const [nflGameCols, setNFLGameCols] = useState([]);
   // const [nflPlayerData, setNFLPlayerData] = useState([]);
   // const [nflPlayerCols, setNFLPlayerCols] = useState([]);
+  const [nflGameHeader, setNFLGameHeader] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -54,11 +58,12 @@ function useNFLGameApi(gameId) {
       const espnTBox = espnNflTeamBox(res)
       setNFLGameCols(espnTBox[0])
       setNFLGameData(espnTBox[1]);
+      setNFLGameHeader(espnNflGameHeader(res))
     };
     fetchData();
   }, [gameId]);
 
-  return [nflGameData,nflGameCols];
+  return [nflGameData,nflGameCols,nflGameHeader];
 }
 
 export default useNFLGameApi;

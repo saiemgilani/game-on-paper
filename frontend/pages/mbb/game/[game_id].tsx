@@ -8,6 +8,7 @@ import useMBBGameApi from '../../../hooks/useMBBGameApi'
 // core components
 import { Footer } from "../../../components/Footer";
 import { TeamBoxScore } from "../../../components/TeamBoxScore";
+import { CollegeGameHeader } from "../../../components/CollegeGameHeader";
 import { Grid, Typography } from '@material-ui/core'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import Box from '@material-ui/core/Box'
@@ -16,11 +17,14 @@ import { NAME, NAME_AND_DOMAIN } from '../../../types/constants'
 import axios from 'axios';
 
 
+const myLoader = ({ src, width }) => {
+  return `https://a.espncdn.com/i/teamlogos/ncaa/500/${src}.png?w=${width}`
+}
 export default function MBBGamePage() {
   const gameId =
     typeof window !== 'undefined' ? window.location.pathname.slice(1) : ''
     
-  const [mbbGameData,mbbGameCols] = useMBBGameApi(gameId)
+  const [mbbGameData,mbbGameCols,mbbGameHeader] = useMBBGameApi(gameId)
 
   const large = useMediaQuery('(min-width:700px)')
   const data = mbbGameData
@@ -36,23 +40,26 @@ export default function MBBGamePage() {
             content={`${NAME}: Game on Paper`}
           />
         </Head>
-        <Grid container>
-          <Grid item xs={12}>
-            <Box p={5}>
-              <Typography variant={large ? 'h4' : 'h4'} style={{ textAlign: 'center' }}>Game on Paper</Typography>
-            </Box>
+        <div style={{ textAlign: 'center' ,
+                                  margin: '20'}}>
+          <Grid container style={{justifyContent: 'center'}}>
+              <CollegeGameHeader 
+              score={mbbGameHeader}
+              sport={'mbb'}
+              loader={myLoader}
+              />
           </Grid>
-        </Grid>
-        <Grid container>
-          <Grid item xs={12}>
-        <div style={{ textAlign: 'center' }}>
-          <TeamBoxScore
-          data={data}
-          columns={columns}
-          />
         </div>
+        <div style={{ textAlign: 'center' }}>
+          <Grid container>
+            <Grid item xs={12}>
+              <TeamBoxScore
+              data={data}
+              columns={columns}
+              />
+            </Grid>
           </Grid>
-        </Grid>
+        </div>
       </>
     );
   }

@@ -23,10 +23,10 @@ export const paletteColorsLight = {
 
 
 const options = (dark: boolean): ThemeOptions => {
-  const paletteColors = dark ? paletteColorsDark : paletteColorsLight
+  const paletteColors = dark ?  paletteColorsLight : paletteColorsDark
   return {
     palette: {
-      type: dark ? 'dark' : 'light',
+      type: dark ?  'light': 'dark' ,
       primary: {
         light: paletteColors.primary,
         main: paletteColors.primary,

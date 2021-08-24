@@ -3,9 +3,13 @@ import axios from 'axios';
 
 import {pyApiOrigin} from '../utils/config';
 
+function espnWnbaGameHeader(res) {
+  return res.data.header.competitions[0].competitors
+}
 function useWNBAGameApi(gameId) {
   const [wnbaGameData, setWNBAGameData] = useState([]);
   const [wnbaGameCols, setWNBAGameCols] = useState([]);
+  const [wnbaGameHeader, setWNBAGameHeader] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,12 +34,12 @@ function useWNBAGameApi(gameId) {
       console.log(boxDA)
       setWNBAGameCols(columns)
       setWNBAGameData(boxDA);
-
+      setWNBAGameHeader(espnWnbaGameHeader(res))
     };
     fetchData();
   }, [gameId]);
 
-  return [wnbaGameData,wnbaGameCols];
+  return [wnbaGameData,wnbaGameCols,wnbaGameHeader];
 }
 
 export default useWNBAGameApi;

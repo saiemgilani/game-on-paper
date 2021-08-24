@@ -2,10 +2,13 @@ import {useEffect, useState} from 'react';
 import axios from 'axios';
 
 import {pyApiOrigin} from '../utils/config';
-
+function espnWbbGameHeader(res) {
+  return res.data.header.competitions[0].competitors
+}
 function useWBBGameApi(gameId) {
   const [wbbGameData, setWBBGameData] = useState([]);
   const [wbbGameCols, setWBBGameCols] = useState([]);
+  const [wbbGameHeader, setWBBGameHeader] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,12 +33,12 @@ function useWBBGameApi(gameId) {
       console.log(boxDA)
       setWBBGameCols(columns)
       setWBBGameData(boxDA);
-
+      setWBBGameHeader(espnWbbGameHeader(res))
     };
     fetchData();
   }, [gameId]);
 
-  return [wbbGameData,wbbGameCols];
+  return [wbbGameData,wbbGameCols,wbbGameHeader];
 }
 
 export default useWBBGameApi;

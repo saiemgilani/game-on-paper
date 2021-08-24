@@ -8,6 +8,7 @@ import useWBBGameApi from '../../../hooks/useWBBGameApi'
 // core components
 import { Footer } from "../../../components/Footer";
 import { TeamBoxScore } from "../../../components/TeamBoxScore";
+import { CollegeGameHeader } from "../../../components/CollegeGameHeader";
 import { Grid, Typography } from '@material-ui/core'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import Box from '@material-ui/core/Box'
@@ -16,11 +17,14 @@ import { NAME, NAME_AND_DOMAIN } from '../../../types/constants'
 import axios from 'axios';
 
 
+const myLoader = ({ src, width }) => {
+  return `https://a.espncdn.com/i/teamlogos/ncaa/500/${src}.png?w=${width}`
+}
 export default function WBBGamePage() {
   const gameId =
     typeof window !== 'undefined' ? window.location.pathname.slice(1) : ''
     
-  const [wbbGameData,wbbGameCols] = useWBBGameApi(gameId)
+  const [wbbGameData,wbbGameCols, wbbGameHeader] = useWBBGameApi(gameId)
 
   const large = useMediaQuery('(min-width:700px)')
   const data = wbbGameData
@@ -36,23 +40,25 @@ export default function WBBGamePage() {
             content={`${NAME}: Game on Paper`}
           />
         </Head>
-        <Grid container>
-          <Grid item xs={12}>
-            <Box p={5}>
-              <Typography variant={large ? 'h4' : 'h4'} style={{ textAlign: 'center' }}>Game on Paper</Typography>
-            </Box>
-          </Grid>
-        </Grid>
-        <Grid container>
-          <Grid item xs={12}>
         <div style={{ textAlign: 'center' }}>
-          <TeamBoxScore
-          data={data}
-          columns={columns}
-          />
-        </div>
+          <Grid container style={{justifyContent: 'center'}}>
+              <CollegeGameHeader
+                score={wbbGameHeader}
+                sport={'wbb'}
+                loader={myLoader}
+              />
           </Grid>
-        </Grid>
+        </div>
+        <div style={{ textAlign: 'center' }}>
+          <Grid container>
+            <Grid item xs={12}>
+              <TeamBoxScore
+              data={data}
+              columns={columns}
+              />
+            </Grid>
+          </Grid>
+        </div>
       </>
     );
   }

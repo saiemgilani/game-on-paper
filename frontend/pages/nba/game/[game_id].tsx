@@ -8,6 +8,7 @@ import useNBAGameApi from '../../../hooks/useNBAGameApi'
 // core components
 import { Footer } from "../../../components/Footer";
 import { TeamBoxScore } from "../../../components/TeamBoxScore";
+import { GameHeader } from "../../../components/GameHeader";
 import { Grid, Typography } from '@material-ui/core'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import Box from '@material-ui/core/Box'
@@ -15,10 +16,13 @@ import Head from 'next/head'
 import { NAME, NAME_AND_DOMAIN } from '../../../types/constants'
 import axios from 'axios';
 
+const myLoader = ({ src, width }) => {
+  return `https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/${src}.png?w=${width}`
+}
 
 export default function NBAGamePage() {
   const gameId = typeof window !== 'undefined' ? window.location.pathname.slice(1) : ''
-  const [nbaGameData,nbaGameCols] = useNBAGameApi(gameId)
+  const [nbaGameData,nbaGameCols,nbaGameHeader] = useNBAGameApi(gameId)
 
   const large = useMediaQuery('(min-width:700px)')
   const data = nbaGameData
@@ -33,13 +37,15 @@ export default function NBAGamePage() {
             content={`${NAME}: Game on Paper`}
           />
         </Head>
-        <Grid container>
-          <Grid item xs={12}>
-            <Box p={5}>
-              <Typography variant={large ? 'h4' : 'h4'} style={{ textAlign: 'center' }}>Game on Paper</Typography>
-            </Box>
+        <div style={{ textAlign: 'center' }}>
+          <Grid container style={{justifyContent: 'center'}}>
+              <GameHeader 
+              score={nbaGameHeader}
+              sport={'nba'}
+              loader={myLoader}
+              />
           </Grid>
-        </Grid>
+        </div>
         <Grid container>
           <Grid item xs={12}>
         <div style={{ textAlign: 'center' }}>

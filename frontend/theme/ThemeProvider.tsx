@@ -11,7 +11,7 @@ export const ToggleThemeContext = React.createContext({
   toggleTheme: () => {
     console.log()
   },
-  isDark: false,
+  isDark: true,
 })
 
 type SelectedTheme = {

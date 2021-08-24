@@ -49,8 +49,8 @@ const useStyles = makeStyles((theme) =>({
     display: "flex",
     border: "0",
     borderRadius: "3px",
-    padding: "0.625rem 0",
-    marginBottom: "20px",
+    padding: "0.825rem 0",
+    marginBottom: "23px",
     color: '#000000',
     width: "100%",
     textColor: '#000000',
@@ -128,7 +128,7 @@ export const TopBar = (): ReactElement => {
         <div className={classes.toolbarRight}>
           <Tooltip title="Toggle Theme">
             <Button variant="text" color="inherit" onClick={toggleTheme}>
-              {isDark ? <SunIcon /> : <MoonIcon />}
+              {isDark ?  <MoonIcon /> : <SunIcon /> }
             </Button>
           </Tooltip>
         </div>

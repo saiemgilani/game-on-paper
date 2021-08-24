@@ -40,29 +40,35 @@ function espnCfbPlayerBox(res) {
   return res.data.boxScore.players
 }
 
+function espnCfbGameHeader(res) {
+  return res.data.header.competitions[0].competitors
+}
 function useCFBGameApi(gameId) {
   const [cfbGameData, setCFBGameData] = useState([]);
   const [cfbGameCols, setCFBGameCols] = useState([]);
   const [cfbPlayerData, setCFBPlayerData] = useState([]);
   const [cfbPlayerCols, setCFBPlayerCols] = useState([]);
+  const [cfbGameHeader, setCFBGameHeader] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       const baseUrl = `${pyApiOrigin}/${gameId}`;
       const res = await axios.get(baseUrl);
-
+      console.log(res)
       const espnTBox = espnCfbTeamBox(res)
       setCFBGameCols(espnTBox[0])
       setCFBGameData(espnTBox[1]);
       const espnPBox = espnCfbPlayerBox(res)
       setCFBPlayerCols(espnPBox[0])
       setCFBPlayerData(espnPBox[1]);
-
+      const espnGameHeader = espnCfbGameHeader(res)
+      console.log(res.data['header']['competitions'][0]['competitors'])
+      setCFBGameHeader(espnGameHeader)
     };
     fetchData();
   }, [gameId]);
 
-  return [cfbGameData,cfbGameCols,cfbPlayerData,cfbPlayerCols];
+  return [cfbGameData,cfbGameCols,cfbPlayerData,cfbPlayerCols,cfbGameHeader];
 }
 
 export default useCFBGameApi;

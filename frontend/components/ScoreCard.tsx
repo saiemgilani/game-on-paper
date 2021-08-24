@@ -80,7 +80,7 @@ export const ScoreCard: FC<ScoreCardProps> = ({ score,  sport, loader, noMargin 
           <CardContent>
           <Grid container spacing={1}>
             <Grid item> 
-              {<Image loader={loader} src={src1} width={30} height={30}   alt={score['competitors'][1]['team']['shortDisplayName']}/>} 
+              {<Image loader={loader} src={src1} width={30} height={30} alt={score['competitors'][1]['team']['shortDisplayName']}/>} 
             </Grid>
             <Grid item> 
               <Typography variant={'h6'} color="textPrimary" >

@@ -3,9 +3,13 @@ import axios from 'axios';
 
 import {pyApiOrigin} from '../utils/config';
 
+function espnMbbGameHeader(res) {
+  return res.data.header.competitions[0].competitors
+}
 function useMBBGameApi(gameId) {
   const [mbbGameData, setMBBGameData] = useState([]);
   const [mbbGameCols, setMBBGameCols] = useState([]);
+  const [mbbGameHeader, setMBBGameHeader] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,12 +34,14 @@ function useMBBGameApi(gameId) {
       console.log(boxDA)
       setMBBGameCols(columns)
       setMBBGameData(boxDA);
+      const espnGameHeader = espnMbbGameHeader(res)
+      setMBBGameHeader(espnGameHeader)
 
     };
     fetchData();
   }, [gameId]);
 
-  return [mbbGameData,mbbGameCols];
+  return [mbbGameData,mbbGameCols,mbbGameHeader];
 }
 
 export default useMBBGameApi;
