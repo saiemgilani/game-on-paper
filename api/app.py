@@ -234,12 +234,13 @@ def get_cfb_game(request: Request, gameId: str) -> Optional[None]:
 
 @app.get("/py/cfb/scoreboard")
 def get_cfb_scoreboard(request: Request,
+                        groups:Optional[str] = Query(None),
                         dates:Optional[str] = Query(None),
                         week:Optional[str] = Query(None),
                         seasontype:Optional[str] = Query(None)) -> Optional[None]:
 
     headers = {"accept": "application/json"}
-    processed_data = ScheduleProcess(dates = dates, week = week, season_type = seasontype)
+    processed_data = ScheduleProcess(groups = groups, dates = dates, week = week, season_type = seasontype)
     schedule = processed_data.cfb_schedule()
     tmp_json = schedule
     return tmp_json

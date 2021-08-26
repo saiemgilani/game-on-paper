@@ -17,14 +17,16 @@ class ScheduleProcess(object):
     season = ''
     dates = ''
     week = ''
+    groups = ''
     season_type = ''
     path_to_json = '/'
 
-    def __init__(self, season = 0, dates = '', week = '', season_type = '', path_to_json = '/'):
+    def __init__(self, season = 0, dates = '', week = '', season_type = '', groups='', path_to_json = '/'):
         self.season = int(season)
         self.dates = dates
         self.week = week
         self.season_type = season_type
+        self.groups = groups
         self.path_to_json = path_to_json
 
     def download(self, url, num_retries=5):
@@ -55,8 +57,12 @@ class ScheduleProcess(object):
             season_type = ''
         else:
             season_type = '&seasontype=' + self.season_type
+        if self.groups is None:
+            groups = '&groups=80'
+        else:
+            groups = '&groups=' + self.groups
         ev = pd.DataFrame()
-        url = "http://site.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard?limit=300{}{}{}".format(dates,week,season_type)
+        url = "http://site.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard?limit=300{}{}{}{}".format(groups,dates,week,season_type)
         resp = self.download(url=url)
         if resp is not None:
             events_txt = json.loads(resp)

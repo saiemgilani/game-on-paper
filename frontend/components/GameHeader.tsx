@@ -48,7 +48,8 @@ const useStyles = makeStyles((theme) => ({
     height: 30,
     display:'inline-block',
     maxHeight:'80%',
-    maxWidth:'80%'
+    maxWidth:'80%',
+    transform: 'translateY(7.5px)',
   },
   actions: {
     right: 5,
@@ -71,9 +72,13 @@ export const GameHeader: FC<ScoreCardProps> = ({ score,  sport, loader, noMargin
           <Typography variant={'h6'} color="textPrimary" 
             style={{ justifyContent: 'center', 
             fontSize: '1.8rem' }} >
+            <div className={classes.img}>
             <Image loader={loader} src={score[0]['team']['abbreviation']} width={35} height={35} alt={score[0]['abbreviation']}/> 
+            </div>
             {score[0].team.location+'  '+score[0].score+`                         `}
+            <div className={classes.img}>
             <Image loader={loader} src={score[1]['team']['abbreviation']} width={35} height={35} alt={score[1]['abbreviation']}/> 
+            </div>
             {score[1].team.location+'  '+score[1].score}
           </Typography>
         </Grid>

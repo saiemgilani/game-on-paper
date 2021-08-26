@@ -2,9 +2,10 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Link from 'next/link'
-import { useRouteMatch } from 'react-router-dom';
+import { useRouter } from 'next/router'
 import useRequest from '../../libs/useRequest'
 import useCFBScoreboardApi from '../../hooks/useCFBScoreboardApi'
+
 // core components
 import { Grid, Typography } from '@material-ui/core'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
@@ -79,6 +80,7 @@ const myLoader = ({ src, width }) => {
 }
 export default function CFBScoreboardPage() {
   const large = useMediaQuery('(min-width:700px)')
+  const router = useRouter()
   const seasons = '2020'
   const [season, setSeason] = useState('');
   const [week, setWeek] = useState('');

@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up('xl')]: {
       width: 400,
     },
-    height: 200,
+    height: 150,
     margin: 10,
     position: 'relative',
     backgroundColor: theme.palette.primary.main,
@@ -49,14 +49,14 @@ const useStyles = makeStyles((theme) => ({
   },
   hscore:{
     right: 5,
-    top: 45,
+    top: 66,
     padding: 5,
     fontSize: '1.1rem',
     position: 'absolute',
   },
   ascore:{
     right: 5,
-    top: 8,
+    top: 31,
     padding: 5,
     fontSize: '1.1rem',
     position: 'absolute',
@@ -68,50 +68,101 @@ const useStyles = makeStyles((theme) => ({
     position: 'absolute',
   },
 }))
+
+function date(score) {
+  let dt = new Date(score['date']);
+  let dtString = dt.toLocaleDateString()
+  let hours = dt.getHours();
+  let minutes = dt.getMinutes();
+  let hrs = hours > 12 ? hours - 12 : hours;
+  let mins = minutes > 10 ? minutes  : '0' + minutes;
+  let ampm = hours >= 12 ? 'PM' : 'AM';
+  let timeString = hrs + ':' + mins + ampm;
+  return dtString + ' ' + timeString;
+}
 export const ScoreCard: FC<ScoreCardProps> = ({ score,  sport, loader, noMargin }): ReactElement => {
   const classes = useStyles()
   const pros = ['wnba','nba','nfl']
   const proSport = pros.includes(sport)
   const src1 = proSport ? score['competitors'][1]['team']['abbreviation'] : score['competitors'][1]['team']['id']
   const src2 = proSport ? score['competitors'][0]['team']['abbreviation'] : score['competitors'][0]['team']['id']
-  console.log()
+  const gameDate = date(score)
+  console.log(proSport)
   return (
       <Card className={classes.card} elevation={3} style={{}}>
           <CardContent>
-          <Grid container spacing={1}>
-            <Grid item> 
-              {<Image loader={loader} src={src1} width={30} height={30} alt={score['competitors'][1]['team']['shortDisplayName']}/>} 
-            </Grid>
-            <Grid item> 
-              <Typography variant={'h6'} color="textPrimary" >
-                  {'  '}{score['competitors'][1]['team']['shortDisplayName']} 
+          <Grid
+            container
+            direction="row"
+            spacing={1}>
+            <Grid item>
+              <Typography
+                variant={'caption'}
+                color="textPrimary" >
+                {'  '}{gameDate}
               </Typography>
             </Grid>
-            <Grid item> 
-              <Button size="small" variant="text" className={classes.ascore}>
-              {score['competitors'][1]['score']}
+          </Grid>
+          <Grid
+            container
+            direction="row"
+            spacing={1}>
+            <Grid item>
+              {<Image
+                loader={loader}
+                src={src1}
+                width={30}
+                height={30}
+                alt={proSport ? score['competitors'][1]['team']['shortDisplayName']:score['competitors'][1]['team']['location']}/>}
+            </Grid>
+            <Grid item>
+              <Typography
+                variant={'h6'}
+                color="textPrimary" >
+                {'  '}{proSport ? score['competitors'][1]['team']['shortDisplayName']:score['competitors'][1]['team']['location']}
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Button
+                size="small"
+                variant="text"
+                className={classes.ascore}>
+                {score['status.type.state']==='pre'? ' ': score['competitors'][1]['score']}
               </Button>
             </Grid>
           </Grid>
-          <Grid container spacing={1}>
-            <Grid item> 
-            {<Image loader={loader} src={src2} width={30} height={30}  alt={score['competitors'][0]['team']['shortDisplayName']}/>} 
+          <Grid
+            container
+            direction="row"
+            spacing={1}>
+            <Grid item>
+              {<Image
+                loader={loader}
+                src={src2}
+                width={30}
+                height={30}
+                alt={proSport? score['competitors'][0]['team']['shortDisplayName']:score['competitors'][0]['team']['location']}/>}
             </Grid>
-            <Grid item> 
-            <Typography variant={'h6'} color="textPrimary">
-            {'  '}{score['competitors'][0]['team']['shortDisplayName']} 
+            <Grid item>
+            <Typography
+              variant={'h6'}
+              color="textPrimary">
+              {'  '}{proSport? score['competitors'][0]['team']['shortDisplayName']:score['competitors'][0]['team']['location']}
             </Typography>
             </Grid>
-            <Grid item> 
-              <Button size="small" variant="text" className={classes.hscore}>
-              {score['competitors'][0]['score']}
+            <Grid item>
+              <Button
+                size="small"
+                variant="text"
+                className={classes.hscore}>
+                {score['status.type.state']==='pre'? ' ': score['competitors'][0]['score']}
               </Button>
             </Grid>
           </Grid>
             <Link href={`/${sport}/game/${score.id}`}>
               <Box pt={3}>
                   <Button size="small" variant="text" className={classes.actions}>
-                  Stats <ChevronRight  />
+                    Stats <ChevronRight  />
                   </Button>
               </Box>
             </Link>

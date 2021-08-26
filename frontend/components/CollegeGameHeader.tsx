@@ -48,7 +48,8 @@ const useStyles = makeStyles((theme) => ({
     height: 30,
     display:'inline-block',
     maxHeight:'80%',
-    maxWidth:'80%'
+    maxWidth:'80%',
+    transform: 'translateY(7.5px)',
   },
   hscore:{
     right: 5,
@@ -85,9 +86,13 @@ export const CollegeGameHeader: FC<ScoreCardProps> = ({ score,  sport, loader, n
           <Typography variant={'h6'} color="textPrimary" 
             style={{ justifyContent: 'center', 
             fontSize: '1.8rem' }} >
+            <div className={classes.img}>
             <Image loader={loader} src={score[0]['id']} width={35} height={35} alt={score[0]['id']}/> 
+            </div>
             {score[0].team.location+'  '+score[0].score+`                         `}
+            <div className={classes.img}>
             <Image loader={loader} src={score[1]['id']} width={35} height={35} alt={score[1]['id']}/> 
+            </div>
             {score[1].team.location+'  '+score[1].score}
           </Typography>
         </Grid>
