@@ -43,7 +43,6 @@ class ScheduleProcess(object):
                     return self.download(url, num_retries - 1)
         return html
 
-
     def cfb_schedule(self):
         if self.week is None:
             week = ''
@@ -179,14 +178,16 @@ class ScheduleProcess(object):
         return ev
 
     def nba_schedule(self):
-        dates = self.dates
-        if dates is None:
+        if self.dates is None:
             dates = ''
-        season_type = self.season_type
-        if season_type is None:
+        else:
+            dates = '&dates=' + self.dates
+        if self.season_type is None:
             season_type = ''
+        else:
+            season_type = '&seasontype=' + self.season_type
 
-        url = "http://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?limit=300&dates={}&seasontype={}".format(dates,season_type)
+        url = "http://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?limit=300{}{}".format(dates,season_type)
         ev = pd.DataFrame()
         resp = self.download(url=url)
 
@@ -217,7 +218,6 @@ class ScheduleProcess(object):
         ev = json.loads(pd.DataFrame(ev).to_json(orient='records'))
         return ev
 
-
     def wbb_schedule(self):
         if self.dates is None:
             dates = ''
@@ -230,7 +230,6 @@ class ScheduleProcess(object):
         url = "http://site.api.espn.com/apis/site/v2/sports/basketball/womens-college-basketball/scoreboard?limit=300{}{}".format(dates,season_type)
         resp = self.download(url=url)
         txt = json.loads(resp)['leagues'][0]['calendar']
-    #     print(len(txt))
         txt = list(map(lambda x: x[:10].replace("-",""),txt))
 
         ev = pd.DataFrame()
@@ -263,14 +262,16 @@ class ScheduleProcess(object):
         return ev
 
     def wnba_schedule(self):
-        dates = self.dates
-        if dates is None:
+        if self.dates is None:
             dates = ''
-        season_type = self.season_type
-        if season_type is None:
+        else:
+            dates = '&dates=' + self.dates
+        if self.season_type is None:
             season_type = ''
+        else:
+            season_type = '&seasontype=' + self.season_type
 
-        url = "http://site.api.espn.com/apis/site/v2/sports/basketball/wnba/scoreboard?limit=300&dates={}&seasontype={}".format(dates,season_type)
+        url = "http://site.api.espn.com/apis/site/v2/sports/basketball/wnba/scoreboard?limit=300{}{}".format(dates,season_type)
         ev = pd.DataFrame()
         resp = self.download(url=url)
 
@@ -300,7 +301,6 @@ class ScheduleProcess(object):
                 ev = ev.append(pd.json_normalize(event['competitions'][0]))
         ev = json.loads(pd.DataFrame(ev).to_json(orient='records'))
         return ev
-
 
     def cfb_calendar(self):
         season = self.season

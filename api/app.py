@@ -5,18 +5,16 @@ import json
 import uvicorn
 import numpy as np
 from fastapi import FastAPI, HTTPException, Request, Query
-from fastapi.responses import HTMLResponse
-from fastapi.templating import Jinja2Templates
 from fastapi.middleware.cors import CORSMiddleware
 from play_handler import PlayProcess
 from hoops_handler import HoopsProcess
 from schedule_handler import ScheduleProcess
-from dotenv import load_dotenv, dotenv_values
-config = dotenv_values('.env.development.local')
+# from dotenv import load_dotenv, dotenv_values
+# config = dotenv_values('.env.development.local')
 
 app = FastAPI(
-    title="Vercel FastAPI template",
-    description="A starter template for FastAPI backends in Vercel deployments",
+    title="Game on Paper FastAPI Python",
+    description="The python API backend for Game on Paper, currently serving CFB, NFL, MBB, NBA, WBB, WNBA ",
     version="0.1.0",
     docs_url='/py/api',
     openapi_url='/py/api/openapi.json',
@@ -42,6 +40,74 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.get("/py/cfb/scoreboard")
+def get_cfb_scoreboard(request: Request,
+                        groups:Optional[str] = Query(None),
+                        dates:Optional[str] = Query(None),
+                        week:Optional[str] = Query(None),
+                        seasontype:Optional[str] = Query(None)) -> Optional[None]:
+
+    headers = {"accept": "application/json"}
+    processed_data = ScheduleProcess(groups = groups, dates = dates, week = week, season_type = seasontype)
+    schedule = processed_data.cfb_schedule()
+    tmp_json = schedule
+    return tmp_json
+
+@app.get("/py/nfl/scoreboard")
+def get_nfl_scoreboard(request: Request,
+                        dates:Optional[str] = Query(None),
+                        week:Optional[str] = Query(None),
+                        seasontype:Optional[str] = Query(None)) -> Optional[None]:
+
+    headers = {"accept": "application/json"}
+    processed_data = ScheduleProcess(dates = dates, week = week, season_type = seasontype)
+    schedule = processed_data.nfl_schedule()
+    tmp_json = schedule
+    return tmp_json
+
+@app.get("/py/mbb/scoreboard")
+def get_mbb_scoreboard(request: Request,
+                        dates:Optional[str] = Query(None),
+                        seasontype:Optional[str] = Query(None)) -> Optional[None]:
+
+    headers = {"accept": "application/json"}
+    processed_data = ScheduleProcess(dates = dates, season_type=seasontype)
+    schedule = processed_data.mbb_schedule()
+    tmp_json = schedule
+    return tmp_json
+
+@app.get("/py/nba/scoreboard")
+def get_nba_scoreboard(request: Request,
+                        dates:Optional[str] = Query(None),
+                        seasontype:Optional[str] = Query(None)) -> Optional[None]:
+
+    headers = {"accept": "application/json"}
+    processed_data = ScheduleProcess(dates = dates, season_type = seasontype)
+    schedule = processed_data.nba_schedule()
+    tmp_json = schedule
+    return tmp_json
+
+@app.get("/py/wbb/scoreboard")
+def get_wbb_scoreboard(request: Request,
+                        dates:Optional[str] = Query(None),
+                        seasontype:Optional[str] = Query(None)) -> Optional[None]:
+
+    headers = {"accept": "application/json"}
+    processed_data = ScheduleProcess(dates = dates)
+    schedule = processed_data.wbb_schedule()
+    tmp_json = schedule
+    return tmp_json
+
+@app.get("/py/wnba/scoreboard")
+def get_wnba_scoreboard(request: Request,
+                        dates:Optional[str] = Query(None),
+                        seasontype:Optional[str] = Query(None)) -> Optional[None]:
+
+    headers = {"accept": "application/json"}
+    processed_data = ScheduleProcess(dates = dates, season_type = seasontype)
+    schedule = processed_data.wnba_schedule()
+    tmp_json = schedule
+    return tmp_json
 
 @app.get("/py/cfb/game/{gameId}")
 def get_cfb_game(request: Request, gameId: str) -> Optional[None]:
@@ -230,34 +296,6 @@ def get_cfb_game(request: Request, gameId: str) -> Optional[None]:
         "gameInfo" : np.array(pbp['gameInfo']).tolist(),
         "season" : np.array(pbp['season']).tolist()
     }
-
-
-@app.get("/py/cfb/scoreboard")
-def get_cfb_scoreboard(request: Request,
-                        groups:Optional[str] = Query(None),
-                        dates:Optional[str] = Query(None),
-                        week:Optional[str] = Query(None),
-                        seasontype:Optional[str] = Query(None)) -> Optional[None]:
-
-    headers = {"accept": "application/json"}
-    processed_data = ScheduleProcess(groups = groups, dates = dates, week = week, season_type = seasontype)
-    schedule = processed_data.cfb_schedule()
-    tmp_json = schedule
-    return tmp_json
-
-@app.get("/py/nfl/scoreboard")
-def get_nfl_scoreboard(request: Request,
-                        dates:Optional[str] = Query(None),
-                        week:Optional[str] = Query(None),
-                        seasontype:Optional[str] = Query(None)) -> Optional[None]:
-
-    headers = {"accept": "application/json"}
-    processed_data = ScheduleProcess(dates = dates, week = week, season_type = seasontype)
-    schedule = processed_data.nfl_schedule()
-    tmp_json = schedule
-    return tmp_json
-
-
 
 @app.get("/py/nfl/game/{gameId}")
 def get_nfl_game(request: Request, gameId: str) -> Optional[None]:
@@ -450,39 +488,15 @@ def get_nfl_game(request: Request, gameId: str) -> Optional[None]:
 def get_mbb_game(request: Request, gameId: str) -> Optional[None]:
 
     headers = {"accept": "application/json"}
-    # gameId = request.get_json(force=True)['gameId']
     processed_data = HoopsProcess(gameId = gameId)
     pbp = processed_data.mbb_pbp()
     tmp_json = pbp
-    return tmp_json
-
-@app.get("/py/mbb/scoreboard")
-def get_mbb_scoreboard(request: Request,
-                        dates:Optional[str] = Query(None),
-                        seasontype:Optional[str] = Query(None)) -> Optional[None]:
-
-    headers = {"accept": "application/json"}
-    processed_data = ScheduleProcess(dates = dates)
-    schedule = processed_data.mbb_schedule()
-    tmp_json = schedule
-    return tmp_json
-
-@app.get("/py/nba/scoreboard")
-def get_nba_scoreboard(request: Request,
-                        dates:Optional[str] = Query(None),
-                        seasontype:Optional[str] = Query(None)) -> Optional[None]:
-
-    headers = {"accept": "application/json"}
-    processed_data = ScheduleProcess(dates = dates, season_type = seasontype)
-    schedule = processed_data.nba_schedule()
-    tmp_json = schedule
     return tmp_json
 
 @app.get("/py/nba/game/{gameId}")
 def get_nba_game(request: Request, gameId: str) -> Optional[None]:
 
     headers = {"accept": "application/json"}
-    # gameId = request.get_json(force=True)['gameId']
     processed_data = HoopsProcess(gameId = gameId)
     pbp = processed_data.nba_pbp()
     tmp_json = pbp
@@ -492,39 +506,15 @@ def get_nba_game(request: Request, gameId: str) -> Optional[None]:
 def get_wbb_game(request: Request, gameId: str) -> Optional[None]:
 
     headers = {"accept": "application/json"}
-    # gameId = request.get_json(force=True)['gameId']
     processed_data = HoopsProcess(gameId = gameId)
     pbp = processed_data.wbb_pbp()
     tmp_json = pbp
-    return tmp_json
-
-@app.get("/py/wbb/scoreboard")
-def get_wbb_scoreboard(request: Request,
-                        dates:Optional[str] = Query(None),
-                        seasontype:Optional[str] = Query(None)) -> Optional[None]:
-
-    headers = {"accept": "application/json"}
-    processed_data = ScheduleProcess(dates = dates)
-    schedule = processed_data.wbb_schedule()
-    tmp_json = schedule
-    return tmp_json
-
-@app.get("/py/wnba/scoreboard")
-def get_wnba_scoreboard(request: Request,
-                        dates:Optional[str] = Query(None),
-                        seasontype:Optional[str] = Query(None)) -> Optional[None]:
-
-    headers = {"accept": "application/json"}
-    processed_data = ScheduleProcess(dates = dates, season_type = seasontype)
-    schedule = processed_data.wnba_schedule()
-    tmp_json = schedule
     return tmp_json
 
 @app.get("/py/wnba/game/{gameId}")
 def get_wnba_game(request: Request, gameId: str) -> Optional[None]:
 
     headers = {"accept": "application/json"}
-    # gameId = request.get_json(force=True)['gameId']
     processed_data = HoopsProcess(gameId = gameId)
     pbp = processed_data.wnba_pbp()
     tmp_json = pbp
