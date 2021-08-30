@@ -10,7 +10,7 @@ import { Grid, Typography } from '@material-ui/core'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import Box from '@material-ui/core/Box'
 import Head from 'next/head'
-import { NAME, NAME_AND_DOMAIN } from '../../types/constants'
+import { NAME } from '../../types/constants'
 
 
 

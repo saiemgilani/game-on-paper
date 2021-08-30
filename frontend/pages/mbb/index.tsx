@@ -10,7 +10,7 @@ import { Grid, Typography } from '@material-ui/core'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import Box from '@material-ui/core/Box'
 import Head from 'next/head'
-import { NAME, NAME_AND_DOMAIN } from '../../types/constants'
+import { NAME } from '../../types/constants'
 
 
 
@@ -28,22 +28,24 @@ export default function LandingPage() {
         <Grid container>
           <Grid item xs={12}>
             <Box p={5}>
-              <Typography variant={large ? 'h3' : 'h4'} style={{ textAlign: 'center' }}>
-              Men's College Basketball
+              <Typography variant={large ? 'h3' : 'h4'}
+                style={{ textAlign: 'center' }}>
+                Men's College Basketball
               </Typography>
             </Box>
           </Grid>
-          </Grid>
+        </Grid>
         <div style={{ textAlign: 'center' }}>
-          <div>
-            <p>
+          <p>
             <Link href="mbb/scoreboard" >
               <Button variant="text" color="inherit">
-                <SportsBasketballIcon /> <Typography variant={large ? 'h6' : 'h6'} >Scoreboard</Typography>
+                <SportsBasketballIcon />
+                <Typography variant={large ? 'h6' : 'h6'} >
+                  Scoreboard
+                </Typography>
               </Button>
             </Link>
-            </p>
-          </div>
+          </p>
         </div>
 
       </>

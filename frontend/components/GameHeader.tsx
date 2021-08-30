@@ -21,29 +21,6 @@ type ScoreCardProps = {
 }
 
 const useStyles = makeStyles((theme) => ({
-  card: {
-    width: 300,
-    [theme.breakpoints.down('xs')]: {
-      width: 300,
-    },
-    [theme.breakpoints.down('sm')]: {
-      width: 300,
-    },
-    [theme.breakpoints.down('md')]: {
-      width: 300,
-    },
-    [theme.breakpoints.up('lg')]: {
-      width: 400,
-    },
-    [theme.breakpoints.up('xl')]: {
-      width: 400,
-    },
-    height: 200,
-    margin: 10,
-    position: 'relative',
-    backgroundColor: theme.palette.primary.main,
-    color: theme.palette.text.secondary,
-  },
   img: {
     height: 30,
     display:'inline-block',
@@ -62,26 +39,54 @@ export const GameHeader: FC<ScoreCardProps> = ({ score,  sport, loader, noMargin
   const classes = useStyles()
   const pros = ['wnba','nba','nfl']
   const proSport = pros.includes(sport)
-  
+
   if (score.length === 0) {
-    return <div>Still fetching data</div>;
+    return (
+      <Grid container
+        spacing={1}
+        style={{alignContent:'center'}}>
+        <Grid item
+          xs={12}>
+          <Box p={5}>
+            <Typography variant={'h6'}
+              color="textPrimary"
+              style={{ justifyContent: 'center',
+              fontSize: '1.8rem' }} >
+              <div>Still fetching data</div>
+            </Typography>
+          </Box>
+        </Grid>
+      </Grid>
+    )
   }
   return (
-    <Grid container spacing={1} style={{alignContent:'center'}}>
-        <Grid item xs={12}> 
-          <Typography variant={'h6'} color="textPrimary" 
-            style={{ justifyContent: 'center', 
+    <Grid container
+      spacing={1}
+      style={{alignContent:'center'}}>
+      <Grid item
+        xs={12}>
+        <Box p={5}>
+          <Typography variant={'h6'}
+            color="textPrimary"
+            style={{ justifyContent: 'center',
             fontSize: '1.8rem' }} >
             <div className={classes.img}>
-            <Image loader={loader} src={score[0]['team']['abbreviation']} width={35} height={35} alt={score[0]['abbreviation']}/> 
+            <Image loader={loader}
+              src={score[0]['team']['abbreviation']}
+              width={35} height={35}
+              alt={score[0]['abbreviation']}/>
             </div>
             {score[0].team.location+'  '+score[0].score+`                         `}
             <div className={classes.img}>
-            <Image loader={loader} src={score[1]['team']['abbreviation']} width={35} height={35} alt={score[1]['abbreviation']}/> 
+            <Image loader={loader}
+              src={score[1]['team']['abbreviation']}
+              width={35} height={35}
+              alt={score[1]['abbreviation']}/>
             </div>
             {score[1].team.location+'  '+score[1].score}
           </Typography>
-        </Grid>
+        </Box>
+      </Grid>
     </Grid>
   )
 }

@@ -13,17 +13,10 @@ import { Grid, Typography } from '@material-ui/core'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import Box from '@material-ui/core/Box'
 import Head from 'next/head'
-import { NAME, NAME_AND_DOMAIN } from '../../../types/constants'
+import { NAME } from '../../../types/constants'
 import axios from 'axios';
 
-const renameKeys = (keysMap, obj) =>
-  Object.keys(obj).reduce(
-    (acc, key) => ({
-      ...acc,
-      ...{ [keysMap[key] || key]: obj[key] }
-    }),
-    {}
-  );
+
 
 const myLoader = ({ src, width }) => {
   return `https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/${src}.png?w=${width}`
@@ -35,7 +28,7 @@ export default function NFLGamePage() {
 
   const large = useMediaQuery('(min-width:700px)')
   const data = nflGameData
-  
+
   const columns = nflGameCols
 
   return (
