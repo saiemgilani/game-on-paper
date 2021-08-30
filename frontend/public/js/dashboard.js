@@ -11,12 +11,12 @@ function calculateHalfSecondsRemaining(period, time) {
       return 0
   }
 
-  let splitTime = time.split(":")
-  let minutes = (splitTime.length > 0) ? parseInt(splitTime[0]) : 0
-  let seconds = (splitTime.length > 1) ? parseInt(splitTime[1]) : 0
-  let adjMin = (period == 1 || period == 3) ? (15.0 + minutes) : minutes
+  var splitTime = time.split(":")
+  var minutes = (splitTime.length > 0) ? parseInt(splitTime[0]) : 0
+  var seconds = (splitTime.length > 1) ? parseInt(splitTime[1]) : 0
+  var adjMin = (period == 1 || period == 3) ? (15.0 + minutes) : minutes
   return Math.max(0, Math.min(1800, (adjMin * 60.0) + seconds))
-
+  
 }
 function calculateGameSecondsRemaining(period, halfSeconds) {
   if (period <= 2) {
@@ -27,7 +27,7 @@ function calculateGameSecondsRemaining(period, halfSeconds) {
 }
 
 function hexToRgb(hex) {
-  let result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
   return result ? {
       r: parseInt(result[1], 16),
       g: parseInt(result[2], 16),
@@ -37,9 +37,9 @@ function hexToRgb(hex) {
 
 function baseTranslate(input, inMin, inMax, outMin, outMax) {
 
-  let leftRange = inMax - inMin;
-  let rightRange = outMax - outMin;
-  let scaledValue = (input - inMin) / leftRange;
+  var leftRange = inMax - inMin;
+  var rightRange = outMax - outMin;
+  var scaledValue = (input - inMin) / leftRange;
   return outMin + (scaledValue * rightRange);
 }
 
@@ -74,10 +74,10 @@ function interpolateTimestamps(plays) {
         return plays;
     }
     plays.forEach(p => p.time_remaining = calculateHalfSecondsRemaining(p.period, p.clock.displayValue))
-    let ind = [];
-    for (let i = 0; i < plays.length; i+= 1) {
+    var ind = [];
+    for (var i = 0; i < plays.length; i+= 1) {
         // var play = plays[i]
-        let nextPlay = null
+        var nextPlay = null
         if ((i + 1) >= plays.length) {
             nextPlay = null
         } else {
@@ -99,7 +99,7 @@ function interpolateTimestamps(plays) {
 
     plays[0].time_remaining = 1800
     plays[plays.length - 1].time_remaining = 0
-
+    
     // game is probably in progress?
     if (ind.length == 0) {
         ind.push(plays.length - 1)
@@ -114,18 +114,18 @@ function interpolateTimestamps(plays) {
     // console.log(ind)
 
     let halfPoint = ind[ind.length - 1]
-    for (let i = 0; i < halfPoint; i++) {
-        let pct = (i / halfPoint)
+    for (var i = 0; i < halfPoint; i++) {
+        var pct = (i / halfPoint)
         // console.log("pct: " + pct)
         plays[i].time_remaining = Math.round(lerp(1800, 0, pct))
     }
-
+    
     for (var i = halfPoint + 1; i < plays.length; i++) {
         var pct = ((i - (halfPoint + 1)) / (plays.length - (halfPoint + 1)))
         // console.log("pct: " + pct)
         plays[i].time_remaining = Math.round(lerp(1800, 0, pct))
     }
-
+    
     plays.forEach(p => p.game_time_remaining = calculateGameSecondsRemaining(p.period, p.time_remaining))
 
     return plays;
@@ -151,7 +151,7 @@ function deltaE(rgbA, rgbB) {
     let i = deltaLKlsl * deltaLKlsl + deltaCkcsc * deltaCkcsc + deltaHkhsh * deltaHkhsh;
     return i < 0 ? 0 : Math.sqrt(i);
 }
-
+  
 function rgb2lab(rgb){
     let r = rgb[0] / 255, g = rgb[1] / 255, b = rgb[2] / 255, x, y, z;
     r = (r > 0.04045) ? Math.pow((r + 0.055) / 1.055, 2.4) : r / 12.92;
@@ -169,14 +169,14 @@ function rgb2lab(rgb){
 if (gameData.plays.length > 0) {
     gameData.plays = interpolateTimestamps(gameData.plays)
     // console.log(gameData.plays[0])
-    let timestamps = (gameData.gameInfo.status.type.completed == true) ? gameData.plays.map(p => p.game_time_remaining) : [...Array(gameData.plays.length).keys()];
+    var timestamps = (gameData.gameInfo.status.type.completed == true) ? gameData.plays.map(p => p.game_time_remaining) : [...Array(gameData.plays.length).keys()];
     // console.log(timestamps)
-    let homeComp = gameData.gameInfo.competitors[0];
-    let awayComp = gameData.gameInfo.competitors[1];
-    let homeTeam = homeComp.team;
-    let awayTeam = awayComp.team;
-    let awayTeamColor = hexToRgb(awayTeam.color)
-    let homeTeamColor = hexToRgb(homeTeam.color)
+    var homeComp = gameData.gameInfo.competitors[0];
+    var awayComp = gameData.gameInfo.competitors[1];
+    var homeTeam = homeComp.team;
+    var awayTeam = awayComp.team;
+    var awayTeamColor = hexToRgb(awayTeam.color)
+    var homeTeamColor = hexToRgb(homeTeam.color)
 
     // if the homeTeamColor and the awayTeamColor are too similar, make the awayTeam use their alt
     let dEHome = deltaE([awayTeamColor.r, awayTeamColor.g, awayTeamColor.b], [homeTeamColor.r, homeTeamColor.g, homeTeamColor.b])
@@ -191,9 +191,9 @@ if (gameData.plays.length > 0) {
 
     // if either color is too similar to white, use gray
     let colors = [homeTeamColor, awayTeamColor]
-    let adjusted = false;
+    var adjusted = false;
     colors.forEach((clr, idx) => {
-        let dEBackground = deltaE([clr.r, clr.g, clr.b], [255,255,255])
+        var dEBackground = deltaE([clr.r, clr.g, clr.b], [255,255,255])
         if (dEBackground <= 49) {
             adjusted = true;
             if (idx == 0) {
@@ -204,7 +204,7 @@ if (gameData.plays.length > 0) {
             console.log(`updating color at index ${idx} to gray bc of background`)
         }
     })
-
+    
     // if both colors are now gray, reset the homeTeamColor
     let dEHomeAdj = deltaE([awayTeamColor.r, awayTeamColor.g, awayTeamColor.b], [homeTeamColor.r, homeTeamColor.g, homeTeamColor.b])
     if (dEHomeAdj <= 49 && adjusted) {
@@ -212,10 +212,10 @@ if (gameData.plays.length > 0) {
         console.log(`resetting home color to ${JSON.stringify(homeTeamColor)} because of similarity to gray away color`)
     }
 
-    let homeTeamWP = gameData.plays.map(p => (p.pos_team == homeTeam.id) ? translateWP(p.winProbability.before) : translateWP(1.0 - p.winProbability.before));
+    var homeTeamWP = gameData.plays.map(p => (p.pos_team == homeTeam.id) ? translateWP(p.winProbability.before) : translateWP(1.0 - p.winProbability.before));
 
-    let homeTeamEPA = calculateCumulativeSums(gameData.plays.filter(p => (p.pos_team == homeTeam.id)).map(p => p.expectedPoints.added)).map((p, idx) => { return { "x": (idx + 1), "y": p } });
-    let awayTeamEPA = calculateCumulativeSums(gameData.plays.filter(p => (p.pos_team == awayTeam.id)).map(p => p.expectedPoints.added)).map((p, idx) => { return { "x": (idx + 1), "y": p } });
+    var homeTeamEPA = calculateCumulativeSums(gameData.plays.filter(p => (p.pos_team == homeTeam.id)).map(p => p.expectedPoints.added)).map((p, idx) => { return { "x": (idx + 1), "y": p } });
+    var awayTeamEPA = calculateCumulativeSums(gameData.plays.filter(p => (p.pos_team == awayTeam.id)).map(p => p.expectedPoints.added)).map((p, idx) => { return { "x": (idx + 1), "y": p } });
 
     homeTeamEPA.splice(0, 0, {
         x: 0,
@@ -237,7 +237,7 @@ if (gameData.plays.length > 0) {
         }
     }
 
-    let targetDataSet = {
+    var targetDataSet = {
         yAxisID : 'y-axis-0',
         fill: true,
         lineTension: 0,
@@ -260,12 +260,12 @@ if (gameData.plays.length > 0) {
                 var min = Math.min.apply(null, this.chart.data.datasets[i].data);
                 var max = Math.max.apply(null, this.chart.data.datasets[i].data);
                 var yScale = this.getScaleForId(this.chart.data.datasets[i].yAxisID);
-
+    
                 // figure out the pixels for these and the value 0
                 var top = yScale.getPixelForValue(max);
                 var zero = yScale.getPixelForValue(0);
                 var bottom = yScale.getPixelForValue(min);
-
+    
                 // build a gradient that switches color at the 0 point
                 var ctx = this.chart.chart.ctx;
                 var gradientFill = ctx.createLinearGradient(0, top, 0, bottom);
@@ -344,13 +344,13 @@ if (gameData.plays.length > 0) {
 
     (function () {
         'use strict'
-
+        
         feather.replace()
-
+        
         // Graphs
-        let ctx = document.getElementById('wpChart')
+        var ctx = document.getElementById('wpChart')
         // eslint-disable-next-line no-unused-vars
-        let wpChart = new Chart(ctx, {
+        var wpChart = new Chart(ctx, {
             type: 'NegativeTransparentLine',
             data: {
                 labels: timestamps,
@@ -436,9 +436,9 @@ if (gameData.plays.length > 0) {
         //     a.href = url_base64jp;
         // });
 
-        let epCtx = document.getElementById('epChart')
+        var epCtx = document.getElementById('epChart')
             // eslint-disable-next-line no-unused-vars
-        let epChart = new Chart(epCtx, {
+        var epChart = new Chart(epCtx, {
             type: 'scatter',
             data: {
                 datasets: [
@@ -518,9 +518,9 @@ if (gameData.plays.length > 0) {
 
         document.getElementById("ep-download").addEventListener('click', function() {
             /*Get image of canvas element*/
-            let url_base64jp = epChart.toBase64Image();
+            var url_base64jp = epChart.toBase64Image();
             /*get download button (tag: <a></a>) */
-            let a =  document.getElementById("ep-download");
+            var a =  document.getElementById("ep-download");
             /*insert chart image url to download button (tag: <a></a>) */
             a.href = url_base64jp;
         });

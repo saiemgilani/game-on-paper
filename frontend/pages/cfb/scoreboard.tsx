@@ -11,7 +11,7 @@ import { Grid, Typography } from '@material-ui/core'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import Box from '@material-ui/core/Box'
 import Head from 'next/head'
-import { NAME, NAME_AND_DOMAIN } from '../../types/constants'
+import { NAME } from '../../types/constants'
 import { ScoreCard } from "../../components/ScoreCard";
 import { useTable } from 'react-table'
 import Button from '@material-ui/core/Button'
@@ -80,8 +80,7 @@ const myLoader = ({ src, width }) => {
 }
 export default function CFBScoreboardPage() {
   const large = useMediaQuery('(min-width:700px)')
-  const router = useRouter()
-  const seasons = '2020'
+  
   const [season, setSeason] = useState('');
   const [week, setWeek] = useState('');
   const [seasonType, setSeasonType] = useState('Regular');
@@ -108,43 +107,53 @@ export default function CFBScoreboardPage() {
           />
         </Head>
         <Grid container>
-          <Grid item xs={12}>
+          <Grid item
+            xs={12}>
             <Box p={5}>
-              <Typography variant={large ? 'h4' : 'h6'} style={{ textAlign: 'center' }}>
+              <Typography variant={large ? 'h4' : 'h6'}
+                style={{ textAlign: 'center' }}>
                 College Football Scoreboard
               </Typography>
             </Box>
           </Grid>
         </Grid>
-        <Grid container direction={"row"} alignContent={'center'} justifyContent={'center'} spacing = {1}>
-          <Grid item >
+        <Grid container
+          direction={"row"}
+          alignContent={'center'}
+          justifyContent={'center'}
+          spacing={1}>
+          <Grid item>
             <CFBSeasonSelector
-                season={season}
-                setSeason={setSeason}/>
+              season={season}
+              setSeason={setSeason}/>
           </Grid>
-          <Grid item >
+          <Grid item>
             <CFBWeekSelector
-                seasonType={seasonType}
-                week={week}
-                setWeek={setWeek}/>
+              seasonType={seasonType}
+              week={week}
+              setWeek={setWeek}/>
           </Grid>
-          <Grid item >
+          <Grid item>
             <CFBSeasonTypeSelector
-                week={week}
-                seasonType={seasonType}
-                setSeasonType={setSeasonType}/>
+              week={week}
+              seasonType={seasonType}
+              setSeasonType={setSeasonType}/>
           </Grid>
         </Grid>
         <div>
-          <Grid container direction={"row"} justifyContent={'space-between'}>
+          <Grid container
+            direction={"row"}
+            justifyContent={'space-between'}>
           {acc.map((d, idx) =>(
-              <Grid item xs={12} sm={6} md={4} lg={4} key={idx}>
-                <ScoreCard
-                  score={d}
-                  loader={myLoader}
-                  noMargin={false}
-                  sport={'cfb'}/>
-              </Grid>
+            <Grid item
+              xs={12} sm={6} md={4} lg={4}
+              key={idx}>
+              <ScoreCard
+                score={d}
+                loader={myLoader}
+                noMargin={false}
+                sport={'cfb'}/>
+            </Grid>
           ))}
           </Grid>
         </div>

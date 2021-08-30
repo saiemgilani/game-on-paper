@@ -12,10 +12,10 @@ function useCFBScoreboardApi(season,week,seasonType) {
 
       const endpoint = new URL(pyApiOrigin);
       const baseUrl = `${endpoint}/cfb/scoreboard`;
-      console.log(baseUrl)
+
       let stype = week==='Bowls'? '3':(seasonType === '' ? '':(seasonType === 'Regular' ? '2' : '3') );
       let wk = week==='Bowls'? '1' : (seasonType==='Post'? '1':week)
-      console.log(stype);
+
       const params = {
           dates: season,
           week: wk,

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 const SeasonTypeSelector = ({ seasonType, setSeasonType}) => {
     const stypes = [
+    '',
     'Regular',
     'Post']
   return (

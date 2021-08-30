@@ -15,22 +15,8 @@ import useMediaQuery from '@material-ui/core/useMediaQuery'
 import Box from '@material-ui/core/Box'
 import Head from 'next/head'
 import { ScoreData } from '../../../types/scores'
-import { NAME, NAME_AND_DOMAIN } from '../../../types/constants'
+import { NAME } from '../../../types/constants'
 import axios from 'axios';
-type GameProps = {
-  score: ScoreData
-  loader: any
-  sport: string
-  noMargin?: boolean
-}
-const renameKeys = (keysMap, obj) =>
-  Object.keys(obj).reduce(
-    (acc, key) => ({
-      ...acc,
-      ...{ [keysMap[key] || key]: obj[key] }
-    }),
-    {}
-  );
 
 const myLoader = ({ src, width }) => {
   return `https://a.espncdn.com/i/teamlogos/ncaa/500/${src}.png?w=${width}`
