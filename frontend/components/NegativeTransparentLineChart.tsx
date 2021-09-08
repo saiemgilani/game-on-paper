@@ -80,88 +80,18 @@ function date(score) {
   let timeString = hrs + ':' + mins + ampm;
   return dtString + ' ' + timeString;
 }
-export const ScoreCard: FC<ScoreCardProps> = ({ score,  sport, loader, noMargin }): ReactElement => {
-  const classes = useStyles()
-  const pros = ['wnba','nba','nfl']
-  const proSport = pros.includes(sport)
-  const src1 = proSport ? score['competitors'][1]['team']['abbreviation'] : score['competitors'][1]['team']['id']
-  const src2 = proSport ? score['competitors'][0]['team']['abbreviation'] : score['competitors'][0]['team']['id']
-  const gameDate = date(score)
-  console.log(proSport)
-  return (
-      <Card className={classes.card} elevation={3} style={{}}>
-        <CardContent>
-          <Grid container
-            direction="row"
-            spacing={1}>
-            <Grid item>
-              <Typography variant={'caption'}
-                color="textPrimary" >
-                {'  '}{gameDate}
-              </Typography>
-            </Grid>
-          </Grid>
-          <Grid container
-            direction="row"
-            spacing={1}>
-            <Grid item>
-              {<Image loader={loader}
-                src={src1}
-                width={30}
-                height={30}
-                alt={proSport ? score['competitors'][1]['team']['shortDisplayName']:score['competitors'][1]['team']['location']}/>}
-            </Grid>
-            <Grid item>
-              <Typography variant={'h6'}
-                color="textPrimary" >
-                {'  '}{proSport ? score['competitors'][1]['team']['shortDisplayName']:score['competitors'][1]['team']['location']}
-              </Typography>
-            </Grid>
-            <Grid item>
-              <Button size="small"
-                variant="text"
-                className={classes.ascore}>
-                {score['status.type.state']==='pre'? ' ': score['competitors'][1]['score']}
-              </Button>
-            </Grid>
-          </Grid>
-          <Grid container
-            direction="row"
-            spacing={1}>
-            <Grid item>
-              {<Image
-                loader={loader}
-                src={src2}
-                width={30}
-                height={30}
-                alt={proSport? score['competitors'][0]['team']['shortDisplayName']:score['competitors'][0]['team']['location']}/>}
-            </Grid>
-            <Grid item>
-            <Typography
-              variant={'h6'}
-              color="textPrimary">
-              {'  '}{proSport? score['competitors'][0]['team']['shortDisplayName']:score['competitors'][0]['team']['location']}
-            </Typography>
-            </Grid>
-            <Grid item>
-              <Button
-                size="small"
-                variant="text"
-                className={classes.hscore}>
-                {score['status.type.state']==='pre'? ' ': score['competitors'][0]['score']}
-              </Button>
-            </Grid>
-          </Grid>
-          <Link href={`/${sport}/game/${score.id}`}>
-            <Box pt={3}>
-                <Button size="small" variant="text" className={classes.actions}>
-                  Stats <ChevronRight  />
-                </Button>
-            </Box>
-          </Link>
-        </CardContent>
-      </Card>
-  )
-}
+// export const ScoreCard: FC<ScoreCardProps> = ({ score,  sport, loader, noMargin }): ReactElement => {
+//   const classes = useStyles()
+//   const pros = ['wnba','nba','nfl']
+//   const proSport = pros.includes(sport)
+//   const src1 = proSport ? score['competitors'][1]['team']['abbreviation'] : score['competitors'][1]['team']['id']
+//   const src2 = proSport ? score['competitors'][0]['team']['abbreviation'] : score['competitors'][0]['team']['id']
+//   const gameDate = date(score)
+//   return(
+//     <>
+//       <div>
+//       </div>
+//   )
+// }
 
-export default ScoreCard
+// export default ScoreCard

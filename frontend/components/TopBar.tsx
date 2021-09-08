@@ -31,7 +31,6 @@ import { ToggleThemeContext } from '../theme'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Tooltip } from '@material-ui/core'
-import { NAME_AND_DOMAIN } from '../types/constants'
 
 import logo from '../public/logo/logo.png'
 

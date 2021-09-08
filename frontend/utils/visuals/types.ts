@@ -18,3 +18,5 @@ export interface Shot {
   LOC_Y: number;
   SHOT_MADE_FLAG: boolean | number;
 }
+
+

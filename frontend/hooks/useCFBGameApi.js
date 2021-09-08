@@ -45,7 +45,15 @@ function espnCfbGameHeader(res) {
 }
 function useCFBGameApi(gameId) {
   const [cfbGameData, setCFBGameData] = useState([]);
-  const [cfbGameCols, setCFBGameCols] = useState([]);
+  const [cfbHomePassBox, setCFBHomePassBox] = useState([]);
+  const [cfbAwayPassBox, setCFBAwayPassBox] = useState([]);
+  const [cfbHomeRushBox, setCFBHomeRushBox] = useState([]);
+  const [cfbAwayRushBox, setCFBAwayRushBox] = useState([]);
+  const [cfbHomeRecBox, setCFBHomeRecBox] = useState([]);
+  const [cfbAwayRecBox, setCFBAwayRecBox] = useState([]);
+  // const [cfbGameCols, setCFBGameCols] = useState([]);
+  const [cfbTeamBoxData, setCFBTeamBoxData] = useState([]);
+  const [cfbTeamBoxCols, setCFBTeamBoxCols] = useState([]);
   const [cfbPlayerData, setCFBPlayerData] = useState([]);
   const [cfbPlayerCols, setCFBPlayerCols] = useState([]);
   const [cfbGameHeader, setCFBGameHeader] = useState([]);
@@ -54,10 +62,38 @@ function useCFBGameApi(gameId) {
     const fetchData = async () => {
       const baseUrl = `${pyApiOrigin}/${gameId}`;
       const res = await axios.get(baseUrl);
-      console.log(res)
+      setCFBGameData(res.data);
+      console.log(res.data.box_score.pass)
+      const homeTeamId = res.data.homeTeamId
+      const awayTeamId = res.data.awayTeamId
+      const homePassBox = res.data.box_score.pass.filter(function(itm){
+        return homeTeamId.indexOf(itm.pos_team) > -1
+      })
+      const awayPassBox = res.data.box_score.pass.filter(function(itm){
+        return awayTeamId.indexOf(itm.pos_team) > -1
+      })
+      
+      const homeRushBox = res.data.box_score.rush.filter(function(itm){
+        return homeTeamId.indexOf(itm.pos_team) > -1
+      })
+      const awayRushBox = res.data.box_score.rush.filter(function(itm){
+        return awayTeamId.indexOf(itm.pos_team) > -1
+      })
+      const homeRecBox = res.data.box_score.receiver.filter(function(itm){
+        return homeTeamId.indexOf(itm.pos_team) > -1
+      })
+      const awayRecBox = res.data.box_score.receiver.filter(function(itm){
+        return awayTeamId.indexOf(itm.pos_team) > -1
+      })
+      setCFBHomePassBox(homePassBox)
+      setCFBAwayPassBox(awayPassBox)
+      setCFBHomeRushBox(homeRushBox)
+      setCFBAwayRushBox(awayRushBox)
+      setCFBHomeRecBox(homeRecBox)
+      setCFBAwayRecBox(awayRecBox)
       const espnTBox = espnCfbTeamBox(res)
-      setCFBGameCols(espnTBox[0])
-      setCFBGameData(espnTBox[1]);
+      setCFBTeamBoxCols(espnTBox[0])
+      setCFBTeamBoxData(espnTBox[1]);
       const espnPBox = espnCfbPlayerBox(res)
       setCFBPlayerCols(espnPBox[0])
       setCFBPlayerData(espnPBox[1]);
@@ -68,7 +104,13 @@ function useCFBGameApi(gameId) {
     fetchData();
   }, [gameId]);
 
-  return [cfbGameData,cfbGameCols,cfbPlayerData,cfbPlayerCols,cfbGameHeader];
+  return [cfbGameData, 
+          cfbHomePassBox, cfbAwayPassBox,
+          cfbHomeRushBox, cfbAwayRushBox,
+          cfbHomeRecBox, cfbAwayRecBox,
+          cfbTeamBoxData, cfbTeamBoxCols,
+          cfbPlayerData, cfbPlayerCols, 
+          cfbGameHeader];
 }
 
 export default useCFBGameApi;

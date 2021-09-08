@@ -135,7 +135,9 @@ def get_cfb_game(request: Request, gameId: str) -> Optional[None]:
     # clean records back into ESPN format
     for record in jsonified_df:
         record["clock"] = {
-            "displayValue" : record["clock.displayValue"]
+            "displayValue" : record["clock.displayValue"],
+            "minutes" : record["clock.minutes"],
+            "seconds" : record["clock.seconds"]
         }
 
         record["type"] = {
@@ -186,7 +188,7 @@ def get_cfb_game(request: Request, gameId: str) -> Optional[None]:
 
         record["winProbability"] = {
             "before" : record["wp_before"],
-            "after" : record["wp_after"],
+            "after" : record["wp_after"] if (record["start.pos_team.id"] == record["end.pos_team.id"]) else (1 - record["wp_after"]),
             "added" : record["wpa"]
         }
 
@@ -217,7 +219,8 @@ def get_cfb_game(request: Request, gameId: str) -> Optional[None]:
             "ExpScoreDiff_Time_Ratio" : record["start.ExpScoreDiff_Time_Ratio"],
             "shortDownDistanceText" : record["start.shortDownDistanceText"],
             "possessionText" : record["start.possessionText"],
-            "downDistanceText" : record["start.downDistanceText"]
+            "downDistanceText" : record["start.downDistanceText"],
+            "posTeamSpread" : record["start.pos_team_spread"]
         }
 
         record["end"] = {
@@ -275,14 +278,16 @@ def get_cfb_game(request: Request, gameId: str) -> Optional[None]:
         for col in bad_cols:
             record.pop(col, None)
 
-    # logging.getLogger("root").info(result)
-    return {
+    result = {
         "id": gameId,
         "count" : len(jsonified_df),
         "plays" : jsonified_df,
         "box_score" : box,
         "homeTeamId": pbp['header']['competitions'][0]['competitors'][0]['team']['id'],
+        "homeTeamName": pbp['header']['competitions'][0]['competitors'][0]['team']['location'],
         "awayTeamId": pbp['header']['competitions'][0]['competitors'][1]['team']['id'],
+        "awayTeamName": pbp['header']['competitions'][0]['competitors'][1]['team']['location'],
+        "drives" : pbp['drives'],
         "scoringPlays" : np.array(pbp['scoringPlays']).tolist(),
         "winprobability" : np.array(pbp['winprobability']).tolist(),
         "boxScore" : pbp['boxscore'],
@@ -296,6 +301,9 @@ def get_cfb_game(request: Request, gameId: str) -> Optional[None]:
         "gameInfo" : np.array(pbp['gameInfo']).tolist(),
         "season" : np.array(pbp['season']).tolist()
     }
+
+    # logging.getLogger("root").info(result)
+    return result
 
 @app.get("/py/nfl/game/{gameId}")
 def get_nfl_game(request: Request, gameId: str) -> Optional[None]:
@@ -322,7 +330,9 @@ def get_nfl_game(request: Request, gameId: str) -> Optional[None]:
     # clean records back into ESPN format
     for record in jsonified_df:
         record["clock"] = {
-            "displayValue" : record["clock.displayValue"]
+            "displayValue" : record["clock.displayValue"],
+            "minutes" : record["clock.minutes"],
+            "seconds" : record["clock.seconds"]
         }
 
         record["type"] = {
@@ -373,7 +383,7 @@ def get_nfl_game(request: Request, gameId: str) -> Optional[None]:
 
         record["winProbability"] = {
             "before" : record["wp_before"],
-            "after" : record["wp_after"],
+            "after" : record["wp_after"] if (record["start.pos_team.id"] == record["end.pos_team.id"]) else (1 - record["wp_after"]),
             "added" : record["wpa"]
         }
 
@@ -404,7 +414,8 @@ def get_nfl_game(request: Request, gameId: str) -> Optional[None]:
             "ExpScoreDiff_Time_Ratio" : record["start.ExpScoreDiff_Time_Ratio"],
             "shortDownDistanceText" : record["start.shortDownDistanceText"],
             "possessionText" : record["start.possessionText"],
-            "downDistanceText" : record["start.downDistanceText"]
+            "downDistanceText" : record["start.downDistanceText"],
+            "posTeamSpread" : record["start.pos_team_spread"]
         }
 
         record["end"] = {
@@ -462,14 +473,16 @@ def get_nfl_game(request: Request, gameId: str) -> Optional[None]:
         for col in bad_cols:
             record.pop(col, None)
 
-    # logging.getLogger("root").info(result)
-    return {
+    result = {
         "id": gameId,
         "count" : len(jsonified_df),
         "plays" : jsonified_df,
         "box_score" : box,
         "homeTeamId": pbp['header']['competitions'][0]['competitors'][0]['team']['id'],
+        "homeTeamName": pbp['header']['competitions'][0]['competitors'][0]['team']['location'],
         "awayTeamId": pbp['header']['competitions'][0]['competitors'][1]['team']['id'],
+        "awayTeamName": pbp['header']['competitions'][0]['competitors'][1]['team']['location'],
+        "drives" : pbp['drives'],
         "scoringPlays" : np.array(pbp['scoringPlays']).tolist(),
         "winprobability" : np.array(pbp['winprobability']).tolist(),
         "boxScore" : pbp['boxscore'],
@@ -483,6 +496,7 @@ def get_nfl_game(request: Request, gameId: str) -> Optional[None]:
         "gameInfo" : np.array(pbp['gameInfo']).tolist(),
         "season" : np.array(pbp['season']).tolist()
     }
+    return result
 
 @app.get("/py/mbb/game/{gameId}")
 def get_mbb_game(request: Request, gameId: str) -> Optional[None]:
