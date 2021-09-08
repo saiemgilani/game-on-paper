@@ -83,7 +83,7 @@ export default function CFBScoreboardPage() {
   
   const [season, setSeason] = useState('');
   const [week, setWeek] = useState('');
-  const [seasonType, setSeasonType] = useState('Regular');
+  const [seasonType, setSeasonType] = useState('');
   const [cfbScoreboardData] = useCFBScoreboardApi(season, week, seasonType)
 
   const data = cfbScoreboardData

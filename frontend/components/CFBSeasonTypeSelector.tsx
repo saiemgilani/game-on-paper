@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 const CFBSeasonTypeSelector = ({ week, seasonType, setSeasonType}) => {
     const stypes = [
+    '',
     'Regular',
     'Post']
     const stype = week==='Bowls'? 'Post':seasonType;
