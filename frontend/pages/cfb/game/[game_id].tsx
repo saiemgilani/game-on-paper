@@ -8,7 +8,7 @@ import useCFBGameApi from '../../../hooks/useCFBGameApi'
 // core components
 
 import { TeamBoxScore } from "../../../components/TeamBoxScore";
-import { MaterialTable } from "../../../components/MaterialTable";
+import { CFBGamePlayersTable } from "../../../components/CFBGamePlayersTable";
 import { CollegeGameHeader } from "../../../components/CollegeGameHeader";
 import { Grid, Typography } from '@material-ui/core'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
@@ -17,6 +17,7 @@ import Head from 'next/head'
 import { ScoreData } from '../../../types/scores'
 import { NAME } from '../../../types/constants'
 import axios from 'axios';
+import Image from 'next/image'
 import Card from '@material-ui/core/Card'
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -38,6 +39,13 @@ const useStyles = makeStyles({
     bold: {
       fontWeight: 600
     },
+    img: {
+      height: 30,
+      display:'inline-block',
+      maxHeight:'80%',
+      maxWidth:'80%',
+      transform: 'translateY(7.5px)',
+    },
   });
 const myLoader = ({ src, width }) => {
   return `https://a.espncdn.com/i/teamlogos/ncaa/500/${src}.png?w=${width}`
@@ -50,7 +58,7 @@ export default function CFBGamePage() {
         cfbHomeRushBox, cfbAwayRushBox,
         cfbHomeRecBox, cfbAwayRecBox,
         cfbTeamBoxData, cfbTeamBoxCols,
-        cfbPlayerData,cfbPlayerCols,
+        cfbPlayerData, cfbPlayerCols,
         cfbGameHeader] = useCFBGameApi(gameId)
 
   const large = useMediaQuery('(min-width:700px)')
@@ -72,10 +80,24 @@ export default function CFBGamePage() {
       <>
         <Head>
           <title>{NAME}: Game on Paper</title>
-          <meta
-            name="description"
-            content={`${NAME}: Game on Paper`}
-          />
+          <meta name="referrer" content="origin-when-cross-origin"/>
+          <link rel="canonical" href={`http://gameonpaper.com/cfb/game/${gameId}`}/>
+          <meta name="description" content={`Advanced stats for ${cfbGameData['awayTeamName']} vs. ${cfbGameData['homeTeamName']}`}/>
+          <meta property="og:site_name" content="GameOnPaper.com"/>
+          <meta property="og:url" content={`http://gameonpaper.com/cfb/game/${gameId}`}/>
+          <meta property="og:title" content={'Game on Paper'}/>
+          <meta property="og:description" content={`Advanced stats for ${cfbGameData['awayTeamName']} vs. ${cfbGameData['homeTeamName']}`}/>
+          <meta property="og:image" content={`https://s.espncdn.com/stitcher/sports/football/college-football/events/${gameId}.png?templateId=espn.com.share.1`}/>
+          <meta property="og:image:width" content="1200"/>
+          <meta property="og:image:height" content="630"/>
+          <meta property="og:type" content="website"/>
+          <meta name="twitter:site" content="Game on Paper"/>
+          <meta name="twitter:url" content={`http://gameonpaper.com/cfb/game/${gameId}`}/>
+          <meta name="twitter:title" content={`${gameId}`}/>
+          <meta name="twitter:description" content={`Advanced stats for ${cfbGameData['awayTeamName']} vs. ${cfbGameData['homeTeamName']}`}/>
+          <meta name="twitter:card" content="summary"/>
+          <meta name="title" content={'Game on Paper'}/>
+          <meta name="medium" content="website"/>
         </Head>
         <div style={{ textAlign: 'center' }}>
           <Grid container style={{justifyContent: 'center'}}>
@@ -99,219 +121,23 @@ export default function CFBGamePage() {
         
         <div style={{ textAlign: 'center' }}>
           <Grid container spacing={3}>
-            <Grid item xs={11}>
-              <Typography variant={'h3'} align="left">{cfbGameData['homeTeamName']}</Typography>
-              <TableContainer component={Paper}>
-                <Table className={classes.table} size="small" aria-label="a dense table">
-                  <TableHead>
-                    <TableRow>
-                      <TableCell></TableCell>
-                      <TableCell align="left"><Typography className={classes.bold}>Stat line</Typography></TableCell>
-                      <TableCell align="right"><Typography className={classes.bold}>Yards/Play</Typography></TableCell>
-                      <TableCell align="right"><Typography className={classes.bold}>EPA/Play</Typography></TableCell>
-                      <TableCell align="right"><Typography className={classes.bold}>EPA</Typography></TableCell>
-                      <TableCell align="right"><Typography className={classes.bold}>SR</Typography></TableCell>
-                      <TableCell align="right"><Typography className={classes.bold}>WPA</Typography></TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableHead>
-                    <TableRow>
-                      <TableCell><Typography className={classes.bold}>Dropbacks</Typography></TableCell>
-                      <TableCell align="left"><Typography></Typography></TableCell>
-                      <TableCell align="right"><Typography></Typography></TableCell>
-                      <TableCell align="right"><Typography></Typography></TableCell>
-                      <TableCell align="right"><Typography></Typography></TableCell>
-                      <TableCell align="right"><Typography></Typography></TableCell>
-                      <TableCell align="right"><Typography></Typography></TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                      {homePassRows.map((row) => (
-                          <TableRow key={row.passer_player_name}>
-                          <TableCell component="th" scope="row">
-                              <Typography>{row.passer_player_name}</Typography>
-                          </TableCell>
-                          <TableCell align="left">
-                          <Typography>{row.Comp+'/'+row.Att+' '+row.Yds+' yds, '+row.Pass_TD+' TD, '+row.Int+' INT, '+row.Sck+' Scks'}</Typography>
-                          </TableCell>
-                          <TableCell align="right"><Typography>{row.YPA}</Typography></TableCell>
-                          <TableCell align="right"><Typography>{row.EPA_per_Play}</Typography></TableCell>
-                          <TableCell align="right"><Typography>{row.EPA}</Typography></TableCell>
-                          <TableCell align="right"><Typography>{row.SR}</Typography></TableCell>
-                          <TableCell align="right"><Typography>{row.WPA}</Typography></TableCell>
-                          </TableRow>
-                      ))}
-                  </TableBody>
-                </Table>
-                <Table className={classes.table} size="small" aria-label="a dense table">
-                  <TableHead>
-                    <TableRow>
-                      <TableCell><Typography className={classes.bold}>Rush Attempts</Typography></TableCell>
-                      <TableCell align="left"><Typography></Typography></TableCell>
-                      <TableCell align="right"><Typography></Typography></TableCell>
-                      <TableCell align="right"><Typography></Typography></TableCell>
-                      <TableCell align="right"><Typography></Typography></TableCell>
-                      <TableCell align="right"><Typography></Typography></TableCell>
-                      <TableCell align="right"><Typography></Typography></TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                      {homeRushRows.map((row) => (
-                          <TableRow key={row.rusher_player_name}>
-                          <TableCell component="th" scope="row">
-                            <Typography>{row.rusher_player_name}</Typography>
-                          </TableCell>
-                          <TableCell align="left">
-                            <Typography>{row.Car+' carries, '+row.Yds+' yds, '+row.Rush_TD+' TD, '+row.Fum+' Fum ('+row.Fum_Lost+' lost)'}</Typography>
-                          </TableCell>
-                          <TableCell align="right"><Typography>{row.YPC}</Typography></TableCell>
-                          <TableCell align="right"><Typography>{row.EPA_per_Play}</Typography></TableCell>
-                          <TableCell align="right"><Typography>{row.EPA}</Typography></TableCell>
-                          <TableCell align="right"><Typography>{row.SR}</Typography></TableCell>
-                          <TableCell align="right"><Typography>{row.WPA}</Typography></TableCell>
-                          </TableRow>
-                      ))}
-                  </TableBody>
-                </Table>
-                
-                <Table className={classes.table} size="small" aria-label="a dense table">
-                  <TableHead>
-                    <TableRow>
-                      <TableCell><Typography className={classes.bold}>Pass Targets</Typography></TableCell>
-                      <TableCell align="left"><Typography></Typography></TableCell>
-                      <TableCell align="right"><Typography></Typography></TableCell>
-                      <TableCell align="right"><Typography></Typography></TableCell>
-                      <TableCell align="right"><Typography></Typography></TableCell>
-                      <TableCell align="right"><Typography></Typography></TableCell>
-                      <TableCell align="right"><Typography></Typography></TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                      {homeRecRows.map((row) => (
-                          <TableRow key={row.receiver_player_name}>
-                            <TableCell component="th" scope="row">
-                              <Typography>{row.receiver_player_name}</Typography>
-                            </TableCell>
-                            <TableCell align="left">
-                              <Typography>{row.Rec+' '+`${row.Rec > 1? 'catches':'catch'}`+' ('+row.Tar+' '+`${row.Tar > 1? 'targets), ':'target), '}`+row.Yds+' yds, '+row.Rec_TD+' TD, '+row.Fum+' Fum ('+row.Fum_Lost+' lost)'}</Typography>
-                            </TableCell>
-                            <TableCell align="right"><Typography>{row.YPT}</Typography></TableCell>
-                            <TableCell align="right"><Typography>{row.EPA_per_Play}</Typography></TableCell>
-                            <TableCell align="right"><Typography>{row.EPA}</Typography></TableCell>
-                            <TableCell align="right"><Typography>{row.SR}</Typography></TableCell>
-                            <TableCell align="right"><Typography>{row.WPA}</Typography></TableCell>
-                          </TableRow>
-                      ))}
-                  </TableBody>
-                </Table>
-              </TableContainer>
+            <Grid item xs={12}>
+              <Box p={2}>
+                <Typography variant={'h3'} align="left">
+                  {'  '+ cfbGameData['homeTeamName']}
+                </Typography>
+              
+                <CFBGamePlayersTable pass={homePassRows} rush={homeRushRows} rec={homeRecRows}/>
+              </Box>
             </Grid>
-            <Grid item xs={11} >
-              <Typography variant={'h3'} align="left">{cfbGameData['awayTeamName']}</Typography>
-              <TableContainer component={Paper}>
-                <Table className={classes.table} size="small" aria-label="a dense table">
-                  <TableHead>
-                    <TableRow>
-                      <TableCell></TableCell>
-                      <TableCell align="left"><Typography className={classes.bold}>Stat line</Typography></TableCell>
-                      <TableCell align="right"><Typography className={classes.bold}>Yards/Play</Typography></TableCell>
-                      <TableCell align="right"><Typography className={classes.bold}>EPA/Play</Typography></TableCell>
-                      <TableCell align="right"><Typography className={classes.bold}>EPA</Typography></TableCell>
-                      <TableCell align="right"><Typography className={classes.bold}>SR</Typography></TableCell>
-                      <TableCell align="right"><Typography className={classes.bold}>WPA</Typography></TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableHead>
-                    <TableRow>
-                      <TableCell><Typography className={classes.bold}>Dropbacks</Typography></TableCell>
-                      <TableCell align="left"><Typography></Typography></TableCell>
-                      <TableCell align="right"><Typography></Typography></TableCell>
-                      <TableCell align="right"><Typography></Typography></TableCell>
-                      <TableCell align="right"><Typography></Typography></TableCell>
-                      <TableCell align="right"><Typography></Typography></TableCell>
-                      <TableCell align="right"><Typography></Typography></TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                      {awayPassRows.map((row) => (
-                          <TableRow key={row.passer_player_name}>
-                          <TableCell component="th" scope="row">
-                              <Typography>{row.passer_player_name}</Typography>
-                          </TableCell>
-                          <TableCell align="left">
-                          <Typography>{row.Comp+'/'+row.Att+' '+row.Yds+' yds, '+row.Pass_TD+' TD, '+row.Int+' INT, '+row.Sck+' Scks'}</Typography>
-                          </TableCell>
-                          <TableCell align="right"><Typography>{row.YPA}</Typography></TableCell>
-                          <TableCell align="right"><Typography>{row.EPA_per_Play}</Typography></TableCell>
-                          <TableCell align="right"><Typography>{row.EPA}</Typography></TableCell>
-                          <TableCell align="right"><Typography>{row.SR}</Typography></TableCell>
-                          <TableCell align="right"><Typography>{row.WPA}</Typography></TableCell>
-                          </TableRow>
-                      ))}
-                  </TableBody>
-                </Table>
-                <Table className={classes.table} size="small" aria-label="a dense table">
-                  <TableHead>
-                    <TableRow>
-                      <TableCell><Typography className={classes.bold}>Rush Attempts</Typography></TableCell>
-                      <TableCell align="left"><Typography></Typography></TableCell>
-                      <TableCell align="right"><Typography></Typography></TableCell>
-                      <TableCell align="right"><Typography></Typography></TableCell>
-                      <TableCell align="right"><Typography></Typography></TableCell>
-                      <TableCell align="right"><Typography></Typography></TableCell>
-                      <TableCell align="right"><Typography></Typography></TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                      {awayRushRows.map((row) => (
-                          <TableRow key={row.rusher_player_name}>
-                          <TableCell component="th" scope="row">
-                            <Typography>{row.rusher_player_name}</Typography>
-                          </TableCell>
-                          <TableCell align="left">
-                            <Typography>{row.Car+' carries, '+row.Yds+' yds, '+row.Rush_TD+' TD, '+row.Fum+' Fum ('+row.Fum_Lost+' lost)'}</Typography>
-                          </TableCell>
-                          <TableCell align="right"><Typography>{row.YPC}</Typography></TableCell>
-                          <TableCell align="right"><Typography>{row.EPA_per_Play}</Typography></TableCell>
-                          <TableCell align="right"><Typography>{row.EPA}</Typography></TableCell>
-                          <TableCell align="right"><Typography>{row.SR}</Typography></TableCell>
-                          <TableCell align="right"><Typography>{row.WPA}</Typography></TableCell>
-                          </TableRow>
-                      ))}
-                  </TableBody>
-                </Table>
+            <Grid item xs={12}>
+              <Box p={2}>
                 
-                <Table className={classes.table} size="small" aria-label="a dense table">
-                  <TableHead>
-                    <TableRow>
-                      <TableCell><Typography className={classes.bold}>Pass Targets</Typography></TableCell>
-                      <TableCell align="left"><Typography></Typography></TableCell>
-                      <TableCell align="right"><Typography></Typography></TableCell>
-                      <TableCell align="right"><Typography></Typography></TableCell>
-                      <TableCell align="right"><Typography></Typography></TableCell>
-                      <TableCell align="right"><Typography></Typography></TableCell>
-                      <TableCell align="right"><Typography></Typography></TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                      {awayRecRows.map((row) => (
-                          <TableRow key={row.receiver_player_name}>
-                            <TableCell component="th" scope="row">
-                              <Typography>{row.receiver_player_name}</Typography>
-                            </TableCell>
-                            <TableCell align="left">
-                              <Typography>{row.Rec+' '+`${row.Rec > 1? 'catches':'catch'}`+' ('+row.Tar+' '+`${row.Tar > 1? 'targets), ':'target), '}`+row.Yds+' yds, '+row.Rec_TD+' TD, '+row.Fum+' Fum ('+row.Fum_Lost+' lost)'}</Typography>
-                            </TableCell>
-                            <TableCell align="right"><Typography>{row.YPT}</Typography></TableCell>
-                            <TableCell align="right"><Typography>{row.EPA_per_Play}</Typography></TableCell>
-                            <TableCell align="right"><Typography>{row.EPA}</Typography></TableCell>
-                            <TableCell align="right"><Typography>{row.SR}</Typography></TableCell>
-                            <TableCell align="right"><Typography>{row.WPA}</Typography></TableCell>
-                          </TableRow>
-                      ))}
-                  </TableBody>
-                </Table>
-              </TableContainer>
+                <Typography variant={'h3'} align="left">
+                  {'  '+ cfbGameData['awayTeamName']}
+                </Typography>
+                <CFBGamePlayersTable pass={awayPassRows} rush={awayRushRows} rec={awayRecRows}/>
+              </Box>
             </Grid>
           </Grid>
         </div>
