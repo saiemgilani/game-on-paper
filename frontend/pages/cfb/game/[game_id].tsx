@@ -115,24 +115,13 @@ export default function CFBGamePage() {
         </Head>
         <div style={{ textAlign: 'center' }}>
           <Grid container style={{justifyContent: 'center'}}>
-              <CollegeGameHeader 
+              <CollegeGameHeader
               score={cfbGameHeader}
               sport={'cfb'}
               loader={myLoader}
               />
           </Grid>
         </div>
-        <div style={{ textAlign: 'center' }}>
-          <Grid container spacing={3}>
-            <Grid item xs={12} p={2}>
-              <TeamBoxScore
-              data={data}
-              columns={columns}
-              />
-            </Grid>
-          </Grid>
-        </div>
-        
           <Grid container spacing={3}>
             <Grid item xs={6}>
               <Box p={2}>
