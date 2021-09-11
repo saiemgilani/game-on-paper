@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up('xl')]: {
       width: 400,
     },
-    height: 150,
+    height: 190,
     margin: 10,
     position: 'relative',
     backgroundColor: theme.palette.primary.main,
@@ -93,11 +93,17 @@ export const ScoreCard: FC<ScoreCardProps> = ({ score,  sport, loader, noMargin 
         <CardContent>
           <Grid container
             direction="row"
-            spacing={1}>
+            spacing={10}>
             <Grid item>
               <Typography variant={'caption'}
                 color="textPrimary" >
                 {'  '}{gameDate}
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Typography variant={'caption'}
+                color="textPrimary" style={{ justifyContent: 'right'}} >
+                {'  '}{score['status.type.state']==='post'?'Final':(score['status.type.state']==='in'? score['status.type.shortDetail']: ' ')}
               </Typography>
             </Grid>
           </Grid>
@@ -150,6 +156,17 @@ export const ScoreCard: FC<ScoreCardProps> = ({ score,  sport, loader, noMargin 
                 className={classes.hscore}>
                 {score['status.type.state']==='pre'? ' ': score['competitors'][0]['score']}
               </Button>
+            </Grid>
+          </Grid>
+          <Grid container
+            direction="row"
+            spacing={1}>
+            <Grid item>
+              <Typography variant={'caption'}
+                color="textPrimary" style={{ justifyContent: 'right'}} >
+                {'  '}{score['status.type.state']==='in'? (score['situation.downDistanceText'] != null ? (score['situation.downDistanceText']):'')+
+                  ' '+score['situation.lastPlay.text']: ' '}
+              </Typography>
             </Grid>
           </Grid>
           <Link href={`/${sport}/game/${score.id}`}>

@@ -8,8 +8,11 @@ import useCFBGameApi from '../../../hooks/useCFBGameApi'
 // core components
 
 import { TeamBoxScore } from "../../../components/TeamBoxScore";
+import { CFBGameTeamsTable } from "../../../components/CFBGameTeamsTable";
+import { CFBGameTeamsTable2 } from "../../../components/CFBGameTeamsTable2";
 import { CFBGamePlayersTable } from "../../../components/CFBGamePlayersTable";
 import { CollegeGameHeader } from "../../../components/CollegeGameHeader";
+import { TeamHeader } from "../../../components/TeamHeader";
 import { Grid, Typography } from '@material-ui/core'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import Box from '@material-ui/core/Box'
@@ -54,6 +57,12 @@ export default function CFBGamePage() {
   const gameId =
     typeof window !== 'undefined' ? window.location.pathname.slice(1) : ''
   const [cfbGameData, 
+        cfbTeamOverall,
+        cfbTeamScrimmage,
+        cfbTeamRushing,
+        cfbTeamExplosiveness,
+        cfbTeamSituational,
+        cfbTeamDrives,
         cfbHomePassBox, cfbAwayPassBox,
         cfbHomeRushBox, cfbAwayRushBox,
         cfbHomeRecBox, cfbAwayRecBox,
@@ -62,7 +71,12 @@ export default function CFBGamePage() {
         cfbGameHeader] = useCFBGameApi(gameId)
 
   const large = useMediaQuery('(min-width:700px)')
-
+  const overall = cfbTeamOverall
+  const scrimmage = cfbTeamScrimmage
+  const rushing = cfbTeamRushing
+  const explosiveness = cfbTeamExplosiveness
+  const situational = cfbTeamSituational
+  const drives = cfbTeamDrives
   const homePassRows = cfbHomePassBox
   const awayPassRows = cfbAwayPassBox
   const homeRushRows = cfbHomeRushBox
@@ -75,7 +89,7 @@ export default function CFBGamePage() {
   const pros = ['wnba','nba','nfl']
   const proSport = pros.includes('cfb')
   const classes = useStyles();
-  console.log(cfbGameData)
+  console.log(cfbTeamScrimmage)
   return (
       <>
         <Head>
@@ -110,7 +124,7 @@ export default function CFBGamePage() {
         </div>
         <div style={{ textAlign: 'center' }}>
           <Grid container spacing={3}>
-            <Grid item xs={12}>
+            <Grid item xs={12} p={2}>
               <TeamBoxScore
               data={data}
               columns={columns}
@@ -119,23 +133,47 @@ export default function CFBGamePage() {
           </Grid>
         </div>
         
+          <Grid container spacing={3}>
+            <Grid item xs={6}>
+              <Box p={2}>
+              <CFBGameTeamsTable
+                ovr={overall}
+                scrim={scrimmage}
+                rushing={rushing}
+                expl={cfbTeamExplosiveness}
+                loader={myLoader}/>
+              </Box>
+            </Grid>
+            <Grid item xs={6}>
+              <Box p={2}>
+              <CFBGameTeamsTable2
+                situ={situational}
+                drives={drives}
+                loader={myLoader}/>
+              </Box>
+            </Grid>
+          </Grid>
         <div style={{ textAlign: 'center' }}>
           <Grid container spacing={3}>
             <Grid item xs={12}>
               <Box p={2}>
-                <Typography variant={'h3'} align="left">
-                  {'  '+ cfbGameData['homeTeamName']}
-                </Typography>
-              
+                <TeamHeader 
+                  score={cfbGameHeader}
+                  homeAway={0}
+                  sport={'cfb'}
+                  loader={myLoader}
+                />
                 <CFBGamePlayersTable pass={homePassRows} rush={homeRushRows} rec={homeRecRows}/>
               </Box>
             </Grid>
             <Grid item xs={12}>
               <Box p={2}>
-                
-                <Typography variant={'h3'} align="left">
-                  {'  '+ cfbGameData['awayTeamName']}
-                </Typography>
+                <TeamHeader 
+                  score={cfbGameHeader}
+                  homeAway={1}
+                  sport={'cfb'}
+                  loader={myLoader}
+                />
                 <CFBGamePlayersTable pass={awayPassRows} rush={awayRushRows} rec={awayRecRows}/>
               </Box>
             </Grid>

@@ -67,7 +67,7 @@ const options = (dark: boolean): ThemeOptions => {
         lineHeight: '16.41px',
         letterSpacing: '0.1px',
       },
-      body1: { fontFamily: 'Roboto Slab',  fontWeight: 400, fontSize: '18px', lineHeight: '150%', letterSpacing: '0.5px' },
+      body1: { fontFamily: 'Roboto Slab',  fontWeight: 400, fontSize: '14px', lineHeight: '110%', letterSpacing: '0.5px' },
       body2: { fontFamily: 'Lato',  fontWeight: 400, fontSize: '16px', lineHeight: '16px', letterSpacing: '0.25px' },
       button: { fontFamily: 'Lato', fontWeight: 500, fontSize: '14px', letterSpacing: '1.25px' },
       caption: { fontFamily: 'Lato', fontSize: '12px', lineHeight: '14px', letterSpacing: '0.4px' },

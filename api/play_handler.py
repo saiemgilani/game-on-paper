@@ -3233,7 +3233,7 @@ class PlayProcess(object):
         team_box = reduce(lambda left,right: pd.merge(left,right,on=['pos_team'], how='outer'), team_data_frames)
         team_box = team_box.replace({np.nan:None})
 
-        situation_box_normal = self.plays_json[(self.plays_json.scrimmage_play == True)].groupby(by=["pos_team"]).agg(
+        situation_box_normal = self.plays_json[(self.plays_json.scrimmage_play == True)].groupby(by=["pos_team"], as_index=False).agg(
             EPA_success = ('EPA_success', sum),
             EPA_success_rate = ('EPA_success', mean),
         )
@@ -3435,7 +3435,6 @@ class PlayProcess(object):
             "turnover" : turnover_box_json,
             "drives" : json.loads(drives_data.to_json(orient="records"))
         }
-
 
     def run_processing_pipeline(self):
         if (self.ran_pipeline == False):
