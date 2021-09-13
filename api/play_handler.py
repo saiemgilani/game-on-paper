@@ -3210,14 +3210,14 @@ class PlayProcess(object):
             rushes_rate = ('rush', mean),
             first_downs_created = ('first_down_created', sum),
             first_downs_created_rate = ('first_down_created', mean)
-        )
+        ).round(2)
         team_rush_power_box = self.plays_json[(self.plays_json["power_rush_attempt"] == True)].groupby(by=["pos_team"], as_index=False).agg(
             EPA_rushing_power = ('EPA', sum),
             EPA_rushing_power_per_play = ('EPA', mean),
             rushing_power_success = ('power_rush_success', sum),
             rushing_power_success_rate = ('power_rush_success', mean),
             rushing_power = ('power_rush_attempt', sum),
-        )
+        ).round(2)
 
         team_rush_box = self.plays_json[(self.plays_json["rush"] == True)].groupby(by=["pos_team"], as_index=False).agg(
             rushing_stuff = ('stuffed_run', sum),
@@ -3228,7 +3228,7 @@ class PlayProcess(object):
             rushing_opportunity_rate = ('opportunity_run', mean),
             rushing_highlight = ('highlight_run', sum),
             rushing_highlight_rate = ('highlight_run', mean),
-        )
+        ).round(2)
         team_data_frames = [team_sp_box, team_scrimmage_box_rush, team_scrimmage_box_pass, team_scrimmage_box, team_base_box, team_rush_base_box, team_rush_power_box, team_rush_box]
         team_box = reduce(lambda left,right: pd.merge(left,right,on=['pos_team'], how='outer'), team_data_frames)
         team_box = team_box.replace({np.nan:None})
@@ -3236,17 +3236,17 @@ class PlayProcess(object):
         situation_box_normal = self.plays_json[(self.plays_json.scrimmage_play == True)].groupby(by=["pos_team"], as_index=False).agg(
             EPA_success = ('EPA_success', sum),
             EPA_success_rate = ('EPA_success', mean),
-        )
+        ).round(2)
 
         situation_box_pass = self.plays_json[(self.plays_json["pass"] == True) & (self.plays_json.scrimmage_play == True)].groupby(by=["pos_team"]).agg(
             EPA_success_pass = ('EPA_success', sum),
             EPA_success_pass_rate = ('EPA_success', mean),
-        )
+        ).round(2)
 
         situation_box_rush = self.plays_json[(self.plays_json["rush"] == True) & (self.plays_json.scrimmage_play == True)].groupby(by=["pos_team"]).agg(
             EPA_success_rush = ('EPA_success', sum),
             EPA_success_rush_rate = ('EPA_success', mean),
-        )
+        ).round(2)
 
         situation_box_middle8 = self.plays_json[(self.plays_json["middle_8"] == True) & (self.plays_json.scrimmage_play == True)].groupby(by=["pos_team"]).agg(
             middle_8 = ('middle_8', sum),
@@ -3256,7 +3256,7 @@ class PlayProcess(object):
             EPA_middle_8_per_play = ('EPA', mean),
             EPA_middle_8_success = ('EPA_success', sum),
             EPA_middle_8_success_rate = ('EPA_success', mean),
-        )
+        ).round(2)
 
         situation_box_middle8_pass = self.plays_json[(self.plays_json["pass"] == True) & (self.plays_json["middle_8"] == True) & (self.plays_json.scrimmage_play == True)].groupby(by=["pos_team"]).agg(
             middle_8_pass = ('pass', sum),
@@ -3264,7 +3264,7 @@ class PlayProcess(object):
             EPA_middle_8_pass_per_play = ('EPA', mean),
             EPA_middle_8_success_pass = ('EPA_success', sum),
             EPA_middle_8_success_pass_rate = ('EPA_success', mean),
-        )
+        ).round(2)
 
         situation_box_middle8_rush = self.plays_json[(self.plays_json["rush"] == True) & (self.plays_json["middle_8"] == True) & (self.plays_json.scrimmage_play == True)].groupby(by=["pos_team"]).agg(
             middle_8_rush = ('rush', sum),
@@ -3274,7 +3274,7 @@ class PlayProcess(object):
 
             EPA_middle_8_success_rush = ('EPA_success', sum),
             EPA_middle_8_success_rush_rate = ('EPA_success', mean),
-        )
+        ).round(2)
 
         situation_box_early = self.plays_json[(self.plays_json.early_down == True)].groupby(by=["pos_team"]).agg(
             EPA_success_early_down = ('EPA_success', sum),
@@ -3286,7 +3286,7 @@ class PlayProcess(object):
             EPA_early_down_per_play = ('EPA', mean),
             early_down_first_down = ('first_down_created', sum),
             early_down_first_down_rate = ('first_down_created', mean)
-        )
+        ).round(2)
 
         situation_box_early_pass = self.plays_json[(self.plays_json["pass"] == True) & (self.plays_json.early_down == True)].groupby(by=["pos_team"]).agg(
             early_down_pass = ('pass', sum),
@@ -3294,7 +3294,7 @@ class PlayProcess(object):
             EPA_early_down_pass_per_play = ('EPA', mean),
             EPA_success_early_down_pass = ('EPA_success', sum),
             EPA_success_early_down_pass_rate = ('EPA_success', mean),
-        )
+        ).round(2)
 
         situation_box_early_rush = self.plays_json[(self.plays_json["rush"] == True) & (self.plays_json.early_down == True)].groupby(by=["pos_team"]).agg(
             early_down_rush = ('rush', sum),
@@ -3302,7 +3302,7 @@ class PlayProcess(object):
             EPA_early_down_rush_per_play = ('EPA', mean),
             EPA_success_early_down_rush = ('EPA_success', sum),
             EPA_success_early_down_rush_rate = ('EPA_success', mean),
-        )
+        ).round(2)
 
         situation_box_late = self.plays_json[(self.plays_json.late_down == True)].groupby(by=["pos_team"]).agg(
             EPA_success_late_down = ('EPA_success_late_down', sum),
@@ -3318,20 +3318,20 @@ class PlayProcess(object):
             EPA_success_late_down_rush_rate = ('EPA_success_late_down_rush', mean),
             late_down_pass_rate = ('late_down_pass', mean),
             late_down_rush_rate = ('late_down_rush', mean)
-        )
+        ).round(2)
 
         situation_box_standard = self.plays_json[self.plays_json.standard_down == True].groupby(by=["pos_team"]).agg(
             EPA_success_standard_down = ('EPA_success_standard_down', sum),
             EPA_success_standard_down_rate = ('EPA_success_standard_down', mean),
             EPA_standard_down = ('EPA_success_standard_down', sum),
             EPA_standard_down_per_play = ('EPA_success_standard_down', mean)
-        )
+        ).round(2)
         situation_box_passing = self.plays_json[self.plays_json.passing_down == True].groupby(by=["pos_team"]).agg(
             EPA_success_passing_down = ('EPA_success_passing_down', sum),
             EPA_success_passing_down_rate = ('EPA_success_passing_down', mean),
             EPA_passing_down = ('EPA_success_standard_down', sum),
             EPA_passing_down_per_play = ('EPA_success_standard_down', mean)
-        )
+        ).round(2)
         situation_data_frames = [situation_box_normal, situation_box_pass, situation_box_rush, situation_box_early, situation_box_early_pass, situation_box_early_rush, situation_box_middle8, situation_box_middle8_pass, situation_box_middle8_rush, situation_box_late, situation_box_standard, situation_box_passing]
         situation_box = reduce(lambda left,right: pd.merge(left,right,on=['pos_team'], how='outer'), situation_data_frames)
         situation_box = situation_box.replace({np.nan:None})
@@ -3345,7 +3345,7 @@ class PlayProcess(object):
             havoc_total_rate = ('havoc', mean),
             fumbles = ('fumble_vec', sum),
             def_int = ('int', sum)
-        )
+        ).round(2)
         def_base_box = def_base_box.replace({np.nan:None})
 
         def_box_havoc_pass = self.plays_json[(self.plays_json.scrimmage_play == True) & (self.plays_json["pass"] == True)].groupby(by=["def_pos_team"], as_index=False).agg(
@@ -3353,13 +3353,13 @@ class PlayProcess(object):
             havoc_total_pass_rate = ('havoc', mean),
             sacks = ('sack', sum),
             sacks_rate = ('sack', mean),
-        )
+        ).round(2)
         def_box_havoc_pass = def_box_havoc_pass.replace({np.nan:None})
 
         def_box_havoc_rush = self.plays_json[(self.plays_json.scrimmage_play == True) & (self.plays_json["rush"] == True)].groupby(by=["def_pos_team"], as_index=False).agg(
             havoc_total_rush = ('havoc', sum),
             havoc_total_rush_rate = ('havoc', mean),
-        )
+        ).round(2)
         def_box_havoc_rush = def_box_havoc_rush.replace({np.nan:None})
 
         def_data_frames = [def_base_box,def_box_havoc_pass,def_box_havoc_rush]
@@ -3422,7 +3422,7 @@ class PlayProcess(object):
             plays_per_drive = ('drive.offensivePlays', mean),
             yards_per_drive = ('drive.yards', mean),
             drives = ('drive.id', pd.Series.nunique)
-        )
+        ).round(2)
         drives_data['drive_total_gained_yards_rate'] = (100 * drives_data.drive_total_gained_yards / drives_data.drive_total_available_yards).round(2)
 
         return {
