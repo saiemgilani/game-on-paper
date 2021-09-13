@@ -10,6 +10,7 @@ import useCFBGameApi from '../../../hooks/useCFBGameApi'
 import { TeamBoxScore } from "../../../components/TeamBoxScore";
 import { CFBGameTeamsTable } from "../../../components/CFBGameTeamsTable";
 import { CFBGameTeamsTable2 } from "../../../components/CFBGameTeamsTable2";
+import { CFBGameTeamsTable3 } from "../../../components/CFBGameTeamsTable3";
 import { CFBGamePlayersTable } from "../../../components/CFBGamePlayersTable";
 import { CollegeGameHeader } from "../../../components/CollegeGameHeader";
 import { TeamHeader } from "../../../components/TeamHeader";
@@ -35,21 +36,82 @@ type MaterialTableProps = {
     rows: any
     noMargin?: boolean
   }
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
     table: {
-      minWidth: 650,
+      width: 300,
+      [theme.breakpoints.down('xs')]: {
+        width: 300,
+      },
+      [theme.breakpoints.down('sm')]: {
+        width: 300,
+      },
+      [theme.breakpoints.down('md')]: {
+        width: 300,
+      },
+      [theme.breakpoints.up('lg')]: {
+        width: 400,
+      },
+      [theme.breakpoints.up('xl')]: {
+        width: 400,
+      },
+      height: 200,
+      margin: 10,
+      position: 'relative',
+      cursor: 'pointer',
+      backgroundColor: '#ffffff',
+      color: theme.palette.text.secondary,
     },
     bold: {
       fontWeight: 600
     },
-    img: {
-      height: 30,
-      display:'inline-block',
-      maxHeight:'80%',
-      maxWidth:'80%',
-      transform: 'translateY(7.5px)',
+    card: {
+      width: 300,
+      [theme.breakpoints.down('xs')]: {
+        width: 300,
+      },
+      [theme.breakpoints.down('sm')]: {
+        width: 300,
+      },
+      [theme.breakpoints.down('md')]: {
+        width: 300,
+      },
+      [theme.breakpoints.up('lg')]: {
+        width: 400,
+      },
+      [theme.breakpoints.up('xl')]: {
+        width: 400,
+      },
+      height: 200,
+      margin: 10,
+      position: 'relative',
+      cursor: 'pointer',
+      backgroundColor: '#ffffff',
+      color: theme.palette.text.secondary,
     },
-  });
+    media: {
+      height: 30,
+    },
+    hscore:{
+      right: 5,
+      top: 58,
+      padding: 5,
+      fontSize: '1.1rem',
+      position: 'absolute',
+    },
+    ascore:{
+      right: 5,
+      top: 18,
+      padding: 5,
+      fontSize: '1.1rem',
+      position: 'absolute',
+    },
+    actions: {
+      right: 5,
+      bottom: 5,
+      padding: 5,
+      position: 'absolute',
+    },
+    }))
 const myLoader = ({ src, width }) => {
   return `https://a.espncdn.com/i/teamlogos/ncaa/500/${src}.png?w=${width}`
 }
@@ -62,7 +124,9 @@ export default function CFBGamePage() {
         cfbTeamRushing,
         cfbTeamExplosiveness,
         cfbTeamSituational,
-        cfbTeamDrives,
+        cfbTeamDrives, cfbTeamHavoc,
+        cfbTeamTurnovers,
+        cfbTeamSpecialTeams,
         cfbHomePassBox, cfbAwayPassBox,
         cfbHomeRushBox, cfbAwayRushBox,
         cfbHomeRecBox, cfbAwayRecBox,
@@ -77,6 +141,9 @@ export default function CFBGamePage() {
   const explosiveness = cfbTeamExplosiveness
   const situational = cfbTeamSituational
   const drives = cfbTeamDrives
+  const havoc = cfbTeamHavoc
+  const turnovers = cfbTeamTurnovers
+  const specialTeams = cfbTeamSpecialTeams
   const homePassRows = cfbHomePassBox
   const awayPassRows = cfbAwayPassBox
   const homeRushRows = cfbHomeRushBox
@@ -122,30 +189,35 @@ export default function CFBGamePage() {
               />
           </Grid>
         </div>
-          <Grid container spacing={3}>
-            <Grid item xs={6}>
-              <Box p={2}>
+          <Grid container
+            direction="row">
+            <Grid item xs={12} lg={5}>
               <CFBGameTeamsTable
                 ovr={overall}
                 scrim={scrimmage}
                 rushing={rushing}
-                expl={cfbTeamExplosiveness}
+                expl={explosiveness}
+                situ={situational}
+                drives={drives}
                 loader={myLoader}/>
-              </Box>
             </Grid>
-            <Grid item xs={6}>
-              <Box p={2}>
+            <Grid item xs={12} lg={5}>
               <CFBGameTeamsTable2
                 situ={situational}
                 drives={drives}
                 loader={myLoader}/>
-              </Box>
+            </Grid>
+            <Grid item xs={12} lg={5}>
+              <CFBGameTeamsTable3
+                def={havoc}
+                turns={turnovers}
+                special={specialTeams}
+                loader={myLoader}/>
             </Grid>
           </Grid>
         <div style={{ textAlign: 'center' }}>
           <Grid container spacing={3}>
-            <Grid item xs={12}>
-              <Box p={2}>
+            <Grid item xs={12} lg={6}>
                 <TeamHeader 
                   score={cfbGameHeader}
                   homeAway={0}
@@ -153,10 +225,8 @@ export default function CFBGamePage() {
                   loader={myLoader}
                 />
                 <CFBGamePlayersTable pass={homePassRows} rush={homeRushRows} rec={homeRecRows}/>
-              </Box>
             </Grid>
-            <Grid item xs={12}>
-              <Box p={2}>
+            <Grid item xs={12} lg={6}>
                 <TeamHeader 
                   score={cfbGameHeader}
                   homeAway={1}
@@ -164,7 +234,6 @@ export default function CFBGamePage() {
                   loader={myLoader}
                 />
                 <CFBGamePlayersTable pass={awayPassRows} rush={awayRushRows} rec={awayRecRows}/>
-              </Box>
             </Grid>
           </Grid>
         </div>

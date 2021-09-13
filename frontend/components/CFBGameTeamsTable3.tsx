@@ -13,8 +13,9 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { ScoreData } from '../types/scores'
 type GameTeamsTableProps = {
-    situ: any[]
-    drives: any[]
+    def: any[]
+    turns: any[]
+    special: any[]
     loader: any
   }
   const useStyles = makeStyles((theme) => ({
@@ -46,9 +47,9 @@ type GameTeamsTableProps = {
       fontWeight: 600
     },
   }));
-  export const CFBGameTeamsTable2: FC<GameTeamsTableProps> = ({ situ, drives, loader }): ReactElement => {
+  export const CFBGameTeamsTable3: FC<GameTeamsTableProps> = ({ def, turns, special, loader }): ReactElement => {
   const classes = useStyles();
-  if(situ.length == 0 || drives.length == 0 ){
+  if(def.length == 0 || turns.length == 0 || special.length == 0) {
       return (
       <Grid container
         spacing={1}
@@ -77,27 +78,27 @@ type GameTeamsTableProps = {
                         <Typography style={{ 
                             justifyContent: 'left', alignContent:'left', 
                             fontSize: '1.3rem', fontWeight: 600 }}>
-                            Situational
+                            Defensive
                         </Typography>
                     </TableCell>
                     <TableCell align="right">
                         <Image loader={loader}
-                            src={`${situ[0]['away_pos_team']}`}
+                            src={`${def[0]['away_pos_team']}`}
                             width={35} height={35}
-                            alt={`${situ[0]['away_pos_team']}`}/>
+                            alt={`${def[0]['away_pos_team']}`}/>
                     </TableCell>
                     <TableCell align="right">
                         <Image loader={loader}
-                            src={`${situ[0]['home_pos_team']}`}
+                            src={`${def[0]['home_pos_team']}`}
                             width={35} height={35}
-                            alt={`${situ[0]['home_pos_team']}`}/>
+                            alt={`${def[0]['home_pos_team']}`}/>
                     </TableCell>
                 </TableRow>
             </TableHead>
             <TableHead>
             </TableHead>
             <TableBody>
-                {situ.map((row) => (
+                {def.map((row) => (
                     <TableRow key={row.Stat}>
                         <TableCell component="th" scope="row">
                             <Typography>{`${String(row.Stat)}`}</Typography>
@@ -119,27 +120,69 @@ type GameTeamsTableProps = {
                         <Typography style={{ 
                             justifyContent: 'left', alignContent:'left', 
                             fontSize: '1.3rem', fontWeight: 600 }}>
-                            Drives
+                            Turnovers
                         </Typography>
                     </TableCell>
                     <TableCell align="right">
                         <Image loader={loader}
-                            src={`${drives[0]['away_pos_team']}`}
+                            src={`${turns[0]['away_pos_team']}`}
                             width={35} height={35}
-                            alt={`${drives[0]['away_pos_team']}`}/>
+                            alt={`${turns[0]['away_pos_team']}`}/>
                     </TableCell>
                     <TableCell align="right">
                         <Image loader={loader}
-                            src={`${drives[0]['home_pos_team']}`}
+                            src={`${turns[0]['home_pos_team']}`}
                             width={35} height={35}
-                            alt={`${drives[0]['home_pos_team']}`}/>
+                            alt={`${turns[0]['home_pos_team']}`}/>
                     </TableCell>
                 </TableRow>
             </TableHead>
             <TableHead>
             </TableHead>
             <TableBody>
-                {drives.map((row) => (
+                {turns.map((row) => (
+                    <TableRow key={row.Stat}>
+                        <TableCell component="th" scope="row">
+                            <Typography>{`${String(row.Stat)}`}</Typography>
+                        </TableCell>
+                        <TableCell align="right">
+                            <Typography>{row.away_stat_value}</Typography>
+                        </TableCell>
+                        <TableCell align="right">
+                            <Typography>{row.home_stat_value}</Typography>
+                        </TableCell>
+                    </TableRow>
+                ))}
+            </TableBody>
+        </Table>
+        <Table className={classes.table} size="small" aria-label="a dense table">
+            <TableHead>
+                <TableRow>
+                    <TableCell align="left">
+                        <Typography style={{ 
+                            justifyContent: 'left', alignContent:'left', 
+                            fontSize: '1.3rem', fontWeight: 600 }}>
+                            Special Teams
+                        </Typography>
+                    </TableCell>
+                    <TableCell align="right">
+                        <Image loader={loader}
+                            src={`${special[0]['away_pos_team']}`}
+                            width={35} height={35}
+                            alt={`${special[0]['away_pos_team']}`}/>
+                    </TableCell>
+                    <TableCell align="right">
+                        <Image loader={loader}
+                            src={`${special[0]['home_pos_team']}`}
+                            width={35} height={35}
+                            alt={`${special[0]['home_pos_team']}`}/>
+                    </TableCell>
+                </TableRow>
+            </TableHead>
+            <TableHead>
+            </TableHead>
+            <TableBody>
+                {special.map((row) => (
                     <TableRow key={row.Stat}>
                         <TableCell component="th" scope="row">
                             <Typography>{`${String(row.Stat)}`}</Typography>

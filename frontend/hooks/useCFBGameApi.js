@@ -150,6 +150,9 @@ function useCFBGameApi(gameId) {
   const [cfbTeamExplosiveness, setCFBTeamExplosiveness] = useState([]);
   const [cfbTeamSituational, setCFBTeamSituational] = useState([]);
   const [cfbTeamDrives, setCFBTeamDrives] = useState([]);
+  const [cfbTeamHavoc, setCFBTeamHavoc] = useState([]);
+  const [cfbTeamTurnovers, setCFBTeamTurnovers] = useState([]);
+  const [cfbTeamSpecialTeams, setCFBTeamSpecialTeams] = useState([]);
   const [cfbHomePassBox, setCFBHomePassBox] = useState([]);
   const [cfbAwayPassBox, setCFBAwayPassBox] = useState([]);
   const [cfbHomeRushBox, setCFBHomeRushBox] = useState([]);
@@ -200,16 +203,8 @@ function useCFBGameApi(gameId) {
             away_pos_team: res.data.box_score.team[1]['pos_team'],})
       )
       const teamBoxScrimmage = []
-      columns = [
-        "scrimmage_plays",
-        "EPA_overall_off",
-        "EPA_per_play",
-        "passes",
-        "EPA_passing_overall",
-        "EPA_passing_per_play",
-        "rushes", 
-        "EPA_rushing_overall",
-        "EPA_rushing_per_play"]
+      columns = ["scrimmage_plays", "EPA_overall_off", "EPA_per_play", "passes", "EPA_passing_overall",
+        "EPA_passing_per_play", "rushes", "EPA_rushing_overall", "EPA_rushing_per_play"]
       const teamboxscrimmage = columns.forEach(col =>
         teamBoxScrimmage.push({
           Stat: stat_key_title_mapping[col], 
@@ -220,15 +215,8 @@ function useCFBGameApi(gameId) {
         })
       )
       const teamBoxRushing = []
-      columns = [
-        "scrimmage_plays",
-        "rushes",
-        "rushing_power",
-        "rushing_power_success",
-        "rushing_stuff",
-        "rushing_stopped",
-        "rushing_opportunity",
-        "rushing_highlight"]
+      columns = ["scrimmage_plays", "rushes", "rushing_power", "rushing_power_success",
+        "rushing_stuff", "rushing_stopped", "rushing_opportunity", "rushing_highlight"]
       const teamboxrushing = columns.forEach(col =>
         teamBoxRushing.push({
           Stat: stat_key_title_mapping[col], 
@@ -249,31 +237,12 @@ function useCFBGameApi(gameId) {
           away_pos_team: res.data.box_score.team[1]['pos_team']
         })
       )  
-      columns = [
-        "EPA_success",
-        "EPA_success_pass",
-        "EPA_success_rush",
-        "EPA_success_standard_down",
-        "EPA_success_passing_down",
-        "EPA_success_early_down",
-        "EPA_success_late_down",
-        "EPA_middle_8_success",
-        "early_downs",
-        "early_down_first_down",
-        "EPA_early_down",
-        "EPA_early_down_per_play",
-        "early_down_pass",
-        "early_down_rush",
-        "EPA_success_early_down_pass",
-        "EPA_success_early_down_rush",
-        "middle_8",
-        "EPA_middle_8",
-        "EPA_middle_8_per_play",
-        "middle_8_pass",
-        "middle_8_rush",
-        "EPA_middle_8_success_pass",
-        "EPA_middle_8_success_rush"
-      ]
+      columns = ["EPA_success", "EPA_success_pass", "EPA_success_rush",  "EPA_success_standard_down",
+        "EPA_success_passing_down", "EPA_success_early_down", "EPA_success_late_down", "EPA_middle_8_success",
+        "early_downs", "early_down_first_down", "EPA_early_down", "EPA_early_down_per_play",
+        "early_down_pass", "early_down_rush", "EPA_success_early_down_pass", "EPA_success_early_down_rush",
+        "middle_8", "EPA_middle_8", "EPA_middle_8_per_play", "middle_8_pass", "middle_8_rush",
+        "EPA_middle_8_success_pass", "EPA_middle_8_success_rush"]
       const teamBoxSituational = []
       const teamboxsituational = columns.forEach(col =>
         teamBoxSituational.push({
@@ -294,14 +263,50 @@ function useCFBGameApi(gameId) {
           away_stat_value: res.data.box_score.drives[1][col], 
           away_pos_team: res.data.box_score.drives[1]['pos_team']
         })
-      )  
-      console.log(teamBoxSituational)
+      )
+      columns = ["scrimmage_plays","havoc_total","havoc_total_pass","havoc_total_rush","TFL","TFL_pass","TFL_rush", "sacks","PD","def_int","fumbles"]
+      const teamBoxHavoc = []
+      const teamboxHavoc = columns.forEach(col =>
+        teamBoxHavoc.push({
+          Stat: stat_key_title_mapping[col],
+          home_stat_value: res.data.box_score.defensive[0][col],
+          home_pos_team: res.data.box_score.defensive[0]['def_pos_team'],
+          away_stat_value: res.data.box_score.defensive[1][col],
+          away_pos_team: res.data.box_score.defensive[1]['def_pos_team']
+        })
+      )
+      columns = ["turnovers","total_fumbles","fumbles_lost","fumbles_recovered","Int","turnover_margin","expected_turnovers","expected_turnover_margin","turnover_luck"]
+      const teamBoxTurnovers = []
+      const teamboxTurnovers = columns.forEach(col =>
+        teamBoxTurnovers.push({
+          Stat: stat_key_title_mapping[col],
+          home_stat_value: res.data.box_score.turnover[0][col],
+          home_pos_team: res.data.box_score.turnover[0]['pos_team'],
+          away_stat_value: res.data.box_score.turnover[1][col],
+          away_pos_team: res.data.box_score.turnover[1]['pos_team']
+        })
+      )
+      columns = ["special_teams_plays","EPA_sp","EPA_fg","EPA_punt","EPA_kickoff"]
+      const teamBoxSpecialTeams = []
+      const teamboxSpecialTeams = columns.forEach(col =>
+        teamBoxSpecialTeams.push({
+          Stat: stat_key_title_mapping[col],
+          home_stat_value: res.data.box_score.team[0][col],
+          home_pos_team: res.data.box_score.team[0]['pos_team'],
+          away_stat_value: res.data.box_score.team[1][col],
+          away_pos_team: res.data.box_score.team[1]['pos_team']
+        })
+      )
+      console.log(teamBoxTurnovers)
       setCFBTeamOverall(teamBoxOverall)
       setCFBTeamScrimmage(teamBoxScrimmage)
       setCFBTeamRushing(teamBoxRushing)
       setCFBTeamExplosiveness(teamBoxExplosiveness)
       setCFBTeamSituational(teamBoxSituational)
       setCFBTeamDrives(teamBoxDrives)
+      setCFBTeamHavoc(teamBoxHavoc)
+      setCFBTeamTurnovers(teamBoxTurnovers)
+      setCFBTeamSpecialTeams(teamBoxSpecialTeams)
       setCFBHomePassBox(homePassBox)
       setCFBAwayPassBox(awayPassBox)
       setCFBHomeRushBox(homeRushBox)
@@ -328,6 +333,9 @@ function useCFBGameApi(gameId) {
           cfbTeamExplosiveness,
           cfbTeamSituational,
           cfbTeamDrives,
+          cfbTeamHavoc,
+          cfbTeamTurnovers,
+          cfbTeamSpecialTeams,
           cfbHomePassBox, cfbAwayPassBox,
           cfbHomeRushBox, cfbAwayRushBox,
           cfbHomeRecBox, cfbAwayRecBox,

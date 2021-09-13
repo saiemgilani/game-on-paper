@@ -17,20 +17,44 @@ type GameTeamsTableProps = {
     scrim: any[]
     rushing: any[]
     expl: any[]
+    situ: any[]
+    drives: any[]
     loader: any
   }
-const useStyles = makeStyles({
+  const useStyles = makeStyles((theme) => ({
     table: {
-      minWidth: 350,
+      minWidth: 550,
+      width: 700,
+      [theme.breakpoints.down('xs')]: {
+        width: 300,
+      },
+      [theme.breakpoints.down('sm')]: {
+        width: 300,
+      },
+      [theme.breakpoints.down('md')]: {
+        width: 300,
+      },
+      [theme.breakpoints.up('lg')]: {
+        width: 550,
+      },
+      [theme.breakpoints.up('xl')]: {
+        width: 400,
+      },
+      margin: 0,
+      position: 'relative',
+      cursor: 'pointer',
+      backgroundColor: '#ffffff',
+      color: theme.palette.text.secondary,
     },
     bold: {
       fontWeight: 600
     },
-  });
+  }));
 
-  export const CFBGameTeamsTable: FC<GameTeamsTableProps> = ({ ovr, scrim, rushing, expl, loader }): ReactElement => {
+  export const CFBGameTeamsTable: FC<GameTeamsTableProps> = ({ ovr, scrim, rushing, expl, situ, drives, loader }): ReactElement => {
   const classes = useStyles();
-  if(ovr.length == 0 || scrim.length == 0 || rushing.length == 0 || expl.length == 0){
+  if(ovr.length == 0 || scrim.length == 0 || rushing.length == 0 || expl.length == 0 ||
+    situ.length == 0 || drives.length == 0 ){
       return (
       <Grid container
         spacing={1}
@@ -51,7 +75,10 @@ const useStyles = makeStyles({
   }
   return (
     <div>
-    <TableContainer component={Paper}>
+    {/* <TableContainer component={Grid} className={classes.table}> */}
+    {/* <Grid container direction="row" xs={12} lg={6}>
+        <Grid container direction="column">
+        <Grid item xs={12} lg={6}> */}
         <Table className={classes.table} size="small" aria-label="a dense table">
             <TableHead>
                 <TableRow>
@@ -220,7 +247,99 @@ const useStyles = makeStyles({
                 ))}
             </TableBody>
         </Table>
-    </TableContainer>
+        {/* </Grid>
+        </Grid> */}
+
+        {/* <Grid container direction="column">
+        <Grid item xs={12} lg={6}>
+        <Table className={classes.table} size="small" aria-label="a dense table">
+            <TableHead>
+                <TableRow>
+                    <TableCell align="left">
+                        <Typography style={{ 
+                            justifyContent: 'left', alignContent:'left', 
+                            fontSize: '1.3rem', fontWeight: 600 }}>
+                            Situational
+                        </Typography>
+                    </TableCell>
+                    <TableCell align="right">
+                        <Image loader={loader}
+                            src={`${situ[0]['away_pos_team']}`}
+                            width={35} height={35}
+                            alt={`${situ[0]['away_pos_team']}`}/>
+                    </TableCell>
+                    <TableCell align="right">
+                        <Image loader={loader}
+                            src={`${situ[0]['home_pos_team']}`}
+                            width={35} height={35}
+                            alt={`${situ[0]['home_pos_team']}`}/>
+                    </TableCell>
+                </TableRow>
+            </TableHead>
+            <TableHead>
+            </TableHead>
+            <TableBody>
+                {situ.map((row) => (
+                    <TableRow key={row.Stat}>
+                        <TableCell component="th" scope="row">
+                            <Typography>{`${String(row.Stat)}`}</Typography>
+                        </TableCell>
+                        <TableCell align="right">
+                            <Typography>{row.away_stat_value}</Typography>
+                        </TableCell>
+                        <TableCell align="right">
+                            <Typography>{row.home_stat_value}</Typography>
+                        </TableCell>
+                    </TableRow>
+                ))}
+            </TableBody>
+        </Table>
+        <Table className={classes.table} size="small" aria-label="a dense table">
+            <TableHead>
+                <TableRow>
+                    <TableCell align="left">
+                        <Typography style={{ 
+                            justifyContent: 'left', alignContent:'left', 
+                            fontSize: '1.3rem', fontWeight: 600 }}>
+                            Drives
+                        </Typography>
+                    </TableCell>
+                    <TableCell align="right">
+                        <Image loader={loader}
+                            src={`${drives[0]['away_pos_team']}`}
+                            width={35} height={35}
+                            alt={`${drives[0]['away_pos_team']}`}/>
+                    </TableCell>
+                    <TableCell align="right">
+                        <Image loader={loader}
+                            src={`${drives[0]['home_pos_team']}`}
+                            width={35} height={35}
+                            alt={`${drives[0]['home_pos_team']}`}/>
+                    </TableCell>
+                </TableRow>
+            </TableHead>
+            <TableHead>
+            </TableHead>
+            <TableBody>
+                {drives.map((row) => (
+                    <TableRow key={row.Stat}>
+                        <TableCell component="th" scope="row">
+                            <Typography>{`${String(row.Stat)}`}</Typography>
+                        </TableCell>
+                        <TableCell align="right">
+                            <Typography>{row.away_stat_value}</Typography>
+                        </TableCell>
+                        <TableCell align="right">
+                            <Typography>{row.home_stat_value}</Typography>
+                        </TableCell>
+                    </TableRow>
+                ))}
+            </TableBody>
+        </Table>
+        </Grid>
+        </Grid>
+        </Grid> */}
+    {/* </TableContainer> */}
     
     </div>
     );

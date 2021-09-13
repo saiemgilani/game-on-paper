@@ -15,15 +15,44 @@ type MaterialTableProps = {
     rush: any[]
     rec: any[]
   }
-const useStyles = makeStyles({
+  const useStyles = makeStyles((theme) => ({
     table: {
-      minWidth: 650,
+      minWidth: 320,
+      width: 300,
+      [theme.breakpoints.down('xs')]: {
+        width: 300,
+      },
+      [theme.breakpoints.down('sm')]: {
+        width: 300,
+      },
+      [theme.breakpoints.down('md')]: {
+        width: 300,
+      },
+      [theme.breakpoints.up('lg')]: {
+        width: 400,
+      },
+      [theme.breakpoints.up('xl')]: {
+        width: 400,
+      },
+      height: 200,
+      margin: 10,
+      cursor: 'pointer',
+      backgroundColor: '#ffffff',
+      color: theme.palette.text.secondary,
+    },
+    number: {
+        minWidth: 50
+    },
+    name: {
+        minWidth:160,
+    },
+    statline: {
+        minWidth:300,
     },
     bold: {
       fontWeight: 600
     },
-  });
-
+  }));
   export const CFBGamePlayersTable: FC<MaterialTableProps> = ({ pass, rush, rec}): ReactElement => {
   const classes = useStyles();
 
@@ -33,40 +62,42 @@ const useStyles = makeStyles({
         <Table className={classes.table} size="small" aria-label="a dense table">
             <TableHead>
             <TableRow>
-                <TableCell></TableCell>
-                <TableCell align="left"><Typography className={classes.bold}>Stat line</Typography></TableCell>
-                <TableCell align="right"><Typography className={classes.bold}>Yards/Play</Typography></TableCell>
-                <TableCell align="right"><Typography className={classes.bold}>EPA/Play</Typography></TableCell>
-                <TableCell align="right"><Typography className={classes.bold}>EPA</Typography></TableCell>
-                <TableCell align="right"><Typography className={classes.bold}>SR</Typography></TableCell>
-                <TableCell align="right"><Typography className={classes.bold}>WPA</Typography></TableCell>
+                <TableCell className={classes.name}></TableCell>
+                <TableCell align="left" className={classes.statline}><Typography className={classes.bold}>Stat line</Typography></TableCell>
+                <TableCell align="right"  className={classes.number}><Typography className={classes.bold}>Yards/Play</Typography></TableCell>
+                <TableCell align="right"  className={classes.number}><Typography className={classes.bold}>EPA/Play</Typography></TableCell>
+                <TableCell align="right"  className={classes.number}><Typography className={classes.bold}>EPA</Typography></TableCell>
+                <TableCell align="right"  className={classes.number}><Typography className={classes.bold}>SR</Typography></TableCell>
+                <TableCell align="right"  className={classes.number}><Typography className={classes.bold}>WPA</Typography></TableCell>
             </TableRow>
             </TableHead>
             <TableHead>
             <TableRow>
-                <TableCell><Typography className={classes.bold}>Dropbacks</Typography></TableCell>
-                <TableCell align="left"><Typography></Typography></TableCell>
-                <TableCell align="right"><Typography></Typography></TableCell>
-                <TableCell align="right"><Typography></Typography></TableCell>
-                <TableCell align="right"><Typography></Typography></TableCell>
-                <TableCell align="right"><Typography></Typography></TableCell>
-                <TableCell align="right"><Typography></Typography></TableCell>
+                <TableCell className={classes.name}>
+                    <Typography className={classes.bold}>Dropbacks</Typography>
+                </TableCell>
+                <TableCell align="left" className={classes.statline}><Typography></Typography></TableCell>
+                <TableCell align="right"  className={classes.number}><Typography></Typography></TableCell>
+                <TableCell align="right"  className={classes.number}><Typography></Typography></TableCell>
+                <TableCell align="right"  className={classes.number}><Typography></Typography></TableCell>
+                <TableCell align="right"  className={classes.number}><Typography></Typography></TableCell>
+                <TableCell align="right"  className={classes.number}><Typography></Typography></TableCell>
             </TableRow>
             </TableHead>
             <TableBody>
                 {pass.map((row) => (
                     <TableRow key={row.passer_player_name}>
-                    <TableCell component="th" scope="row">
+                    <TableCell component="th" scope="row"  className={classes.name}>
                         <Typography>{row.passer_player_name}</Typography>
                     </TableCell>
-                    <TableCell align="left">
-                    <Typography>{row.Comp+'/'+row.Att+' '+row.Yds+' yds, '+row.Pass_TD+' TD, '+row.Int+' INT, '+row.Sck+' Scks'}</Typography>
+                    <TableCell align="left" className={classes.statline}>
+                        <Typography>{row.Comp+'/'+row.Att+' '+row.Yds+' yds, '+row.Pass_TD+' TD, '+row.Int+' INT, '+row.Sck+' Scks'}</Typography>
                     </TableCell>
-                    <TableCell align="right"><Typography>{row.YPA}</Typography></TableCell>
-                    <TableCell align="right"><Typography>{row.EPA_per_Play}</Typography></TableCell>
-                    <TableCell align="right"><Typography>{row.EPA}</Typography></TableCell>
-                    <TableCell align="right"><Typography>{row.SR}</Typography></TableCell>
-                    <TableCell align="right"><Typography>{row.WPA}</Typography></TableCell>
+                    <TableCell align="right"  className={classes.number}><Typography>{row.YPA}</Typography></TableCell>
+                    <TableCell align="right"  className={classes.number}><Typography>{row.EPA_per_Play}</Typography></TableCell>
+                    <TableCell align="right"  className={classes.number}><Typography>{row.EPA}</Typography></TableCell>
+                    <TableCell align="right"  className={classes.number}><Typography>{row.SR}</Typography></TableCell>
+                    <TableCell align="right"  className={classes.number}><Typography>{row.WPA}</Typography></TableCell>
                     </TableRow>
                 ))}
             </TableBody>
@@ -74,29 +105,29 @@ const useStyles = makeStyles({
         <Table className={classes.table} size="small" aria-label="a dense table">
             <TableHead>
             <TableRow>
-                <TableCell><Typography className={classes.bold}>Rush Attempts</Typography></TableCell>
-                <TableCell align="left"><Typography></Typography></TableCell>
-                <TableCell align="right"><Typography></Typography></TableCell>
-                <TableCell align="right"><Typography></Typography></TableCell>
-                <TableCell align="right"><Typography></Typography></TableCell>
-                <TableCell align="right"><Typography></Typography></TableCell>
-                <TableCell align="right"><Typography></Typography></TableCell>
+                <TableCell className={classes.name}><Typography className={classes.bold}>Rush Attempts</Typography></TableCell>
+                <TableCell align="left"  className={classes.statline}><Typography></Typography></TableCell>
+                <TableCell align="right"  className={classes.number}><Typography></Typography></TableCell>
+                <TableCell align="right"  className={classes.number}><Typography></Typography></TableCell>
+                <TableCell align="right"  className={classes.number}><Typography></Typography></TableCell>
+                <TableCell align="right"  className={classes.number}><Typography></Typography></TableCell>
+                <TableCell align="right"  className={classes.number}><Typography></Typography></TableCell>
             </TableRow>
             </TableHead>
             <TableBody>
                 {rush.map((row) => (
                     <TableRow key={row.rusher_player_name}>
-                    <TableCell component="th" scope="row">
-                    <Typography>{row.rusher_player_name}</Typography>
+                    <TableCell component="th" scope="row"  className={classes.name}>
+                        <Typography>{row.rusher_player_name}</Typography>
                     </TableCell>
-                    <TableCell align="left">
-                    <Typography>{row.Car+' carries, '+row.Yds+' yds, '+row.Rush_TD+' TD, '+row.Fum+' Fum ('+row.Fum_Lost+' lost)'}</Typography>
+                    <TableCell align="left" className={classes.statline}>
+                        <Typography>{row.Car+' carries, '+row.Yds+' yds, '+row.Rush_TD+' TD, '+row.Fum+' Fum ('+row.Fum_Lost+' lost)'}</Typography>
                     </TableCell>
-                    <TableCell align="right"><Typography>{row.YPC}</Typography></TableCell>
-                    <TableCell align="right"><Typography>{row.EPA_per_Play}</Typography></TableCell>
-                    <TableCell align="right"><Typography>{row.EPA}</Typography></TableCell>
-                    <TableCell align="right"><Typography>{row.SR}</Typography></TableCell>
-                    <TableCell align="right"><Typography>{row.WPA}</Typography></TableCell>
+                    <TableCell align="right"  className={classes.number}><Typography>{row.YPC}</Typography></TableCell>
+                    <TableCell align="right"  className={classes.number}><Typography>{row.EPA_per_Play}</Typography></TableCell>
+                    <TableCell align="right"  className={classes.number}><Typography>{row.EPA}</Typography></TableCell>
+                    <TableCell align="right"  className={classes.number}><Typography>{row.SR}</Typography></TableCell>
+                    <TableCell align="right"  className={classes.number}><Typography>{row.WPA}</Typography></TableCell>
                     </TableRow>
                 ))}
             </TableBody>
@@ -104,29 +135,31 @@ const useStyles = makeStyles({
         <Table className={classes.table} size="small" aria-label="a dense table">
             <TableHead>
             <TableRow>
-                <TableCell><Typography className={classes.bold}>Pass Targets</Typography></TableCell>
-                <TableCell align="left"><Typography></Typography></TableCell>
-                <TableCell align="right"><Typography></Typography></TableCell>
-                <TableCell align="right"><Typography></Typography></TableCell>
-                <TableCell align="right"><Typography></Typography></TableCell>
-                <TableCell align="right"><Typography></Typography></TableCell>
-                <TableCell align="right"><Typography></Typography></TableCell>
+                <TableCell className={classes.name}>
+                    <Typography className={classes.bold}>Pass Targets</Typography>
+                </TableCell>
+                <TableCell align="left" className={classes.statline}><Typography></Typography></TableCell>
+                <TableCell align="right"  className={classes.number}><Typography></Typography></TableCell>
+                <TableCell align="right"  className={classes.number}><Typography></Typography></TableCell>
+                <TableCell align="right"  className={classes.number}><Typography></Typography></TableCell>
+                <TableCell align="right"  className={classes.number}><Typography></Typography></TableCell>
+                <TableCell align="right"  className={classes.number}><Typography></Typography></TableCell>
             </TableRow>
             </TableHead>
             <TableBody>
                 {rec.map((row) => (
                     <TableRow key={row.receiver_player_name}>
-                    <TableCell component="th" scope="row">
+                    <TableCell component="th" scope="row" className={classes.name}> 
                         <Typography>{row.receiver_player_name}</Typography>
                     </TableCell>
-                    <TableCell align="left">
+                    <TableCell align="left" className={classes.statline}>
                         <Typography>{row.Rec+' '+`${row.Rec > 1? 'catches':'catch'}`+' ('+row.Tar+' '+`${row.Tar > 1? 'targets), ':'target), '}`+row.Yds+' yds, '+row.Rec_TD+' TD, '+row.Fum+' Fum ('+row.Fum_Lost+' lost)'}</Typography>
                     </TableCell>
-                    <TableCell align="right"><Typography>{row.YPT}</Typography></TableCell>
-                    <TableCell align="right"><Typography>{row.EPA_per_Play}</Typography></TableCell>
-                    <TableCell align="right"><Typography>{row.EPA}</Typography></TableCell>
-                    <TableCell align="right"><Typography>{row.SR}</Typography></TableCell>
-                    <TableCell align="right"><Typography>{row.WPA}</Typography></TableCell>
+                    <TableCell align="right"  className={classes.number}><Typography>{row.YPT}</Typography></TableCell>
+                    <TableCell align="right"  className={classes.number}><Typography>{row.EPA_per_Play}</Typography></TableCell>
+                    <TableCell align="right"  className={classes.number}><Typography>{row.EPA}</Typography></TableCell>
+                    <TableCell align="right"  className={classes.number}><Typography>{row.SR}</Typography></TableCell>
+                    <TableCell align="right"  className={classes.number}><Typography>{row.WPA}</Typography></TableCell>
                     </TableRow>
                 ))}
             </TableBody>
