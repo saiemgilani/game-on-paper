@@ -39,3 +39,6 @@ yarn-error.log*
 /frontend/public/sitemap.xml
 
 /frontend/drafts/*
+frontend/draft/*
+frontend/draft/ChartJS.tsx
+frontend/draft/ChartJSIndex.tsx
