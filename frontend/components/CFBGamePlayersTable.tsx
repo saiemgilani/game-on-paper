@@ -34,10 +34,8 @@ type MaterialTableProps = {
       [theme.breakpoints.up('xl')]: {
         width: 400,
       },
-      height: 200,
       margin: 10,
       cursor: 'pointer',
-      backgroundColor: '#ffffff',
       color: theme.palette.text.secondary,
     },
     number: {
@@ -58,30 +56,18 @@ type MaterialTableProps = {
 
   return (
     <div>
-    <TableContainer component={Paper}>
         <Table className={classes.table} size="small" aria-label="a dense table">
             <TableHead>
             <TableRow>
-                <TableCell className={classes.name}></TableCell>
+                <TableCell className={classes.name}>
+                    <Typography className={classes.bold}>Dropbacks</Typography>
+                </TableCell>
                 <TableCell align="left" className={classes.statline}><Typography className={classes.bold}>Stat line</Typography></TableCell>
                 <TableCell align="right"  className={classes.number}><Typography className={classes.bold}>Yards/Play</Typography></TableCell>
                 <TableCell align="right"  className={classes.number}><Typography className={classes.bold}>EPA/Play</Typography></TableCell>
                 <TableCell align="right"  className={classes.number}><Typography className={classes.bold}>EPA</Typography></TableCell>
                 <TableCell align="right"  className={classes.number}><Typography className={classes.bold}>SR</Typography></TableCell>
                 <TableCell align="right"  className={classes.number}><Typography className={classes.bold}>WPA</Typography></TableCell>
-            </TableRow>
-            </TableHead>
-            <TableHead>
-            <TableRow>
-                <TableCell className={classes.name}>
-                    <Typography className={classes.bold}>Dropbacks</Typography>
-                </TableCell>
-                <TableCell align="left" className={classes.statline}><Typography></Typography></TableCell>
-                <TableCell align="right"  className={classes.number}><Typography></Typography></TableCell>
-                <TableCell align="right"  className={classes.number}><Typography></Typography></TableCell>
-                <TableCell align="right"  className={classes.number}><Typography></Typography></TableCell>
-                <TableCell align="right"  className={classes.number}><Typography></Typography></TableCell>
-                <TableCell align="right"  className={classes.number}><Typography></Typography></TableCell>
             </TableRow>
             </TableHead>
             <TableBody>
@@ -106,12 +92,12 @@ type MaterialTableProps = {
             <TableHead>
             <TableRow>
                 <TableCell className={classes.name}><Typography className={classes.bold}>Rush Attempts</Typography></TableCell>
-                <TableCell align="left"  className={classes.statline}><Typography></Typography></TableCell>
-                <TableCell align="right"  className={classes.number}><Typography></Typography></TableCell>
-                <TableCell align="right"  className={classes.number}><Typography></Typography></TableCell>
-                <TableCell align="right"  className={classes.number}><Typography></Typography></TableCell>
-                <TableCell align="right"  className={classes.number}><Typography></Typography></TableCell>
-                <TableCell align="right"  className={classes.number}><Typography></Typography></TableCell>
+                <TableCell align="left" className={classes.statline}><Typography className={classes.bold}>Stat line</Typography></TableCell>
+                <TableCell align="right"  className={classes.number}><Typography className={classes.bold}>Yards/Play</Typography></TableCell>
+                <TableCell align="right"  className={classes.number}><Typography className={classes.bold}>EPA/Play</Typography></TableCell>
+                <TableCell align="right"  className={classes.number}><Typography className={classes.bold}>EPA</Typography></TableCell>
+                <TableCell align="right"  className={classes.number}><Typography className={classes.bold}>SR</Typography></TableCell>
+                <TableCell align="right"  className={classes.number}><Typography className={classes.bold}>WPA</Typography></TableCell>
             </TableRow>
             </TableHead>
             <TableBody>
@@ -138,12 +124,12 @@ type MaterialTableProps = {
                 <TableCell className={classes.name}>
                     <Typography className={classes.bold}>Pass Targets</Typography>
                 </TableCell>
-                <TableCell align="left" className={classes.statline}><Typography></Typography></TableCell>
-                <TableCell align="right"  className={classes.number}><Typography></Typography></TableCell>
-                <TableCell align="right"  className={classes.number}><Typography></Typography></TableCell>
-                <TableCell align="right"  className={classes.number}><Typography></Typography></TableCell>
-                <TableCell align="right"  className={classes.number}><Typography></Typography></TableCell>
-                <TableCell align="right"  className={classes.number}><Typography></Typography></TableCell>
+                <TableCell align="left" className={classes.statline}><Typography className={classes.bold}>Stat line</Typography></TableCell>
+                <TableCell align="right"  className={classes.number}><Typography className={classes.bold}>Yards/Play</Typography></TableCell>
+                <TableCell align="right"  className={classes.number}><Typography className={classes.bold}>EPA/Play</Typography></TableCell>
+                <TableCell align="right"  className={classes.number}><Typography className={classes.bold}>EPA</Typography></TableCell>
+                <TableCell align="right"  className={classes.number}><Typography className={classes.bold}>SR</Typography></TableCell>
+                <TableCell align="right"  className={classes.number}><Typography className={classes.bold}>WPA</Typography></TableCell>
             </TableRow>
             </TableHead>
             <TableBody>
@@ -164,8 +150,6 @@ type MaterialTableProps = {
                 ))}
             </TableBody>
         </Table>
-    </TableContainer>
-    
     </div>
     );
 }

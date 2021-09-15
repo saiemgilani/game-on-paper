@@ -56,7 +56,7 @@ export default function LandingPage(props) {
               </Link>
             </Box>
           </Grid>
-          <Grid item xs={12} sm={6} style={{ textAlign: 'center' }}>
+          {/* <Grid item xs={12} sm={6} style={{ textAlign: 'center' }}>
             <Box p={5}>
               <Link href="nfl/scoreboard" >
               <Button variant="text" color="inherit">
@@ -105,7 +105,7 @@ export default function LandingPage(props) {
               </Button>
               </Link>
             </Box>
-          </Grid>
+          </Grid> */}
       </Grid>
     </>
   );

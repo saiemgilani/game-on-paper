@@ -43,7 +43,6 @@ type GameTeamsTableProps = {
       margin: 0,
       position: 'relative',
       cursor: 'pointer',
-      backgroundColor: '#ffffff',
       color: theme.palette.text.secondary,
     },
     bold: {
@@ -75,10 +74,6 @@ type GameTeamsTableProps = {
   }
   return (
     <div>
-    {/* <TableContainer component={Grid} className={classes.table}> */}
-    {/* <Grid container direction="row" xs={12} lg={6}>
-        <Grid container direction="column">
-        <Grid item xs={12} lg={6}> */}
         <Table className={classes.table} size="small" aria-label="a dense table">
             <TableHead>
                 <TableRow>
@@ -247,100 +242,6 @@ type GameTeamsTableProps = {
                 ))}
             </TableBody>
         </Table>
-        {/* </Grid>
-        </Grid> */}
-
-        {/* <Grid container direction="column">
-        <Grid item xs={12} lg={6}>
-        <Table className={classes.table} size="small" aria-label="a dense table">
-            <TableHead>
-                <TableRow>
-                    <TableCell align="left">
-                        <Typography style={{ 
-                            justifyContent: 'left', alignContent:'left', 
-                            fontSize: '1.3rem', fontWeight: 600 }}>
-                            Situational
-                        </Typography>
-                    </TableCell>
-                    <TableCell align="right">
-                        <Image loader={loader}
-                            src={`${situ[0]['away_pos_team']}`}
-                            width={35} height={35}
-                            alt={`${situ[0]['away_pos_team']}`}/>
-                    </TableCell>
-                    <TableCell align="right">
-                        <Image loader={loader}
-                            src={`${situ[0]['home_pos_team']}`}
-                            width={35} height={35}
-                            alt={`${situ[0]['home_pos_team']}`}/>
-                    </TableCell>
-                </TableRow>
-            </TableHead>
-            <TableHead>
-            </TableHead>
-            <TableBody>
-                {situ.map((row) => (
-                    <TableRow key={row.Stat}>
-                        <TableCell component="th" scope="row">
-                            <Typography>{`${String(row.Stat)}`}</Typography>
-                        </TableCell>
-                        <TableCell align="right">
-                            <Typography>{row.away_stat_value}</Typography>
-                        </TableCell>
-                        <TableCell align="right">
-                            <Typography>{row.home_stat_value}</Typography>
-                        </TableCell>
-                    </TableRow>
-                ))}
-            </TableBody>
-        </Table>
-        <Table className={classes.table} size="small" aria-label="a dense table">
-            <TableHead>
-                <TableRow>
-                    <TableCell align="left">
-                        <Typography style={{ 
-                            justifyContent: 'left', alignContent:'left', 
-                            fontSize: '1.3rem', fontWeight: 600 }}>
-                            Drives
-                        </Typography>
-                    </TableCell>
-                    <TableCell align="right">
-                        <Image loader={loader}
-                            src={`${drives[0]['away_pos_team']}`}
-                            width={35} height={35}
-                            alt={`${drives[0]['away_pos_team']}`}/>
-                    </TableCell>
-                    <TableCell align="right">
-                        <Image loader={loader}
-                            src={`${drives[0]['home_pos_team']}`}
-                            width={35} height={35}
-                            alt={`${drives[0]['home_pos_team']}`}/>
-                    </TableCell>
-                </TableRow>
-            </TableHead>
-            <TableHead>
-            </TableHead>
-            <TableBody>
-                {drives.map((row) => (
-                    <TableRow key={row.Stat}>
-                        <TableCell component="th" scope="row">
-                            <Typography>{`${String(row.Stat)}`}</Typography>
-                        </TableCell>
-                        <TableCell align="right">
-                            <Typography>{row.away_stat_value}</Typography>
-                        </TableCell>
-                        <TableCell align="right">
-                            <Typography>{row.home_stat_value}</Typography>
-                        </TableCell>
-                    </TableRow>
-                ))}
-            </TableBody>
-        </Table>
-        </Grid>
-        </Grid>
-        </Grid> */}
-    {/* </TableContainer> */}
-    
     </div>
     );
 }

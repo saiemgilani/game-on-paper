@@ -12,6 +12,7 @@ import { CFBGameTeamsTable } from "../../../components/CFBGameTeamsTable";
 import { CFBGameTeamsTable2 } from "../../../components/CFBGameTeamsTable2";
 import { CFBGameTeamsTable3 } from "../../../components/CFBGameTeamsTable3";
 import { CFBGamePlayersTable } from "../../../components/CFBGamePlayersTable";
+import { CFBGamePlays } from "../../../components/CFBGamePlays";
 import { CollegeGameHeader } from "../../../components/CollegeGameHeader";
 import { TeamHeader } from "../../../components/TeamHeader";
 import { Grid, Typography } from '@material-ui/core'
@@ -58,7 +59,6 @@ const useStyles = makeStyles((theme) => ({
       margin: 10,
       position: 'relative',
       cursor: 'pointer',
-      backgroundColor: '#ffffff',
       color: theme.palette.text.secondary,
     },
     bold: {
@@ -67,16 +67,16 @@ const useStyles = makeStyles((theme) => ({
     card: {
       width: 300,
       [theme.breakpoints.down('xs')]: {
-        width: 300,
+        width: 280,
       },
       [theme.breakpoints.down('sm')]: {
-        width: 300,
+        width: 280,
       },
       [theme.breakpoints.down('md')]: {
-        width: 300,
+        width: 280,
       },
       [theme.breakpoints.up('lg')]: {
-        width: 400,
+        width: 300,
       },
       [theme.breakpoints.up('xl')]: {
         width: 400,
@@ -85,7 +85,6 @@ const useStyles = makeStyles((theme) => ({
       margin: 10,
       position: 'relative',
       cursor: 'pointer',
-      backgroundColor: '#ffffff',
       color: theme.palette.text.secondary,
     },
     media: {
@@ -118,7 +117,11 @@ const myLoader = ({ src, width }) => {
 export default function CFBGamePage() {
   const gameId =
     typeof window !== 'undefined' ? window.location.pathname.slice(1) : ''
-  const [cfbGameData, 
+  const [cfbGameData,
+        cfbGamePlays,
+        cfbGameBigPlays,
+        cfbGameImportantPlays,
+        cfbGameScoringPlays,
         cfbTeamOverall,
         cfbTeamScrimmage,
         cfbTeamRushing,
@@ -136,6 +139,10 @@ export default function CFBGamePage() {
 
   const large = useMediaQuery('(min-width:700px)')
   const overall = cfbTeamOverall
+  const plays = cfbGamePlays
+  const bigPlays = cfbGameBigPlays
+  const importantPlays = cfbGameImportantPlays
+  const scoringPlays = cfbGameScoringPlays
   const scrimmage = cfbTeamScrimmage
   const rushing = cfbTeamRushing
   const explosiveness = cfbTeamExplosiveness
@@ -191,7 +198,7 @@ export default function CFBGamePage() {
         </div>
           <Grid container
             direction="row">
-            <Grid item xs={12} lg={5}>
+            <Grid item xs={12} sm={8} md={8} lg={6} xl={4}>
               <CFBGameTeamsTable
                 ovr={overall}
                 scrim={scrimmage}
@@ -201,13 +208,13 @@ export default function CFBGamePage() {
                 drives={drives}
                 loader={myLoader}/>
             </Grid>
-            <Grid item xs={12} lg={5}>
+            <Grid item xs={12} sm={8} md={8} lg={6} xl={4}>
               <CFBGameTeamsTable2
                 situ={situational}
                 drives={drives}
                 loader={myLoader}/>
             </Grid>
-            <Grid item xs={12} lg={5}>
+            <Grid item xs={12} sm={8} md={8} lg={6} xl={4}>
               <CFBGameTeamsTable3
                 def={havoc}
                 turns={turnovers}
@@ -217,8 +224,8 @@ export default function CFBGamePage() {
           </Grid>
         <div style={{ textAlign: 'center' }}>
           <Grid container spacing={3}>
-            <Grid item xs={12} lg={6}>
-                <TeamHeader 
+            <Grid item xs={12} lg={12}>
+                <TeamHeader
                   score={cfbGameHeader}
                   homeAway={0}
                   sport={'cfb'}
@@ -226,14 +233,38 @@ export default function CFBGamePage() {
                 />
                 <CFBGamePlayersTable pass={homePassRows} rush={homeRushRows} rec={homeRecRows}/>
             </Grid>
-            <Grid item xs={12} lg={6}>
-                <TeamHeader 
+            <Grid item xs={12} lg={12}>
+                <TeamHeader
                   score={cfbGameHeader}
                   homeAway={1}
                   sport={'cfb'}
                   loader={myLoader}
                 />
                 <CFBGamePlayersTable pass={awayPassRows} rush={awayRushRows} rec={awayRecRows}/>
+            </Grid>
+            <Grid item xs={12} lg={12}>
+              <Box p={2}>
+                <Typography variant={'h3'} align="left" className={classes.bold}>Most Important Plays</Typography>
+              <CFBGamePlays plays={importantPlays} loader={myLoader}/>
+              </Box>
+            </Grid>
+            <Grid item xs={12} lg={12}>
+              <Box p={2}>
+                <Typography variant={'h3'} align="left" className={classes.bold}>Big Plays</Typography>
+              <CFBGamePlays plays={bigPlays} loader={myLoader}/>
+              </Box>
+            </Grid>
+            <Grid item xs={12} lg={12}>
+              <Box p={2}>
+                <Typography variant={'h3'} align="left" className={classes.bold}>Scoring Plays</Typography>
+              <CFBGamePlays plays={scoringPlays} loader={myLoader}/>
+              </Box>
+            </Grid>
+            <Grid item xs={12} lg={12}>
+              <Box p={2}>
+                <Typography variant={'h3'} align="left" className={classes.bold}>All Plays</Typography>
+              <CFBGamePlays plays={plays} loader={myLoader}/>
+              </Box>
             </Grid>
           </Grid>
         </div>

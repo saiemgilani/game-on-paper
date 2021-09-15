@@ -39,7 +39,6 @@ type GameTeamsTableProps = {
       margin: 10,
       position: 'relative',
       cursor: 'pointer',
-      backgroundColor: '#ffffff',
       color: theme.palette.text.secondary,
     },
     bold: {
@@ -69,7 +68,6 @@ type GameTeamsTableProps = {
   }
   return (
     <div>
-    {/* <TableContainer component={Grid}> */}
         <Table className={classes.table} size="small" aria-label="a dense table">
             <TableHead>
                 <TableRow>
@@ -154,7 +152,6 @@ type GameTeamsTableProps = {
                 ))}
             </TableBody>
         </Table>
-    {/* </TableContainer> */}
     </div>
     );
 }
