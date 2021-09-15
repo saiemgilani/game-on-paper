@@ -17,8 +17,8 @@ type MaterialTableProps = {
   }
   const useStyles = makeStyles((theme) => ({
     table: {
-      minWidth: 320,
-      width: 300,
+      minWidth: '95%',
+      width: '100%',
       [theme.breakpoints.down('xs')]: {
         width: 300,
       },
@@ -34,18 +34,18 @@ type MaterialTableProps = {
       [theme.breakpoints.up('xl')]: {
         width: 400,
       },
-      margin: 10,
+      margin: 0,
       cursor: 'pointer',
       color: theme.palette.text.secondary,
     },
     number: {
-        minWidth: 50
+        minWidth: '5%',
     },
     name: {
-        minWidth:160,
+        minWidth:'10%',
     },
     statline: {
-        minWidth:300,
+        minWidth:'40%',
     },
     bold: {
       fontWeight: 600

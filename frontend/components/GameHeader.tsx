@@ -61,8 +61,7 @@ export const GameHeader: FC<ScoreCardProps> = ({ score,  sport, loader, noMargin
         <Box p={5}>
           <Typography variant={'h6'}
             color="textPrimary"
-            style={{ justifyContent: 'center',
-            fontSize: '1.8rem' }} >
+            style={{ justifyContent: 'center'}} >
             <div className={classes.img}>
             <Image loader={loader}
               src={score[0]['team']['abbreviation']}

@@ -19,8 +19,8 @@ type GameTeamsTableProps = {
   }
   const useStyles = makeStyles((theme) => ({
     table: {
-      minWidth: 550,
-      width: 700,
+      minWidth: '95%',
+      width: '100%',
       [theme.breakpoints.down('xs')]: {
         width: 300,
       },
@@ -36,7 +36,6 @@ type GameTeamsTableProps = {
       [theme.breakpoints.up('xl')]: {
         width: 400,
       },
-      margin: 10,
       position: 'relative',
       cursor: 'pointer',
       color: theme.palette.text.secondary,

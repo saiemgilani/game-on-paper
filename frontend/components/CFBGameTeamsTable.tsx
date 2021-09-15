@@ -23,8 +23,8 @@ type GameTeamsTableProps = {
   }
   const useStyles = makeStyles((theme) => ({
     table: {
-      minWidth: 550,
-      width: 700,
+      minWidth: '95%',
+      width: '100%',
       [theme.breakpoints.down('xs')]: {
         width: 300,
       },

@@ -60,8 +60,8 @@ type GamePlaysProps = {
   }
   const useStyles = makeStyles((theme) => ({
     table: {
-      minWidth: 350,
-      width: 300,
+      minWidth: '100%',
+      width: '100%',
       [theme.breakpoints.down('xs')]: {
         width: 300,
       },

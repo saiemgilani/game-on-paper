@@ -197,7 +197,7 @@ export default function CFBGamePage() {
           </Grid>
         </div>
           <Grid container
-            direction="row">
+            direction="row" style={{justifyContent: 'center'}}>
             <Grid item xs={12} sm={8} md={8} lg={6} xl={4}>
               <CFBGameTeamsTable
                 ovr={overall}

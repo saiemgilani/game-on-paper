@@ -51,6 +51,7 @@ const useStyles = makeStyles((theme) =>({
     padding: "0.825rem 0",
     marginBottom: "23px",
     color: '#000000',
+    minWidth: "100%",
     width: "100%",
     textColor: '#000000',
     boxShadow:
@@ -77,7 +78,7 @@ const useStyles = makeStyles((theme) =>({
     transition: 'transform .5s',
   },
   hide: {
-    transform: 'translateY(-20%)',
+    transform: 'translateY(-110%)',
     transition: 'transform .5s',
   },
   toolbar: {
@@ -116,8 +117,8 @@ export const TopBar = (): ReactElement => {
           <a>
           <Image
             src={logo}
-            width={35}
-            height={35}
+            width={large ? 35: 25}
+            height={large ? 35: 25}
             alt='Game on Paper' />
           </a>
         </Link>

@@ -22,7 +22,8 @@ type ScoreCardProps = {
 
 const useStyles = makeStyles((theme) => ({
   card: {
-    width: 300,
+    minWidth: '95%',
+    width: '100%',
     [theme.breakpoints.down('xs')]: {
       width: 300,
     },
@@ -39,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
       width: 400,
     },
     height: 190,
-    margin: 10,
+    margin: 0,
     position: 'relative',
     backgroundColor: theme.palette.primary.main,
     color: theme.palette.text.secondary,
@@ -64,6 +65,12 @@ const useStyles = makeStyles((theme) => ({
   actions: {
     right: 5,
     bottom: 5,
+    padding: 5,
+    position: 'absolute',
+  },
+  result: {
+    right: 18,
+    top: 12,
     padding: 5,
     position: 'absolute',
   },
@@ -101,7 +108,7 @@ export const ScoreCard: FC<ScoreCardProps> = ({ score,  sport, loader, noMargin 
               </Typography>
             </Grid>
             <Grid item>
-              <Typography variant={'caption'}
+              <Typography variant={'caption'} className={classes.result}
                 color="textPrimary" style={{ justifyContent: 'right'}} >
                 {'  '}{score['status.type.state']==='post'?'Final':(score['status.type.state']==='in'? score['status.type.shortDetail']: ' ')}
               </Typography>
@@ -163,7 +170,7 @@ export const ScoreCard: FC<ScoreCardProps> = ({ score,  sport, loader, noMargin 
             spacing={1}>
             <Grid item>
               <Typography variant={'caption'}
-                color="textPrimary" style={{ justifyContent: 'right'}} >
+                color="textPrimary" >
                 {'  '}{score['status.type.state']==='in'? (score['situation.downDistanceText'] != null ? (score['situation.downDistanceText']):'')+
                   ' '+score['situation.lastPlay.text']: ' '}
               </Typography>

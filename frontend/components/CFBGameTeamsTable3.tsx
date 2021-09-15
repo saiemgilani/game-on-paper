@@ -12,6 +12,9 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { ScoreData } from '../types/scores'
+function roundNumber(value, power10, fixed) {
+  return (Math.round(parseFloat(value || 0) * (Math.pow(10, power10))) / (Math.pow(10, power10))).toFixed(fixed)
+}
 type GameTeamsTableProps = {
     def: any[]
     turns: any[]
@@ -20,8 +23,8 @@ type GameTeamsTableProps = {
   }
   const useStyles = makeStyles((theme) => ({
     table: {
-      minWidth: 550,
-      width: 700,
+      minWidth: '95%',
+      width: '100%',
       [theme.breakpoints.down('xs')]: {
         width: 300,
       },
@@ -37,7 +40,6 @@ type GameTeamsTableProps = {
       [theme.breakpoints.up('xl')]: {
         width: 400,
       },
-      margin: 10,
       position: 'relative',
       cursor: 'pointer',
       color: theme.palette.text.secondary,

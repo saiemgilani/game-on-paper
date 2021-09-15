@@ -1,6 +1,7 @@
 import React, { FC, ReactElement } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import { Grid, Typography } from '@material-ui/core'
+import useMediaQuery from '@material-ui/core/useMediaQuery'
 import Card from '@material-ui/core/Card'
 import CardActionArea from '@material-ui/core/CardActionArea'
 import CardActions from '@material-ui/core/CardActions'
@@ -33,6 +34,7 @@ export const CollegeGameHeader: FC<ScoreCardProps> = ({ score,  sport, loader, n
   const classes = useStyles()
   const pros = ['wnba','nba','nfl']
   const proSport = pros.includes(sport)
+  const large = useMediaQuery('(min-width:500px)')
 
   if (score.length === 0) {
     return (
@@ -59,22 +61,21 @@ export const CollegeGameHeader: FC<ScoreCardProps> = ({ score,  sport, loader, n
       style={{alignContent:'center'}}>
       <Grid item
         xs={12}>
-        <Box p={5}>
-          <Typography variant={'h6'}
+        <Box p={2}>
+          <Typography variant={large ? 'h3': 'h6'}
                 color="textPrimary"
-                style={{ justifyContent: 'center',
-                        fontSize: '1.8rem' }} >
+                style={{ justifyContent: 'center'}} >
             <div className={classes.img}>
               <Image loader={loader}
                 src={score[0]['id']}
-                width={35} height={35}
+                width={large ? 30 : 25} height={large ? 30 : 25}
                 alt={score[0]['id']}/>
             </div>
             {score[0].team.location+'  '+score[0].score+`                         `}
             <div className={classes.img}>
               <Image loader={loader}
                 src={score[1]['id']}
-                width={35} height={35}
+                width={large ? 30 : 25} height={large ? 30 : 25}
                 alt={score[1]['id']}/>
             </div>
             {score[1].team.location+'  '+score[1].score}

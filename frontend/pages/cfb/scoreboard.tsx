@@ -68,6 +68,9 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '1.1rem',
     position: 'absolute',
   },
+  cards: {
+    paddingTop: 10,
+  },
   actions: {
     right: 5,
     bottom: 5,
@@ -121,6 +124,7 @@ export default function CFBScoreboardPage() {
           direction={"row"}
           alignContent={'center'}
           justifyContent={'center'}
+          style={{justifyContent: 'center'}}
           spacing={1}>
           <Grid item>
             <CFBSeasonSelector
@@ -141,9 +145,10 @@ export default function CFBScoreboardPage() {
           </Grid>
         </Grid>
         <div>
-          <Grid container
+          <Grid container className={classes.cards}
             direction={"row"}
-            justifyContent={'space-between'}>
+            style={{justifyContent: 'center'}}
+            spacing={1}>
           {acc.map((d, idx) =>(
             <Grid item
               xs={12} sm={6} md={4} lg={4}
