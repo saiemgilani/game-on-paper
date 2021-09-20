@@ -244,25 +244,25 @@ export default function CFBGamePage() {
             </Grid>
             <Grid item xs={12} lg={12}>
               <Box p={2}>
-                <Typography variant={'h3'} align="left" className={classes.bold}>Most Important Plays</Typography>
+                <Typography variant={'h3'} align="left">Most Important Plays</Typography>
               <CFBGamePlays plays={importantPlays} loader={myLoader}/>
               </Box>
             </Grid>
             <Grid item xs={12} lg={12}>
               <Box p={2}>
-                <Typography variant={'h3'} align="left" className={classes.bold}>Big Plays</Typography>
+                <Typography variant={'h3'} align="left">Big Plays</Typography>
               <CFBGamePlays plays={bigPlays} loader={myLoader}/>
               </Box>
             </Grid>
             <Grid item xs={12} lg={12}>
               <Box p={2}>
-                <Typography variant={'h3'} align="left" className={classes.bold}>Scoring Plays</Typography>
+                <Typography variant={'h3'} align="left">Scoring Plays</Typography>
               <CFBGamePlays plays={scoringPlays} loader={myLoader}/>
               </Box>
             </Grid>
             <Grid item xs={12} lg={12}>
               <Box p={2}>
-                <Typography variant={'h3'} align="left" className={classes.bold}>All Plays</Typography>
+                <Typography variant={'h3'} align="left">All Plays</Typography>
               <CFBGamePlays plays={plays} loader={myLoader}/>
               </Box>
             </Grid>

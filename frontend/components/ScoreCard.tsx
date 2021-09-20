@@ -1,5 +1,6 @@
 import React, { FC, ReactElement } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
+import useMediaQuery from '@material-ui/core/useMediaQuery'
 import { Grid, Typography } from '@material-ui/core'
 import Card from '@material-ui/core/Card'
 import CardActionArea from '@material-ui/core/CardActionArea'
@@ -40,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
       width: 400,
     },
     height: 190,
-    margin: 0,
+    margin: '2%',
     position: 'relative',
     backgroundColor: theme.palette.primary.main,
     color: theme.palette.text.secondary,
@@ -91,6 +92,7 @@ export const ScoreCard: FC<ScoreCardProps> = ({ score,  sport, loader, noMargin 
   const classes = useStyles()
   const pros = ['wnba','nba','nfl']
   const proSport = pros.includes(sport)
+  const large = useMediaQuery('(min-width:500px)')
   const src1 = proSport ? score['competitors'][1]['team']['abbreviation'] : score['competitors'][1]['team']['id']
   const src2 = proSport ? score['competitors'][0]['team']['abbreviation'] : score['competitors'][0]['team']['id']
   const gameDate = date(score)
@@ -120,8 +122,8 @@ export const ScoreCard: FC<ScoreCardProps> = ({ score,  sport, loader, noMargin 
             <Grid item>
               {<Image loader={loader}
                 src={src1}
-                width={30}
-                height={30}
+                width={large ? 30 : 25}
+                height={large ? 30 : 25}
                 alt={proSport ? score['competitors'][1]['team']['shortDisplayName']:score['competitors'][1]['team']['location']}/>}
             </Grid>
             <Grid item>
@@ -145,8 +147,8 @@ export const ScoreCard: FC<ScoreCardProps> = ({ score,  sport, loader, noMargin 
               {<Image
                 loader={loader}
                 src={src2}
-                width={30}
-                height={30}
+                width={large ? 30 : 25}
+                height={large ? 30 : 25}
                 alt={proSport? score['competitors'][0]['team']['shortDisplayName']:score['competitors'][0]['team']['location']}/>}
             </Grid>
             <Grid item>

@@ -61,10 +61,9 @@ type GameTeamsTableProps = {
         <Grid item
           xs={12}>
           <Box p={5}>
-            <Typography variant={'h6'}
+            <Typography variant={'h2'}
               color="textPrimary"
-              style={{ justifyContent: 'left',
-                       fontSize: '1.8rem' }} >
+              style={{ justifyContent: 'left' }} >
               <div></div>
             </Typography>
           </Box>
@@ -78,9 +77,9 @@ type GameTeamsTableProps = {
             <TableHead>
                 <TableRow>
                     <TableCell align="left">
-                        <Typography style={{ 
-                            justifyContent: 'left', alignContent:'left', 
-                            fontSize: '1.3rem', fontWeight: 600 }}>
+                    <Typography variant={'h3'}
+                        color="textPrimary"
+                        style={{ justifyContent: 'left' }} >
                             Overall
                         </Typography>
                     </TableCell>
@@ -120,9 +119,9 @@ type GameTeamsTableProps = {
             <TableHead>
                 <TableRow>
                     <TableCell align="left">
-                        <Typography style={{ 
-                            justifyContent: 'left', alignContent:'left', 
-                            fontSize: '1.3rem', fontWeight: 600 }}>
+                    <Typography variant={'h3'}
+                        color="textPrimary"
+                        style={{ justifyContent: 'left' }} >
                             Production
                         </Typography>
                     </TableCell>
@@ -162,9 +161,9 @@ type GameTeamsTableProps = {
             <TableHead>
                 <TableRow>
                     <TableCell align="left">
-                        <Typography style={{ 
-                            justifyContent: 'left', alignContent:'left', 
-                            fontSize: '1.3rem', fontWeight: 600 }}>
+                        <Typography variant={'h3'}
+                            color="textPrimary"
+                            style={{ justifyContent: 'left' }} >
                             Rushing
                         </Typography>
                     </TableCell>
@@ -204,9 +203,9 @@ type GameTeamsTableProps = {
             <TableHead>
                 <TableRow>
                     <TableCell align="left">
-                        <Typography style={{ 
-                            justifyContent: 'left', alignContent:'left', 
-                            fontSize: '1.3rem', fontWeight: 600 }}>
+                        <Typography variant={'h3'}
+                            color="textPrimary"
+                            style={{ justifyContent: 'left' }} >
                             Explosiveness
                         </Typography>
                     </TableCell>

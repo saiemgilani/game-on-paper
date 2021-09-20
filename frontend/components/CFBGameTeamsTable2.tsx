@@ -54,10 +54,9 @@ type GameTeamsTableProps = {
         <Grid item
           xs={12}>
           <Box p={5}>
-            <Typography variant={'h6'}
-              color="textPrimary"
-              style={{ justifyContent: 'left',
-                       fontSize: '1.8rem' }} >
+            <Typography variant={'h3'}
+                            color="textPrimary"
+                            style={{ justifyContent: 'left' }} >
               <div></div>
             </Typography>
           </Box>
@@ -71,9 +70,9 @@ type GameTeamsTableProps = {
             <TableHead>
                 <TableRow>
                     <TableCell align="left">
-                        <Typography style={{ 
-                            justifyContent: 'left', alignContent:'left', 
-                            fontSize: '1.3rem', fontWeight: 600 }}>
+                        <Typography variant={'h3'}
+                            color="textPrimary"
+                            style={{ justifyContent: 'left' }} >
                             Situational
                         </Typography>
                     </TableCell>
@@ -113,9 +112,9 @@ type GameTeamsTableProps = {
             <TableHead>
                 <TableRow>
                     <TableCell align="left">
-                        <Typography style={{ 
-                            justifyContent: 'left', alignContent:'left', 
-                            fontSize: '1.3rem', fontWeight: 600 }}>
+                        <Typography variant={'h3'}
+                            color="textPrimary"
+                            style={{ justifyContent: 'left' }} >
                             Drives
                         </Typography>
                     </TableCell>

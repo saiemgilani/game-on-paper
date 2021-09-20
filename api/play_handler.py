@@ -3412,8 +3412,8 @@ class PlayProcess(object):
         turnover_box_json[0]["turnover_margin"] = home_to - away_to
         turnover_box_json[1]["turnover_margin"] = away_to - home_to
 
-        turnover_box_json[0]["turnover_luck"] = 5.0 * (turnover_box_json[0]["turnover_margin"] - turnover_box_json[0]["expected_turnover_margin"])
-        turnover_box_json[1]["turnover_luck"] = 5.0 * (turnover_box_json[1]["turnover_margin"] - turnover_box_json[1]["expected_turnover_margin"])
+        turnover_box_json[0]["turnover_luck"] = round(5.0 * (turnover_box_json[0]["turnover_margin"] - turnover_box_json[0]["expected_turnover_margin"]),2)
+        turnover_box_json[1]["turnover_luck"] = round(5.0 * (turnover_box_json[1]["turnover_margin"] - turnover_box_json[1]["expected_turnover_margin"]),2)
 
         drives_data = self.plays_json[(self.plays_json.scrimmage_play == True)].groupby(by=["pos_team"], as_index=False).agg(
             drive_total_available_yards = ('drive_start', sum),

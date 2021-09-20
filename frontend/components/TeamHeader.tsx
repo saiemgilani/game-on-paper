@@ -42,10 +42,9 @@ export const TeamHeader: FC<TeamHeaderProps> = ({ score, homeAway, sport, loader
         <Grid item
           xs={12}>
           <Box p={5}>
-            <Typography variant={'h6'}
-              color="textPrimary"
-              style={{ justifyContent: 'left',
-                       fontSize: '1.8rem' }} >
+            <Typography variant={'h3'}
+                color="textPrimary"
+                style={{ justifyContent: 'left' }} >
               <div></div>
             </Typography>
           </Box>
@@ -61,11 +60,9 @@ export const TeamHeader: FC<TeamHeaderProps> = ({ score, homeAway, sport, loader
       }}>
       <Grid item >
         <Box p={2}>
-          <Typography variant={'h6'}
-                color="textPrimary"
-                style={{ justifyContent: 'left',
-                        alignContent:'left',
-                        fontSize: '1.8rem' }} >
+        <Typography variant={'h3'}
+                        color="textPrimary"
+                        style={{ justifyContent: 'left' }} >
             <div className={classes.img}>
               <Image loader={loader}
                 src={score[homeAway]['id']}

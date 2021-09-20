@@ -13,8 +13,6 @@ export default class MyDocument extends Document {
           <meta property="og:locale" content="en_GB" />
           <link rel="icon" type="image/png" href="/logo/logo.png" />
           <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Chivo:300,400,500,700&display=swap" />
-          <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,400,500,700&display=swap" />
-          <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab:300,400,500,700&display=swap" />
         </Head>
         <body>
           <Main />

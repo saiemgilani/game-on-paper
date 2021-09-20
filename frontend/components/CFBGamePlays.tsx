@@ -60,8 +60,7 @@ type GamePlaysProps = {
   }
   const useStyles = makeStyles((theme) => ({
     table: {
-      minWidth: '100%',
-      width: '100%',
+      minWidth: '95%',
       [theme.breakpoints.down('xs')]: {
         width: 300,
       },
@@ -77,18 +76,16 @@ type GamePlaysProps = {
       [theme.breakpoints.up('xl')]: {
         width: 400,
       },
-      margin: 10,
-      cursor: 'pointer',
+      margin: 0,
       color: theme.palette.text.secondary,
     },
     number: {
-        minWidth: 35
+        minWidth: "10%"
     },
     name: {
-        minWidth:160,
     },
     text: {
-        minWidth:400,
+        minWidth:'50%',
     },
     bold: {
       fontWeight: 600
@@ -273,65 +270,29 @@ function PlayRow(play, loader, classes, canCollapse, collapsePrefix, expandingRo
 
     )
 };
-//     if (canCollapse) {
-//         baseRow += `<tr>
-//             <td colspan="6" class="hiddenRow">
-//                 <div class="accordian-body collapse" id="play-${collapsePrefix}-${play.game_play_number}"> 
-//                     <div class="row p-1">`;
-//         if (expandingRowCallback != null) {
-//             baseRow += expandingRowCallback(play);
-//         } else {
-//             baseRow += `
-//             <div class="ms-sm-auto col-lg-6">
-//                 <p style="text-align: center;"><strong>Play Type:</strong> ${play.type.text}</p>
-//                 <p style="text-align: center;"><strong>Yards to End Zone (Before -> After):</strong> ${play.start.yardsToEndzone} -> ${play.end.yardsToEndzone}</p>                
-//                 <p style="text-align: center;"><strong>Started Drive at:</strong> ${formatYardline(play.drive_start, offenseAbbrev, defenseAbbrev)}</p>                
-//                 <p style="text-align: center;"><strong>ExpPts (After - Before = Added):</strong> ${roundNumber(parseFloat(play.expectedPoints.after), 2, 2)} - ${roundNumber(parseFloat(play.expectedPoints.before), 2, 2)} = ${roundNumber(parseFloat(play.expectedPoints.added), 2, 2)}</p>
-//                 <p style="text-align: center;"><strong>Score Difference (Before):</strong> ${play.start.pos_score_diff} (${roundNumber(parseFloat(play.start.ExpScoreDiff), 2, 2)})</p>
-//                 <p style="text-align: center;"><strong>Score Difference (End):</strong> ${play.end.pos_score_diff} (${roundNumber(parseFloat(play.end.ExpScoreDiff), 2, 2)})</p>
-//                 <p style="text-align: center;"><strong>Change of Possession:</strong> ${play.change_of_poss}</p>                            
-//             </div>
-//             <div class="ms-sm-auto col-lg-6">
-//                 <p style="text-align: center;"><strong>Score:</strong> ${play.awayTeamAbbrev} ${play.awayScore}, ${play.homeTeamAbbrev} ${play.homeScore}</p>
-//                 <p style="text-align: center;"><strong>Drive Summary:</strong> ${play.drive_play_index} plays, ${play.drive_total_yards} yards</p>
-//                 <p style="text-align: center;"><strong>Win Probability (Before):</strong> ${roundNumber(parseFloat(play.winProbability.before) * 100, 3, 1)}%</p>
-//                 <p style="text-align: center;"><strong>Win Probability (After):</strong> ${roundNumber(parseFloat(play.winProbability.after) * 100, 3, 1)}%</p>
-//                 <p style="text-align: center;"><strong>Away Score:</strong> ${play.start.awayScore} (${play.awayScore}) <strong>Home Score:</strong> ${play.start.homeScore} (${play.homeScore})</p>    
-//                 <p style="text-align: center;"><strong>Pos Team Timeouts:</strong> ${play.end.posTeamTimeouts} <strong>Defense Timeouts:</strong> ${play.end.defPosTeamTimeouts}</p>
-//                 ${fourthDownEval}
-//             </div>
-//             `;
-//         } 
-//         baseRow += `</div>
-//                 </div>
-//             </td>
-//         </tr>`
-//     }
-//     return baseRow;
-//   }
+
 export const CFBGamePlays: FC<GamePlaysProps> = ({ plays, loader }): ReactElement => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   if(plays.length == 0 ){
-      return (
-      <Grid container
-        spacing={1}
-        style={{alignContent:'left'}}>
-        <Grid item
-          xs={12}>
-          <Box p={5}>
-            <Typography variant={'h6'}
-              color="textPrimary"
-              style={{ justifyContent: 'left',
-                       fontSize: '1.8rem' }} >
-              <div></div>
-            </Typography>
-          </Box>
+    return (
+        <Grid container
+            spacing={1}
+            style={{alignContent:'left'}}>
+            <Grid item
+            xs={12}>
+            <Box p={5}>
+                <Typography variant={'h6'}
+                color="textPrimary"
+                style={{ justifyContent: 'left',
+                        fontSize: '1.8rem' }} >
+                <div></div>
+                </Typography>
+            </Box>
+            </Grid>
         </Grid>
-      </Grid>
     )
   }
-  
   return (
         <Table className={classes.table} size="small" aria-label="a dense table">
             <TableHead>
