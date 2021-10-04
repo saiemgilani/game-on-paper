@@ -26,6 +26,9 @@ import CFBSeasonTypeSelector from '../../components/CFBSeasonTypeSelector';
 import CFBWeekSelector from '../../components/CFBWeekSelector';
 import CFBSeasonSelector from '../../components/CFBSeasonSelector';
 
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+
 const useStyles = makeStyles((theme) => ({
   card: {
     width: 300,
@@ -109,58 +112,33 @@ export default function CFBScoreboardPage() {
             content={`${NAME}: Game on Paper.`}
           />
         </Head>
-        <Grid container>
-          <Grid item
-            xs={12}>
-            <Box p={5}>
-              <Typography variant={large ? 'h4' : 'h6'}
-                style={{ textAlign: 'center' }}>
-                College Football Scoreboard
-              </Typography>
-            </Box>
-          </Grid>
-        </Grid>
-        <Grid container
-          direction={"row"}
-          alignContent={'center'}
-          justifyContent={'center'}
-          style={{justifyContent: 'center'}}
-          spacing={1}>
-          <Grid item>
+        <Row>
+          <Col>
             <CFBSeasonSelector
               season={season}
               setSeason={setSeason}/>
-          </Grid>
-          <Grid item>
+          </Col>
+          <Col>
             <CFBWeekSelector
               seasonType={seasonType}
               week={week}
               setWeek={setWeek}/>
-          </Grid>
-          <Grid item>
+          </Col>
+          <Col>
             <CFBSeasonTypeSelector
               week={week}
               seasonType={seasonType}
               setSeasonType={setSeasonType}/>
-          </Grid>
-        </Grid>
+          </Col>
+        </Row>
         <div>
-          <Grid container className={classes.cards}
-            direction={"row"}
-            style={{justifyContent: 'center'}}
-            spacing={1}>
-          {acc.map((d, idx) =>(
-            <Grid item
-              xs={12} sm={6} md={4} lg={4}
-              key={idx}>
-              <ScoreCard
-                score={d}
-                loader={myLoader}
-                noMargin={false}
-                sport={'cfb'}/>
-            </Grid>
+        {acc.map((d, idx) =>(
+            <ScoreCard
+            score={d}
+            loader={myLoader}
+            noMargin={false}
+            sport={'cfb'}/>
           ))}
-          </Grid>
         </div>
         <div style={{ textAlign: 'center' }}>
             <Link href="/cfb">Back</Link>
