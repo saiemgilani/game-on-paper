@@ -6,7 +6,8 @@ import uvicorn
 import numpy as np
 from fastapi import FastAPI, HTTPException, Request, Query
 from fastapi.middleware.cors import CORSMiddleware
-from play_handler import PlayProcess
+from cfbfastR.cfb import PlayProcess as CFBProcess
+
 from hoops_handler import HoopsProcess
 from schedule_handler import ScheduleProcess
 # from dotenv import load_dotenv, dotenv_values
@@ -114,7 +115,7 @@ def get_cfb_game(request: Request, gameId: str) -> Optional[None]:
 
     headers = {"accept": "application/json"}
     # gameId = request.get_json(force=True)['gameId']
-    processed_data = PlayProcess(gameId = gameId)
+    processed_data = CFBProcess(gameId = gameId)
     pbp = processed_data.cfb_pbp()
     processed_data.run_processing_pipeline()
     tmp_json = processed_data.plays_json.to_json(orient="records")
@@ -305,8 +306,8 @@ def get_cfb_game(request: Request, gameId: str) -> Optional[None]:
     # logging.getLogger("root").info(result)
     return result
 
-@app.get("/py/nfl/game/{gameId}")
-def get_nfl_game(request: Request, gameId: str) -> Optional[None]:
+# @app.get("/py/nfl/game/{gameId}")
+# def get_nfl_game(request: Request, gameId: str) -> Optional[None]:
     headers = {"accept": "application/json"}
     # gameId = request.get_json(force=True)['gameId']
     processed_data = PlayProcess(gameId = gameId)

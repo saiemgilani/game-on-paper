@@ -12,3 +12,4 @@ urllib3==1.26.3
 uvicorn==0.13.3
 xgboost==1.2.0
 websockets==9.0
+cfbfastR-py==0.0.21
