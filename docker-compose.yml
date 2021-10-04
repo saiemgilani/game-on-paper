@@ -33,5 +33,3 @@ services:
             - ./api:/src/app/api
         environment:
             PORT: 7000
-        ports:
-            - 7000:7000

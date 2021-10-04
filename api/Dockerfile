@@ -1,14 +1,18 @@
-FROM python:latest
+FROM python:latest as base 
 
 # set work directory
-WORKDIR /src/app
+WORKDIR /root/src
 
-# copy project
+COPY ./requirements.txt ./requirements.txt
+
+# ---- Dependencies ----
+FROM base AS pybuilder
+RUN pip install --user -r requirements.txt
+
+FROM base
+WORKDIR /code
+COPY --from=pybuilder /root/.local /root/.local
 COPY . .
-# install dependencies
-RUN pip install --no-cache-dir -r requirements.txt
-
-EXPOSE 7000
 
 # run
 CMD ["python", "app.py"]
