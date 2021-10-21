@@ -32,7 +32,7 @@ class ScheduleProcess(object):
     def download(self, url, num_retries=5):
         try:
             html = urllib.request.urlopen(url).read()
-        except (URLError, HTTPError, ContentTooShortError, http.client.HTTPException, http.client.IncompleteRead) as e:            
+        except (URLError, HTTPError, ContentTooShortError, http.client.HTTPException, http.client.IncompleteRead) as e:
             html = None
             if num_retries > 0:
                 if hasattr(e, 'code') and 500 <= e.code < 600:

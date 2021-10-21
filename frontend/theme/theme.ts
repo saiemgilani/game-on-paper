@@ -57,8 +57,8 @@ const options = (dark: boolean): ThemeOptions => {
       h2: { fontFamily: 'Chivo', fontWeight: 500, fontSize: '32px', lineHeight: '38px'},
       h3: { fontFamily: 'Chivo', fontWeight: 500, fontSize: '1.7rem' },
       h4: { fontFamily: 'Chivo', fontWeight: 500, fontSize: '1.3rem' },
-      h5: { fontFamily: 'Chivo', fontWeight: 700, fontSize: '1.3rem'},
-      h6: { fontFamily: 'Chivo', fontWeight: 700, fontSize: '14px', lineHeight: '21px' },
+      h5: { fontFamily: 'Chivo', fontWeight: 700, fontSize: '15px', lineHeight: '24px', letterSpacing: '0.05px'},
+      h6: { fontFamily: 'Chivo', fontWeight: 700, fontSize: '14px', lineHeight: '21px', letterSpacing: '0.05px' },
       subtitle1: { fontFamily: 'Chivo', fontSize: '16px', lineHeight: '24px', letterSpacing: '0.15px' },
       subtitle2: {
         fontFamily: 'Chivo',

@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
       width: 400,
     },
     height: 190,
-    margin: '2%',
+    padding: '2%',
     position: 'relative',
     backgroundColor: theme.palette.primary.main,
     color: theme.palette.text.secondary,
@@ -54,6 +54,15 @@ const useStyles = makeStyles((theme) => ({
     top: 66,
     padding: 5,
     fontSize: '1.1rem',
+    fontWeight: 700,
+    position: 'absolute',
+  },
+  hscoreLarge:{
+    right: 5,
+    top: 71,
+    padding: 5,
+    fontSize: '18px',
+    fontWeight: 700,
     position: 'absolute',
   },
   ascore:{
@@ -61,6 +70,15 @@ const useStyles = makeStyles((theme) => ({
     top: 31,
     padding: 5,
     fontSize: '1.1rem',
+    fontWeight: 700,
+    position: 'absolute',
+  },
+  ascoreLarge:{
+    right: 5,
+    top: 36,
+    padding: 5,
+    fontSize: '18px',
+    fontWeight: 700,
     position: 'absolute',
   },
   actions: {
@@ -127,15 +145,19 @@ export const ScoreCard: FC<ScoreCardProps> = ({ score,  sport, loader, noMargin 
                 alt={proSport ? score['competitors'][1]['team']['shortDisplayName']:score['competitors'][1]['team']['location']}/>}
             </Grid>
             <Grid item>
-              <Typography variant={'h6'}
+              <Typography variant={large ? 'h5':'h6'}
                 color="textPrimary" >
-                {'  '}{proSport ? score['competitors'][1]['team']['shortDisplayName']:score['competitors'][1]['team']['location']}
+                {'  '}{proSport?
+                  score['competitors'][1]['team']['shortDisplayName']:
+                  (score['competitors'][1]['curatedRank']['current']<99?
+                    score['competitors'][1]['curatedRank']['current']+' '+score['competitors'][1]['team']['location']:
+                    score['competitors'][1]['team']['location'])}
               </Typography>
             </Grid>
             <Grid item>
               <Button size="small"
                 variant="text"
-                className={classes.ascore}>
+                className={large ? classes.ascoreLarge : classes.ascore}>
                 {score['status.type.state']==='pre'? ' ': score['competitors'][1]['score']}
               </Button>
             </Grid>
@@ -153,16 +175,20 @@ export const ScoreCard: FC<ScoreCardProps> = ({ score,  sport, loader, noMargin 
             </Grid>
             <Grid item>
             <Typography
-              variant={'h6'}
+              variant={large ? 'h5':'h6'}
               color="textPrimary">
-              {'  '}{proSport? score['competitors'][0]['team']['shortDisplayName']:score['competitors'][0]['team']['location']}
+              {'  '}{proSport?
+                score['competitors'][0]['team']['shortDisplayName']:
+                (score['competitors'][0]['curatedRank']['current']<99?
+                  score['competitors'][0]['curatedRank']['current']+' '+ score['competitors'][0]['team']['location']:
+                  score['competitors'][0]['team']['location'])}
             </Typography>
             </Grid>
             <Grid item>
               <Button
                 size="small"
                 variant="text"
-                className={classes.hscore}>
+                className={large ? classes.hscoreLarge : classes.hscore}>
                 {score['status.type.state']==='pre'? ' ': score['competitors'][0]['score']}
               </Button>
             </Grid>

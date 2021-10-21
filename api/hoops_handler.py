@@ -207,9 +207,6 @@ class HoopsProcess(object):
             pbp_txt['plays']["awayTeamNameAlt"] = str(awayTeamNameAlt)
             pbp_txt['plays']['period.number'] = pbp_txt['plays']['period.number'].apply(lambda x: int(x))
             pbp_txt['plays']['qtr'] = pbp_txt['plays']['period.number'].apply(lambda x: int(x))
-
-            
-
             pbp_txt['plays']["homeTeamSpread"] = 2.5
             if len(pbp_txt['pickcenter']) > 1:
                 if 'spread' in pbp_txt['pickcenter'][1].keys():
