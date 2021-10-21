@@ -80,18 +80,3 @@ function date(score) {
   let timeString = hrs + ':' + mins + ampm;
   return dtString + ' ' + timeString;
 }
-// export const ScoreCard: FC<ScoreCardProps> = ({ score,  sport, loader, noMargin }): ReactElement => {
-//   const classes = useStyles()
-//   const pros = ['wnba','nba','nfl']
-//   const proSport = pros.includes(sport)
-//   const src1 = proSport ? score['competitors'][1]['team']['abbreviation'] : score['competitors'][1]['team']['id']
-//   const src2 = proSport ? score['competitors'][0]['team']['abbreviation'] : score['competitors'][0]['team']['id']
-//   const gameDate = date(score)
-//   return(
-//     <>
-//       <div>
-//       </div>
-//   )
-// }
-
-// export default ScoreCard
