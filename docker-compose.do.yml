@@ -34,7 +34,7 @@ services:
       timeout: 10s
   node:
     image: ghcr.io/saiemgilani/saiemgilani/gp-node:latest
-    command: ["yarn","start"]
+    command: ["node","server.js"]
     environment:
       RDATA_BASE_URL: "http://python:7000"
     ports:

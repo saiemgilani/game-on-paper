@@ -3,11 +3,11 @@
 const nextConfig = {
   experimental: {
     appDir: true,
+    serverActions: true,
   },
   reactStrictMode: true,
+  output: 'standalone',
   images: {
-    minimumCacheTTL: 60,
-    disableStaticImages: true,
     remotePatterns: [
       {
         protocol: 'https',

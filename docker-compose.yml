@@ -1,7 +1,9 @@
 version: "3.9"
 services:
   python:
-    build: ./python
+    build:
+      context: ./python
+      dockerfile: Dockerfile
     restart: unless-stopped
     expose:
       - 7000
@@ -13,6 +15,8 @@ services:
       retries: 5
       start_period: 20s
       timeout: 10s
+    networks:
+      - game-on-paper-site
   redis:
     build:
       context: ./redis
@@ -28,6 +32,8 @@ services:
       retries: 5
       start_period: 20s
       timeout: 10s
+    networks:
+      - game-on-paper-site
   cache:
     build:
       context: ./redis
@@ -43,6 +49,8 @@ services:
       retries: 5
       start_period: 20s
       timeout: 10s
+    networks:
+      - game-on-paper-site
   summary:
     image: ghcr.io/akeaswaran/akeaswaran/cfb-team-summaries:latest
     expose:
@@ -55,10 +63,14 @@ services:
       retries: 5
       start_period: 20s
       timeout: 10s
+    networks:
+      - game-on-paper-site
 
   node:
-    command: ["yarn","start"]
-    build: ./frontend
+    command: ["node","server.js"]
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
     environment:
       RDATA_BASE_URL: "http://python:7000/py"
     restart: unless-stopped
@@ -82,7 +94,11 @@ services:
       - cache
       - summary
       - python
+    networks:
+      - game-on-paper-site
 
 volumes:
   db_cache:
     driver: local
+networks:
+  game-on-paper-site:
