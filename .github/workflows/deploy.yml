@@ -83,7 +83,7 @@ jobs:
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
+          password: ${{ secrets.SSH_DO }}
           port: ${{ secrets.PORT }}
           localPath: './docker-compose.do.yml'
           remotePath: './docker-compose.yml'
