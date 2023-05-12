@@ -1,35 +1,62 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
-    "baseUrl": ".",
-    "skipLibCheck": true,
-    "strict": false,
-    "forceConsistentCasingInFileNames": true,
+    "checkJs": true,                          /* Enable error reporting in type-checked JavaScript files. */
+    "skipLibCheck": true                      /* Skip type checking all .d.ts files. */,
+    "strict": true,                           /* Enable all strict type-checking options. */ // "noImplicitAny": true,                            /* Enable error reporting for expressions and declarations with an implied 'any' type. */
+    "forceConsistentCasingInFileNames": true, /* Ensure that casing is correct in imports. */ /* Type Checking */
     "noEmit": true,
-    "esModuleInterop": true,
+    "esModuleInterop": true,                  /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables 'allowSyntheticDefaultImports' for type compatibility. */ // "preserveSymlinks": true,                         /* Disable resolving symlinks to their realpath. This correlates to the same flag in node. */
     "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "incremental": true,
+    "noUnusedLocals": false,                   /* Enable error reporting when local variables aren't read. */
+    "noUnusedParameters": false,               /* Raise an error when a function parameter isn't read. */
+    "baseUrl": ".",           /* Specify the base directory to resolve non-relative module names. */
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@/*": ["./*"],
+      "@/components/*": [
+        "components/*"
+      ],
+      "@lib/*": [
+        "lib/*"
+      ],
+      "@utils/*": [
+        "utils/*"
+      ],
+      "@content/*": [
+        "content/*"
+      ],
+      "@styles/*": [
+        "styles/*"
+      ],
+      "@context/*": [
+        "context/*"
+      ],
+      "@layout/*": [
+        "layout/*"
+      ],
+      "@hooks/*": [
+        "hooks/*"
+      ],
+      "@public/*": [
+        "public/*"
+      ],
+      "@posts/*": [
+        "posts/*"
+      ]
+    }
   },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    "assets/jss/nextjs-material-kit/pages/landingPageSections/workStyle.js",
-    "assets/jss/nextjs-material-kit/pages/landingPageSections/productStyle.js",
-    "assets/jss/nextjs-material-kit/pages/landingPageSections/packageStyle.js",
-    "src/components/Header/Header.js", "assets/jss/nextjs-material-kit/pages/landingPage.js",
-    "assets/jss/nextjs-material-kit.js",
-    "pages-sections/LandingPage-Sections/ProductSection.js"  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "exclude": ["node_modules"]
 }

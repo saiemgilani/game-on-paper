@@ -1,26 +1,65 @@
-import React, { FC, ReactElement } from 'react'
-import { Grid, Typography } from '@material-ui/core'
-import { makeStyles } from "@material-ui/core/styles";
-const useStyles = makeStyles((theme) => ({
-  footer: {
-    position: 'relative',
-    padding: '1.5rem',
-    bottom:10,
-    width: '100%',
-    height: '2.5rem',            /* Footer height */
-  },
-}))
-export const Footer: FC = ({}): ReactElement => {
-  const classes = useStyles()
+"use client";
+import Link from "next/link";
+import Image from "next/image";
+import {
+  FadeContainer,
+  opacityVariant,
+  popUp,
+} from "@/lib/content/FramerMotionVariants";
+import { navigationRoutes } from "@utils/utils";
+import { motion } from "framer-motion";
+import { SiSpotify } from "react-icons/si";
+import useSWR from "swr";
+import fetcher from "@lib/fetcher";
+import { BsDot } from "react-icons/bs";
+
+function FooterLink({ route, text }: { route: string; text: string }) {
   return (
-    <Grid container>
-      <Grid item xs={12}>
-      <div className={classes.footer}>
-        <Typography style={{ textAlign: 'center'}}>
-          Built by <a href="http://www.github.com/saiemgilani" target="_blank" rel="noreferrer">Akshay Easwaran</a>, <a href="http://www.github.com/saiemgilani" target="_blank" rel="noreferrer">Saiem Gilani</a> and others.
-        </Typography>
-      </div>
-    </Grid>
-  </Grid>
-  )
+    <Link href={`/${route}`}>
+      <motion.p
+        className="hover:text-black dark:hover:text-white w-fit"
+        variants={popUp}
+      >
+        {text}
+      </motion.p>
+    </Link>
+  );
 }
+export default function Footer() {
+
+
+  return (
+    <>
+    <footer className="w-screen text-gray-600 dark:text-gray-400/50 font-inter mb-14 print:hidden">
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        variants={FadeContainer}
+        viewport={{ once: true }}
+        className="flex flex-col max-w-4xl gap-5 p-5 mx-auto text-sm border-t-2 border-gray-200 2xl:max-w-5xl 3xl:max-w-7xl dark:border-gray-400/10 sm:text-base"
+      >
+
+        <section className="grid grid-cols-3 gap-10">
+          <div className="flex flex-col gap-4 capitalize">
+            {navigationRoutes.slice(0, 5).map((text, index) => {
+              return <FooterLink key={index} route={text} text={text} />;
+            })}
+          </div>
+          <div className="flex flex-col gap-4 capitalize">
+            {navigationRoutes
+              .slice(5, navigationRoutes.length)
+              .map((route, index) => {
+                let text = route;
+                if (route === "rss") text = "RSS";
+                return <FooterLink key={index} route={route} text={text} />;
+              })}
+          </div>
+        </section>
+      </motion.div>
+    </footer>
+    </>
+  );
+}
+
+
+

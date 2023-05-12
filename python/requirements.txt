@@ -1,0 +1,8 @@
+sportsdataverse==0.0.35
+fastapi==0.95.1
+pathspec==0.8.1
+pydantic==1.10.7
+python-dotenv==0.15.0
+starlette==0.26.1
+uvicorn==0.22.0
+requests==2.26.0
