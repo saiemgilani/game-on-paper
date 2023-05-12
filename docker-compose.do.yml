@@ -24,6 +24,8 @@ services:
     image: ghcr.io/akeaswaran/akeaswaran/cfb-team-summaries:latest
     expose:
       - 3000
+    ports:
+      - 3000:3000
     healthcheck:
       test: curl --fail http://summary:3000/health || exit 1
       interval: 60s
@@ -57,6 +59,8 @@ services:
     image: ghcr.io/saiemgilani/saiemgilani/gp-python:latest
     expose:
       - 7000
+    ports:
+      - 7000:7000
     healthcheck:
       test: curl --fail http://python:7000/healthcheck || exit 1
       interval: 60s
