@@ -9,7 +9,7 @@ import "@fontsource/chivo/700.css";
 import { Metadata } from "next"
 
 import { siteConfig } from "@/config/site"
-import { fontSansSerif } from "@/lib/fonts"
+import { fontSansSerif, fontMono } from "@/lib/fonts"
 import { cn } from "@/lib/utils"
 import { SiteHeader } from "@/components/site-header"
 import Footer  from "@/components/footer"
@@ -129,7 +129,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         </head>
         <body
           className={cn(
-            "min-h-screen bg-background font-sans-serif antialiased",
+            "min-h-screen bg-background font-sans-serif antialiased --font-chivo",
             fontSansSerif.className
           )}
         >
