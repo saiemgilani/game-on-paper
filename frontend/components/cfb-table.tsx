@@ -6,7 +6,39 @@ import DataTable, { ExpanderComponentProps } from 'react-data-table-component';
 import { CFBGamePlay, Competitor, Competition, Away } from '@/lib/cfb/types';
 import { useState, useEffect } from "react";
 import { useTheme } from 'next-themes'
+import styled, { keyframes } from 'styled-components';
 
+const rotate360 = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+`;
+
+const Spinner = styled.div`
+	margin: 16px;
+	animation: ${rotate360} 1s linear infinite;
+	transform: translateZ(0);
+	border-top: 2px solid grey;
+	border-right: 2px solid grey;
+	border-bottom: 2px solid grey;
+	border-left: 4px solid black;
+	background: transparent;
+	width: 80px;
+	height: 80px;
+	border-radius: 50%;
+`;
+
+
+const CustomLoader = () => (
+	<div style={{ padding: '24px' }}>
+		<Spinner />
+		<div>Loading plays data...</div>
+	</div>
+);
 
 const CLEAN_LIST = [61]
 interface StatKeyNames {
@@ -311,10 +343,51 @@ const columns = [
 
 // data provides access to your row data
 const ExpandedComponent: React.FC<ExpanderComponentProps<CFBGameRow>> = ({ data }) => {
+    let offense = (data.start.pos_team.id == data.homeTeamId) ? data.homeTeamId : data.awayTeamId;
+    let defense = (data.start.pos_team.id == data.homeTeamId) ? data.awayTeamId : data.homeTeamId;
+    let offenseAbbrev = (data.start.pos_team.id == data.homeTeamId) ? data.homeTeamAbbrev : data.awayTeamAbbrev;
+    let defenseAbbrev = (data.start.pos_team.id == data.homeTeamId) ? data.awayTeamAbbrev : data.homeTeamAbbrev;
     return (
         <>
-            <div className="flex flex-col gap-2 align-center">
+            <div className="flex flex-col gap-2 p-2 align-center">
                 <p className="text-align-center"><b>Play Type:</b> {data.type.text}</p>
+                <p className="text-align-center"><b>{`Yards to End Zone (Before -> After):`}</b>
+                    {` ${data.start.yardsToEndzone} -> ${data.end.yardsToEndzone}`}
+                </p>
+                <p className="text-align-center"><b>{`Started Drive at:`}</b>
+                    {` ${formatYardline(data.drive_start, offenseAbbrev, defenseAbbrev)}`}
+                </p>
+                <p className="text-align-center"><b>{`ExpPts (After - Before = Added):`}</b>
+                    {` ${roundNumber(parseFloat(data.expectedPoints.after.toString()), 2, 2)} - ${roundNumber(parseFloat(data.expectedPoints.before.toString()), 2, 2)} = ${roundNumber(parseFloat(data.expectedPoints.added.toString()), 2, 2)}`}
+                </p>
+                <p className="text-align-center"><b>{`Score Difference (Before):`}</b>
+                    {` ${data.start.pos_score_diff} (${roundNumber(parseFloat(data.start.ExpScoreDiff.toString()), 2, 2)})`}
+                </p>
+                <p className="text-align-center"><b>{`Score Difference (Before):`}</b>
+                    {` ${data.end.pos_score_diff} (${roundNumber(parseFloat(data.end.ExpScoreDiff.toString()), 2, 2)})`}
+                </p>
+                <p className="text-align-center"><b>{`Change of Possession:`}</b>{` ${data.change_of_poss}`}
+                </p>
+            </div>
+            <div className="flex flex-col gap-2 p-2 align-center">
+                <p className="text-align-center"><b>Score:</b>
+                    {` ${data.awayTeamAbbrev} ${data.awayScore}, ${data.homeTeamAbbrev} ${data.homeScore}`}
+                </p>
+                <p className="text-align-center"><b>Drive Summary:</b>
+                    {` ${data.drive_play_index} plays, ${data.drive_total_yards} yards`}
+                </p>
+                <p className="text-align-center"><b>Win Probability (Before):</b>
+                    {` ${roundNumber(parseFloat(data.winProbability.before.toString()) * 100, 3, 1)}`}
+                </p>
+                <p className="text-align-center"><b>Win Probability (After):</b>
+                    {` ${roundNumber(parseFloat(data.winProbability.after.toString()) * 100, 3, 1)}`}
+                </p>
+                <p className="text-align-center">
+                    <b>Away Score:</b> {` ${data.start.awayScore} (${data.awayScore})`}   <b>Home Score:</b> {` ${data.start.homeScore} (${data.homeScore})`}
+                </p>
+                <p className="text-align-center">
+                    <b>{`Pos Team Timeouts:`}</b>{` ${data.end.posTeamTimeouts}`} <b>{`Def Pos Team Timeouts:`}</b>{` ${data.end.defPosTeamTimeouts}`}
+                </p>
             </div>
         </>
     )
