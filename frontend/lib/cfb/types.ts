@@ -6,7 +6,7 @@ export type CFBGame = {
     homeTeamId?:         string;
     awayTeamId?:         string;
     drives?:             Drives;
-    scoringPlays?:       ScoringPlay[];
+    scoringPlays?:       CFBGamePlay[];
     winprobability?:     Winprobability[];
     boxScore?:           BoxScore;
     homeTeamSpread?:     number;

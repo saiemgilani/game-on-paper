@@ -44,15 +44,22 @@ export default async function CFBGamePage({ params }: {
         <div>
             <CFBGameHeader awayTeam={awayTeam} homeTeam={homeTeam} competitions={competitions} />
             <div className="flex flex-auto justify-around px-4">
-            {data && data.plays ? (
-            <CFBTable
-                title={"Play by Play"}
-                plays={data?.plays ?? []}
-                homeTeam={homeTeam}
-                awayTeam={awayTeam} />
-            ) : (
-                ""
-            )}
+                {data && data.scoringPlays ? (
+                    <CFBTable
+                        title={"Scoring Plays"}
+                        plays={data?.scoringPlays ?? []}
+                        homeTeam={homeTeam}
+                        awayTeam={awayTeam} />
+                ) : ("")}
+            </div>
+            <div className="flex flex-auto justify-around px-4">
+                {data && data.plays ? (
+                    <CFBTable
+                        title={"Play by Play"}
+                        plays={data?.plays ?? []}
+                        homeTeam={homeTeam}
+                        awayTeam={awayTeam} />
+                ) : ("")}
             </div>
         </div>
         </>

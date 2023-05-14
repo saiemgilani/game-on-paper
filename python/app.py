@@ -279,6 +279,9 @@ def get_cfb_game(request: Request, gameId: str) -> Optional[None]:
         else:
             homeTeamId = pbp['header']['competitions'][0]['competitors'][1]['team']['id']
             awayTeamId = pbp['header']['competitions'][0]['competitors'][0]['team']['id']
+
+        pbp['scoringPlays'] = [play for play in jsonified_df if play['scoringPlay'] == True]
+
         result = {
             "id": gameId,
             "count" : len(jsonified_df),
@@ -287,7 +290,7 @@ def get_cfb_game(request: Request, gameId: str) -> Optional[None]:
             "homeTeamId": homeTeamId,
             "awayTeamId": awayTeamId,
             "drives" : pbp['drives'],
-            "scoringPlays" : np.array(pbp['scoringPlays']).tolist(),
+            "scoringPlays" : pbp['scoringPlays'],
             "winprobability" : np.array(pbp['winprobability']).tolist(),
             "boxScore" : pbp['boxscore'],
             "homeTeamSpread" : np.array(pbp['homeTeamSpread']).tolist(),

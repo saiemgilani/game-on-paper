@@ -9,7 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-
     "@fontsource/chivo": "^4.5.11",
     "@fontsource/roboto": "^4.5.8",
     "@radix-ui/react-select": "^1.2.1",
@@ -17,6 +16,7 @@
     "@types/node": "18.16.3",
     "@types/react": "18.2.5",
     "@types/react-dom": "18.2.3",
+    "@use-it/event-listener": "^0.1.7",
     "autoprefixer": "10.4.14",
     "axios": "^1.4.0",
     "class-variance-authority": "^0.6.0",

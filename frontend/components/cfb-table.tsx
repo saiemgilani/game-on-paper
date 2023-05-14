@@ -419,7 +419,8 @@ export default function CFBTable({
     plays,
     title,
     homeTeam,
-    awayTeam }: { plays: CFBGamePlay[],
+    awayTeam }: {
+        plays: CFBGamePlay[],
         title: string,
         homeTeam: Competitor,
         awayTeam: Competitor }) {
