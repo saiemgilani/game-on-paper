@@ -96,6 +96,10 @@
     --destructive: 0 100% 50%;
     --destructive-foreground: 210 40% 98%;
 
+    --danger: 355, 70%, 91%;
+    --success: 153, 31%, 86%;
+    --warning: 46, 100%, 90%;
+
     --ring: 215 20.2% 65.1%;
 
     --radius: 0.7rem;
@@ -128,6 +132,10 @@
 
     --destructive: 0 63% 31%;
     --destructive-foreground: 210 40% 98%;
+
+    --danger: 355, 70%, 15%;
+    --success: 159, 31%, 18%;
+    --warning: 46, 100%, 16%;
 
     --ring: 216 34% 17%;
 
@@ -262,6 +270,18 @@
   text-align: right;
   max-width: 10%;
 }
+
+
+.rdt_TableRow.table-success > .rdt_TableCell, .rdt_TableRow.table-success {
+  background-color: theme('colors.success');
+}
+.rdt_TableRow.table-danger > .rdt_TableCell, .rdt_TableRow.table-danger  {
+  background-color: theme('colors.danger');
+}
+.rdt_TableRow.table-warning > .rdt_TableCell, .rdt_TableRow.table-warning  {
+  background-color: theme('colors.warning');
+}
+
 .rdt_ExpanderRow {
   color: theme('colors.foreground');
   background-color: theme('colors.background');
@@ -270,3 +290,4 @@
   display: flex;
   justify-content: center;
 }
+

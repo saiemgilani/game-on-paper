@@ -4,78 +4,15 @@ import Image from 'next/image';
 import Link from 'next/link';
 import DataTable, { ExpanderComponentProps } from 'react-data-table-component';
 import { CFBGamePlay, Competitor, Competition, Away } from '@/lib/cfb/types';
+import { useState, useEffect } from "react";
+import { useTheme } from 'next-themes'
 
 
 const CLEAN_LIST = [61]
-
-function cleanAbbreviation(team: Away) {
-    if (team.abbreviation !== undefined) {
-        if (CLEAN_LIST.includes(parseInt(team.id))) {
-            return team?.abbreviation.toLocaleLowerCase()
-        }
-        return team?.abbreviation
-    } else {
-        return team?.location
-    }
-}
-
-function cleanName(team: Away) {
-    if (team.nickname !== undefined) {
-        if (CLEAN_LIST.includes(parseInt(team.id))) {
-            return team?.nickname.toLocaleLowerCase()
-        }
-        return team?.nickname
-    } else {
-        return team?.location
-    }
-}
-
-function cleanLocation(team: Away) {
-    if (team.location !== undefined) {
-        if (CLEAN_LIST.includes(parseInt(team.id))) {
-            return team?.location.toLocaleLowerCase()
-        }
-        return team?.location
-    } else {
-        return team?.location
-    }
-}
-
-function getNumberWithOrdinal(n: number) {
-    let s = ["th", "st", "nd", "rd"];
-    let v = n % 100;
-    return n + (s[(v - 20) % 10] || s[v] || s[0]);
-}
-function formatDown(down: number, playType: string) {
-    if (playType.includes("Kickoff")) {
-        return "Kickoff"
-    } else if (playType.includes("Extra Point") || playType.includes("Conversion")) {
-        return "PAT"
-    } else if (down > -1) {
-        return getNumberWithOrdinal(down)
-    } else {
-        return down
-    }
-}
-function formatYardline(yardsToEndzone: number, offenseAbbrev: string, defenseAbbrev: string) {
-    if (yardsToEndzone == 50) {
-        return "50";
-    } else if (yardsToEndzone < 50) {
-        return `${defenseAbbrev} ${yardsToEndzone}`
-    } else {
-        return `${offenseAbbrev} ${100 - yardsToEndzone}`
-    }
-}
-function formatDistance(down: number, type: string, distance: number, yardline: number) {
-    let dist = (distance == 0 || yardline <= distance) ? "Goal" : distance
-    let downForm: any = formatDown(down, type)
-    if (downForm.includes("Kickoff") || downForm.includes("PAT")) {
-        return downForm
-    } else {
-        return downForm + " & " + dist
-    }
-}
-const stat_key_title_mapping = {
+interface StatKeyNames {
+    [key: string]: string
+  }
+const stat_key_title_mapping: StatKeyNames = {
     "EPA_plays" : "Total Plays",
     "scrimmage_plays" : "Scrimmage Plays",
     "EPA_overall_total" : "Total EPA",
@@ -215,6 +152,86 @@ const turnover_vec = [
     "Uncategorized Touchdown"
 ]
 
+function cleanAbbreviation(team: Away) {
+    if (team.abbreviation !== undefined) {
+        if (CLEAN_LIST.includes(parseInt(team.id))) {
+            return team?.abbreviation.toLocaleLowerCase()
+        }
+        return team?.abbreviation
+    } else {
+        return team?.location
+    }
+}
+
+function cleanName(team: Away) {
+    if (team.nickname !== undefined) {
+        if (CLEAN_LIST.includes(parseInt(team.id))) {
+            return team?.nickname.toLocaleLowerCase()
+        }
+        return team?.nickname
+    } else {
+        return team?.location
+    }
+}
+
+function cleanLocation(team: Away) {
+    if (team.location !== undefined) {
+        if (CLEAN_LIST.includes(parseInt(team.id))) {
+            return team?.location.toLocaleLowerCase()
+        }
+        return team?.location
+    } else {
+        return team?.location
+    }
+}
+
+
+function getNumberWithOrdinal(n: number) {
+    let s = ["th", "st", "nd", "rd"];
+    let v = n % 100;
+    return n + (s[(v - 20) % 10] || s[v] || s[0]);
+}
+function formatDown(down: number, playType: string) {
+    if (playType.includes("Kickoff")) {
+        return "Kickoff"
+    } else if (playType.includes("Extra Point") || playType.includes("Conversion")) {
+        return "PAT"
+    } else if (down > -1) {
+        return getNumberWithOrdinal(down)
+    } else {
+        return down
+    }
+}
+function formatColorRow(play: CFBGamePlay, homeTeam: Competitor, awayTeam: Competitor){
+    let classText = "";
+    if (turnover_vec.includes(play.type.text) || (play.text.includes("fumble") && play.change_of_poss == 1) || (play.start.down == 4 && parseFloat(play.statYardage.toString()) < parseFloat(play.start.distance.toString()) && !play.type.text.includes('Punt') && !play.type.text.includes('Timeout'))) {
+        classText = " table-danger"
+    } else if (play.scoringPlay == true) {
+        classText = " table-success"
+    } else if (play.text.toLocaleLowerCase().includes("penalty")) {
+        classText = " table-warning"
+    }
+}
+function formatYardline(yardsToEndzone: number, offenseAbbrev: string, defenseAbbrev: string) {
+    if (yardsToEndzone == 50) {
+        return "50";
+    } else if (yardsToEndzone < 50) {
+        return `${defenseAbbrev} ${yardsToEndzone}`
+    } else {
+        return `${offenseAbbrev} ${100 - yardsToEndzone}`
+    }
+}
+function formatDistance(down: number, type: string, distance: number, yardline: number) {
+    let dist = (distance == 0 || yardline <= distance) ? "Goal" : distance
+    let downForm: any = formatDown(down, type)
+    if (downForm.includes("Kickoff") || downForm.includes("PAT")) {
+        return downForm
+    } else {
+        return downForm + " & " + dist
+    }
+}
+
+
 function roundNumber(value: any, power10: number, fixed: number) {
     return (Math.round(parseFloat(value || '0') * (Math.pow(10, power10))) / (Math.pow(10, power10))).toFixed(fixed)
 }
@@ -244,8 +261,11 @@ function formatPlayDescription(play: CFBGamePlay, homeTeam: Competitor, awayTeam
      }</p>
 }
 
-function formatOffenseLogo(row: CFBGamePlay){
-    return <Link href={`/cfb/year/${row.season}/team/${row.pos_team}`}><Image width={"35"} height={"35"} src={`https://a.espncdn.com/i/teamlogos/ncaa/500/${row.pos_team}.png`} alt={`ESPN team id ${row.pos_team}`}/></Link>
+function formatOffenseLogo(row: CFBGamePlay, homeTeam: Competitor, awayTeam: Competitor, theme?: string){
+    let homeTeamLogoUrl = theme === "dark" ? homeTeam.team.logos[0].href : homeTeam.team.logos[1].href;
+    let awayTeamLogoUrl = theme === "dark" ? awayTeam.team.logos[0].href : awayTeam.team.logos[1].href;
+    let logoUrl = (row.pos_team == row.homeTeamId) ? homeTeamLogoUrl : awayTeamLogoUrl;
+    return <Link href={`/cfb/year/${row.season}/team/${row.pos_team}`}><Image width={"35"} height={"35"} src={logoUrl} alt={`ESPN team id ${row.pos_team}`}/></Link>
 }
 
 
@@ -307,6 +327,21 @@ interface CFBGameRow extends CFBGamePlay {
 
 }
 
+const conditionalRowStyles = [
+    {
+      when: (row: CFBGameRow) => (turnover_vec.includes(row.type.text) || (row.text.includes("fumble") && row.change_of_poss == 1) || (row.start.down == 4 && parseFloat(row.statYardage.toString()) < parseFloat(row.start.distance.toString()) && !row.type.text.includes('Punt') && !row.type.text.includes('Timeout'))),
+      classNames: ['table-danger'],
+    },
+    {
+      when: (row: CFBGameRow) => row.scoringPlay == true,
+      classNames: ['table-success'],
+    },
+    {
+      when: (row: CFBGameRow) => row.text.toLocaleLowerCase().includes("penalty"),
+      classNames: ['table-warning'],
+    }
+];
+
 export default function CFBTable({
     plays,
     title,
@@ -316,10 +351,17 @@ export default function CFBTable({
         homeTeam: Competitor,
         awayTeam: Competitor }) {
 
+    let localTheme: string;
+    if (typeof window !== 'undefined') {
+        localTheme = window.localStorage.getItem('theme') || 'light';
+        console.log(localTheme)
+    }
+
+    // console.log("the theme is: "+ document.documentElement.getAttribute('data-theme')    )
     const newPlays: CFBGameRow[] = [...plays]
     newPlays.forEach((play) => {
         play.period_text = formatPeriod(play)
-        play.offense_logo = formatOffenseLogo(play)
+        play.offense_logo = formatOffenseLogo(play, homeTeam, awayTeam, localTheme)
         play.play_description = formatPlayDescription(play, homeTeam, awayTeam)
 
     })
@@ -337,6 +379,7 @@ export default function CFBTable({
             expandableRows
             expandOnRowClicked
             expandableRowsHideExpander
+            conditionalRowStyles={conditionalRowStyles}
             expandableRowsComponent={ExpandedComponent} />
     );
 }

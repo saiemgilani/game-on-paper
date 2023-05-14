@@ -273,13 +273,19 @@ def get_cfb_game(request: Request, gameId: str) -> Optional[None]:
             for col in bad_cols:
                 record.pop(col, None)
 
+        if pbp['header']['competitions'][0]['competitors'][0]['homeAway'] == 'home':
+            homeTeamId = pbp['header']['competitions'][0]['competitors'][0]['team']['id']
+            awayTeamId = pbp['header']['competitions'][0]['competitors'][1]['team']['id']
+        else:
+            homeTeamId = pbp['header']['competitions'][0]['competitors'][1]['team']['id']
+            awayTeamId = pbp['header']['competitions'][0]['competitors'][0]['team']['id']
         result = {
             "id": gameId,
             "count" : len(jsonified_df),
             "plays" : jsonified_df,
             "advBoxScore" : box,
-            "homeTeamId": pbp['header']['competitions'][0]['competitors'][0]['team']['id'],
-            "awayTeamId": pbp['header']['competitions'][0]['competitors'][1]['team']['id'],
+            "homeTeamId": homeTeamId,
+            "awayTeamId": awayTeamId,
             "drives" : pbp['drives'],
             "scoringPlays" : np.array(pbp['scoringPlays']).tolist(),
             "winprobability" : np.array(pbp['winprobability']).tolist(),
