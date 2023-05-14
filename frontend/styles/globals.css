@@ -59,17 +59,7 @@
   src: url(/fonts/Avengero/Avengero-Regular.woff2) format("woff2");
 }
 
-@font-face {
-  font-family: "Chivo";
-  font-weight: 400;
-  src: url(/fonts/chivo/Chivo-Regular.tff) format("truetype");
-}
 
-@font-face {
-  font-family: "Chivo";
-  src: url(/fonts/chivo//Chivo-Bold.ttf) format('truetype');
-  font-weight: 700;
-}
 
 @font-face {
   font-family: "Fira Mono";
@@ -151,10 +141,132 @@
   }
   body {
     @apply bg-background text-foreground;
-    font-family: "Chivo", serif;
+    font-family: "Chivo", sans-serif;
 
   }
   h1, h2, h3, h4, h5, h6 {
-    font-family: "Chivo", serif/*rtl:Amiri, Georgia, "Times New Roman", serif*/;
+    font-family: "Chivo", sans-serif/*rtl:Amiri, Georgia, "Times New Roman", serif*/;
   }
+}
+
+.rdt_Table[role="table"] {
+  display: flex;
+  justify-content: center;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  max-width: 95%;
+}
+.rdt_TableCol[data-column-id="time"] {
+  color: theme('colors.foreground');
+  background-color: theme('colors.background');
+  display: flex;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  padding: 0.25rem;
+  max-width: 10%;
+}
+.rdt_TableCell[data-column-id="time"] {
+  color: theme('colors.foreground');
+  background-color: theme('colors.background');
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  padding: 0.25rem;
+  max-width: 10%;
+}
+.rdt_TableCol[data-column-id="offense"] {
+  color: theme('colors.foreground');
+  background-color: theme('colors.background');
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  padding: 0.25rem;
+  max-width: 10%;
+}
+.rdt_TableCell[data-column-id="offense"] {
+  color: theme('colors.foreground');
+  background-color: theme('colors.background');
+  padding: 0.25rem;
+  max-width: 10%;
+}
+.rdt_TableCol[data-column-id="play_description"] {
+  color: theme('colors.foreground');
+  background-color: theme('colors.background');
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  text-align: left;
+  padding: 0.25rem;
+  overflow-wrap: break-word;
+  min-width: 50%;
+}
+
+.rdt_TableCell[data-column-id="play_description"] {
+  color: theme('colors.foreground');
+  background-color: theme('colors.background');
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  text-align: left;
+  padding: 0.25rem;
+  overflow-wrap: break-word;
+  min-width: 50%;
+}
+.rdt_TableCol[data-column-id="epa"] {
+  color: theme('colors.foreground');
+  background-color: theme('colors.background');
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  padding: 0.25rem;
+  text-align: right;
+  max-width: 10%;
+}
+.rdt_TableCell[data-column-id="epa"] {
+  color: theme('colors.foreground');
+  background-color: theme('colors.background');
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  padding: 0.25rem;
+  text-align: right;
+  max-width: 10%;
+}
+.rdt_TableCol[data-column-id="wp_pct"] {
+  color: theme('colors.foreground');
+  background-color: theme('colors.background');
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  padding: 0.25rem;
+  text-align: right;
+  max-width: 10%;
+}
+.rdt_TableCell[data-column-id="wp_pct"] {
+  color: theme('colors.foreground');
+  background-color: theme('colors.background');
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  padding: 0.25rem;
+  text-align: right;
+  max-width: 10%;
+}
+.rdt_TableCol[data-column-id="wpa"] {
+  color: theme('colors.foreground');
+  background-color: theme('colors.background');
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  padding: 0.25rem;
+  text-align: right;
+  max-width: 10%;
+}
+.rdt_TableCell[data-column-id="wpa"] {
+  color: theme('colors.foreground');
+  background-color: theme('colors.background');
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  padding: 0.25rem;
+  text-align: right;
+  max-width: 10%;
+}
+.rdt_ExpanderRow {
+  color: theme('colors.foreground');
+  background-color: theme('colors.background');
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  display: flex;
+  justify-content: center;
 }

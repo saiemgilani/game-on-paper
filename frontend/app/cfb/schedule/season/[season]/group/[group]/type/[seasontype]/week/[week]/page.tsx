@@ -16,7 +16,7 @@ async function getCFBSchedule(params: any) {
     const res = await fetch(endpoint , {
 
         headers: { 'Content-Type': 'application/json' },
-        next: { revalidate: 600 },
+        next: { revalidate: 10 },
     });
     const resp = res.json()
     return resp;

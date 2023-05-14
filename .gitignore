@@ -23,3 +23,4 @@ cfb-api
 .ipynb_checkpoints
 __pycache__
 */__pycache__
+python/data

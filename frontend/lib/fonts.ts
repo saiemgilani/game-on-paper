@@ -1,13 +1,14 @@
-import { JetBrains_Mono as FontMono, Chivo as FontSans } from "next/font/google"
+import { JetBrains_Mono as JetBrains_Mono, Chivo as Chivo } from "next/font/google"
 
-export const fontSans = FontSans({
+export const fontSansSerif = Chivo({
   subsets: ["latin"],
-  variable: "--font-sans",
+  variable: "--font-chivo",
   weight: ["400", "500", "700"],
 })
 
-export const fontMono = FontMono({
+export const fontMono = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
+  weight: ["400", "500", "700"],
 })
 

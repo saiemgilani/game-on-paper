@@ -1,8 +1,15 @@
 import "@/styles/globals.css"
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
+import "@fontsource/chivo/400.css";
+import "@fontsource/chivo/500.css";
+import "@fontsource/chivo/700.css";
 import { Metadata } from "next"
 
 import { siteConfig } from "@/config/site"
-import { fontSans } from "@/lib/fonts"
+import { fontSansSerif } from "@/lib/fonts"
 import { cn } from "@/lib/utils"
 import { SiteHeader } from "@/components/site-header"
 import Footer  from "@/components/footer"
@@ -88,6 +95,29 @@ export default function RootLayout({ children }: RootLayoutProps) {
             type="font/woff2"
             crossOrigin="anonymous"
           />
+          {/* Chivo */}
+          <link
+            rel="preload"
+            href="/fonts/chivo/Chivo-Regular.ttf"
+            as="font"
+            type="font/ttf"
+            crossOrigin="anonymous"
+          />
+          <link
+            rel="preload"
+            href="/fonts/chivo/Chivo-Bold.ttf"
+            as="font"
+            type="font/ttf"
+            crossOrigin="anonymous"
+          />
+          {/* FiraMono */}
+          <link
+            rel="preload"
+            href="/fonts/fira-mono/FiraMono-Regular.ttf"
+            as="font"
+            type="font/ttf"
+            crossOrigin="anonymous"
+          />
           {/* Avengero */}
           <link
             rel="preload"
@@ -99,8 +129,8 @@ export default function RootLayout({ children }: RootLayoutProps) {
         </head>
         <body
           className={cn(
-            "min-h-screen bg-background font-sans antialiased",
-            fontSans.className
+            "min-h-screen bg-background font-sans-serif antialiased",
+            fontSansSerif.className
           )}
         >
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>

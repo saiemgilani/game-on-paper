@@ -1,18 +1,51 @@
-from datetime import datetime
-from typing import Optional
 import json
 import requests
 import uvicorn
 import numpy as np
 import pandas as pd
+import logging
+import warnings
+from datetime import datetime
+from typing import Optional
 from fastapi import FastAPI, HTTPException, Request, Query, Response
 from fastapi.middleware.cors import CORSMiddleware
 from sportsdataverse.cfb.cfb_pbp import CFBPlayProcess
 from sportsdataverse.cfb import espn_cfb_schedule
+warnings.filterwarnings("ignore")
 
+logging.basicConfig(level=logging.INFO, filename = 'gp_site_logfile.txt')
+logger = logging.getLogger(__name__)
 
 # from dotenv import load_dotenv, dotenv_values
 # config = dotenv_values('.env.development.local')
+
+
+tags_metadata = [
+    {
+        "name": "Women's College Basketball",
+        "description":  "Women's College Basketball API",
+    },
+    {
+        "name": "Men's College Basketball",
+        "description":  "Men's College Basketball API",
+    },
+    {
+        "name": "WNBA",
+        "description":  "WNBA API",
+    },
+    {
+        "name": "NBA",
+        "description":  "NBA API",
+    },
+    {
+        "name": "College Football",
+        "description": "College Football API",
+    },
+    {
+        "name": "NFL",
+        "description": "National Football League API",
+    }
+]
 
 app = FastAPI(
     title="Game on Paper FastAPI Python",
@@ -20,7 +53,8 @@ app = FastAPI(
     version="0.1.0",
     docs_url='/py/api',
     openapi_url='/py/api/openapi.json',
-    redoc_url=None
+    redoc_url=None,
+    openapi_tags = tags_metadata
 )
 origins = [
     "http://localhost.gameonpaper.com",
@@ -57,7 +91,7 @@ def healthcheck():
     }), media_type="application/json")
 
 
-@app.get("/py/cfb/scoreboard")
+@app.get("/py/cfb/scoreboard", tags=["College Football"])
 def get_cfb_scoreboard(request: Request,
                         groups:Optional[str] = Query(None),
                         dates:Optional[str] = Query(None),
@@ -70,8 +104,8 @@ def get_cfb_scoreboard(request: Request,
 
 
 
-@app.get("/py/cfb/game/{gameId}")
-async def get_cfb_game(request: Request, gameId: str) -> Optional[None]:
+@app.get("/py/cfb/game/{gameId}", tags=["College Football"])
+def get_cfb_game(request: Request, gameId: str) -> Optional[None]:
     try:
         headers = {"accept": "application/json"}
         # gameId = request.get_json(force=True)['gameId']
@@ -243,7 +277,7 @@ async def get_cfb_game(request: Request, gameId: str) -> Optional[None]:
             "id": gameId,
             "count" : len(jsonified_df),
             "plays" : jsonified_df,
-            "box_score" : box,
+            "advBoxScore" : box,
             "homeTeamId": pbp['header']['competitions'][0]['competitors'][0]['team']['id'],
             "awayTeamId": pbp['header']['competitions'][0]['competitors'][1]['team']['id'],
             "drives" : pbp['drives'],
@@ -254,15 +288,12 @@ async def get_cfb_game(request: Request, gameId: str) -> Optional[None]:
             "overUnder" : np.array(pbp['overUnder']).tolist(),
             "header" : pbp['header'],
             "broadcasts" : np.array(pbp['broadcasts']).tolist(),
-            "videos" : np.array(pbp['videos']).tolist(),
-            "standings" : pbp['standings'],
             "pickcenter" : np.array(pbp['pickcenter']).tolist(),
-            "espnWinProbability" : np.array(pbp['espnWP']).tolist(),
             "gameInfo" : np.array(pbp['gameInfo']).tolist(),
             "season" : np.array(pbp['season']).tolist()
         }
         # logging.getLogger("root").info(result)
-
+        logging.getLogger("root").info("Successfully processed game: " + gameId)
         return Response(json.dumps(result), media_type="application/json")
     except KeyError:
         return Response({
@@ -275,12 +306,14 @@ async def get_cfb_game(request: Request, gameId: str) -> Optional[None]:
             "message" : "Unknown error occurred, check logs."
         }, media_type = "application/json"), 500
 
-@app.get("/py/cfb/percentiles/{year}")
-async def get_cfb_percentiles_year(request: Request,
+@app.get("/py/cfb/percentiles/{year}", tags=["College Football"])
+def get_cfb_percentiles_year(request: Request,
                                    year: str) -> Optional[None]:
     headers = {"accept": "application/json"}
     percentiles = requests.get(url = f"http://summary:3000/percentiles/{year}")
     return Response(json.dumps(percentiles.json()), media_type="application/json")
 
+
+
 if __name__ == "__main__":
-  uvicorn.run("app:app", host='0.0.0.0', port=7000, reload=True)
+  uvicorn.run("app:app", host='0.0.0.0', port=7000, reload=True )

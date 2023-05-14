@@ -1,0 +1,342 @@
+"use client";
+import * as React from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import DataTable, { ExpanderComponentProps } from 'react-data-table-component';
+import { CFBGamePlay, Competitor, Competition, Away } from '@/lib/cfb/types';
+
+
+const CLEAN_LIST = [61]
+
+function cleanAbbreviation(team: Away) {
+    if (team.abbreviation !== undefined) {
+        if (CLEAN_LIST.includes(parseInt(team.id))) {
+            return team?.abbreviation.toLocaleLowerCase()
+        }
+        return team?.abbreviation
+    } else {
+        return team?.location
+    }
+}
+
+function cleanName(team: Away) {
+    if (team.nickname !== undefined) {
+        if (CLEAN_LIST.includes(parseInt(team.id))) {
+            return team?.nickname.toLocaleLowerCase()
+        }
+        return team?.nickname
+    } else {
+        return team?.location
+    }
+}
+
+function cleanLocation(team: Away) {
+    if (team.location !== undefined) {
+        if (CLEAN_LIST.includes(parseInt(team.id))) {
+            return team?.location.toLocaleLowerCase()
+        }
+        return team?.location
+    } else {
+        return team?.location
+    }
+}
+
+function getNumberWithOrdinal(n: number) {
+    let s = ["th", "st", "nd", "rd"];
+    let v = n % 100;
+    return n + (s[(v - 20) % 10] || s[v] || s[0]);
+}
+function formatDown(down: number, playType: string) {
+    if (playType.includes("Kickoff")) {
+        return "Kickoff"
+    } else if (playType.includes("Extra Point") || playType.includes("Conversion")) {
+        return "PAT"
+    } else if (down > -1) {
+        return getNumberWithOrdinal(down)
+    } else {
+        return down
+    }
+}
+function formatYardline(yardsToEndzone: number, offenseAbbrev: string, defenseAbbrev: string) {
+    if (yardsToEndzone == 50) {
+        return "50";
+    } else if (yardsToEndzone < 50) {
+        return `${defenseAbbrev} ${yardsToEndzone}`
+    } else {
+        return `${offenseAbbrev} ${100 - yardsToEndzone}`
+    }
+}
+function formatDistance(down: number, type: string, distance: number, yardline: number) {
+    let dist = (distance == 0 || yardline <= distance) ? "Goal" : distance
+    let downForm: any = formatDown(down, type)
+    if (downForm.includes("Kickoff") || downForm.includes("PAT")) {
+        return downForm
+    } else {
+        return downForm + " & " + dist
+    }
+}
+const stat_key_title_mapping = {
+    "EPA_plays" : "Total Plays",
+    "scrimmage_plays" : "Scrimmage Plays",
+    "EPA_overall_total" : "Total EPA",
+    "EPA_overall_off" : "&emsp;&emsp;EPA",
+    "EPA_overall_offense" : "&emsp;&emsp;Offensive EPA",
+    "EPA_passing_overall" : "&emsp;&emsp;EPA",
+    "EPA_rushing_overall" : "&emsp;&emsp;EPA",
+    "EPA_per_play" : "&emsp;&emsp;EPA/Play",
+    "EPA_passing_per_play" : "&emsp;&emsp;EPA/Play",
+    "EPA_rushing_per_play" : "&emsp;&emsp;EPA/Play",
+    "rushes" : "Rushes",
+    "rushing_power" : "&emsp;&emsp;Power Run Attempts (Down &#8805; 3, Distance &#8804; 2)",
+    "rushing_power_success" : "&emsp;&emsp;Successful Power Runs (Rate)",
+    "rushing_stuff" : "&emsp;&emsp;Stuffed Runs (Yds Gained &#8804; 0)",
+    "rushing_stopped" : "&emsp;&emsp;Stopped Runs (Yds Gained &#8804; 2)",
+    "rushing_opportunity" : "&emsp;&emsp;Opportunity Runs (Yds Gained &#8805; 4)",
+    "rushing_highlight" : "&emsp;&emsp;Highlight Runs (Yds Gained &#8805; 8)",
+    "havoc_total" : "Havoc Plays Created",
+    "havoc_total_pass" : "&emsp;&emsp;Passing",
+    "havoc_total_rush" : "&emsp;&emsp;Rushing",
+    "EPA_penalty": "&emsp;&emsp;Penalty EPA",
+    "special_teams_plays" : "Total Plays",
+    "EPA_sp" : "Total EPA",
+    "EPA_special_teams" : "&emsp;&emsp;Special Teams EPA",
+    "EPA_fg" : "&emsp;&emsp;Field Goal EPA",
+    "EPA_punt" : "&emsp;&emsp;Punting EPA",
+    "EPA_kickoff" : "&emsp;&emsp;Kickoff Return EPA",
+    "TFL" : "TFLs Generated",
+    "TFL_pass" : "&emsp;&emsp;Passing",
+    "TFL_rush" : "&emsp;&emsp;Rushing",
+    "EPA_success" : "Successful Plays (EPA > 0)",
+    "EPA_success_pass" : "&emsp;&emsp;When Passing",
+    "EPA_success_rush" : "&emsp;&emsp;When Rushing",
+    "EPA_success_standard_down" : "&emsp;&emsp;On Standard Downs",
+    "EPA_success_passing_down": "&emsp;&emsp;On Passing Downs",
+    "EPA_success_early_down": "&emsp;&emsp;On Early Downs",
+    "EPA_success_early_down_pass": "&emsp;&emsp;Successful Passes (Rate)",
+    "EPA_success_early_down_rush": "&emsp;&emsp;Successful Rushes (Rate)",
+    "early_downs": "Early Downs",
+    "early_down_pass": "&emsp;&emsp;Passes",
+    "early_down_rush": "&emsp;&emsp;Rushes",
+    "EPA_success_late_down": "&emsp;&emsp;On Late Downs",
+    "EPA_success_late_down_pass": "&emsp;&emsp;Successful Passes (Rate)",
+    "EPA_success_late_down_rush": "&emsp;&emsp;Successful Rushes (Rate)",
+    "late_downs": "Late Downs",
+    "late_down_pass": "&emsp;&emsp;Passes",
+    "late_down_rush": "&emsp;&emsp;Rushes",
+    "EPA_explosive" : "Explosive Plays",
+    "EPA_explosive_passing" : "&emsp;&emsp;When Passing (EPA > 2.4)",
+    "EPA_explosive_rushing" : "&emsp;&emsp;When Rushing (EPA > 1.8)",
+    "scoring_opps_opportunities" : "Scoring Opps",
+    "scoring_opps_points" : "&emsp;&emsp;Total Points",
+    "scoring_opps_pts_per_opp" : "&emsp;&emsp;Points per Opp",
+    "field_pos_avg_start" : "Avg Starting FP",
+    "field_pos_avg_starting_predicted_pts" : "&emsp;&emsp;Predicted Points",
+    "sacks" : "Sacks Generated",
+    "turnovers" : "Turnovers",
+    "expected_turnovers" : "Expected Turnovers",
+    "turnover_margin" : "Turnover Margin",
+    "expected_turnover_margin" : "Expected Turnover Margin",
+    "turnover_luck" : "Turnover Luck (pts)",
+    "PD" : "Passes Defensed",
+    "INT" : "&emsp;&emsp;Interceptions",
+    "Int" : "&emsp;&emsp;Interceptions",
+    "def_int" : "Interceptions",
+    "fumbles" : "Fumbles Forced",
+    "total_fumbles" : "&emsp;&emsp;Fumbles",
+    "fumbles_lost" : "&emsp;&emsp;Fumbles Lost",
+    "fumbles_recovered" : "&emsp;&emsp;Fumbles Recovered",
+    "middle_8": "\"Middle 8\" Plays",
+    "middle_8_pass": "&emsp;&emsp;Passes",
+    "middle_8_rush": "&emsp;&emsp;Rushes",
+    "EPA_middle_8": "&emsp;&emsp;EPA",
+    "EPA_middle_8_success": "&emsp;&emsp;During \"Middle 8\"",
+    "EPA_middle_8_success_pass": "&emsp;&emsp;Successful Passes (Rate)",
+    "EPA_middle_8_success_rush": "&emsp;&emsp;Successful Rushes (Rate)",
+    "EPA_middle_8_per_play" : "&emsp;&emsp;EPA/play",
+    "EPA_early_down" : "&emsp;&emsp;EPA",
+    "EPA_early_down_per_play" : "&emsp;&emsp;EPA/Play",
+    "first_downs_created" : "First Downs Created",
+    "early_down_first_down" : "&emsp;&emsp;First Downs Created",
+    "passes" : "Passes",
+    // @ts-ignore
+    "rushes" : "Rushes",
+    "drives" : "Total",
+    "drive_total_gained_yards_rate" : "Available Yards %",
+    "yards_per_drive" : "Yards/Drive",
+    "plays_per_drive" : "Plays/Drive",
+    "avg_field_position": "Avg Starting Field Position",
+    "rushing_highlight_yards": "<a href=\"https://www.footballstudyhall.com/2018/2/2/16963820/college-football-advanced-stats-glossary\">Highlight Yards</a>",
+    "rushing_highlight_yards_per_opp": "&emsp;&emsp;Per Rush Opportunity",
+    "line_yards": "<a href=\"https://www.footballstudyhall.com/2018/2/2/16963820/college-football-advanced-stats-glossary\">OL Line Yards</a>",
+    "line_yards_per_carry": "&emsp;&emsp;Per Carry",
+    "yards_per_rush": "&emsp;&emsp;Yards/Play",
+    "yards_per_pass": "&emsp;&emsp;Yards/Play",
+    "yards_per_play": "&emsp;&emsp;Yards/Play",
+    "off_yards" : "&emsp;&emsp;Yards",
+    "rush_yards" : "&emsp;&emsp;Yards",
+    "pass_yards" : "&emsp;&emsp;Yards",
+    "total_yards":  "Total Yards",
+    "total_off_yards" : "&emsp;&emsp;Offensive Yards",
+    "total_sp_yards":"&emsp;&emsp;Special Teams Yards",
+    "total_pen_yards":"&emsp;&emsp;Penalty Yards",
+    "EPA_misc" : "&emsp;&emsp;Non-Scrimmage/Misc EPA",
+    "open_field_yards" : "Open-Field Yards",
+    "second_level_yards" : "Second-Level Yards",
+    "drive_stopped_rate" : "<a href=\"https://theathletic.com/2419632/2021/03/02/college-football-defense-rankings-stop-rate/\">Stop Rate</a>",
+    "EPA_non_explosive" : "EPA w/o Explosive Plays",
+    "EPA_non_explosive_per_play" : "&emsp;&emsp;EPA/Play",
+    "EPA_non_explosive_passing" : "&emsp;&emsp;When Passing",
+    "EPA_non_explosive_passing_per_play" : "&emsp;&emsp;&emsp;&emsp;EPA/Play",
+    "EPA_non_explosive_rushing" : "&emsp;&emsp;When Rushing",
+    "EPA_non_explosive_rushing_per_play" : "&emsp;&emsp;&emsp;&emsp;EPA/Play"
+}
+const turnover_vec = [
+    "Blocked Field Goal",
+    "Blocked Field Goal Touchdown",
+    "Blocked Punt",
+    "Blocked Punt Touchdown",
+    "Field Goal Missed",
+    "Missed Field Goal Return",
+    "Missed Field Goal Return Touchdown",
+    "Fumble Recovery (Opponent)",
+    "Fumble Recovery (Opponent) Touchdown",
+    "Fumble Return Touchdown",
+    "Defensive 2pt Conversion",
+    "Interception",
+    "Interception Return",
+    "Interception Return Touchdown",
+    "Pass Interception Return",
+    "Pass Interception Return Touchdown",
+    "Kickoff Team Fumble Recovery",
+    "Kickoff Team Fumble Recovery Touchdown",
+    "Punt Touchdown",
+    "Punt Return Touchdown",
+    "Sack Touchdown",
+    "Uncategorized Touchdown"
+]
+
+function roundNumber(value: any, power10: number, fixed: number) {
+    return (Math.round(parseFloat(value || '0') * (Math.pow(10, power10))) / (Math.pow(10, power10))).toFixed(fixed)
+}
+
+function formatPeriod(play: CFBGamePlay){
+    let period = `Q${play.period}`;
+    if (play.period > 5) {
+        period = `${play.period - 4}OT`
+    } else if (play.period == 5) {
+        period = "OT"
+    } else {
+        period = `Q${play.period} ${play.clock.displayValue}`;
+    }
+    return period
+}
+
+function formatPlayDescription(play: CFBGamePlay, homeTeam: Competitor, awayTeam: Competitor){
+    let offense = (play.start.pos_team.id == play.homeTeamId) ? play.homeTeamId : play.awayTeamId;
+    let defense = (play.start.pos_team.id == play.homeTeamId) ? play.awayTeamId : play.homeTeamId;
+    let offenseAbbrev = (play.start.pos_team.id == play.homeTeamId) ? play.homeTeamAbbrev : play.awayTeamAbbrev;
+    let defenseAbbrev = (play.start.pos_team.id == play.homeTeamId) ? play.awayTeamAbbrev : play.homeTeamAbbrev;
+
+    return <p>{`(${formatDistance(play.start.down, play.type.text, play.start.distance, play.start.yardsToEndzone)}`+
+    ' at '+`${formatYardline(play.start.yardsToEndzone, offenseAbbrev, defenseAbbrev)}`+') '+
+     play.text}{
+     ((play.scoringPlay == true) ? <b>{` - ${play.awayTeamAbbrev} ${play.awayScore}, ${play.homeTeamAbbrev} ${play.homeScore}`}</b> : ` - ${play.awayTeamAbbrev} ${play.awayScore}, ${play.homeTeamAbbrev} ${play.homeScore}`)
+     }</p>
+}
+
+function formatOffenseLogo(row: CFBGamePlay){
+    return <Link href={`/cfb/year/${row.season}/team/${row.pos_team}`}><Image width={"35"} height={"35"} src={`https://a.espncdn.com/i/teamlogos/ncaa/500/${row.pos_team}.png`} alt={`ESPN team id ${row.pos_team}`}/></Link>
+}
+
+
+const columns = [
+    {
+        name: 'Time',
+        id: 'time',
+        cell: (row: CFBGameRow) => row.period_text,
+        classNames: ['w-1/12'],
+    },
+    {
+        name: 'Offense',
+        id: 'offense',
+        cell: (row: CFBGameRow) => row.offense_logo,
+        classNames: ['w-1/12'],
+    },
+    {
+        name: 'Play Description',
+        id: 'play_description',
+        selector: (row: CFBGameRow) => row.play_description,
+        wrap: true,
+        classNames: ['w-1/2'],
+    },
+    {
+        name: 'EPA',
+        id: 'epa',
+        selector: (row: CFBGameRow) => roundNumber(parseFloat(row.expectedPoints.added.toString()), 2, 2),
+        classNames: ['w-1/12'],
+    },
+    {
+        name: 'WP%',
+        id: 'wp_pct',
+        selector: (row: CFBGameRow) => roundNumber(parseFloat(row.winProbability.before.toString()) * 100, 3, 1),
+        classNames: ['w-1/12'],
+    },
+    {
+        name: 'WPA',
+        id: 'wpa',
+        selector: (row: CFBGameRow) => roundNumber(parseFloat(row.winProbability.added.toString()) * 100, 3, 1),
+        classNames: ['w-1/12'],
+    },
+];
+
+// data provides access to your row data
+const ExpandedComponent: React.FC<ExpanderComponentProps<CFBGameRow>> = ({ data }) => {
+    return (
+        <>
+            <div className="flex flex-col gap-2 align-center">
+                <p className="text-align-center"><b>Play Type:</b> {data.type.text}</p>
+            </div>
+        </>
+    )
+};
+
+interface CFBGameRow extends CFBGamePlay {
+    period_text?: string;
+    offense_logo?: JSX.Element;
+    play_description?: JSX.Element;
+
+}
+
+export default function CFBTable({
+    plays,
+    title,
+    homeTeam,
+    awayTeam }: { plays: CFBGamePlay[],
+        title: string,
+        homeTeam: Competitor,
+        awayTeam: Competitor }) {
+
+    const newPlays: CFBGameRow[] = [...plays]
+    newPlays.forEach((play) => {
+        play.period_text = formatPeriod(play)
+        play.offense_logo = formatOffenseLogo(play)
+        play.play_description = formatPlayDescription(play, homeTeam, awayTeam)
+
+    })
+
+    return (
+        // @ts-ignore
+        <DataTable
+            title={title}
+            noHeader
+            // @ts-ignore
+            columns={columns}
+            data={newPlays}
+            keyField={"game_play_number" || "id"}
+            responsive
+            expandableRows
+            expandOnRowClicked
+            expandableRowsHideExpander
+            expandableRowsComponent={ExpandedComponent} />
+    );
+}
