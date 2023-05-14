@@ -294,8 +294,8 @@ function formatPlayDescription(play: CFBGamePlay, homeTeam: Competitor, awayTeam
 }
 
 function formatOffenseLogo(row: CFBGamePlay, homeTeam: Competitor, awayTeam: Competitor, theme?: string){
-    let homeTeamLogoUrl = theme === "dark" ? homeTeam.team.logos[0].href : homeTeam.team.logos[1].href;
-    let awayTeamLogoUrl = theme === "dark" ? awayTeam.team.logos[0].href : awayTeam.team.logos[1].href;
+    let homeTeamLogoUrl = theme === "light" ? homeTeam.team.logos[0].href : homeTeam.team.logos[1].href;
+    let awayTeamLogoUrl = theme === "light" ? awayTeam.team.logos[0].href : awayTeam.team.logos[1].href;
     let logoUrl = (row.pos_team == row.homeTeamId) ? homeTeamLogoUrl : awayTeamLogoUrl;
     return <Link href={`/cfb/year/${row.season}/team/${row.pos_team}`}><Image width={"35"} height={"35"} src={logoUrl} alt={`ESPN team id ${row.pos_team}`}/></Link>
 }
