@@ -155,6 +155,9 @@
   h1, h2, h3, h4, h5, h6 {
     font-family: "Chivo", sans-serif/*rtl:Amiri, Georgia, "Times New Roman", serif*/;
   }
+  p > a {
+    @apply !text-blue-500 dark:!text-blue-400;
+  }
 }
 
 .rdt_Table[role="table"] {
@@ -282,7 +285,7 @@
   background-color: theme('colors.warning');
 }
 
-.rdt_ExpanderRow {
+.rdt_ExpanderRow, div.rdt_ExpanderRow, .rdt_ExpanderRow > div{
   color: theme('colors.foreground');
   background-color: theme('colors.background');
   font-size: 0.875rem;
@@ -291,3 +294,7 @@
   justify-content: center;
 }
 
+.rdt_ExpanderRow > div > p > a{
+  color: 25 118% 253%;
+  text-decoration: underline;
+}

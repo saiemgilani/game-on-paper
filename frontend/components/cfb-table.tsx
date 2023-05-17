@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import DataTable, { ExpanderComponentProps } from 'react-data-table-component';
 import { CFBGamePlay, Competitor, Competition, Away } from '@/lib/cfb/types';
+import AnimatedHeading from './FramerMotion/animated-heading';
 import { useState, useEffect } from "react";
 import { useTheme } from 'next-themes'
 import styled, { keyframes } from 'styled-components';
@@ -216,8 +217,6 @@ function cleanLocation(team: Away) {
         return team?.location
     }
 }
-
-
 function getNumberWithOrdinal(n: number) {
     let s = ["th", "st", "nd", "rd"];
     let v = n % 100;
@@ -262,12 +261,9 @@ function formatDistance(down: number, type: string, distance: number, yardline: 
         return downForm + " & " + dist
     }
 }
-
-
 function roundNumber(value: any, power10: number, fixed: number) {
     return (Math.round(parseFloat(value || '0') * (Math.pow(10, power10))) / (Math.pow(10, power10))).toFixed(fixed)
 }
-
 function formatPeriod(play: CFBGamePlay){
     let period = `Q${play.period}`;
     if (play.period > 5) {
@@ -279,7 +275,6 @@ function formatPeriod(play: CFBGamePlay){
     }
     return period
 }
-
 function formatPlayDescription(play: CFBGamePlay, homeTeam: Competitor, awayTeam: Competitor){
     let offense = (play.start.pos_team.id == play.homeTeamId) ? play.homeTeamId : play.awayTeamId;
     let defense = (play.start.pos_team.id == play.homeTeamId) ? play.awayTeamId : play.homeTeamId;
@@ -292,15 +287,12 @@ function formatPlayDescription(play: CFBGamePlay, homeTeam: Competitor, awayTeam
      ((play.scoringPlay == true) ? <b>{` - ${play.awayTeamAbbrev} ${play.awayScore}, ${play.homeTeamAbbrev} ${play.homeScore}`}</b> : ` - ${play.awayTeamAbbrev} ${play.awayScore}, ${play.homeTeamAbbrev} ${play.homeScore}`)
      }</p>
 }
-
 function formatOffenseLogo(row: CFBGamePlay, homeTeam: Competitor, awayTeam: Competitor, theme?: string){
     let homeTeamLogoUrl = theme === "light" ? homeTeam.team.logos[0].href : homeTeam.team.logos[1].href;
     let awayTeamLogoUrl = theme === "light" ? awayTeam.team.logos[0].href : awayTeam.team.logos[1].href;
     let logoUrl = (row.pos_team == row.homeTeamId) ? homeTeamLogoUrl : awayTeamLogoUrl;
     return <Link href={`/cfb/year/${row.season}/team/${row.pos_team}`}><Image width={"35"} height={"35"} src={logoUrl} alt={`ESPN team id ${row.pos_team}`}/></Link>
 }
-
-
 const columns = [
     {
         name: 'Time',
@@ -330,13 +322,13 @@ const columns = [
     {
         name: 'WP%',
         id: 'wp_pct',
-        selector: (row: CFBGameRow) => roundNumber(parseFloat(row.winProbability.before.toString()) * 100, 3, 1),
+        selector: (row: CFBGameRow) => roundNumber(parseFloat(row.winProbability.before.toString()) * 100, 3, 1) + "%",
         classNames: ['w-1/12'],
     },
     {
         name: 'WPA',
         id: 'wpa',
-        selector: (row: CFBGameRow) => roundNumber(parseFloat(row.winProbability.added.toString()) * 100, 3, 1),
+        selector: (row: CFBGameRow) => roundNumber(parseFloat(row.winProbability.added.toString()) * 100, 4, 1) + "%",
         classNames: ['w-1/12'],
     },
 ];
@@ -345,8 +337,14 @@ const columns = [
 const ExpandedComponent: React.FC<ExpanderComponentProps<CFBGameRow>> = ({ data }) => {
     let offense = (data.start.pos_team.id == data.homeTeamId) ? data.homeTeamId : data.awayTeamId;
     let defense = (data.start.pos_team.id == data.homeTeamId) ? data.awayTeamId : data.homeTeamId;
+    let offenseLocation = (data.start.pos_team.id == data.homeTeamId) ? data.homeTeamName : data.awayTeamName;
     let offenseAbbrev = (data.start.pos_team.id == data.homeTeamId) ? data.homeTeamAbbrev : data.awayTeamAbbrev;
     let defenseAbbrev = (data.start.pos_team.id == data.homeTeamId) ? data.awayTeamAbbrev : data.homeTeamAbbrev;
+    let fourthDownLink = `https://kazink.shinyapps.io/cfb_fourth_down/?team=${offenseLocation}&pos_score=${data.start.pos_team_score}&def_pos_score=${data.start.def_pos_team_score}&pos_timeouts=${data.start.posTeamTimeouts}&def_timeouts=${data.start.defTeamTimeouts}&distance=${data.start.distance}&yards_to_goal=${data.start.yardsToEndzone}&qtr=${data.period}&minutes=${data.clock.minutes}&seconds=${data.clock.seconds}&posteam_spread=${-1 * parseFloat(data.start.posTeamSpread.toString())}&vegas_ou=${data.overUnder}&season=${data.season}&pos_team_receives_2H_kickoff=${data.modelInputs.start.pos_team_receives_2H_kickoff}&is_home=${data.modelInputs.start.is_home}`;
+    let fourthDownEval = ""
+    if (data.start.down == 4) {
+        fourthDownEval = `<p style="text-align: center;"><strong>Fouth Down Decision Evaluation:</strong> <a href="${fourthDownLink}" target="__blank">link</a></p>`;
+    }
     return (
         <>
             <div className="flex flex-col gap-2 p-2 align-center">
@@ -388,6 +386,7 @@ const ExpandedComponent: React.FC<ExpanderComponentProps<CFBGameRow>> = ({ data 
                 <p className="text-align-center">
                     <b>{`Pos Team Timeouts:`}</b>{` ${data.end.posTeamTimeouts}`} <b>{`Def Pos Team Timeouts:`}</b>{` ${data.end.defPosTeamTimeouts}`}
                 </p>
+                {data.start.down === 4 ? <p className="text-align-center"><b>Fouth Down Decision Evaluation:</b> <Link href={fourthDownLink} >link</Link></p>: ""}
             </div>
         </>
     )

@@ -7,6 +7,8 @@ export type CFBGame = {
     awayTeamId?:         string;
     drives?:             Drives;
     scoringPlays?:       CFBGamePlay[];
+    mostImportantPlays?: CFBGamePlay[];
+    bigPlays?:           CFBGamePlay[];
     winprobability?:     Winprobability[];
     boxScore?:           BoxScore;
     homeTeamSpread?:     number;
@@ -1045,8 +1047,8 @@ export type ExpectedPoints = {
 }
 
 export type ModelInputs = {
-    start?: ModelInputsEnd;
-    end?:   ModelInputsEnd;
+    start: ModelInputsEnd;
+    end:   ModelInputsEnd;
 }
 
 export type ModelInputsEnd = {
@@ -1061,8 +1063,8 @@ export type ModelInputsEnd = {
     ExpScoreDiff?:                 number;
     ExpScoreDiff_Time_Ratio?:      number;
     spread_time?:                  number;
-    pos_team_receives_2H_kickoff?: boolean;
-    is_home?:                      boolean;
+    pos_team_receives_2H_kickoff:  boolean;
+    is_home:                       boolean;
     period?:                       number;
 }
 

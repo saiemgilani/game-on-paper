@@ -281,10 +281,13 @@ def get_cfb_game(request: Request, gameId: str) -> Optional[None]:
             awayTeamId = pbp['header']['competitions'][0]['competitors'][0]['team']['id']
 
         pbp['scoringPlays'] = [play for play in jsonified_df if play['scoringPlay'] == True]
-
+        pbp['mostImportantPlays'] =  [play for play in jsonified_df if sorted(jsonified_df, key=lambda x: abs(x['wpa']), reverse=True).index(play) < 10]
+        pbp['bigPlays'] =  [play for play in jsonified_df if sorted(jsonified_df, key=lambda x: abs(x['EPA']), reverse=True).index(play) < 10]
         result = {
             "id": gameId,
             "count" : len(jsonified_df),
+            "mostImportantPlays": pbp['mostImportantPlays'],
+            "bigPlays": pbp['bigPlays'],
             "plays" : jsonified_df,
             "advBoxScore" : box,
             "homeTeamId": homeTeamId,
