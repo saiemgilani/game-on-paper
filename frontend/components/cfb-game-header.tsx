@@ -11,7 +11,7 @@ export default function CFBGameHeader({ awayTeam, homeTeam, competitions }:
     let statusDetail = competitions.status.type.detail;
     let statusText;
     if (competitions.status.type.completed == true || statusDetail.includes("Cancel") || statusDetail.includes("Postpone") || statusDetail.includes("Delay")) {
-        statusText = statusDetail + " - " + DateTime.fromISO(competitions.date).toLocaleString(DateTime.DATETIME_FULL);
+        statusText = statusDetail + " - " + DateTime.fromISO(competitions.date, {zone: 'utc'}).toLocaleString(DateTime.DATETIME_FULL);
     } else {
         statusText = "LIVE - " + statusDetail
     }
