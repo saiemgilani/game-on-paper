@@ -156,6 +156,8 @@
     @apply !text-blue-500 dark:!text-blue-400;
   }
 }
+
+
 .accordion-body {
   display: flex;
   align-content: center;

@@ -133,7 +133,7 @@ const MobileMenu = ({
 }) => {
   return (
     <motion.div
-      className="absolute top-0 left-0 z-10 w-screen h-screen font-normal bg-white dark:bg-darkPrimary sm:hidden"
+      className="absolute top-0 left-0 z-10 w-screen h-screen font-normal bg-secondary dark:bg-secondary sm:hidden"
       variants={hamFastFadeContainer}
       initial="hidden"
       animate="visible"
@@ -148,9 +148,9 @@ const MobileMenu = ({
                 href={item.href}
                 key={`mobileNav-${index}`}
                 onClick={handleClick}
-                className="flex w-auto py-4 text-base font-semibold bg-white dark:bg-darkPrimary text-gray-900 capitalize border-b border-gray-300 cursor-pointer dark:border-gray-700 dark:text-gray-100"
+                className="flex w-auto py-4 text-base font-semibold text-gray-900 capitalize border-b border-gray-300 cursor-pointer dark:border-gray-700 dark:text-gray-100"
               >
-              <motion.p variants={mobileNavItemSideways} className=" bg-white dark:bg-darkPrimary ">
+              <motion.p variants={mobileNavItemSideways} >
                 {item.title}
               </motion.p>
               </Link>
@@ -180,8 +180,8 @@ export function SiteHeader() {
     setNavOpen(!navOpen);
   }
   return (
-    <header className="sticky top-0 z-40 w-full border-b bg-background">
-      <div className="container flex h-16 items-center space-x-4 sm:justify-between sm:space-x-0">
+    <header className="top-0 z-40 w-full border-b bg-background">
+      <div className="container flex h-16 items-center space-x-4 sm:justify-between sm:space-x-0 ">
       {/* Mobile Navigation Hamburger and MobileMenu */}
       <HamBurger open={navOpen} handleClick={handleClick} />
       <AnimatePresence>
