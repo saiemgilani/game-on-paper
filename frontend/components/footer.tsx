@@ -6,18 +6,22 @@ import {
   opacityVariant,
   popUp,
 } from "@/lib/content/FramerMotionVariants";
-import { navigationRoutes } from "@utils/utils";
+import { siteConfig } from "@/config/site"
+import { NavItem } from "@/lib/types"
 import { motion } from "framer-motion";
 import { SiSpotify } from "react-icons/si";
 import useSWR from "swr";
 import fetcher from "@lib/fetcher";
 import { BsDot } from "react-icons/bs";
 
-function FooterLink({ route, text }: { route: string; text: string }) {
+interface MainNavProps {
+  items?: NavItem[]
+}
+function FooterLink({ href, text }: { href: string; text: string }) {
   return (
-    <Link href={`/${route}`}>
+    <Link href={href === "/home" ? "/" : href}>
       <motion.p
-        className="hover:text-black dark:hover:text-white w-fit"
+        className="capitalize hover:text-black dark:hover:text-white w-fit"
         variants={popUp}
       >
         {text}
@@ -25,6 +29,10 @@ function FooterLink({ route, text }: { route: string; text: string }) {
     </Link>
   );
 }
+
+
+
+
 export default function Footer() {
 
 
@@ -40,20 +48,20 @@ export default function Footer() {
       >
 
         <section className="grid grid-cols-3 gap-10">
-          <div className="flex flex-col gap-4 capitalize">
-            {navigationRoutes.slice(0, 5).map((text, index) => {
-              return <FooterLink key={index} route={text} text={text} />;
-            })}
-          </div>
-          <div className="flex flex-col gap-4 capitalize">
-            {navigationRoutes
-              .slice(5, navigationRoutes.length)
-              .map((route, index) => {
-                let text = route;
-                if (route === "rss") text = "RSS";
-                return <FooterLink key={index} route={route} text={text} />;
-              })}
-          </div>
+        <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={FadeContainer}
+            className="flex items-center md:gap-2"
+          >
+            {siteConfig.mainNav?.map(
+              (item, index) =>
+                item.href && (
+                  <FooterLink key={index} href={`/${item.href}`} text={item.title} />
+                )
+            )}
+          </motion.div>
+
         </section>
       </motion.div>
     </footer>

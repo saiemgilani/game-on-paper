@@ -11,6 +11,8 @@
   "dependencies": {
     "@fontsource/chivo": "^4.5.11",
     "@fontsource/roboto": "^4.5.8",
+    "@radix-ui/react-accordion": "^1.1.1",
+    "@radix-ui/react-collapsible": "^1.0.2",
     "@radix-ui/react-select": "^1.2.1",
     "@types/luxon": "^3.3.0",
     "@types/node": "18.16.3",

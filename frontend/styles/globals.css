@@ -58,9 +58,6 @@
   font-display: swap;
   src: url(/fonts/Avengero/Avengero-Regular.woff2) format("woff2");
 }
-
-
-
 @font-face {
   font-family: "Fira Mono";
   src: url(/fonts/fira-mono/FiraMono-Medium.ttf) format('truetype');
@@ -159,7 +156,13 @@
     @apply !text-blue-500 dark:!text-blue-400;
   }
 }
-
+.accordion-body {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
 .rdt_Table[role="table"] {
   display: flex;
   justify-content: center;
@@ -208,7 +211,6 @@
   overflow-wrap: break-word;
   min-width: 50%;
 }
-
 .rdt_TableCell[data-column-id="play_description"] {
   color: theme('colors.foreground');
   background-color: theme('colors.background');
