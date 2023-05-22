@@ -21,7 +21,7 @@ function FooterLink({ href, text }: { href: string; text: string }) {
   return (
     <Link href={href === "/home" ? "/" : href}>
       <motion.p
-        className="capitalize hover:text-black dark:hover:text-white w-fit"
+        className="capitalize hover:text-black dark:hover:text-white w-fit  md:gap-2"
         variants={popUp}
       >
         {text}

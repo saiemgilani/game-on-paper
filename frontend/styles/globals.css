@@ -174,6 +174,24 @@ table {
   table-layout: auto;
 }
 
+tr.table-success > td, tr.table-success {
+  background-color: theme('colors.success');
+}
+tr.table-danger > td, tr.table-danger  {
+  background-color: theme('colors.danger');
+}
+tr.table-warning > td, tr.table-warning  {
+  background-color: theme('colors.warning');
+}
+
+.max-h-0 {
+	max-height: 0;
+}
+
+.group:focus .group-focus\:max-h-40 {
+	max-height: 10rem;
+}
+
 /* ----- Player Stat Tables ------- */
 /* .rdt_TableCol[data-column-id="passer"] {
   color: theme('colors.foreground');
@@ -283,89 +301,95 @@ table {
 
 /* ----- Play-by-Play Tables ----- */
 .rdt_Table[role="table"] {
-  display: flex;
-  justify-content: center;
-  max-width: 95%;
+  max-width: 100%;
+  border-collapse: collapse;
   table-layout: auto;
 }
 .rdt_TableCol[data-column-id="time"] {
   color: theme('colors.foreground');
   background-color: theme('colors.background');
-  display: flex;
-  min-width: 12.5%;
+  flex-grow: 0;
+  flex-shrink: 1;
 }
 .rdt_TableCell[data-column-id="time"] {
   color: theme('colors.foreground');
   background-color: theme('colors.background');
-  min-width: 12.5%;
+  flex-grow: 0;
+  flex-shrink: 1;
 }
 .rdt_TableCol[data-column-id="offense"] {
   color: theme('colors.foreground');
   background-color: theme('colors.background');
   overflow-wrap: break-word;
-  min-width: 12.5%;
+  flex-grow: 0;
+  flex-shrink: 1;
 }
 .rdt_TableCell[data-column-id="offense"] {
   color: theme('colors.foreground');
   background-color: theme('colors.background');
   overflow-wrap: break-word;
-  min-width: 12.5%;
+  flex-grow: 0;
+  flex-shrink: 1;
 }
 .rdt_TableCol[data-column-id="play_description"] {
   color: theme('colors.foreground');
   background-color: theme('colors.background');
   text-align: left;
   overflow-wrap: break-word;
-  min-width: 37.5%;
 }
 .rdt_TableCell[data-column-id="play_description"] {
   color: theme('colors.foreground');
   background-color: theme('colors.background');
   text-align: left;
   overflow-wrap: break-word;
-  min-width: 37.5%;
 }
 .rdt_TableCol[data-column-id="epa"] {
   color: theme('colors.foreground');
   background-color: theme('colors.background');
   text-align: right;
   overflow-wrap: break-word;
-  min-width: 12.5%;
+  flex-grow: 0;
+  flex-shrink: 1;
 }
 .rdt_TableCell[data-column-id="epa"] {
   color: theme('colors.foreground');
   background-color: theme('colors.background');
   text-align: right;
   overflow-wrap: break-word;
-  min-width: 12.5%;
+  flex-grow: 0;
+  flex-shrink: 1;
 }
 .rdt_TableCol[data-column-id="wp_pct"] {
   color: theme('colors.foreground');
   background-color: theme('colors.background');
   text-align: right;
   overflow-wrap: break-word;
-  min-width: 12.5%;
+  flex-grow: 0;
+  flex-shrink: 1;
 }
 .rdt_TableCell[data-column-id="wp_pct"] {
   color: theme('colors.foreground');
   background-color: theme('colors.background');
   text-align: right;
   overflow-wrap: break-word;
-  min-width: 12.5%;
+  flex-grow: 0;
+  flex-shrink: 1;
 }
 .rdt_TableCol[data-column-id="wpa"] {
   color: theme('colors.foreground');
   background-color: theme('colors.background');
-  overflow-wrap: break-word;
   text-align: right;
-  min-width: 12.5%;
+  overflow-wrap: break-word;
+  flex-grow: 0;
+  flex-shrink: 1;
 }
 .rdt_TableCell[data-column-id="wpa"] {
   color: theme('colors.foreground');
   background-color: theme('colors.background');
   text-align: right;
   overflow-wrap: break-word;
-  min-width: 12.5%;
+  flex-grow: 0;
+  flex-shrink: 1;
 }
 
 

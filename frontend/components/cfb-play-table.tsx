@@ -5,10 +5,16 @@ import Link from 'next/link';
 import DataTable, { ExpanderComponentProps } from 'react-data-table-component';
 import { CFBGamePlay, Competitor, Competition, Away } from '@/lib/cfb/types';
 import AnimatedHeading from './FramerMotion/animated-heading';
-import { useState, useEffect } from "react";
+import  { useState, useEffect, useCallback, useRef } from "react";
 import { useTheme } from 'next-themes'
 import styled, { keyframes } from 'styled-components';
-
+import {
+    Accordion,
+    AccordionContent,
+    AccordionItem,
+    AccordionTrigger,
+  } from "@/components/ui/accordion"
+import { format } from 'path';
 const rotate360 = keyframes`
   from {
     transform: rotate(0deg);
@@ -233,7 +239,7 @@ function formatDown(down: number, playType: string) {
         return down
     }
 }
-function formatColorRow(play: CFBGamePlay, homeTeam: Competitor, awayTeam: Competitor){
+function formatColorRow(play: CFBGamePlay){
     let classText = "";
     if (turnover_vec.includes(play.type.text) || (play.text.includes("fumble") && play.change_of_poss == 1) || (play.start.down == 4 && parseFloat(play.statYardage.toString()) < parseFloat(play.start.distance.toString()) && !play.type.text.includes('Punt') && !play.type.text.includes('Timeout'))) {
         classText = " table-danger"
@@ -242,6 +248,7 @@ function formatColorRow(play: CFBGamePlay, homeTeam: Competitor, awayTeam: Compe
     } else if (play.text.toLocaleLowerCase().includes("penalty")) {
         classText = " table-warning"
     }
+    return classText
 }
 function formatYardline(yardsToEndzone: number, offenseAbbrev: string, defenseAbbrev: string) {
     if (yardsToEndzone == 50) {
@@ -281,7 +288,7 @@ function formatPlayDescription(play: CFBGamePlay, homeTeam: Competitor, awayTeam
     let offenseAbbrev = (play.start.pos_team.id == play.homeTeamId) ? play.homeTeamAbbrev : play.awayTeamAbbrev;
     let defenseAbbrev = (play.start.pos_team.id == play.homeTeamId) ? play.awayTeamAbbrev : play.homeTeamAbbrev;
 
-    return <p data-tag="allowRowEvents">{`(${formatDistance(play.start.down, play.type.text, play.start.distance, play.start.yardsToEndzone)}`+
+    return <p>{`(${formatDistance(play.start.down, play.type.text, play.start.distance, play.start.yardsToEndzone)}`+
     ' at '+`${formatYardline(play.start.yardsToEndzone, offenseAbbrev, defenseAbbrev)}`+') '+
      play.text}{
      ((play.scoringPlay == true) ? <b>{` - ${play.awayTeamAbbrev} ${play.awayScore}, ${play.homeTeamAbbrev} ${play.homeScore}`}</b> : ` - ${play.awayTeamAbbrev} ${play.awayScore}, ${play.homeTeamAbbrev} ${play.homeScore}`)
@@ -293,101 +300,7 @@ function formatOffenseLogo(row: CFBGamePlay, homeTeam: Competitor, awayTeam: Com
     let logoUrl = (row.pos_team == row.homeTeamId) ? homeTeamLogoUrl : awayTeamLogoUrl;
     return <Link href={`/cfb/year/${row.season}/team/${row.pos_team}`}><Image width={"35"} height={"35"} src={logoUrl} alt={`ESPN team id ${row.pos_team}`}/></Link>
 }
-const columns = [
-    {
-        name: 'Time',
-        id: 'time',
-        cell: (row: CFBGameRow) => row.period_text,
-        classNames: [''],
-    },
-    {
-        name: 'Offense',
-        id: 'offense',
-        cell: (row: CFBGameRow) => row.offense_logo,
-        classNames: [''],
-    },
-    {
-        name: 'Play Description',
-        id: 'play_description',
-        selector: (row: CFBGameRow) => row.play_description,
-        wrap: true,
-        classNames: [''],
-    },
-    {
-        name: 'EPA',
-        id: 'epa',
-        selector: (row: CFBGameRow) => roundNumber(parseFloat(row.expectedPoints.added.toString()), 2, 2),
-        classNames: [''],
-    },
-    {
-        name: 'WP%',
-        id: 'wp_pct',
-        selector: (row: CFBGameRow) => roundNumber(parseFloat(row.winProbability.before.toString()) * 100, 3, 1) + "%",
-        classNames: [''],
-    },
-    {
-        name: 'WPA',
-        id: 'wpa',
-        selector: (row: CFBGameRow) => roundNumber(parseFloat(row.winProbability.added.toString()) * 100, 4, 1) + "%",
-        classNames: [''],
-    },
-];
 
-// data provides access to your row data
-const ExpandedComponent: React.FC<ExpanderComponentProps<CFBGameRow>> = ({ data }) => {
-    let offense = (data.start.pos_team.id == data.homeTeamId) ? data.homeTeamId : data.awayTeamId;
-    let defense = (data.start.pos_team.id == data.homeTeamId) ? data.awayTeamId : data.homeTeamId;
-    let offenseLocation = (data.start.pos_team.id == data.homeTeamId) ? data.homeTeamName : data.awayTeamName;
-    let offenseAbbrev = (data.start.pos_team.id == data.homeTeamId) ? data.homeTeamAbbrev : data.awayTeamAbbrev;
-    let defenseAbbrev = (data.start.pos_team.id == data.homeTeamId) ? data.awayTeamAbbrev : data.homeTeamAbbrev;
-    let fourthDownLink = `https://kazink.shinyapps.io/cfb_fourth_down/?team=${offenseLocation}&pos_score=${data.start.pos_team_score}&def_pos_score=${data.start.def_pos_team_score}&pos_timeouts=${data.start.posTeamTimeouts}&def_timeouts=${data.start.defTeamTimeouts}&distance=${data.start.distance}&yards_to_goal=${data.start.yardsToEndzone}&qtr=${data.period}&minutes=${data.clock.minutes}&seconds=${data.clock.seconds}&posteam_spread=${-1 * parseFloat(data.start.posTeamSpread.toString())}&vegas_ou=${data.overUnder}&season=${data.season}&pos_team_receives_2H_kickoff=${data.modelInputs.start.pos_team_receives_2H_kickoff}&is_home=${data.modelInputs.start.is_home}`;
-
-    return (
-        <>
-            <div className="flex flex-col gap-2 p-2 align-center">
-                <p className="text-align-center"><b>Play Type:</b> {data.type.text}</p>
-                <p className="text-align-center"><b>{`Yards to End Zone (Before -> After):`}</b>
-                    {` ${data.start.yardsToEndzone} -> ${data.end.yardsToEndzone}`}
-                </p>
-                <p className="text-align-center"><b>{`Started Drive at:`}</b>
-                    {` ${formatYardline(data.drive_start, offenseAbbrev, defenseAbbrev)}`}
-                </p>
-                <p className="text-align-center"><b>{`ExpPts (After - Before = Added):`}</b>
-                    {` ${roundNumber(parseFloat(data.expectedPoints.after.toString()), 2, 2)} - ${roundNumber(parseFloat(data.expectedPoints.before.toString()), 2, 2)} = ${roundNumber(parseFloat(data.expectedPoints.added.toString()), 2, 2)}`}
-                </p>
-                <p className="text-align-center"><b>{`Score Difference (Before):`}</b>
-                    {` ${data.start.pos_score_diff} (${roundNumber(parseFloat(data.start.ExpScoreDiff.toString()), 2, 2)})`}
-                </p>
-                <p className="text-align-center"><b>{`Score Difference (Before):`}</b>
-                    {` ${data.end.pos_score_diff} (${roundNumber(parseFloat(data.end.ExpScoreDiff.toString()), 2, 2)})`}
-                </p>
-                <p className="text-align-center"><b>{`Change of Possession:`}</b>{` ${data.change_of_poss}`}
-                </p>
-            </div>
-            <div className="flex flex-col gap-2 p-2 align-center">
-                <p className="text-align-center"><b>Score:</b>
-                    {` ${data.awayTeamAbbrev} ${data.awayScore}, ${data.homeTeamAbbrev} ${data.homeScore}`}
-                </p>
-                <p className="text-align-center"><b>Drive Summary:</b>
-                    {` ${data.drive_play_index} plays, ${data.drive_total_yards} yards`}
-                </p>
-                <p className="text-align-center"><b>Win Probability (Before):</b>
-                    {` ${roundNumber(parseFloat(data.winProbability.before.toString()) * 100, 3, 1)}`}
-                </p>
-                <p className="text-align-center"><b>Win Probability (After):</b>
-                    {` ${roundNumber(parseFloat(data.winProbability.after.toString()) * 100, 3, 1)}`}
-                </p>
-                <p className="text-align-center">
-                    <b>Away Score:</b> {` ${data.start.awayScore} (${data.awayScore})`}   <b>Home Score:</b> {` ${data.start.homeScore} (${data.homeScore})`}
-                </p>
-                <p className="text-align-center">
-                    <b>{`Pos Team Timeouts:`}</b>{` ${data.end.posTeamTimeouts}`} <b>{`Def Pos Team Timeouts:`}</b>{` ${data.end.defPosTeamTimeouts}`}
-                </p>
-                {data.start.down === 4 ? <p className="text-align-center"><b>Fouth Down Decision Evaluation:</b> <Link href={fourthDownLink} >link</Link></p>: ""}
-            </div>
-        </>
-    )
-};
 
 interface CFBGameRow extends CFBGamePlay {
     period_text?: string;
@@ -396,38 +309,103 @@ interface CFBGameRow extends CFBGamePlay {
 
 }
 
-const conditionalRowStyles = [
-    {
-      when: (row: CFBGameRow) => (turnover_vec.includes(row.type.text) || (row.text.includes("fumble") && row.change_of_poss == 1) || (row.start.down == 4 && parseFloat(row.statYardage.toString()) < parseFloat(row.start.distance.toString()) && !row.type.text.includes('Punt') && !row.type.text.includes('Timeout'))),
-      classNames: ['table-danger'],
-    },
-    {
-      when: (row: CFBGameRow) => row.scoringPlay == true,
-      classNames: ['table-success'],
-    },
-    {
-      when: (row: CFBGameRow) => row.text.toLocaleLowerCase().includes("penalty"),
-      classNames: ['table-warning'],
-    }
-];
+function PlayRow(play: CFBGameRow,
+    canCollapse: boolean,
+    collapsePrefix: string,
+    expandingRowCallback: string,
+    homeTeam: Competitor,
+    awayTeam: Competitor) {
 
-export default function CFBPlayTable({
-    plays,
-    title,
-    homeTeam,
-    awayTeam }: {
-        plays: CFBGamePlay[],
-        title: string,
+
+    let offense = (play.start.pos_team.id == play.homeTeamId) ? play.homeTeamId : play.awayTeamId;
+    let defense = (play.start.pos_team.id == play.homeTeamId) ? play.awayTeamId : play.homeTeamId;
+    let offenseLocation = (play.start.pos_team.id == play.homeTeamId) ? play.homeTeamName : play.awayTeamName;
+    let offenseAbbrev = (play.start.pos_team.id == play.homeTeamId) ? play.homeTeamAbbrev : play.awayTeamAbbrev;
+    let defenseAbbrev = (play.start.pos_team.id == play.homeTeamId) ? play.awayTeamAbbrev : play.homeTeamAbbrev;
+    let fourthDownLink = `https://kazink.shinyapps.io/cfb_fourth_down/?team=${offenseLocation}&pos_score=${play.start.pos_team_score}&def_pos_score=${play.start.def_pos_team_score}&pos_timeouts=${play.start.posTeamTimeouts}&def_timeouts=${play.start.defTeamTimeouts}&distance=${play.start.distance}&yards_to_goal=${play.start.yardsToEndzone}&qtr=${play.period}&minutes=${play.clock.minutes}&seconds=${play.clock.seconds}&posteam_spread=${-1 * parseFloat(play.start.posTeamSpread.toString())}&vegas_ou=${play.overUnder}&season=${play.season}&pos_team_receives_2H_kickoff=${play.modelInputs.start.pos_team_receives_2H_kickoff}&is_home=${play.modelInputs.start.is_home}`;
+    let classText = formatColorRow(play);
+    const [expanded, setExpanded] = useState(false)
+    const toggleExpanded = () => setExpanded((current) => !current)
+
+
+    return (
+        <>
+        <tr className={`accordion-toggle${classText}`} onClick={toggleExpanded}>
+            <td className="text-align-left">{play.period_text}</td>
+            <td className="text-align-center">{play.offense_logo}</td>
+            <td className="text-align-left">{play.play_description}</td>
+            <td className="text-align-center">{roundNumber(parseFloat(play.expectedPoints.added.toString()), 2, 2)}</td>
+            <td className="text-align-center">{roundNumber(parseFloat(play.winProbability.before.toString()) * 100, 3, 1)}%</td>
+            <td className="text-align-right">{roundNumber(parseFloat(play.winProbability.added.toString()) * 100, 3, 1)}%</td>
+        </tr>
+        {expanded ? (
+            <tr className={`justify-center w-max accordion-${expanded ? 'down':'up'}`} >
+                <td colSpan={12} className="w-max">
+                    <div className="flex justify-center" id={`play-${collapsePrefix}-${play.game_play_number}`}>
+                        <div className="flex flex-col gap-2 p-2 align-center justify-center">
+                            <p className="text-align-center"><b>{"Play Type:"}</b> {play.type.text}</p>
+                            <p className="text-align-center"><b>{"Yards to End Zone (Before -> After):"}</b> {play.start.yardsToEndzone}{" -> "}{play.end.yardsToEndzone}</p>
+                            <p className="text-align-center"><b>{"Started Drive at:"}</b> {` ${formatYardline(play.drive_start, offenseAbbrev, defenseAbbrev)}`}</p>
+                            <p className="text-align-center"><b>{"ExpPts (After - Before = Added):"}</b> {` ${roundNumber(parseFloat(play.expectedPoints.after.toString()), 2, 2)} - ${roundNumber(parseFloat(play.expectedPoints.before.toString()), 2, 2)} = ${roundNumber(parseFloat(play.expectedPoints.added.toString()), 2, 2)}`}</p>
+                            <p className="text-align-center"><b>{"Score Difference (Before):"}</b> {` ${play.start.pos_score_diff} (${roundNumber(parseFloat(play.start.ExpScoreDiff.toString()), 2, 2)})`}</p>
+                            <p className="text-align-center"><b>{"Score Difference (End):"}</b> {` ${play.end.pos_score_diff} (${roundNumber(parseFloat(play.end.ExpScoreDiff.toString()), 2, 2)})`}</p>
+                            <p className="text-align-center"><b>{"Change of Possession:"}</b> {` ${play.change_of_poss}`}</p>
+                        </div>
+                        <div className="flex flex-col gap-2 p-2 align-center justify-center">
+                            <p className="text-align-center"><b>Score:</b> {` ${play.awayTeamAbbrev} ${play.awayScore}, ${play.homeTeamAbbrev} ${play.homeScore}`}</p>
+                            <p className="text-align-center"><b>Drive Summary:</b> {` ${play.drive_play_index} plays, ${play.drive_total_yards} yards`}</p>
+                            <p className="text-align-center"><b>Win Probability (Before):</b> {` ${roundNumber(parseFloat(play.winProbability.before.toString()) * 100, 3, 1)}`}%</p>
+                            <p className="text-align-center"><b>Win Probability (After):</b> {` ${roundNumber(parseFloat(play.winProbability.after.toString()) * 100, 3, 1)}`}%</p>
+                            <p className="text-align-center"><b>Away Score:</b> {` ${play.start.awayScore} (${play.awayScore})`} <b>Home Score:</b> {` ${play.start.homeScore} (${play.homeScore})`}</p>
+                            <p className="text-align-center"><b>Pos Team Timeouts:</b> {` ${play.end.posTeamTimeouts}`} <b>Defense Timeouts:</b> {` ${play.end.defPosTeamTimeouts}`}</p>
+
+                        </div>
+
+                    </div>
+                </td>
+            </tr>
+            ): null}
+        </>
+    );
+}
+
+
+//#TODO: The div on the collapsed row won't center properly, looks like it just goes with the first column
+export default function CFBPlayTable(
+    {   plays,
+        prefix,
+        expandable,
+        errorMsg,
+        showGuide,
+        expandingRowCallback,
+        homeTeam,
+        awayTeam
+    }:
+    {   plays: any,
+        prefix: string,
+        expandable: boolean,
+        errorMsg: string,
+        showGuide: boolean,
+        expandingRowCallback: any,
         homeTeam: Competitor,
-        awayTeam: Competitor }) {
+        awayTeam: Competitor
+    }){
+    if (plays == null || plays.length == 0) {
+        return (<p className="text-center text-muted">{errorMsg}</p>);
+    }
+    let guideText = showGuide ? (<caption>Play shading guide:
+        <ul>
+            <li><b>Yellow</b> - penalty</li>
+            <li><b>Red</b> - turnover</li>
+            <li><b>Green</b> - scoring play</li>
+        </ul>
+    </caption>) : ""
 
     let localTheme: string;
     if (typeof window !== 'undefined') {
         localTheme = window.localStorage.getItem('theme') || 'light';
         console.log(localTheme)
     }
-
-    // console.log("the theme is: "+ document.documentElement.getAttribute('data-theme')    )
     const newPlays: CFBGameRow[] = [...plays]
     newPlays.forEach((play) => {
         play.period_text = formatPeriod(play)
@@ -436,20 +414,27 @@ export default function CFBPlayTable({
 
     })
 
-    return (
-        // @ts-ignore
-        <DataTable
-            title={title}
-            noHeader
-            // @ts-ignore
-            columns={columns}
-            data={newPlays}
-            keyField={"game_play_number" || "id"}
-            responsive
-            expandableRows
-            expandOnRowClicked
-            expandableRowsHideExpander
-            conditionalRowStyles={conditionalRowStyles}
-            expandableRowsComponent={ExpandedComponent} />
+
+    return(
+        <>
+        <table className="table table-sm table-responsive border-collapse">
+            {guideText}
+            <thead>
+                <tr>
+                    <th className="text-align-left">Time</th>
+                    <th className="text-align-center">Offense</th>
+                    <th className="text-align-left">Play Description</th>
+                    <th className="text-align-center">EPA</th>
+                    <th className="text-align-center">WP%</th>
+                    <th className="text-align-right">WPA</th>
+                </tr>
+            </thead>
+            <tbody>
+                {newPlays.map((play) =>
+                    (PlayRow(play, expandable, prefix, expandingRowCallback, homeTeam, awayTeam)))
+                }
+            </tbody>
+        </table>
+        </>
     );
 }
