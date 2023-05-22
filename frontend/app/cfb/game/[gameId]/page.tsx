@@ -62,8 +62,8 @@ export default async function CFBGamePage({ params }: {
             </div>
 
 
-            <div className="grid grid-cols-1 md:grid-cols-2 justify-around px-4 py-2">
-                <div className="justify-around px-4 py-2">
+            <div className="grid grid-cols-1 md:grid-cols-2 justify-around py-2">
+                <div className="justify-around px-2 py-2">
                     <h2 className="text-2xl font-bold text-left px-2 m-2">Big Plays (orig)</h2>
                         {data && data.bigPlays ? (
                             <CFBPlayTable
@@ -77,7 +77,7 @@ export default async function CFBGamePage({ params }: {
                                 awayTeam={awayTeam} />
                         ) : ("")}
                 </div>
-                <div className="justify-around px-4 py-2">
+                <div className="justify-around px-2 py-2">
                     <h2 className="text-2xl font-bold text-left px-2 m-2">Most Important Plays (orig)</h2>
                         {data && data.mostImportantPlays ? (
                             <CFBPlayTable
@@ -93,7 +93,7 @@ export default async function CFBGamePage({ params }: {
                 </div>
             </div>
             <h2 className="text-2xl font-bold text-left px-2 m-2">Scoring Plays (orig)</h2>
-            <div className="flex flex-auto justify-around px-4 py-2">
+            <div className="flex flex-auto justify-around px-2 py-2">
                 {data && data.scoringPlays ? (
                     <CFBPlayTable
                         plays={data?.scoringPlays ?? []}
@@ -107,7 +107,7 @@ export default async function CFBGamePage({ params }: {
                 ) : ("")}
             </div>
             <h2 className="text-2xl font-bold text-left px-2 m-2">All Plays (orig)</h2>
-            <div className="flex flex-auto justify-around px-4 py-2">
+            <div className="flex flex-auto justify-around px-2 py-2">
                 {data && data.plays ? (
                     <CFBPlayTable
                         plays={data?.plays ?? []}

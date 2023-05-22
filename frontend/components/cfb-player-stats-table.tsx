@@ -39,7 +39,7 @@ export default function CFBPlayerStatsTable({
 
     return(
         <>
-        <table className="table w-11/12	">
+        <table className="table	">
             <thead>
                 <tr>
                 <th ></th>

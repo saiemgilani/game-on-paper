@@ -331,12 +331,12 @@ function PlayRow(play: CFBGameRow,
     return (
         <>
         <tr className={`accordion-toggle${classText}`} onClick={toggleExpanded}>
-            <td className="text-align-left">{play.period_text}</td>
-            <td className="text-align-center">{play.offense_logo}</td>
-            <td className="text-align-left">{play.play_description}</td>
-            <td className="text-align-center">{roundNumber(parseFloat(play.expectedPoints.added.toString()), 2, 2)}</td>
-            <td className="text-align-center">{roundNumber(parseFloat(play.winProbability.before.toString()) * 100, 3, 1)}%</td>
-            <td className="text-align-right">{roundNumber(parseFloat(play.winProbability.added.toString()) * 100, 3, 1)}%</td>
+            <td className="text-align-left p-1">{play.period_text}</td>
+            <td className="text-align-center p-1">{play.offense_logo}</td>
+            <td className="text-align-left p-1">{play.play_description}</td>
+            <td className="text-align-right p-1">{roundNumber(parseFloat(play.expectedPoints.added.toString()), 2, 2)}</td>
+            <td className="text-align-right p-1">{roundNumber(parseFloat(play.winProbability.before.toString()) * 100, 3, 1)}%</td>
+            <td className="text-align-right p-1">{roundNumber(parseFloat(play.winProbability.added.toString()) * 100, 3, 1)}%</td>
         </tr>
         {expanded ? (
             <tr className={`justify-center w-max accordion-${expanded ? 'down':'up'}`} >

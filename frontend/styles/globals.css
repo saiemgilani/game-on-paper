@@ -170,8 +170,13 @@
 table {
   font-size: 0.875rem;
   line-height: 1.25rem;
-  padding: 0.25rem;
+  padding: 0.5rem;
   table-layout: auto;
+}
+table > thead {
+  border-bottom: black;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
 }
 
 tr.table-success > td, tr.table-success {
