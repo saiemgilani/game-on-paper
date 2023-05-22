@@ -164,118 +164,208 @@
   justify-content: center;
   font-size: 0.875rem;
   line-height: 1.25rem;
+  border-color: theme('colors.border');
 }
+
+table {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  padding: 0.25rem;
+  table-layout: auto;
+}
+
+/* ----- Player Stat Tables ------- */
+/* .rdt_TableCol[data-column-id="passer"] {
+  color: theme('colors.foreground');
+  background-color: theme('colors.background');
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  padding: 0.25rem;
+  min-width: 13%;
+}
+.rdt_TableCell[data-column-id="passer"] {
+  color: theme('colors.foreground');
+  background-color: theme('colors.background');
+  padding: 0.25rem;
+  min-width: 13%;
+}
+.rdt_TableCol[data-column-id="rusher"] {
+  color: theme('colors.foreground');
+  background-color: theme('colors.background');
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  padding: 0.25rem;
+  min-width: 13%;
+}
+.rdt_TableCell[data-column-id="rusher"] {
+  color: theme('colors.foreground');
+  background-color: theme('colors.background');
+  padding: 0.25rem;
+  min-width: 13%;
+}
+.rdt_TableCol[data-column-id="receiver"] {
+  color: theme('colors.foreground');
+  background-color: theme('colors.background');
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  padding: 0.25rem;
+  min-width: 13%;
+}
+.rdt_TableCell[data-column-id="receiver"] {
+  color: theme('colors.foreground');
+  background-color: theme('colors.background');
+  padding: 0.25rem;
+  min-width: 13%;
+}
+
+.rdt_TableCol[data-column-id="statline"] {
+  color: theme('colors.foreground');
+  background-color: theme('colors.background');
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  text-align: left;
+  padding: 0.25rem;
+  overflow-wrap: break-word;
+  min-width: 40%;
+}
+.rdt_TableCell[data-column-id="statline"] {
+  color: theme('colors.foreground');
+  background-color: theme('colors.background');
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  text-align: left;
+  padding: 0.25rem;
+  overflow-wrap: break-word;
+  min-width: 40%;
+}
+.rdt_TableCol[data-column-id="yds_per_play"] {
+  color: theme('colors.foreground');
+  background-color: theme('colors.background');
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  padding: 0.25rem;
+  max-width: 8%;
+}
+.rdt_TableCell[data-column-id="yds_per_play"] {
+  color: theme('colors.foreground');
+  background-color: theme('colors.background');
+  padding: 0.25rem;
+  max-width: 8%;
+}
+.rdt_TableCol[data-column-id="epa_per_play"] {
+  color: theme('colors.foreground');
+  background-color: theme('colors.background');
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  padding: 0.25rem;
+  max-width: 8%;
+}
+.rdt_TableCell[data-column-id="epa_per_play"] {
+  color: theme('colors.foreground');
+  background-color: theme('colors.background');
+  padding: 0.25rem;
+  max-width: 8%;
+}
+.rdt_TableCol[data-column-id="sr"] {
+  color: theme('colors.foreground');
+  background-color: theme('colors.background');
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  padding: 0.25rem;
+  max-width: 8%;
+}
+.rdt_TableCell[data-column-id="sr"] {
+  color: theme('colors.foreground');
+  background-color: theme('colors.background');
+  padding: 0.25rem;
+  max-width: 8%;
+} */
+
+/* ----- Play-by-Play Tables ----- */
 .rdt_Table[role="table"] {
   display: flex;
   justify-content: center;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
   max-width: 95%;
+  table-layout: auto;
 }
 .rdt_TableCol[data-column-id="time"] {
   color: theme('colors.foreground');
   background-color: theme('colors.background');
   display: flex;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-  padding: 0.25rem;
-  max-width: 10%;
+  min-width: 12.5%;
 }
 .rdt_TableCell[data-column-id="time"] {
   color: theme('colors.foreground');
   background-color: theme('colors.background');
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-  padding: 0.25rem;
-  max-width: 10%;
+  min-width: 12.5%;
 }
 .rdt_TableCol[data-column-id="offense"] {
   color: theme('colors.foreground');
   background-color: theme('colors.background');
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-  padding: 0.25rem;
-  max-width: 10%;
+  overflow-wrap: break-word;
+  min-width: 12.5%;
 }
 .rdt_TableCell[data-column-id="offense"] {
   color: theme('colors.foreground');
   background-color: theme('colors.background');
-  padding: 0.25rem;
-  max-width: 10%;
+  overflow-wrap: break-word;
+  min-width: 12.5%;
 }
 .rdt_TableCol[data-column-id="play_description"] {
   color: theme('colors.foreground');
   background-color: theme('colors.background');
-  font-size: 0.875rem;
-  line-height: 1.25rem;
   text-align: left;
-  padding: 0.25rem;
   overflow-wrap: break-word;
-  min-width: 50%;
+  min-width: 37.5%;
 }
 .rdt_TableCell[data-column-id="play_description"] {
   color: theme('colors.foreground');
   background-color: theme('colors.background');
-  font-size: 0.875rem;
-  line-height: 1.25rem;
   text-align: left;
-  padding: 0.25rem;
   overflow-wrap: break-word;
-  min-width: 50%;
+  min-width: 37.5%;
 }
 .rdt_TableCol[data-column-id="epa"] {
   color: theme('colors.foreground');
   background-color: theme('colors.background');
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-  padding: 0.25rem;
   text-align: right;
-  max-width: 10%;
+  overflow-wrap: break-word;
+  min-width: 12.5%;
 }
 .rdt_TableCell[data-column-id="epa"] {
   color: theme('colors.foreground');
   background-color: theme('colors.background');
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-  padding: 0.25rem;
   text-align: right;
-  max-width: 10%;
+  overflow-wrap: break-word;
+  min-width: 12.5%;
 }
 .rdt_TableCol[data-column-id="wp_pct"] {
   color: theme('colors.foreground');
   background-color: theme('colors.background');
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-  padding: 0.25rem;
   text-align: right;
-  max-width: 10%;
+  overflow-wrap: break-word;
+  min-width: 12.5%;
 }
 .rdt_TableCell[data-column-id="wp_pct"] {
   color: theme('colors.foreground');
   background-color: theme('colors.background');
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-  padding: 0.25rem;
   text-align: right;
-  max-width: 10%;
+  overflow-wrap: break-word;
+  min-width: 12.5%;
 }
 .rdt_TableCol[data-column-id="wpa"] {
   color: theme('colors.foreground');
   background-color: theme('colors.background');
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-  padding: 0.25rem;
+  overflow-wrap: break-word;
   text-align: right;
-  max-width: 10%;
+  min-width: 12.5%;
 }
 .rdt_TableCell[data-column-id="wpa"] {
   color: theme('colors.foreground');
   background-color: theme('colors.background');
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-  padding: 0.25rem;
   text-align: right;
-  max-width: 10%;
+  overflow-wrap: break-word;
+  min-width: 12.5%;
 }
 
 

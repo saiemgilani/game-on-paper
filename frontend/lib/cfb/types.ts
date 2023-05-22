@@ -2,7 +2,7 @@ export type CFBGame = {
     id?:                 string;
     count?:              number;
     plays?:              CFBGamePlay[];
-    box_score?:          BoxScoreClass;
+    advBoxScore?:        BoxScoreClass;
     homeTeamId?:         string;
     awayTeamId?:         string;
     drives?:             Drives;
@@ -174,27 +174,27 @@ export type Drive = {
 }
 
 export type Pass = {
-    pos_team?:           number;
-    passer_player_name?: string;
-    Comp?:               number;
-    Att?:                number;
-    Yds?:                number;
-    Pass_TD?:            number;
-    Int?:                number;
-    YPA?:                number;
-    EPA?:                number;
-    EPA_per_Play?:       number;
-    WPA?:                number;
-    SR?:                 number;
-    Sck?:                number;
-    athlete_name?:       string;
-    qbr_epa?:            number;
-    sack_epa?:           number;
-    pass_epa?:           number;
-    rush_epa?:           number;
-    pen_epa?:            number;
-    spread?:             number;
-    exp_qbr?:            number;
+    pos_team:            number;
+    passer_player_name:  string;
+    Comp:                number;
+    Att:                 number;
+    Yds:                 number;
+    Pass_TD:             number;
+    Int:                 number;
+    YPA:                 number;
+    EPA:                 number;
+    EPA_per_Play:        number;
+    WPA:                 number;
+    SR:                  number;
+    Sck:                 number;
+    athlete_name:        string;
+    qbr_epa:             number;
+    sack_epa:            number;
+    pass_epa:            number;
+    rush_epa:            number;
+    pen_epa:             number;
+    spread:              number;
+    exp_qbr:             number;
 }
 
 export enum Name {
@@ -204,34 +204,34 @@ export enum Name {
 }
 
 export type Receiver = {
-    pos_team?:             number;
-    receiver_player_name?: string;
-    Rec?:                  number;
-    Tar?:                  number;
-    Yds?:                  number;
-    Rec_TD?:               number;
-    YPT?:                  number | null;
-    EPA?:                  number;
-    EPA_per_Play?:         number;
-    WPA?:                  number;
-    SR?:                   number;
-    Fum?:                  number;
-    Fum_Lost?:             number;
+    pos_team:              number;
+    receiver_player_name:  string;
+    Rec:                   number;
+    Tar:                   number;
+    Yds:                   number;
+    Rec_TD:                number;
+    YPT:                   number | null;
+    EPA:                   number;
+    EPA_per_Play:          number;
+    WPA:                   number;
+    SR:                    number;
+    Fum:                   number;
+    Fum_Lost:              number;
 }
 
 export type Rush = {
-    pos_team?:           number;
-    rusher_player_name?: string;
-    Car?:                number;
-    Yds?:                number;
-    Rush_TD?:            number;
-    YPC?:                number;
-    EPA?:                number;
-    EPA_per_Play?:       number;
-    WPA?:                number;
-    SR?:                 number;
-    Fum?:                number;
-    Fum_Lost?:           number;
+    pos_team:            number;
+    rusher_player_name:  string;
+    Car:                 number;
+    Yds:                 number;
+    Rush_TD:             number;
+    YPC:                 number;
+    EPA:                 number;
+    EPA_per_Play:        number;
+    WPA:                 number;
+    SR:                  number;
+    Fum:                 number;
+    Fum_Lost:            number;
 }
 
 export type Turnover = {

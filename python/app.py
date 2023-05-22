@@ -283,16 +283,19 @@ def get_cfb_game(request: Request, gameId: str) -> Optional[None]:
         pbp['scoringPlays'] = [play for play in jsonified_df if play['scoringPlay'] == True]
         pbp['mostImportantPlays'] =  [play for play in jsonified_df if sorted(jsonified_df, key=lambda x: abs(x['wpa']), reverse=True).index(play) < 10]
         pbp['bigPlays'] =  [play for play in jsonified_df if sorted(jsonified_df, key=lambda x: abs(x['EPA']), reverse=True).index(play) < 10]
+        year = pbp['header']['season']['year']
+        percentiles = pd.read_csv(f"data/{year}/percentiles.csv").to_dict(orient="records")
         result = {
             "id": gameId,
             "count" : len(jsonified_df),
             "mostImportantPlays": pbp['mostImportantPlays'],
             "bigPlays": pbp['bigPlays'],
             "plays" : jsonified_df,
+            "percentiles" :  percentiles,
             "advBoxScore" : box,
             "homeTeamId": homeTeamId,
             "awayTeamId": awayTeamId,
-            "drives" : pbp['drives'],
+            # "drives" : pbp['drives'],
             "scoringPlays" : pbp['scoringPlays'],
             "winprobability" : np.array(pbp['winprobability']).tolist(),
             "boxScore" : pbp['boxscore'],

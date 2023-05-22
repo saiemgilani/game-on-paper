@@ -38,24 +38,24 @@ function NavItems({ href, text }: { href: string; text: string }) {
 
 export function MainNav({ items }: MainNavProps) {
   return (
-    <div className="flex gap-6 md:gap-10">
-      <Link href="/" className="hidden items-center space-x-2 md:flex">
+    <div className="flex gap-6 lg:gap-10">
+      <Link href="/" className="hidden items-center space-x-2 lg:flex">
         {/* <Logo className="h-6 w-6" /> */}
         <motion.div
             initial="hidden"
             animate="visible"
             variants={FadeContainer}
-            className="hidden font-bold sm:inline-block">
+            className="hidden font-bold md:inline-block">
           {siteConfig.name}
         </motion.div>
       </Link>
       {items?.length ? (
-        <motion.nav className="hidden gap-6 md:flex">
+        <motion.nav className="hidden gap-6 lg:flex">
           <motion.div
             initial="hidden"
             animate="visible"
             variants={FadeContainer}
-            className="flex items-center md:gap-2"
+            className="flex items-center lg:gap-2"
           >
             {items?.map(
               (item, index) =>
@@ -84,7 +84,7 @@ function HamBurger({
       initial="hidden"
       animate="visible"
       variants={popUp}
-      className="sm:hidden"
+      className="lg:hidden"
     >
       {!open ? (
         <svg
@@ -133,7 +133,7 @@ const MobileMenu = ({
 }) => {
   return (
     <motion.div
-      className="absolute top-0 left-0 z-10 w-screen h-screen font-normal bg-secondary dark:bg-secondary sm:hidden"
+      className="absolute top-0 left-0 z-10 w-screen h-screen font-normal bg-secondary dark:bg-secondary lg:hidden"
       variants={hamFastFadeContainer}
       initial="hidden"
       animate="visible"
@@ -156,6 +156,43 @@ const MobileMenu = ({
               </Link>
             )
       )}
+            <Link
+              href={siteConfig.links.github}
+              target="_blank"
+              rel="noreferrer"
+            >
+            <motion.div
+              initial="hidden"
+              animate="visible"
+              variants={FadeContainer}
+                className={buttonVariants({
+                  size: "sm",
+                  variant: "ghost",
+                })}
+              >
+                <Icons.gitHub className="h-5 w-5" />
+                <span className="sr-only">GitHub</span>
+              </motion.div>
+            </Link>
+            <Link
+              href={siteConfig.links.twitter}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <motion.div
+                initial="hidden"
+                animate="visible"
+                variants={FadeContainer}
+                className={buttonVariants({
+                  size: "sm",
+                  variant: "ghost",
+                })}
+              >
+                <Icons.twitter className="h-5 w-5 fill-current" />
+                <span className="sr-only">Twitter</span>
+              </motion.div>
+            </Link>
+            <ThemeToggle />
       </motion.nav>
       ) : null}
     </motion.div>
@@ -181,7 +218,7 @@ export function SiteHeader() {
   }
   return (
     <header className="top-0 z-40 w-full border-b bg-background">
-      <div className="container flex h-16 items-center space-x-4 sm:justify-between sm:space-x-0 ">
+      <div className="container flex h-16 items-center space-x-4 md:justify-between md:space-x-0 ">
       {/* Mobile Navigation Hamburger and MobileMenu */}
       <HamBurger open={navOpen} handleClick={handleClick} />
       <AnimatePresence>
@@ -190,7 +227,7 @@ export function SiteHeader() {
         )}
       </AnimatePresence>
         <MainNav items={siteConfig.mainNav} />
-        <div className="flex flex-1 items-center justify-end space-x-4">
+        <div className="flex flex-1 items-center justify-end space-x-4 hidden lg:flex">
           <motion.nav className="flex items-center space-x-1">
             <Link
               href={siteConfig.links.github}
