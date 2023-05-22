@@ -344,8 +344,7 @@ const ExpandedComponent: React.FC<ExpanderComponentProps<CFBGameRow>> = ({ data 
 
     return (
         <>
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 ">
-            <div className="grid grid-flow-row auto-rows-auto gap-2 p-2 align-center">
+            <div className="flex flex-col gap-2 p-2 align-center">
                 <p className="text-align-center"><b>Play Type:</b> {data.type.text}</p>
                 <p className="text-align-center"><b>{`Yards to End Zone (Before -> After):`}</b>
                     {` ${data.start.yardsToEndzone} -> ${data.end.yardsToEndzone}`}
@@ -365,7 +364,7 @@ const ExpandedComponent: React.FC<ExpanderComponentProps<CFBGameRow>> = ({ data 
                 <p className="text-align-center"><b>{`Change of Possession:`}</b>{` ${data.change_of_poss}`}
                 </p>
             </div>
-            <div className="grid grid-flow-row auto-rows-auto gap-2 p-2 align-center">
+            <div className="flex flex-col gap-2 p-2 align-center">
                 <p className="text-align-center"><b>Score:</b>
                     {` ${data.awayTeamAbbrev} ${data.awayScore}, ${data.homeTeamAbbrev} ${data.homeScore}`}
                 </p>
@@ -385,7 +384,6 @@ const ExpandedComponent: React.FC<ExpanderComponentProps<CFBGameRow>> = ({ data 
                     <b>{`Pos Team Timeouts:`}</b>{` ${data.end.posTeamTimeouts}`} <b>{`Def Pos Team Timeouts:`}</b>{` ${data.end.defPosTeamTimeouts}`}
                 </p>
                 {data.start.down === 4 ? <p className="text-align-center"><b>Fouth Down Decision Evaluation:</b> <Link href={fourthDownLink} >link</Link></p>: ""}
-            </div>
             </div>
         </>
     )
