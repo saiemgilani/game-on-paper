@@ -474,7 +474,7 @@ export type Address = {
 export type Header = {
     id?:           string;
     uid?:          string;
-    season?:       Season;
+    season:        Season;
     timeValid?:    boolean;
     competitions:  Competition[];
     links?:        HeaderLink[];
@@ -589,8 +589,8 @@ export type HeaderLink = {
 }
 
 export type Season = {
-    year?: number;
-    type?: number;
+    year:  number;
+    type:  number;
 }
 
 export type Pickcenter = {

@@ -100,6 +100,8 @@ def get_cfb_scoreboard(request: Request,
 
     headers = {"accept": "application/json"}
     schedule = espn_cfb_schedule(groups = groups, dates = dates, week = week, season_type = seasontype)
+    schedule['home_dark_logo'] = schedule['home_logo'].apply(lambda x: x.replace("https://a.espncdn.com/i/teamlogos/ncaa/500/", "https://a.espncdn.com/i/teamlogos/ncaa/500-dark/"))
+    schedule['away_dark_logo'] = schedule['away_logo'].apply(lambda x: x.replace("https://a.espncdn.com/i/teamlogos/ncaa/500/", "https://a.espncdn.com/i/teamlogos/ncaa/500-dark/"))
     return Response(schedule.to_json(orient="records"), media_type="application/json")
 
 

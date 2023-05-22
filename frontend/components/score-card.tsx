@@ -9,9 +9,12 @@ import {
     CardTitle,
   } from "@/components/ui/card"
 import { ScoreboardEvent } from "@/lib/types"
-import Image from "next/image"
+import Image, { ImageProps } from "next/image"
 import Link from "next/link"
 import { ConferenceMap, NetworkMap } from "@/lib/utils"
+
+
+
 function dateTime(date: string) {
     let dt = new Date(date);
     let dtString = dt.toLocaleDateString()
@@ -38,18 +41,20 @@ type linescore = {
     value: string
 }
 
-function TeamRow({ team, teamAbbreviation, linescores, record, logo, gameStatus, score }:
+function TeamRow({ team, teamAbbreviation, linescores, record, logo, darkLogo, gameStatus, score }:
                  {  team: string,
                     teamAbbreviation: string,
                     linescores: linescore[],
                     record: string,
                     logo: string,
+                    darkLogo: string,
                     gameStatus: string,
                     score: string }) {
     return (
       <div className="flex px-2 py-2 items-center">
         <div className="w-7/12 md:w-8/12 flex">
-          <Image className="w-10 mr-2 self-center" src={logo} width={30} height={30} alt={team} />
+          <Image className="w-10 mr-2 self-center inline-block dark:hidden" src={logo} width={30} height={30} alt={team} />
+          <Image className="w-10 mr-2 self-center hidden dark:inline-block" src={darkLogo} width={30} height={30} alt={team} />
           <div className="flex flex-col">
             <p className="text-lg font-bold">{teamAbbreviation}</p>
             <p className="block text-xs  text-gray-600 dark:text-gray-400">{record}</p>
@@ -69,7 +74,7 @@ function TeamRow({ team, teamAbbreviation, linescores, record, logo, gameStatus,
     )
   }
 
-export default function ScoreCard({ away_logo, home_logo, ...props }: ScoreboardEvent) {
+export default function ScoreCard({ ...props }: ScoreboardEvent) {
 
 
     const gameDateTime = dateTime(props.date)
@@ -112,7 +117,8 @@ export default function ScoreCard({ away_logo, home_logo, ...props }: Scoreboard
               teamAbbreviation={props.away_abbreviation}
               linescores= {awayLinescores}
               record={awayRecord}
-              logo={away_logo}
+              logo={props.away_logo}
+              darkLogo={props.away_dark_logo}
               gameStatus={gameStatus}
               score={props.away_score} />
             {/* Home Team */}
@@ -122,7 +128,8 @@ export default function ScoreCard({ away_logo, home_logo, ...props }: Scoreboard
               teamAbbreviation={props.home_abbreviation}
               linescores= {homeLinescores}
               record={homeRecord}
-              logo={home_logo}
+              logo={props.home_logo}
+              darkLogo={props.home_dark_logo}
               gameStatus={gameStatus}
               score={props.home_score} />
             {/* Card Footer */}

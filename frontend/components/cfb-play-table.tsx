@@ -294,11 +294,18 @@ function formatPlayDescription(play: CFBGamePlay, homeTeam: Competitor, awayTeam
      ((play.scoringPlay == true) ? <b>{` - ${play.awayTeamAbbrev} ${play.awayScore}, ${play.homeTeamAbbrev} ${play.homeScore}`}</b> : ` - ${play.awayTeamAbbrev} ${play.awayScore}, ${play.homeTeamAbbrev} ${play.homeScore}`)
      }</p>
 }
-function formatOffenseLogo(row: CFBGamePlay, homeTeam: Competitor, awayTeam: Competitor, theme?: string){
-    let homeTeamLogoUrl = theme === "light" ? homeTeam.team.logos[0].href : homeTeam.team.logos[1].href;
-    let awayTeamLogoUrl = theme === "light" ? awayTeam.team.logos[0].href : awayTeam.team.logos[1].href;
-    let logoUrl = (row.pos_team == row.homeTeamId) ? homeTeamLogoUrl : awayTeamLogoUrl;
-    return <Link href={`/cfb/year/${row.season}/team/${row.pos_team}`}><Image width={"35"} height={"35"} src={logoUrl} alt={`ESPN team id ${row.pos_team}`}/></Link>
+function formatOffenseLogo(row: CFBGamePlay, homeTeam: Competitor, awayTeam: Competitor){
+    let team = (row.pos_team == row.homeTeamId) ? homeTeam : awayTeam;
+    return (
+    <>
+        <Link className="inline-block dark:hidden" href={`/cfb/year/${row.season}/team/${team.id}`}>
+            <Image className="align-middle inline-block dark:hidden" width={"35"} height={"35"} src={team.team.logos[0].href} alt={`ESPN team id ${team.id}`}/>
+        </Link>
+        <Link className="hidden dark:inline-block" href={`/cfb/year/${row.season}/team/${team.id}`}>
+            <Image className="align-middle hidden dark:inline-block" width={"35"} height={"35"} src={team.team.logos[1].href} alt={`ESPN team id ${team.id}`}/>
+        </Link>
+    </>
+    );
 }
 
 
@@ -330,34 +337,34 @@ function PlayRow(play: CFBGameRow,
 
     return (
         <>
-        <tr className={`accordion-toggle${classText}`} onClick={toggleExpanded}>
-            <td className="text-align-left p-1">{play.period_text}</td>
-            <td className="text-align-center p-1">{play.offense_logo}</td>
-            <td className="text-align-left p-1">{play.play_description}</td>
-            <td className="text-align-right p-1">{roundNumber(parseFloat(play.expectedPoints.added.toString()), 2, 2)}</td>
-            <td className="text-align-right p-1">{roundNumber(parseFloat(play.winProbability.before.toString()) * 100, 3, 1)}%</td>
-            <td className="text-align-right p-1">{roundNumber(parseFloat(play.winProbability.added.toString()) * 100, 3, 1)}%</td>
+        <tr className={`accordion-toggle${classText} border-b`} onClick={toggleExpanded}>
+            <td className="text-left p-1">{play.period_text}</td>
+            <td className="text-center p-1">{formatOffenseLogo(play, homeTeam, awayTeam)}</td>
+            <td className="text-left p-1">{play.play_description}</td>
+            <td className="text-right p-1">{roundNumber(parseFloat(play.expectedPoints.added.toString()), 2, 2)}</td>
+            <td className="text-right p-1">{roundNumber(parseFloat(play.winProbability.before.toString()) * 100, 3, 1)}%</td>
+            <td className="text-right p-1">{roundNumber(parseFloat(play.winProbability.added.toString()) * 100, 3, 1)}%</td>
         </tr>
         {expanded ? (
             <tr className={`justify-center w-max accordion-${expanded ? 'down':'up'}`} >
                 <td colSpan={12} className="w-max">
                     <div className="flex justify-center" id={`play-${collapsePrefix}-${play.game_play_number}`}>
-                        <div className="flex flex-col gap-2 p-2 align-center justify-center">
-                            <p className="text-align-center"><b>{"Play Type:"}</b> {play.type.text}</p>
-                            <p className="text-align-center"><b>{"Yards to End Zone (Before -> After):"}</b> {play.start.yardsToEndzone}{" -> "}{play.end.yardsToEndzone}</p>
-                            <p className="text-align-center"><b>{"Started Drive at:"}</b> {` ${formatYardline(play.drive_start, offenseAbbrev, defenseAbbrev)}`}</p>
-                            <p className="text-align-center"><b>{"ExpPts (After - Before = Added):"}</b> {` ${roundNumber(parseFloat(play.expectedPoints.after.toString()), 2, 2)} - ${roundNumber(parseFloat(play.expectedPoints.before.toString()), 2, 2)} = ${roundNumber(parseFloat(play.expectedPoints.added.toString()), 2, 2)}`}</p>
-                            <p className="text-align-center"><b>{"Score Difference (Before):"}</b> {` ${play.start.pos_score_diff} (${roundNumber(parseFloat(play.start.ExpScoreDiff.toString()), 2, 2)})`}</p>
-                            <p className="text-align-center"><b>{"Score Difference (End):"}</b> {` ${play.end.pos_score_diff} (${roundNumber(parseFloat(play.end.ExpScoreDiff.toString()), 2, 2)})`}</p>
-                            <p className="text-align-center"><b>{"Change of Possession:"}</b> {` ${play.change_of_poss}`}</p>
+                        <div className="flex flex-col gap-2 p-1 align-center justify-center">
+                            <p className="text-left"><b>{"Play Type:"}</b> {play.type.text}</p>
+                            <p className="text-left"><b>{"Yards to End Zone (Before -> After):"}</b> {play.start.yardsToEndzone}{" -> "}{play.end.yardsToEndzone}</p>
+                            <p className="text-left"><b>{"Started Drive at:"}</b> {` ${formatYardline(play.drive_start, offenseAbbrev, defenseAbbrev)}`}</p>
+                            <p className="text-left"><b>{"ExpPts (After - Before = Added):"}</b> {` ${roundNumber(parseFloat(play.expectedPoints.after.toString()), 2, 2)} - ${roundNumber(parseFloat(play.expectedPoints.before.toString()), 2, 2)} = ${roundNumber(parseFloat(play.expectedPoints.added.toString()), 2, 2)}`}</p>
+                            <p className="text-left"><b>{"Score Difference (Before):"}</b> {` ${play.start.pos_score_diff} (${roundNumber(parseFloat(play.start.ExpScoreDiff.toString()), 2, 2)})`}</p>
+                            <p className="text-left"><b>{"Score Difference (End):"}</b> {` ${play.end.pos_score_diff} (${roundNumber(parseFloat(play.end.ExpScoreDiff.toString()), 2, 2)})`}</p>
+                            <p className="text-left"><b>{"Change of Possession:"}</b> {` ${play.change_of_poss}`}</p>
                         </div>
-                        <div className="flex flex-col gap-2 p-2 align-center justify-center">
-                            <p className="text-align-center"><b>Score:</b> {` ${play.awayTeamAbbrev} ${play.awayScore}, ${play.homeTeamAbbrev} ${play.homeScore}`}</p>
-                            <p className="text-align-center"><b>Drive Summary:</b> {` ${play.drive_play_index} plays, ${play.drive_total_yards} yards`}</p>
-                            <p className="text-align-center"><b>Win Probability (Before):</b> {` ${roundNumber(parseFloat(play.winProbability.before.toString()) * 100, 3, 1)}`}%</p>
-                            <p className="text-align-center"><b>Win Probability (After):</b> {` ${roundNumber(parseFloat(play.winProbability.after.toString()) * 100, 3, 1)}`}%</p>
-                            <p className="text-align-center"><b>Away Score:</b> {` ${play.start.awayScore} (${play.awayScore})`} <b>Home Score:</b> {` ${play.start.homeScore} (${play.homeScore})`}</p>
-                            <p className="text-align-center"><b>Pos Team Timeouts:</b> {` ${play.end.posTeamTimeouts}`} <b>Defense Timeouts:</b> {` ${play.end.defPosTeamTimeouts}`}</p>
+                        <div className="flex flex-col gap-2 p-1 align-center justify-center">
+                            <p className="text-left"><b>Score:</b> {` ${play.awayTeamAbbrev} ${play.awayScore}, ${play.homeTeamAbbrev} ${play.homeScore}`}</p>
+                            <p className="text-left"><b>Drive Summary:</b> {` ${play.drive_play_index} plays, ${play.drive_total_yards} yards`}</p>
+                            <p className="text-left"><b>Win Probability (Before):</b> {` ${roundNumber(parseFloat(play.winProbability.before.toString()) * 100, 3, 1)}`}%</p>
+                            <p className="text-left"><b>Win Probability (After):</b> {` ${roundNumber(parseFloat(play.winProbability.after.toString()) * 100, 3, 1)}`}%</p>
+                            <p className="text-left"><b>Away Score:</b> {` ${play.start.awayScore} (${play.awayScore})`} <b>Home Score:</b> {` ${play.start.homeScore} (${play.homeScore})`}</p>
+                            <p className="text-left"><b>Pos Team Timeouts:</b> {` ${play.end.posTeamTimeouts}`} <b>Defense Timeouts:</b> {` ${play.end.defPosTeamTimeouts}`}</p>
 
                         </div>
 
@@ -401,15 +408,10 @@ export default function CFBPlayTable(
         </ul>
     </caption>) : ""
 
-    let localTheme: string;
-    if (typeof window !== 'undefined') {
-        localTheme = window.localStorage.getItem('theme') || 'light';
-        console.log(localTheme)
-    }
     const newPlays: CFBGameRow[] = [...plays]
     newPlays.forEach((play) => {
         play.period_text = formatPeriod(play)
-        play.offense_logo = formatOffenseLogo(play, homeTeam, awayTeam, localTheme)
+        play.offense_logo = formatOffenseLogo(play, homeTeam, awayTeam)
         play.play_description = formatPlayDescription(play, homeTeam, awayTeam)
 
     })
@@ -421,12 +423,12 @@ export default function CFBPlayTable(
             {guideText}
             <thead>
                 <tr>
-                    <th className="text-align-left">Time</th>
-                    <th className="text-align-center">Offense</th>
-                    <th className="text-align-left">Play Description</th>
-                    <th className="text-align-center">EPA</th>
-                    <th className="text-align-center">WP%</th>
-                    <th className="text-align-right">WPA</th>
+                    <th className="text-left">Time</th>
+                    <th className="text-center">Offense</th>
+                    <th className="text-left">Play Description</th>
+                    <th className="text-center">EPA</th>
+                    <th className="text-center">WP%</th>
+                    <th className="text-right">WPA</th>
                 </tr>
             </thead>
             <tbody>

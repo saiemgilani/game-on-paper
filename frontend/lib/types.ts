@@ -59,6 +59,7 @@ export type ScoreboardEvent = {
     home_is_active?:            boolean;
     home_venue_id?:             string;
     home_logo:                 string;
+    home_dark_logo:            string;
     home_conference_id:        string;
     home_score:                string;
     home_current_rank?:         number;
@@ -76,6 +77,7 @@ export type ScoreboardEvent = {
     away_is_active?:            boolean;
     away_venue_id?:             string;
     away_logo:                 string;
+    away_dark_logo:            string;
     away_conference_id:        string;
     away_score:                string;
     away_winner:               null;

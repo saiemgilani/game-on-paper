@@ -75,7 +75,8 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 47.4% 11.2%;
 
-    --border: 214.3 31.8% 84%;
+    --border: 210, 14%, 89%;
+    --border-heading: 0, 0%, 0%;
     --input: 214.3 31.8% 91.4%;
 
     --card: 0 0% 100%;
@@ -115,7 +116,8 @@
     --popover: 224 71% 4%;
     --popover-foreground: 215 20.2% 65.1%;
 
-    --border: 247 85% 95%;
+    --border: 197, 6%, 23%;
+    --border-heading: 36, 10%, 90%;
     --input: 216 34% 17%;
 
     --card: 224 71% 4%;
@@ -174,7 +176,7 @@ table {
   table-layout: auto;
 }
 table > thead {
-  border-bottom: black;
+  border-bottom: theme('colors.border-heading');
   border-bottom-style: solid;
   border-bottom-width: 1px;
 }

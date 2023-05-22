@@ -6,6 +6,7 @@ import CFBGameHeader from '@/components/cfb-game-header';
 import CFBPlayTableRdt from '@/components/cfb-play-table-rdt';
 import CFBPlayTable from '@/components/cfb-play-table';
 import CFBPlayerStatsTable from '@/components/cfb-player-stats-table';
+import CFBPlayerStatsHeader from '@/components/cfb-player-stats-header';
 async function getCFBGame(params: any) {
     const endpoint = new URL(pyApiOrigin+'/cfb/game/'+params.gameId);
     try{
@@ -24,8 +25,9 @@ async function getCFBGame(params: any) {
     const homeTeam = header.competitions[0].competitors[0].homeAway === 'home' ? header.competitions[0].competitors[0] : header.competitions[0].competitors[1];
     const awayTeam = header.competitions[0].competitors[0].homeAway === 'away' ? header.competitions[0].competitors[0] : header.competitions[0].competitors[1];
     const competitions = header.competitions[0];
+    const season = header.season?.year
 
-    return { homeTeam, awayTeam, competitions }
+    return { homeTeam, awayTeam, competitions, season }
 }
 
 export default async function CFBGamePage({ params }: {
@@ -35,29 +37,32 @@ export default async function CFBGamePage({ params }: {
                                     }) {
 
     const data: CFBGame = await getCFBGame(params);
-    const { homeTeam, awayTeam, competitions } = getTeamInfo(data.header);
+    const { homeTeam, awayTeam, competitions, season } = getTeamInfo(data.header);
 
     return (
         <>
             <CFBGameHeader awayTeam={awayTeam} homeTeam={homeTeam} competitions={competitions} />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                <div className="grid grid-flow-row auto-rows-auto mx-4">
-                <h2 className="text-2xl font-bold text-left justify-around py-2">{awayTeam.team.location}</h2>
-                    {data && data.advBoxScore ? (
+                <div className="justify-around px-2 py-2">
+
+                {data && data.advBoxScore ? (
+                    <CFBPlayerStatsHeader team={awayTeam} season={season}>
                         <CFBPlayerStatsTable
-                            title={"Big Plays"}
-                            advBoxScore={data?.advBoxScore ?? []}
-                            team={awayTeam} />
-                    ) : ("")}
+                        title={"Big Plays"}
+                        advBoxScore={data?.advBoxScore ?? []}
+                        team={awayTeam} />
+                    </CFBPlayerStatsHeader> ) : ("")}
+
                 </div>
-                <div className="grid grid-flow-row auto-rows-auto mx-4">
-                <h2 className="text-2xl font-bold text-left justify-around py-2">{homeTeam.team.location}</h2>
-                    {data && data.advBoxScore ? (
+                <div className="justify-around px-2 py-2">
+                {data && data.advBoxScore ? (
+                    <CFBPlayerStatsHeader team={homeTeam} season={season}>
                         <CFBPlayerStatsTable
-                            title={"Big Plays"}
-                            advBoxScore={data?.advBoxScore ?? []}
-                            team={homeTeam} />
-                    ) : ("")}
+                        title={"Big Plays"}
+                        advBoxScore={data?.advBoxScore ?? []}
+                        team={homeTeam} />
+                    </CFBPlayerStatsHeader> ) : ("")}
+
                 </div>
             </div>
 
