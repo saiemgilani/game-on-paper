@@ -2,15 +2,15 @@ import {pyApiOrigin} from '@/lib/urlConfig';
 import PageTop from '@/components/page-top';
 import ScoreCard from '@/components/score-card';
 import { CFBGame, Header } from '@/lib/cfb/types';
-import CFBGameHeader from '@/components/cfb-game-header';
-import CFBPlayTableRdt from '@/components/cfb-play-table-rdt';
-import CFBPlayTable from '@/components/cfb-play-table';
-import CFBPlayTableHeader from '@/components/cfb-play-table-header';
-import CFBPlayerStatsTable from '@/components/cfb-player-stats-table';
-import CFBPlayerStatsHeader from '@/components/cfb-player-stats-header';
-import CFBTeamStatsTable from '@/components/cfb-team-stats-table';
-import CFBTeamStatsHeader from '@/components/cfb-team-stats-header';
-import CFBTeamStatsOverallTable from '@/components/cfb-team-stats-overall-table';
+import CFBGameHeader from '@/components/CFB/cfb-game-header';
+import CFBPlayTableRdt from '@/components/CFB/cfb-play-table-rdt';
+import CFBPlayTable from '@/components/CFB/cfb-play-table';
+import CFBPlayTableHeader from '@/components/CFB/cfb-play-table-header';
+import CFBPlayerStatsTable from '@/components/CFB/cfb-player-stats-table';
+import CFBPlayerStatsHeader from '@/components/CFB/cfb-player-stats-header';
+import CFBTeamStatsTable from '@/components/CFB/cfb-team-stats-table';
+import CFBTeamStatsHeader from '@/components/CFB/cfb-team-stats-header';
+import CFBTeamStatsOverallTable from '@/components/CFB/cfb-team-stats-overall-table';
 async function getCFBGame(params: any) {
     const endpoint = new URL(pyApiOrigin+'/cfb/game/'+params.gameId);
     try{
@@ -235,55 +235,6 @@ export default async function CFBGamePage({ params }: {
                     </CFBPlayTableHeader>
                 ) : ("")}
             </div>
-            {/* new RDT table style */}
-            {/*
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-
-                <div className="grid grid-flow-row auto-rows-auto mx-4">
-                    <h2 className="text-2xl font-bold text-left px-2 m-2">Big Plays</h2>
-                    <div className="flex flex-auto justify-around px-4 py-2">
-                        {data && data.bigPlays ? (
-                            <CFBPlayTableRdt
-                                title={"Big Plays"}
-                                plays={data?.bigPlays ?? []}
-                                homeTeam={homeTeam}
-                                awayTeam={awayTeam} />
-                        ) : ("")}
-                    </div>
-                </div>
-                <div className="grid grid-flow-row auto-rows-auto mx-4">
-                    <h2 className="text-2xl font-bold text-left px-2 m-2">Most Important Plays</h2>
-                    <div className="flex flex-auto justify-around px-4 py-2">
-                        {data && data.mostImportantPlays ? (
-                            <CFBPlayTableRdt
-                                title={"Most Important Plays"}
-                                plays={data?.mostImportantPlays ?? []}
-                                homeTeam={homeTeam}
-                                awayTeam={awayTeam} />
-                        ) : ("")}
-                    </div>
-                </div>
-            </div>
-            <h2 className="text-2xl font-bold text-left px-2 m-2">Scoring Plays</h2>
-            <div className="flex flex-auto justify-around px-4 py-2">
-                {data && data.scoringPlays ? (
-                    <CFBPlayTableRdt
-                        title={"Scoring Plays"}
-                        plays={data?.scoringPlays ?? []}
-                        homeTeam={homeTeam}
-                        awayTeam={awayTeam} />
-                ) : ("")}
-            </div>
-            <h2 className="text-2xl font-bold text-left px-2 m-2">All Plays</h2>
-            <div className="flex flex-auto justify-around px-4 py-2">
-                {data && data.plays ? (
-                    <CFBPlayTableRdt
-                        title={"Play by Play"}
-                        plays={data?.plays ?? []}
-                        homeTeam={homeTeam}
-                        awayTeam={awayTeam} />
-                ) : ("")}
-            </div> */}
         </>
     )
 }

@@ -515,7 +515,7 @@ export type Away = {
     nickname?:       string;
     abbreviation?:   AwayTeamAbbrev;
     displayName?:    DisplayName;
-    color?:          string;
+    color:           string;
     alternateColor?: string;
     logos:           Image[];
     links?:          AthleteLink[];

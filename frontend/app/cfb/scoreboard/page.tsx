@@ -2,7 +2,7 @@ import {pyApiOrigin} from '@/lib/urlConfig';
 import PageTop from '@/components/page-top';
 import ScoreCard from '@/components/score-card';
 import { ScoreboardEvent } from '@/lib/types';
-import { CfbScheduleSelect } from '@/components/cfb-schedule-select';
+import { CfbScheduleSelect } from '@/components/CFB/cfb-schedule-select';
 async function getCFBScoreboard() {
     // console.log(pyApiOrigin+'/cfb/scoreboard')
 

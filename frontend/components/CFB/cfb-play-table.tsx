@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import DataTable, { ExpanderComponentProps } from 'react-data-table-component';
 import { CFBGamePlay, Competitor, Competition, Away } from '@/lib/cfb/types';
-import AnimatedHeading from './FramerMotion/animated-heading';
+import AnimatedHeading from '@/components/FramerMotion/animated-heading';
 import  { useState, useEffect, useCallback, useRef } from "react";
 import { useTheme } from 'next-themes'
 import styled, { keyframes } from 'styled-components';
