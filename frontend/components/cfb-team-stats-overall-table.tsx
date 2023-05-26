@@ -135,7 +135,7 @@ function boxScoreRetrievePercentile(percentiles: any, value: number, key: string
 }
 
 function handleBoxScoreRates(percentiles: any, item: any, teamInfo: any, useSuffix: any, decimalPoints: number) {
-    let baseTeamInfo = (teamInfo == null) ? advBoxScore : teamInfo;
+    let baseTeamInfo = teamInfo
 
     let subKeys = item.split('.');
     if (subKeys.length == 1) {
