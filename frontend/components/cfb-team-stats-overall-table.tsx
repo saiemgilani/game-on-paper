@@ -46,9 +46,7 @@ function boxScoreGenerateColorRampValue(percentiles, input, max, midColor) {
 function boxScoreRoundNumber(value, power10, fixed) {
     return (Math.round(parseFloat(value || 0) * (Math.pow(10, power10))) / (Math.pow(10, power10))).toFixed(fixed)
 }
-interface StatKeyNames {
-    [key: string]: any
-  }
+
 const percentile_title_key_mapping: StatKeyNames = {
     "EPA_per_play" : "epaPerPlay",
     "EPA_passing_per_play" : "epaPerDropback",
