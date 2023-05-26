@@ -419,24 +419,26 @@ export default function CFBPlayTable(
 
     return(
         <>
-        <table className="table table-sm table-responsive border-collapse">
-            {guideText}
-            <thead>
-                <tr>
-                    <th className="text-left">Time</th>
-                    <th className="text-center">Offense</th>
-                    <th className="text-left">Play Description</th>
-                    <th className="text-center">EPA</th>
-                    <th className="text-center">WP%</th>
-                    <th className="text-right">WPA</th>
-                </tr>
-            </thead>
-            <tbody>
-                {newPlays.map((play) =>
-                    (PlayRow(play, expandable, prefix, expandingRowCallback, homeTeam, awayTeam)))
-                }
-            </tbody>
-        </table>
+        <div className="flex justify-center w-full">
+            <table className="table w-full table-sm table-responsive border-collapse">
+                {guideText}
+                <thead>
+                    <tr>
+                        <th className="text-left">Time</th>
+                        <th className="text-center">Offense</th>
+                        <th className="text-left">Play Description</th>
+                        <th className="text-center">EPA</th>
+                        <th className="text-center">WP%</th>
+                        <th className="text-right">WPA</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {newPlays.map((play) =>
+                        (PlayRow(play, expandable, prefix, expandingRowCallback, homeTeam, awayTeam)))
+                    }
+                </tbody>
+            </table>
+        </div>
         </>
     );
 }

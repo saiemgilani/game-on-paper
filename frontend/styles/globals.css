@@ -94,6 +94,11 @@
     --destructive: 0 100% 50%;
     --destructive-foreground: 210 40% 98%;
 
+    --link-primary: 216, 98%, 52%;
+    --link-primary-hover: 216, 98%, 42%;
+    --link-secondary: 208, 7%, 46%;
+    --link-secondary-hover: 208, 7%, 36%;
+
     --danger: 355, 70%, 91%;
     --success: 153, 31%, 86%;
     --warning: 46, 100%, 90%;
@@ -132,6 +137,11 @@
     --destructive: 0 63% 31%;
     --destructive-foreground: 210 40% 98%;
 
+    --link-primary: 209, 98%, 56%;
+    --link-primary-hover: 209, 98%, 46%;
+    --link-secondary: 37, 10%, 58%;
+    --link-secondary-hover: 37, 10%, 48%;
+
     --danger: 355, 70%, 15%;
     --success: 159, 31%, 18%;
     --warning: 46, 100%, 16%;
@@ -155,11 +165,37 @@
     font-family: "Chivo", sans-serif/*rtl:Amiri, Georgia, "Times New Roman", serif*/;
   }
   p > a {
-    @apply !text-blue-500 dark:!text-blue-400;
+    @apply !text-link-primary dark:!text-link-primary;
+  }
+  span > a {
+    @apply !text-link-primary dark:!text-link-primary;
   }
 }
 
+.nav-scroller {
+  position: relative;
+  z-index: 2;
+  height: 2.75rem;
+  overflow-y: hidden;
+  border-bottom: 1px solid #e5e5e5;
+}
 
+.nav-scroller .nav {
+  display: flex;
+  flex-wrap: nowrap;
+  padding-bottom: 1rem;
+  margin-top: -1px;
+  overflow-x: auto;
+  text-align: center;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+}
+
+.nav-scroller .nav-link {
+  padding-top: .75rem;
+  padding-bottom: .75rem;
+  font-size: .875rem;
+}
 .accordion-body {
   display: flex;
   align-content: center;

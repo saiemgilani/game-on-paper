@@ -28,6 +28,8 @@ module.exports = {
         "dark-3": "#b8b8b8",
         border: "hsl(var(--border))",
         "border-heading": "hsl(var(--border-heading))",
+        "link-primary": "hsl(var(--link-primary))",
+        "link-secondary": "hsl(var(--link-secondary))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",

@@ -24,19 +24,22 @@ function formatLogo(team: Competitor, season: number) {
 export default function CFBPlayerStatsHeader({
     children,
     team,
-    season }: {
+    season,
+    href }: {
         children: React.ReactNode,
         team: Competitor,
-        season: number }){
-
+        season: number,
+        href?: string }){
+    const [expanded, setExpanded] = useState(false)
+    const toggleExpanded = () => setExpanded((current) => !current)
     const logo = formatLogo(team, season);
     return(
         <>
             <div className="flex justify-between">
-            <h2 className="text-2xl font-bold text-left justify-around py-2">{team.team.location}</h2>
+            <h2 className="text-2xl font-bold text-left justify-around py-2">{team.team.location+ " "}<span className="inline text-sm"  onClick={toggleExpanded}><a href={href}  role="button" aria-expanded="true">[show/hide]</a></span></h2>
             {logo}
             </div>
-            {children}
+            {expanded ? <div className="hidden"></div> : (<div >{children}</div>)}
         </>
     );
 }

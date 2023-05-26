@@ -2,6 +2,7 @@ export type CFBGame = {
     id?:                 string;
     count?:              number;
     plays?:              CFBGamePlay[];
+    percentiles?:        { [key: string]: number }[];
     advBoxScore?:        BoxScoreClass;
     homeTeamId?:         string;
     awayTeamId?:         string;
@@ -151,6 +152,9 @@ export type TeamStatistic = {
     label?:        string;
 }
 
+export interface BoxScoreClassFilter extends BoxScoreClass {
+    [key: string]: any;
+}
 export type BoxScoreClass = {
     pass?:        Pass[];
     rush?:        Rush[];
