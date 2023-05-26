@@ -215,8 +215,11 @@ export default function CFBTeamStatsTable({
             }
         });
     });
-    let awayAdvBoxscoreTeam = advBoxScore.team?.filter((row) => row.pos_team.toString() == awayTeam.id)
-    let homeAdvBoxscoreTeam = advBoxScore.team?.filter((row) => row.pos_team.toString() == homeTeam.id)
+
+    let awayAdvBoxscoreTeam: any;
+    let homeAdvBoxscoreTeam: any;
+    awayAdvBoxscoreTeam = advBoxScore.team?.filter((row) => row.pos_team.toString() == awayTeam.id)
+    homeAdvBoxscoreTeam = advBoxScore.team?.filter((row) => row.pos_team.toString() == homeTeam.id)
     let teamAdvBoxscore = advBoxScore.team;
     let expectedPointsColumns = ["EPA_plays","EPA_overall_total", "EPA_overall_offense", "EPA_special_teams", "EPA_penalty", "EPA_misc"];
     let productionColumns = ["scrimmage_plays","off_yards","yards_per_play","EPA_overall_off","EPA_per_play","passes","pass_yards","yards_per_pass","EPA_passing_overall","EPA_passing_per_play","rushes","rush_yards","yards_per_rush", "EPA_rushing_overall","EPA_rushing_per_play"];
