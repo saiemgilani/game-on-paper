@@ -47,7 +47,7 @@ function boxScoreRoundNumber(value, power10, fixed) {
     return (Math.round(parseFloat(value || 0) * (Math.pow(10, power10))) / (Math.pow(10, power10))).toFixed(fixed)
 }
 interface StatKeyNames {
-    [key: string]: string
+    [key: string]: any
   }
 const percentile_title_key_mapping: StatKeyNames = {
     "EPA_per_play" : "epaPerPlay",

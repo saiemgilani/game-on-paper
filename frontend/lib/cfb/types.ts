@@ -167,7 +167,7 @@ export type BoxScoreClass = {
 }
 
 export type Drive = {
-    pos_team?:                      number;
+    pos_team:                       number;
     drive_total_available_yards?:   number;
     drive_total_gained_yards?:      number;
     avg_field_position?:            number;
