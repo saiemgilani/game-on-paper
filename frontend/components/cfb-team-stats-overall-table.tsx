@@ -134,68 +134,68 @@ function boxScoreRetrievePercentile(percentiles: any, value: number, key: string
     }
 }
 
-function handleBoxScoreRates(percentiles: any, item: any, teamInfo: any, useSuffix: any, decimalPoints: number) {
-    let baseTeamInfo = teamInfo
+// function handleBoxScoreRates(percentiles: any, item: any, teamInfo: any, useSuffix: any, decimalPoints: number) {
+//     let baseTeamInfo = teamInfo
 
-    let subKeys = item.split('.');
-    if (subKeys.length == 1) {
-        subKeys.splice(0, 0, 'team');
-    }
+//     let subKeys = item.split('.');
+//     if (subKeys.length == 1) {
+//         subKeys.splice(0, 0, 'team');
+//     }
 
-    let finalTeamInfo = [...baseTeamInfo[subKeys[0]]]
-    const finalKey = subKeys[1];
-    if (finalKey.includes('rushing_stuff')) {
-        finalTeamInfo.reverse()
-    }
+//     let finalTeamInfo = [...baseTeamInfo[subKeys[0]]]
+//     const finalKey = subKeys[1];
+//     if (finalKey.includes('rushing_stuff')) {
+//         finalTeamInfo.reverse()
+//     }
 
 
-    let finalDecimalPoints = decimalPoints || 1;
-    var result = ""
-    if (boxScoreNonRatePercentColumns.includes(finalKey)) {
-        finalTeamInfo.forEach(teamData => {
-            let val = retrieveValue(teamData, finalKey) || 0;
-            let rate = parseFloat(JSON.parse(JSON.stringify(val)));
-            if (finalKey.includes('_third') || finalKey.includes('_rz')) {
-                rate *= 100
-            }
-            let pct = boxScoreRetrievePercentile(percentiles, val, finalKey);
-            let colorRampClass = boxScoreGenerateColorRampValue(percentiles, pct.pctl, 100, null)
-            //console.log(`calculated pctl for key ${finalKey} with pct value ${pct} and class ${colorRampClass}`)
-            result += `<td class="numeral${colorRampClass}" style="text-align: center;" title="Worst: ${boxScoreRoundNumber(parseFloat(pct.min), 2, 0)}%\nMedian: ${boxScoreRoundNumber(parseFloat(pct.mid), 2, 0)}%\nBest: ${boxScoreRoundNumber(parseFloat(pct.max), 2, 0)}%">${boxScoreRoundNumber(parseFloat(rate), 2, 0)}% <small class="align-self-center" style="opacity: 50%">${boxScoreGetOrdinal(pct.pctl)} %ile</small></td>`;
-        });
-    } else if (boxScoreNonRateDecimalColumns.includes(finalKey)) {
-        finalTeamInfo.forEach(teamData => {
-            let val = retrieveValue(teamData, finalKey) || 0;
-            let pct = boxScoreRetrievePercentile(percentiles, val, finalKey);
-            let colorRampClass = boxScoreGenerateColorRampValue(percentiles, pct.pctl, 100, null)
-            //console.log(`calculated pctl for key ${finalKey} with pct value ${pct} and class ${colorRampClass}`)
-            result += `<td class="numeral${colorRampClass}" style="text-align: center;" title="Worst: ${boxScoreRoundNumber(parseFloat(pct.min), 2, finalDecimalPoints)}\nMedian: ${boxScoreRoundNumber(parseFloat(pct.mid), 2, finalDecimalPoints)}\nBest: ${boxScoreRoundNumber(parseFloat(pct.max), 2, finalDecimalPoints)}">${boxScoreRoundNumber(parseFloat(val), 2, finalDecimalPoints)} <small class="align-self-center" style="opacity: 50%">${boxScoreGetOrdinal(pct.pctl)} %ile</small></td>`;
-        });
-    } else if (boxScoreNonRateColumns.includes(finalKey)) {
-        finalTeamInfo.forEach(teamData => {
-            let val = retrieveValue(teamData, finalKey) || 0;
-            let pct = boxScoreRetrievePercentile(percentiles, val, finalKey);
-            let colorRampClass = boxScoreGenerateColorRampValue(percentiles, pct.pctl, 100, null)
-            //console.log(`calculated pctl for key ${finalKey} with pct value ${pct} and class ${colorRampClass}`)
-            result += `<td class="numeral${colorRampClass}" style="text-align: center;" title="Worst: ${pct.min}\nMedian: ${pct.mid}\nBest: ${pct.max}">${val} <small class="align-self-center" style="opacity: 50%">${boxScoreGetOrdinal(pct.pctl)} %ile</small></td>`;
-        });
-    } else {
-        finalTeamInfo.forEach(teamData => {
-            let val = retrieveValue(teamData, finalKey) || 0;
-            var rate = 0.0;
-            if (useSuffix) {
-                rate = retrieveValue(teamData,`${finalKey}_rate`)
-            } else {
-                rate = (parseFloat(val) / parseFloat(retrieveValue(teamData,'scrimmage_plays')))
-            }
-            let pct = boxScoreRetrievePercentile(percentiles, rate, finalKey);
-            let colorRampClass = boxScoreGenerateColorRampValue(percentiles, pct.pctl, 100, null)
-            //console.log(`calculated pctl for key ${finalKey} with pct value ${pct} and class ${colorRampClass}`)
-            result += `<td class="numeral${colorRampClass}" style="text-align: center;" title="Worst: ${boxScoreRoundNumber(parseFloat(100.0 * pct.min), 2, 0)}%\nMedian: ${boxScoreRoundNumber(parseFloat(100.0 * pct.mid), 2, 0)}%\nBest: ${boxScoreRoundNumber(parseFloat(100.0 * pct.max), 2, 0)}%">${boxScoreRoundNumber(parseFloat(100.0 * rate), 2, 0)}% <small class="align-self-center" style="opacity: 50%">${boxScoreGetOrdinal(pct.pctl)} %ile</small></td>`;
-        });
-    }
-    return result;
-}
+//     let finalDecimalPoints = decimalPoints || 1;
+//     var result = ""
+//     if (boxScoreNonRatePercentColumns.includes(finalKey)) {
+//         finalTeamInfo.forEach(teamData => {
+//             let val = retrieveValue(teamData, finalKey) || 0;
+//             let rate = parseFloat(JSON.parse(JSON.stringify(val)));
+//             if (finalKey.includes('_third') || finalKey.includes('_rz')) {
+//                 rate *= 100
+//             }
+//             let pct = boxScoreRetrievePercentile(percentiles, val, finalKey);
+//             let colorRampClass = boxScoreGenerateColorRampValue(percentiles, pct.pctl, 100, null)
+//             //console.log(`calculated pctl for key ${finalKey} with pct value ${pct} and class ${colorRampClass}`)
+//             result += `<td class="numeral${colorRampClass}" style="text-align: center;" title="Worst: ${boxScoreRoundNumber(parseFloat(pct.min), 2, 0)}%\nMedian: ${boxScoreRoundNumber(parseFloat(pct.mid), 2, 0)}%\nBest: ${boxScoreRoundNumber(parseFloat(pct.max), 2, 0)}%">${boxScoreRoundNumber(parseFloat(rate), 2, 0)}% <small class="align-self-center" style="opacity: 50%">${boxScoreGetOrdinal(pct.pctl)} %ile</small></td>`;
+//         });
+//     } else if (boxScoreNonRateDecimalColumns.includes(finalKey)) {
+//         finalTeamInfo.forEach(teamData => {
+//             let val = retrieveValue(teamData, finalKey) || 0;
+//             let pct = boxScoreRetrievePercentile(percentiles, val, finalKey);
+//             let colorRampClass = boxScoreGenerateColorRampValue(percentiles, pct.pctl, 100, null)
+//             //console.log(`calculated pctl for key ${finalKey} with pct value ${pct} and class ${colorRampClass}`)
+//             result += `<td class="numeral${colorRampClass}" style="text-align: center;" title="Worst: ${boxScoreRoundNumber(parseFloat(pct.min), 2, finalDecimalPoints)}\nMedian: ${boxScoreRoundNumber(parseFloat(pct.mid), 2, finalDecimalPoints)}\nBest: ${boxScoreRoundNumber(parseFloat(pct.max), 2, finalDecimalPoints)}">${boxScoreRoundNumber(parseFloat(val), 2, finalDecimalPoints)} <small class="align-self-center" style="opacity: 50%">${boxScoreGetOrdinal(pct.pctl)} %ile</small></td>`;
+//         });
+//     } else if (boxScoreNonRateColumns.includes(finalKey)) {
+//         finalTeamInfo.forEach(teamData => {
+//             let val = retrieveValue(teamData, finalKey) || 0;
+//             let pct = boxScoreRetrievePercentile(percentiles, val, finalKey);
+//             let colorRampClass = boxScoreGenerateColorRampValue(percentiles, pct.pctl, 100, null)
+//             //console.log(`calculated pctl for key ${finalKey} with pct value ${pct} and class ${colorRampClass}`)
+//             result += `<td class="numeral${colorRampClass}" style="text-align: center;" title="Worst: ${pct.min}\nMedian: ${pct.mid}\nBest: ${pct.max}">${val} <small class="align-self-center" style="opacity: 50%">${boxScoreGetOrdinal(pct.pctl)} %ile</small></td>`;
+//         });
+//     } else {
+//         finalTeamInfo.forEach(teamData => {
+//             let val = retrieveValue(teamData, finalKey) || 0;
+//             var rate = 0.0;
+//             if (useSuffix) {
+//                 rate = retrieveValue(teamData,`${finalKey}_rate`)
+//             } else {
+//                 rate = (parseFloat(val) / parseFloat(retrieveValue(teamData,'scrimmage_plays')))
+//             }
+//             let pct = boxScoreRetrievePercentile(percentiles, rate, finalKey);
+//             let colorRampClass = boxScoreGenerateColorRampValue(percentiles, pct.pctl, 100, null)
+//             //console.log(`calculated pctl for key ${finalKey} with pct value ${pct} and class ${colorRampClass}`)
+//             result += `<td class="numeral${colorRampClass}" style="text-align: center;" title="Worst: ${boxScoreRoundNumber(parseFloat(100.0 * pct.min), 2, 0)}%\nMedian: ${boxScoreRoundNumber(parseFloat(100.0 * pct.mid), 2, 0)}%\nBest: ${boxScoreRoundNumber(parseFloat(100.0 * pct.max), 2, 0)}%">${boxScoreRoundNumber(parseFloat(100.0 * rate), 2, 0)}% <small class="align-self-center" style="opacity: 50%">${boxScoreGetOrdinal(pct.pctl)} %ile</small></td>`;
+//         });
+//     }
+//     return result;
+// }
 
 function retrieveValue(dictionary: any, key: any) {
     const subKeys = key.split('.')
