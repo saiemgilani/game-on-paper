@@ -14,13 +14,13 @@ interface StatKeyNames {
 let boxScoreNonRateDecimalColumns = ["expected_turnovers","expected_turnover_margin","turnover_luck","EPA_middle_8_per_play","EPA_middle_8","EPA_middle_8_per_play","EPA_middle_8","EPA_early_down_per_play","EPA_early_down","EPA_sp","EPA_special_teams","EPA_kickoff","EPA_punt","EPA_fg","EPA_overall_off","EPA_per_play","EPA_passing_overall","EPA_passing_per_play", "EPA_rushing_overall","EPA_rushing_per_play","points_per_drive","yards_per_drive","plays_per_drive","avg_field_position","rushing_highlight_yards_per_opp","line_yards_per_carry","yards_per_rush","yards_per_pass","yards_per_play","drive_stopped_rate","EPA_non_explosive","EPA_non_explosive_passing","EPA_non_explosive_rushing","EPA_non_explosive_per_play","EPA_non_explosive_passing_per_play","EPA_non_explosive_rushing_per_play"];
 let boxScoreNonRateColumns = ["EPA_plays","scrimmage_plays","expected_turnover_margin","turnover_margin","turnovers","expected_turnovers","turnover_luck","early_downs","late_downs","fumbles","INT","PD","middle_8","EPA_middle_8_per_play","EPA_middle_8","EPA_early_down_per_play","EPA_early_down","fumbles_lost","fumbles_recovered","Int","TFL","TFL_pass","TFL_rush","total_fumbles","def_int","points_per_drive","drives","points_per_drive","yards_per_drive","plays_per_drive","drive_total_gained_yards_rate","avg_field_position","rushing_highlight_yards","line_yards","yards_per_rush","yards_per_pass","yards_per_play","off_yards","pass_yards","rush_yards","EPA_overall_offense","EPA_penalty","EPA_overall_total","second_level_yards","open_field_yards","drive_stopped_rate","EPA_non_explosive","EPA_non_explosive_passing","EPA_non_explosive_rushing","EPA_non_explosive_per_play","EPA_non_explosive_passing_per_play","EPA_non_explosive_rushing_per_play"];
 let boxScoreNonRatePercentColumns = ["drive_total_gained_yards_rate","drive_stopped_rate","EPA_success_rate_third","EPA_success_rate_rz"];
-function boxScoreGetOrdinal(n) {
+function boxScoreGetOrdinal(n: number) {
     var s = ["th", "st", "nd", "rd"];
     let v = n % 100;
     return n + (s[(v - 20) % 10] || s[v] || s[0]);
 }
 
-function boxScoreGenerateColorRampValue(percentiles, input, max, midColor) {
+function boxScoreGenerateColorRampValue(percentiles: any, input: string, max: string, midColor: string) {
     if (percentiles.length == 0) {
         //console.log('no pctls logged')
         return null;
@@ -43,7 +43,7 @@ function boxScoreGenerateColorRampValue(percentiles, input, max, midColor) {
     }
 }
 
-function boxScoreRoundNumber(value, power10, fixed) {
+function boxScoreRoundNumber(value: any, power10: number, fixed: number) {
     return (Math.round(parseFloat(value || 0) * (Math.pow(10, power10))) / (Math.pow(10, power10))).toFixed(fixed)
 }
 
@@ -76,7 +76,7 @@ const slim_title_mapping: StatKeyNames = {
 }
 
 
-function boxScoreRetrievePercentile(percentiles, value, key) {
+function boxScoreRetrievePercentile(percentiles: any, value: number, key: string) {
     if (percentiles.length == 0) {
         //console.log('no pctls available')
         return {
@@ -100,11 +100,11 @@ function boxScoreRetrievePercentile(percentiles, value, key) {
 
     //console.log(`calc pctl for key ${adjKey} w/ val ${value}`)
 
-    let basePctls = percentiles.map(item => {
+    let basePctls = percentiles.map((item: any) => {
         let val = retrieveValue(item, adjKey);
         return parseFloat(val)
     })
-    basePctls.sort((a, b) => {
+    basePctls.sort((a: any, b: any) => {
         return parseFloat(a) - parseFloat(b)
     })
 
@@ -121,7 +121,7 @@ function boxScoreRetrievePercentile(percentiles, value, key) {
     let pctls = [...basePctls];
     //console.log(`mapped pctls for key ${adjKey}: ${JSON.stringify(pctls, null, 2)}`)
     pctls = pctls.filter(item => {
-        return parseFloat(item) <= parseFloat(value)
+        return parseFloat(item) <= parseFloat(value.toString())
     });
 
     const pct = pctls.length
@@ -134,7 +134,7 @@ function boxScoreRetrievePercentile(percentiles, value, key) {
     }
 }
 
-function handleBoxScoreRates(percentiles, item, teamInfo, useSuffix, decimalPoints) {
+function handleBoxScoreRates(percentiles: any, item: any, teamInfo: any, useSuffix: any, decimalPoints: number) {
     let baseTeamInfo = (teamInfo == null) ? advBoxScore : teamInfo;
 
     let subKeys = item.split('.');
@@ -197,7 +197,7 @@ function handleBoxScoreRates(percentiles, item, teamInfo, useSuffix, decimalPoin
     return result;
 }
 
-function retrieveValue(dictionary, key) {
+function retrieveValue(dictionary: any, key: any) {
     const subKeys = key.split('.')
     let sub = dictionary;
     for (const k of subKeys) {
