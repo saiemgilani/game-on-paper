@@ -32,8 +32,8 @@ export default function CFBTeamStatsHeader({
     const toggleExpanded = () => setExpanded((current) => !current)
     return(
         <>
-            <div className="flex justify-between mx-4">
-            <h2 className="text-2xl font-bold text-left justify-around px-2 py-2">{title+ " "}<span className="inline text-sm"  onClick={toggleExpanded}><a href={href}  role="button" aria-expanded="true">[show/hide]</a></span></h2>
+            <div className="flex justify-between mx-2">
+            <h2 className="text-2xl font-bold text-left justify-around py-2">{title+ " "}<span className="inline text-sm"  onClick={toggleExpanded}><a href={href}  role="button" aria-expanded="true">[show/hide]</a></span></h2>
 
             </div>
             {expanded ?  (<div >{children}</div>): <div className="hidden"></div>}
