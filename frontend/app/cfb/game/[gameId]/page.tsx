@@ -9,6 +9,7 @@ import CFBPlayTableHeader from '@/components/cfb-play-table-header';
 import CFBPlayerStatsTable from '@/components/cfb-player-stats-table';
 import CFBPlayerStatsHeader from '@/components/cfb-player-stats-header';
 import CFBTeamStatsTable from '@/components/cfb-team-stats-table';
+import CFBTeamStatsHeader from '@/components/cfb-team-stats-header';
 import CFBTeamStatsOverallTable from '@/components/cfb-team-stats-overall-table';
 async function getCFBGame(params: any) {
     const endpoint = new URL(pyApiOrigin+'/cfb/game/'+params.gameId);
@@ -58,90 +59,96 @@ export default async function CFBGamePage({ params }: {
                     <a className="p-2 link-secondary" href={`https://www.espn.com/college-football/game/_/gameId/${data.id}`}>Gamecast</a>
                 </nav>
             </div>
+            <div className=" gap-2">
+                <div className="px-2 py-2">
+                    {data && data.advBoxScore ? (
+                        <CFBTeamStatsHeader title={"Team Stats "} href={"#team-stats"}>
+                        <div className="grid grid-cols-1 lg:grid-cols-3 mx-2">
+                            <div className="grid grid-rows-1 w-1/3 mx-2">
+                                <CFBTeamStatsOverallTable
+                                    advBoxScore={data?.advBoxScore ?? []}
+                                    percentiles = {data?.percentiles ?? []}
+                                    title={"Overall"}
+                                    awayTeam={awayTeam}
+                                    homeTeam={homeTeam}
+                                    season={season} />
+                                <CFBTeamStatsTable
+                                    advBoxScore={data?.advBoxScore ?? []}
+                                    title={"Expected Points"}
+                                    awayTeam={awayTeam}
+                                    homeTeam={homeTeam}
+                                    season={season} />
+                                <CFBTeamStatsTable
+                                    advBoxScore={data?.advBoxScore ?? []}
+                                    title={"Production"}
+                                    awayTeam={awayTeam}
+                                    homeTeam={homeTeam}
+                                    season={season} />
+                                <CFBTeamStatsTable
+                                    advBoxScore={data?.advBoxScore ?? []}
+                                    title={"Rushing"}
+                                    awayTeam={awayTeam}
+                                    homeTeam={homeTeam}
+                                    season={season} />
+                            </div>
+                            <div className="grid grid-rows-1 w-1/3 mx-2">
+                                <div>
+                                    <CFBTeamStatsTable
+                                        advBoxScore={data?.advBoxScore ?? []}
+                                        title={"Explosiveness"}
+                                        awayTeam={awayTeam}
+                                        homeTeam={homeTeam}
+                                        season={season} />
+                                </div>
+                                <div>
+                                    <CFBTeamStatsTable
+                                        advBoxScore={data?.advBoxScore ?? []}
+                                        title={"Situational"}
+                                        awayTeam={awayTeam}
+                                        homeTeam={homeTeam}
+                                        season={season} />
+                                </div>
+                            </div>
+                            <div className="grid grid-rows-1 w-1/3 mx-2">
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 mx-2">
-                <div className="grid grid-rows-1 w-1/3 mx-2">
-                        <CFBTeamStatsOverallTable
-                            advBoxScore={data?.advBoxScore ?? []}
-                            percentiles = {data?.percentiles ?? []}
-                            title={"Overall"}
-                            awayTeam={awayTeam}
-                            homeTeam={homeTeam}
-                            season={season} />
-                        <CFBTeamStatsTable
-                            advBoxScore={data?.advBoxScore ?? []}
-                            title={"Expected Points"}
-                            awayTeam={awayTeam}
-                            homeTeam={homeTeam}
-                            season={season} />
-                        <CFBTeamStatsTable
-                            advBoxScore={data?.advBoxScore ?? []}
-                            title={"Production"}
-                            awayTeam={awayTeam}
-                            homeTeam={homeTeam}
-                            season={season} />
-                        <CFBTeamStatsTable
-                            advBoxScore={data?.advBoxScore ?? []}
-                            title={"Rushing"}
-                            awayTeam={awayTeam}
-                            homeTeam={homeTeam}
-                            season={season} />
-                </div>
-                <div className="grid grid-rows-1 w-1/3 mx-2">
-                    <div>
-                        <CFBTeamStatsTable
-                            advBoxScore={data?.advBoxScore ?? []}
-                            title={"Explosiveness"}
-                            awayTeam={awayTeam}
-                            homeTeam={homeTeam}
-                            season={season} />
-                    </div>
-                    <div>
-                        <CFBTeamStatsTable
-                            advBoxScore={data?.advBoxScore ?? []}
-                            title={"Situational"}
-                            awayTeam={awayTeam}
-                            homeTeam={homeTeam}
-                            season={season} />
-                    </div>
-                </div>
-                <div className="grid grid-rows-1 w-1/3 mx-2">
-
-                    <div>
-                        <CFBTeamStatsTable
-                            advBoxScore={data?.advBoxScore ?? []}
-                            title={"Drives"}
-                            awayTeam={awayTeam}
-                            homeTeam={homeTeam}
-                            season={season} />
-                    </div>
-                    <div>
-                        <CFBTeamStatsTable
-                            advBoxScore={data?.advBoxScore ?? []}
-                            title={"Defensive"}
-                            awayTeam={awayTeam}
-                            homeTeam={homeTeam}
-                            season={season} />
-                    </div>
-                    <div className="py-2">
-                        <CFBTeamStatsTable
-                            advBoxScore={data?.advBoxScore ?? []}
-                            title={"Turnovers"}
-                            awayTeam={awayTeam}
-                            homeTeam={homeTeam}
-                            season={season} />
-                    </div>
-                    <div className="py-2">
-                        <CFBTeamStatsTable
-                            advBoxScore={data?.advBoxScore ?? []}
-                            title={"Special Teams"}
-                            awayTeam={awayTeam}
-                            homeTeam={homeTeam}
-                            season={season} />
-                    </div>
-                </div>
+                                <div>
+                                    <CFBTeamStatsTable
+                                        advBoxScore={data?.advBoxScore ?? []}
+                                        title={"Drives"}
+                                        awayTeam={awayTeam}
+                                        homeTeam={homeTeam}
+                                        season={season} />
+                                </div>
+                                <div>
+                                    <CFBTeamStatsTable
+                                        advBoxScore={data?.advBoxScore ?? []}
+                                        title={"Defensive"}
+                                        awayTeam={awayTeam}
+                                        homeTeam={homeTeam}
+                                        season={season} />
+                                </div>
+                                <div>
+                                    <CFBTeamStatsTable
+                                        advBoxScore={data?.advBoxScore ?? []}
+                                        title={"Turnovers"}
+                                        awayTeam={awayTeam}
+                                        homeTeam={homeTeam}
+                                        season={season} />
+                                </div>
+                                <div className="py-2">
+                                    <CFBTeamStatsTable
+                                        advBoxScore={data?.advBoxScore ?? []}
+                                        title={"Special Teams"}
+                                        awayTeam={awayTeam}
+                                        homeTeam={homeTeam}
+                                        season={season} />
+                                </div>
+                            </div>
+                        </div>
+                        </CFBTeamStatsHeader>
+                    )  : ("")}
+              </div>
             </div>
-
             <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                 <div className="px-2 py-2">
 

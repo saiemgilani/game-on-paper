@@ -314,7 +314,7 @@ export default function CFBTeamStatsOverallTable({
     }
     return(
         <>
-        <table className="table whitespace-pre w-1/3 mx-2">
+        <table className="table whitespace-pre mx-2">
             <thead>
                 <tr>
                     <th className="text-left whitespace-pre overflow-auto">{title}</th>
