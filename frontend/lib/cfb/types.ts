@@ -239,7 +239,7 @@ export type Rush = {
 }
 
 export type Turnover = {
-    pos_team?:                 number;
+    pos_team:                  number;
     pass_breakups?:            number;
     fumbles_lost?:             number;
     fumbles_recovered?:        number;
