@@ -1,12 +1,8 @@
 import * as React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import DataTable, { ExpanderComponentProps } from 'react-data-table-component';
-import { CFBGamePlay, Competitor, Competition, Away, BoxScoreClass, BoxScoreClassFilter, Pass, Rush, Receiver } from '@/lib/cfb/types';
-import AnimatedHeading from '@/components/FramerMotion/animated-heading';
-import { useState, useEffect } from "react";
-import { useTheme } from 'next-themes'
-import styled, { keyframes } from 'styled-components';
+import { Competitor, BoxScoreClassFilter } from '@/lib/cfb/types';
+
 
 interface StatKeyNames {
     [key: string]: string
@@ -281,10 +277,10 @@ export default function CFBTeamStatsTable({
     }
     return(
         <>
-        <table className="table whitespace-pre mx-2">
+        <table className="whitespace-pre min-w-[50%] lg:min-w-[90%]" >
             <thead>
                 <tr>
-                    <th className="text-left whitespace-pre overflow-auto">{title}</th>
+                    <th className="text-left whitespace-pre">{title}</th>
                     <th className="text-center">{formatLogo(awayTeam, season)}</th>
                     <th className="text-center">{formatLogo(homeTeam, season)}</th>
                 </tr>
@@ -292,7 +288,7 @@ export default function CFBTeamStatsTable({
             <tbody>
             {awayAdvBoxscoreTeam && awayAdvBoxscoreTeam[0] ? (columns.map((item, idx) => (
                 <tr key={idx}>
-                    <td className="text-left whitespace-pre overflow-auto">
+                    <td className="text-left whitespace-pre">
                         {Object.keys(stat_key_title_mapping).includes(item) ? (stat_key_title_mapping[item]) : item }
                     </td>
                     <td className="text-center">{handleRates(item, awayAdvBoxscoreTeam[0], true, 2)}</td>

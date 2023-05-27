@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { CFBGamePlay, Competitor, Competition, Away, BoxScoreClass, BoxScoreClassFilter, Pass, Rush, Receiver } from '@/lib/cfb/types';
+import { Competitor, BoxScoreClassFilter } from '@/lib/cfb/types';
 
 
 interface StatKeyNames {
@@ -329,7 +329,7 @@ export default function CFBTeamStatsOverallTable({
     }
     return(
         <>
-        <table className="table whitespace-pre mx-2">
+        <table className="whitespace-pre min-w-[50%] lg:min-w-[90%]">
             <thead>
                 <tr>
                     <th className="text-left whitespace-pre overflow-auto">{title}</th>

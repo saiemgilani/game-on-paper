@@ -1,16 +1,7 @@
 "use client";
 import * as React from "react";
 import { useState } from "react";
-import {
-    Select,
-    SelectContent,
-    SelectGroup,
-    SelectItem,
-    SelectLabel,
-    SelectTrigger,
-    SelectValue,
-  } from "@/components/ui/select"
-  import { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { Conferences } from "@lib/utils"
   // Handles the submit event on form submit.
 

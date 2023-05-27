@@ -14,6 +14,7 @@ import { cn } from "@/lib/utils"
 import { SiteHeader } from "@/components/site-header"
 import Footer  from "@/components/footer"
 import { TailwindIndicator } from "@/components/tailwind-indicator"
+import PlausibleProvider from 'next-plausible'
 import { ThemeProvider } from "@/components/theme-provider"
 
 export const metadata: Metadata = {
@@ -31,6 +32,7 @@ export const metadata: Metadata = {
     shortcut: "/favicon-16x16.png",
     apple: "/apple-touch-icon.png",
   },
+
 }
 
 interface RootLayoutProps {
@@ -127,20 +129,17 @@ export default function RootLayout({ children }: RootLayoutProps) {
             crossOrigin="anonymous"
           />
         </head>
-        <body
-          className={cn(
-            "min-h-screen bg-background font-sans-serif antialiased --font-chivo",
-            fontSansSerif.className
-          )}
-        >
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            <div className="relative flex min-h-screen flex-col">
-              <SiteHeader />
-              <div className="flex-1">{children}</div>
-              <Footer />
-            </div>
-            <TailwindIndicator />
-          </ThemeProvider>
+        <body className={"min-h-screen bg-background font-sans-serif antialiased --font-chivo"}>
+          <PlausibleProvider domain="thegameonpaper.com">
+            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+              <div className="relative flex min-h-screen flex-col">
+                <SiteHeader />
+                <div className="flex-1">{children}</div>
+                <Footer />
+              </div>
+              <TailwindIndicator />
+            </ThemeProvider>
+          </PlausibleProvider>
         </body>
       </html>
     </>

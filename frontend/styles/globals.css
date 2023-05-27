@@ -209,7 +209,6 @@ table {
   font-size: 0.875rem;
   line-height: 1.25rem;
   padding: 0.5rem;
-  table-layout: auto;
 }
 table > thead {
   border-bottom: theme('colors.border-heading');
@@ -234,7 +233,9 @@ tr.table-warning > td, tr.table-warning  {
 .group:focus .group-focus\:max-h-40 {
 	max-height: 10rem;
 }
-
+.numeral {
+  font-family: "Chivo"; /* here to change font for just numerals in tables */
+}
 .hulk-text-level-9, .hulk-text-green {
   color: rgb(52, 199, 89);
 }

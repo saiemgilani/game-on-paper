@@ -4,7 +4,6 @@ import Link from "next/link"
 
 import { NavItem } from "@/lib/types"
 import { siteConfig } from "@/config/site"
-import { cn } from "@/lib/utils"
 import Logo from "@/components/SVG/logo"
 import { motion, useAnimation, AnimatePresence } from "framer-motion";
 import {

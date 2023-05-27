@@ -1,6 +1,7 @@
 "use client";
 import * as React from 'react';
 import { useState } from "react";
+import Link from 'next/link';
 
 export default function CFBPlayTableHeader({
     children,
@@ -8,16 +9,16 @@ export default function CFBPlayTableHeader({
     href }: {
         children: React.ReactNode,
         title: string,
-        href?: string }){
+        href: string }){
     const [expanded, setExpanded] = useState(false)
     const toggleExpanded = () => setExpanded((current) => !current)
     return(
         <>
             <div className="flex justify-between">
-                <h2 className="text-2xl font-bold text-left justify-around py-2">
+                <h2 className="text-2xl font-chivo text-left justify-around py-2">
                     {title}
                     <span className="inline text-sm"  onClick={toggleExpanded}>
-                        <a href={href}  role="button" aria-expanded="true">[show/hide]</a>
+                        <Link href={href}  role="button" aria-expanded="true">[show/hide]</Link>
                     </span>
                 </h2>
             </div>

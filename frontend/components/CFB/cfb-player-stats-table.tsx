@@ -1,12 +1,5 @@
 import * as React from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
-import DataTable, { ExpanderComponentProps } from 'react-data-table-component';
 import { CFBGamePlay, Competitor, Competition, Away, BoxScoreClass, Pass, Rush, Receiver } from '@/lib/cfb/types';
-import AnimatedHeading from '@/components/FramerMotion/animated-heading';
-import { useState, useEffect } from "react";
-import { useTheme } from 'next-themes'
-import styled, { keyframes } from 'styled-components';
 
 function roundNumber(value: any, power10: number, fixed: number) {
     return (Math.round(parseFloat(value || '0') * (Math.pow(10, power10))) / (Math.pow(10, power10))).toFixed(fixed)
@@ -51,12 +44,12 @@ export default function CFBPlayerStatsTable({
                 </tr>
             </thead>
             <tbody>
-            <tr className=" border-b">
+            <tr key={`dropbacks${team.id}`} className=" border-b">
                     <td colSpan={12} className="font-bold" title="Includes pass attempts and sacks.">Dropbacks</td>
             </tr>
-            {teamBox.pass?.map((p: Pass) => (
+            {teamBox.pass?.map((p: Pass, idx: any) => (
                 <>
-                    <tr className=" border-b">
+                    <tr key={idx} className=" border-b">
                         <td className="text-left">{p.passer_player_name} </td>
                         <td className="text-left">{ p.Comp +"/"+ p.Att + ", " + p.Yds + "yd"}{(Math.abs(parseFloat(p.Yds?.toString())) == 1) ? "" : "s" }{", "+ p.Pass_TD +" TD, "+ p.Int + " INT, " +
                                 p.Sck+ " Sck"}{ (Math.abs(parseFloat(p.Sck.toString())) == 1) ? "" : "s" }{", "+ roundNumber(parseFloat(p.exp_qbr.toString()), 2, 1) +" xQBR, " + roundNumber(calculateDETMER(p), 2, 2) + " "}<abbr title="Stands for 'Downfield Eventful Throwing Metric Encouraging Ripping it'. Built to find the most sicko QB performances. Developed by the Moon Crew Discord & @SickosCommittee on Twitter.">DETMER</abbr></td>
@@ -69,12 +62,12 @@ export default function CFBPlayerStatsTable({
                 </>
                 ))
             }
-            <tr className=" border-b">
+            <tr key={`rushAttempts${team.id}`} className=" border-b">
                     <td colSpan={12}  className="font-bold" >Rush attempts</td>
             </tr>
-            {teamBox.rush?.map((p: Rush) => (
+            {teamBox.rush?.map((p: Rush, idx: any) => (
                 <>
-                    <tr className=" border-b">
+                    <tr key={idx} className=" border-b">
                         <td className="text-left">{p.rusher_player_name} </td>
                         <td className="text-left">{ p.Car + " carr"}{(parseInt(p.Car.toString()) == 1) ? "y" : "ies"}{", "+ p.Yds +" yd"}{ (Math.abs(parseFloat(p.Yds.toString())) == 1) ? "" : "s" }{", " +
                             p.Rush_TD + " TD, "+ p.Fum +" Fum ("+ p.Fum_Lost+ " lost)" }</td>
@@ -88,12 +81,12 @@ export default function CFBPlayerStatsTable({
                 ))
             }
 
-            <tr className=" border-b">
+            <tr key={`passTargets${team.id}`} className=" border-b">
                     <td colSpan={12}  className="font-bold" >Pass targets</td>
             </tr>
-            {teamBox.receiving?.map((p: Receiver) => (
+            {teamBox.receiving?.map((p: Receiver, idx: any) => (
                 <>
-                    <tr className=" border-b">
+                    <tr key={idx} className=" border-b">
                         <td className="text-left">{p.receiver_player_name} </td>
                         <td className="text-left">{ p.Rec +" catch"}{ (parseInt(p.Rec.toString()) == 1) ? "" : "es" }{" ("+p.Tar+" target"}{ (parseInt(p.Tar.toString()) == 1) ? "" : "s" }{"), "+
                             p.Yds+ "yd"}{(Math.abs(parseFloat(p.Yds.toString())) == 1) ? "" : "s"}{", "+ p.Rec_TD +" TD, "+ p.Fum +" Fum ("+p.Fum_Lost +" lost)"}</td>

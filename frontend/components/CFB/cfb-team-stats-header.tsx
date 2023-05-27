@@ -2,12 +2,9 @@
 import * as React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import DataTable, { ExpanderComponentProps } from 'react-data-table-component';
-import { CFBGamePlay, Competitor, Competition, Away, BoxScoreClass, Pass, Rush, Receiver } from '@/lib/cfb/types';
-import AnimatedHeading from '@/components/FramerMotion/animated-heading';
-import { useState, useEffect } from "react";
-import { useTheme } from 'next-themes'
-import styled, { keyframes } from 'styled-components';
+import { Competitor } from '@/lib/cfb/types';
+import { useState } from "react";
+
 function formatLogo(team: Competitor, season: number) {
     return (
     <>
@@ -27,16 +24,17 @@ export default function CFBTeamStatsHeader({
     href }: {
         children: React.ReactNode,
         title: string,
-        href?: string }){
+        href: string }){
     const [expanded, setExpanded] = useState(true)
     const toggleExpanded = () => setExpanded((current) => !current)
     return(
         <>
-            <div className="flex justify-between mx-2">
-            <h2 className="text-2xl font-bold text-left justify-around py-2">{title+ " "}<span className="inline text-sm"  onClick={toggleExpanded}><a href={href}  role="button" aria-expanded="true">[show/hide]</a></span></h2>
+            <div className="justify-around">
+            <h2 className="text-2xl font-chivo text-left justify-around py-2">{title+ " "}<span className="inline text-sm"  onClick={toggleExpanded}>
+                <Link href={href}  role="button" aria-expanded="true">[show/hide]</Link></span></h2>
 
             </div>
-            {expanded ?  (<div >{children}</div>): <div className="hidden"></div>}
+            {expanded ?  (<div className="justify-around">{children}</div>): <div className="hidden"></div>}
         </>
     );
 }

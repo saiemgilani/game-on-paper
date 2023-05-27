@@ -21,7 +21,7 @@ function FooterLink({ href, text }: { href: string; text: string }) {
   return (
     <Link href={href === "/home" ? "/" : href}>
       <motion.p
-        className="capitalize hover:text-black dark:hover:text-white w-fit  md:gap-2"
+        className="capitalize hover:text-black dark:hover:text-white w-fit gap-2  md:gap-2"
         variants={popUp}
       >
         {text}
@@ -52,7 +52,7 @@ export default function Footer() {
             initial="hidden"
             animate="visible"
             variants={FadeContainer}
-            className="flex items-center md:gap-2"
+            className="flex items-center gap-2"
           >
             {siteConfig.mainNav?.map(
               (item, index) =>

@@ -2,52 +2,10 @@
 import * as React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import DataTable, { ExpanderComponentProps } from 'react-data-table-component';
 import { CFBGamePlay, Competitor, Competition, Away } from '@/lib/cfb/types';
-import AnimatedHeading from '@/components/FramerMotion/animated-heading';
-import  { useState, useEffect, useCallback, useRef } from "react";
-import { useTheme } from 'next-themes'
-import styled, { keyframes } from 'styled-components';
-import {
-    Accordion,
-    AccordionContent,
-    AccordionItem,
-    AccordionTrigger,
-  } from "@/components/ui/accordion"
-import { format } from 'path';
-const rotate360 = keyframes`
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
-`;
-
-const Spinner = styled.div`
-	margin: 16px;
-	animation: ${rotate360} 1s linear infinite;
-	transform: translateZ(0);
-	border-top: 2px solid grey;
-	border-right: 2px solid grey;
-	border-bottom: 2px solid grey;
-	border-left: 4px solid black;
-	background: transparent;
-	width: 80px;
-	height: 80px;
-	border-radius: 50%;
-`;
+import  { useState } from "react";
 
 
-const CustomLoader = () => (
-	<div style={{ padding: '24px' }}>
-		<Spinner />
-		<div>Loading plays data...</div>
-	</div>
-);
-
-const CLEAN_LIST = [61]
 interface StatKeyNames {
     [key: string]: string
   }
@@ -191,6 +149,7 @@ const turnover_vec = [
     "Uncategorized Touchdown"
 ]
 
+const CLEAN_LIST = [61]
 function cleanAbbreviation(team: Away) {
     if (team.abbreviation !== undefined) {
         if (CLEAN_LIST.includes(parseInt(team.id))) {

@@ -1,6 +1,7 @@
 export type CFBGame = {
     id?:                 string;
     count?:              number;
+    gei:                 number;
     plays?:              CFBGamePlay[];
     percentiles?:        { [key: string]: number }[];
     advBoxScore?:        BoxScoreClass;
@@ -12,8 +13,8 @@ export type CFBGame = {
     bigPlays?:           CFBGamePlay[];
     winprobability?:     Winprobability[];
     boxScore?:           BoxScore;
-    homeTeamSpread?:     number;
-    overUnder?:          number;
+    homeTeamSpread:      number;
+    overUnder:           number;
     header:              Header;
     broadcasts?:         CFBGameBroadcast[];
     videos?:             Video[];

@@ -1,7 +1,129 @@
 "use client";
-import { useEffect } from "react"
-import { Chart } from "chart.js";
-import { CFBGamePlay, Competitor, Competition, Away } from '@/lib/cfb/types';
+import React, { useEffect, useRef, useState, Component } from "react"
+import { Plugin } from "chart.js";
+import Chart from "chart.js/auto";
+import { Chart as ChartJS, ChartComponent, LineController, LineControllerDatasetOptions } from "chart.js"
+
+import { clone } from "chart.js/helpers"
+import { CFBGamePlay, Competitor, Header, Competition, Away } from '@/lib/cfb/types';
+
+// class NegativeTransparentLine extends LineController {
+//     update () {
+//         for(let i = 0; i < this.chart.data.datasets.length; i++) {
+//             // get the min and max values
+//             var min = Math.min.apply(null, this.chart.data.datasets[i].data);
+//             var max = Math.max.apply(null, this.chart.data.datasets[i].data);
+//             var yScale = this.getScaleForId(this.chart.data.datasets[i].yAxisID);
+
+//             // figure out the pixels for these and the value 0
+//             var top = yScale.getPixelForValue(max);
+//             var zero = yScale.getPixelForValue(0);
+//             var bottom = yScale.getPixelForValue(min);
+
+//             // build a gradient that switches color at the 0 point
+//             var ctx = this.chart.chart.ctx;
+//             ctx.save()
+//             var gradientFill = ctx.createLinearGradient(0, top, 0, bottom);
+//             var gradientStroke = ctx.createLinearGradient(0, top, 0, bottom);
+//             var ratio = Math.min((zero - top) / (bottom - top), 1);
+//             if (ratio < 0) {
+//                 ratio = 0;
+//                 gradientFill.addColorStop(1, `rgba(${awayTeamColor.r},${awayTeamColor.g},${awayTeamColor.b}, 0.5)`);
+
+//                 gradientStroke.addColorStop(1, `rgba(${awayTeamColor.r},${awayTeamColor.g},${awayTeamColor.b}, 1.0)`);
+//             } else if (ratio == 1) {
+//                 gradientFill.addColorStop(1, `rgba(${homeTeamColor.r},${homeTeamColor.g},${homeTeamColor.b}, 0.5)`);
+
+//                 gradientStroke.addColorStop(1, `rgba(${homeTeamColor.r},${homeTeamColor.g},${homeTeamColor.b}, 1.0)`);
+//             } else {
+//                 gradientFill.addColorStop(0, `rgba(${homeTeamColor.r},${homeTeamColor.g},${homeTeamColor.b}, 0.5)`);
+//                 gradientFill.addColorStop(ratio, `rgba(${homeTeamColor.r},${homeTeamColor.g},${homeTeamColor.b}, 0.5)`);
+//                 gradientFill.addColorStop(ratio, `rgba(${awayTeamColor.r},${awayTeamColor.g},${awayTeamColor.b}, 0.5)`);
+//                 gradientFill.addColorStop(1, `rgba(${awayTeamColor.r},${awayTeamColor.g},${awayTeamColor.b}, 0.5)`);
+
+//                 gradientStroke.addColorStop(0, `rgba(${homeTeamColor.r},${homeTeamColor.g},${homeTeamColor.b}, 1.0)`);
+//                 gradientStroke.addColorStop(ratio, `rgba(${homeTeamColor.r},${homeTeamColor.g},${homeTeamColor.b}, 1.0)`);
+//                 gradientStroke.addColorStop(ratio, `rgba(${awayTeamColor.r},${awayTeamColor.g},${awayTeamColor.b}, 1.0)`);
+//                 gradientStroke.addColorStop(1, `rgba(${awayTeamColor.r},${awayTeamColor.g},${awayTeamColor.b}, 1.0)`);
+//             }
+
+//             this.chart.data.datasets[i].backgroundColor = gradientFill;
+//             this.chart.data.datasets[i].borderColor = gradientStroke;
+//             this.chart.data.datasets[i].pointBorderColor = gradientStroke;
+//             this.chart.data.datasets[i].pointBackgroundColor = gradientStroke;
+//             this.chart.data.datasets[i].pointHoverBorderColor = gradientStroke;
+//             this.chart.data.datasets[i].pointHoverBackgroundColor = gradientStroke;
+//             ctx.restore();
+//         }
+//         return Chart.controllers.line.prototype.update.apply(this, arguments);
+//     },
+//     draw (ease) {
+//         // call the parent draw method (inheritance in javascript, whatcha gonna do?)
+//         let viewport = getCurrentViewport()
+//         if (viewport == "xl" || viewport == "lg") {
+//             var imgSize = 75.0;
+
+//             var ctx = this.chart.ctx;                                         // get the context
+//             ctx.save();
+//             ctx.globalAlpha = 0.4;
+//             var sizeWidth = ctx.canvas.clientWidth;
+//             var sizeHeight = ctx.canvas.clientHeight;
+
+//             if (this.homeTeamImage) {                                       // if the image is loaded
+//                 ctx.drawImage(this.homeTeamImage, (sizeWidth / 8), (sizeHeight / 8) - (imgSize / 4.0), imgSize, imgSize);             // draw it - ~145 px per half
+//             }
+
+//             if (this.awayTeamImage) {                                    // if the image is loaded
+//                 ctx.drawImage(this.awayTeamImage, (sizeWidth / 8), 5 * (sizeHeight / 8) - (imgSize / 2.0), imgSize, imgSize);             // draw it - ~145 px per half
+//             }
+//             ctx.restore();
+
+//             Chart.controllers.line.prototype.draw.call(this, ease);
+//         }
+//     },
+//     initialize (chart, datasetIndex) {                     // override initialize too to preload the image, the image doesn't need to be outside as it is only used by this chart
+//         Chart.controllers.line.prototype.initialize.call(this, chart, datasetIndex);
+//         var homeImage = new Image();
+//         homeImage.setAttribute('crossOrigin','anonymous');
+//         homeImage.src = window.matchMedia('(prefers-color-scheme: dark)').matches ? `https://a.espncdn.com/i/teamlogos/ncaa/500-dark/${homeTeam.id}.png` : `https://a.espncdn.com/i/teamlogos/ncaa/500/${homeTeam.id}.png`;
+//         homeImage.onload = () => {                                            // when the image loads
+//             this.homeTeamImage = homeImage;                                    // save it as a property so it can be accessed from the draw method
+//             chart.render();                                                 // and force re-render to include it
+//         };
+
+//         var awayImage = new Image();
+//         awayImage.setAttribute('crossOrigin','anonymous');
+//         awayImage.src = window.matchMedia('(prefers-color-scheme: dark)').matches ? `https://a.espncdn.com/i/teamlogos/ncaa/500-dark/${awayTeam.id}.png` : `https://a.espncdn.com/i/teamlogos/ncaa/500/${awayTeam.id}.png`;
+//         awayImage.onload = () => {                                            // when the image loads
+//             this.awayTeamImage = awayImage;                                    // save it as a property so it can be accessed from the draw method
+//             chart.render();                                                 // and force re-render to include it
+//         };
+//     }
+// }
+// NegativeTransparentLine.id = 'NegativeTransparentLine';
+// NegativeTransparentLine.defaults = LineController.defaults;
+
+// const afterDrawPlugin = {
+//     id: 'afterDraw',
+//     afterDraw (chart: any) {
+//         let viewport = getCurrentViewport()
+//         if (viewport == "xl" || viewport == "lg") {
+//             let sizeWidth = chart.ctx.canvas.clientWidth;
+//             let sizeHeight = chart.ctx.canvas.clientHeight;
+//             let imgSize = 75.0;
+
+//             chart.ctx.save()
+//             chart.ctx.textAlign = "right"
+//             chart.ctx.font = "8px Helvetica";
+//             chart.ctx.fillStyle = window.matchMedia('(prefers-color-scheme: dark)').matches ? '#e8e6e3' : '#525252';
+//             chart.ctx.fillText("From GameOnPaper.com, by Akshay Easwaran (@akeaswaran)\nand Saiem Gilani (@saiemgilani)", sizeWidth - (imgSize / 4.0), 7.25 * (sizeHeight / 8) - 35)
+//             chart.ctx.restore();
+//         }
+//     }
+// }
+
+// ChartJS.register(NegativeTransparentLine, afterDrawPlugin)
+
 
 function calculateHalfSecondsRemaining(period: number, time: string) {
     if (period == null) {
@@ -180,100 +302,226 @@ function rgb2lab(rgb: any){
     return [(116 * y) - 16, 500 * (x - y), 200 * (y - z)]
 }
 
+
+
+
 export default function CFBWinProbChart({
     plays,
     homeTeam,
-    awayTeam }:{
+    awayTeam,
+    competitions }:{
         plays: CFBGamePlay[],
         homeTeam: Competitor,
-        awayTeam: Competitor}){
-    if (plays.length > 0) {
-        const allPlays = [...plays];
-        // console.log(gameData.plays[0])
+        awayTeam: Competitor,
+        competitions: Competition[]}){
 
-        // console.log(timestamps)
-        var homeComp = homeTeam;
-        var awayComp = awayTeam;
-        var homeTeamInfo = homeComp.team;
-        var awayTeamInfo = awayComp.team;
-        var awayTeamColor = hexToRgb(awayTeamInfo.color)
-        var homeTeamColor = hexToRgb(homeTeamInfo.color)
-            // if the homeTeamColor and the awayTeamColor are too similar, make the awayTeam use their alt
-        let dEHome = awayTeamColor !== null && homeTeamColor !== null ? deltaE([awayTeamColor.r, awayTeamColor.g, awayTeamColor.b], [homeTeamColor.r, homeTeamColor.g, homeTeamColor.b]): 0
-        if (dEHome <= 49 && awayTeamInfo.alternateColor != null) {
-            awayTeamColor = hexToRgb(awayTeamInfo.alternateColor)
-            console.log(`updating away team color from primary ${JSON.stringify(hexToRgb(awayTeamInfo.color))} to alt: ${JSON.stringify(awayTeamColor)}`)
-            if (awayTeamColor !== null && homeTeamColor !== null && deltaE([awayTeamColor.r, awayTeamColor.g, awayTeamColor.b], [homeTeamColor.r, homeTeamColor.g, homeTeamColor.b]) <= 49) {
-                awayTeamColor = hexToRgb(awayTeamInfo.color)
-                console.log(`resetting away team color from alt ${JSON.stringify(hexToRgb(awayTeamInfo.alternateColor))} from alt: ${JSON.stringify(awayTeamColor)} bc of similarity`)
-            }
+        // const allPlays = [...plays];
+        // // console.log(gameData.plays[0])
+        // var timestamps = Array.from(Array(plays.length).keys());
+        // // console.log(timestamps)
+        // var homeComp = homeTeam;
+        // var awayComp = awayTeam;
+        // var homeTeamInfo = homeComp.team;
+        // var awayTeamInfo = awayComp.team;
+        // var awayTeamColor = hexToRgb(awayTeamInfo.color)
+        // var homeTeamColor = hexToRgb(homeTeamInfo.color)
+        //     // if the homeTeamColor and the awayTeamColor are too similar, make the awayTeam use their alt
+        // let dEHome = awayTeamColor !== null && homeTeamColor !== null ? deltaE([awayTeamColor.r, awayTeamColor.g, awayTeamColor.b], [homeTeamColor.r, homeTeamColor.g, homeTeamColor.b]): 0
+        // if (dEHome <= 49 && awayTeamInfo.alternateColor != null) {
+        //     awayTeamColor = hexToRgb(awayTeamInfo.alternateColor)
+        //     console.log(`updating away team color from primary ${JSON.stringify(hexToRgb(awayTeamInfo.color))} to alt: ${JSON.stringify(awayTeamColor)}`)
+        //     if (awayTeamColor !== null && homeTeamColor !== null && deltaE([awayTeamColor.r, awayTeamColor.g, awayTeamColor.b], [homeTeamColor.r, homeTeamColor.g, homeTeamColor.b]) <= 49) {
+        //         awayTeamColor = hexToRgb(awayTeamInfo.color)
+        //         console.log(`resetting away team color from alt ${JSON.stringify(hexToRgb(awayTeamInfo.alternateColor))} from alt: ${JSON.stringify(awayTeamColor)} bc of similarity`)
+        //     }
+        // }
+
+        // // if either color is too similar to white, use gray
+        // let colors = [homeTeamColor, awayTeamColor]
+        // var adjusted = false;
+        // colors.forEach((clr, idx) => {
+        //     var dEBackground = clr !== null ? deltaE([clr.r, clr.g, clr.b], [255,255,255]): 0
+        //     if (dEBackground <= 49) {
+        //         adjusted = true;
+        //         if (idx == 0) {
+        //             homeTeamColor = hexToRgb("#CCCCCC")
+        //         } else {
+        //             awayTeamColor = hexToRgb("#CCCCCC")
+        //         }
+        //         console.log(`updating color at index ${idx} to gray bc of background`)
+        //     }
+        // })
+
+        // // if both colors are now gray, reset the homeTeamColor
+        // let dEHomeAdj = awayTeamColor !== null && homeTeamColor !== null ? deltaE([awayTeamColor.r, awayTeamColor.g, awayTeamColor.b], [homeTeamColor.r, homeTeamColor.g, homeTeamColor.b]) : 0
+        // if (dEHomeAdj <= 49 && adjusted) {
+        //     homeTeamColor = hexToRgb(homeTeamInfo.color);
+        //     console.log(`resetting home color to ${JSON.stringify(homeTeamColor)} because of similarity to gray away color`)
+        // }
+
+        // var homeTeamWP = plays.map(p => (p.pos_team.toString() == homeTeam.id) ? translateWP(p.winProbability.before) : translateWP(1.0 - p.winProbability.before));
+
+        // // handle end of game
+        // if (competitions[0].status.type.completed == true) {
+        //     if (homeComp.winner == true || parseInt(homeComp.score?.toString() || "0") > parseInt(awayComp.score?.toString() || "0")) {
+        //         timestamps.push(0)
+        //         homeTeamWP.push(translateWP(1.0))
+        //     } else if (awayComp.winner == true || parseInt(homeComp.score?.toString() || "0") < parseInt(awayComp.score?.toString() || "0")) {
+        //         timestamps.push(0)
+        //         homeTeamWP.push(translateWP(0.0))
+        //     }
+        // }
+
+        // var targetDataSet = {
+        //     yAxisID : 'y-axis-0',
+        //     fill: true,
+        //     lineTension: 0,
+        //     pointRadius: 0,
+        //     borderWidth: 3,
+        //     label: null,
+        //     data: homeTeamWP
+        // };
+
+        // console.log(`home: ${homeTeam.id}, ${cleanAbbreviation(homeTeam)}`)
+        // console.log(`away: ${awayTeam.id}, ${cleanAbbreviation(awayTeam)}`)
+        // var zipped = plays.map(function(e, i) {
+        //     return {
+        //       play: i,
+        //       team: e.pos_team,
+        //       homeWP: targetDataSet.data[i]
+        //     }//[e, b[i]];
+        //   });
+        // console.log(zipped)
+        // let isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        // let gridLines = {
+        //     color: (isDarkMode) ? "#8D8D8D" : "#E5E5E5",
+        //     zeroLineColor: (isDarkMode) ? "white" : "#ACACAC"
+        // }
+
+    //     useEffect(() => {
+    //         var ctx = document.getElementById('wpChart') ;
+    //         if (ctx !== null) {
+    //             var wpChart = new Chart(ctx, {
+    //                 type: 'NegativeTransparentLine',
+    //                 data: {
+    //                     labels: timestamps,
+    //                     datasets: [
+    //                         targetDataSet
+    //                     ]
+    //                 },
+    //                 options: {
+    //                     responsive: true,
+    //                     legend: false,
+    //                     scales: {
+    //                         yAxes: [{
+    //                             ticks: {
+    //                                 suggestedMax: 1.0,
+    //                                 suggestedMin: -1.0,
+    //                                 stepSize: 0.5,
+    //                                 callback: function(value: number, index: number) {
+    //                                     if (value > 0) {
+    //                                         let transVal = baseTranslate(value, 0.0, 1.0, 50, 100);
+    //                                         return `${cleanAbbreviation(homeTeam)} ${(Math.round(Math.abs(transVal) * 100) / 100)}%`
+    //                                     } else if (value < 0) {
+    //                                         let transVal = baseTranslate(value, -1.0, 0.0, 100, 50);
+    //                                         return `${cleanAbbreviation(awayTeam)} ${(Math.round(Math.abs(transVal) * 100) / 100)}%`
+    //                                     } else {
+    //                                         return "50%";
+    //                                     }
+    //                                 }
+    //                             },
+    //                             scaleLabel: {
+    //                                 display: false,
+    //                                 labelString: "Win Probablity"
+    //                             },
+    //                             gridLines: gridLines
+    //                         }],
+    //                         xAxes: [{
+    //                             ticks: {
+    //                                 // Include a dollar sign in the ticks
+    //                                 callback: function(value: number, index: number) {
+    //                                     return value
+    //                                 }
+    //                             },
+    //                             scaleLabel: {
+    //                                 display: true,
+    //                                 labelString: "Play Number"
+    //                             },
+    //                             gridLines: gridLines
+    //                         }]
+    //                     },
+    //                     tooltips: {
+    //                         callbacks: {
+    //                             title: function(tooltipItem: any, data: any) {
+    //                                 return `Total Play Number: ${tooltipItem[0].label}`
+    //                             },
+    //                             label: function(tooltipItem: any, data: any) {
+    //                                 // value is always from perspective of home team
+    //                                 if (tooltipItem.value > 0) {
+    //                                     let transVal = baseTranslate(tooltipItem.value, 0.0, 1.0, 50, 100);
+    //                                     return `${cleanAbbreviation(homeTeam)} WP: ${(Math.round(Math.abs(transVal) * 10) / 10)}%`
+    //                                 } else if (tooltipItem.value < 0) {
+    //                                     let transVal = baseTranslate(tooltipItem.value, -1.0, 0.0, 100, 50);
+    //                                     return `${cleanAbbreviation(awayTeam)} WP: ${(Math.round(Math.abs(transVal) * 10) / 10)}%`;
+    //                                 } else {
+    //                                     return "50%";
+    //                                 }
+    //                             }
+    //                         }
+    //                     }
+    //                 }
+    //             })
+    //         }
+    //     },[])
+    // }
+    const chartRef = useRef<ChartJS>(null);
+    useEffect(() => {
+        const chart = chartRef.current;
+
+        if (!chart) {
+        return;
         }
-
-        // if either color is too similar to white, use gray
-        let colors = [homeTeamColor, awayTeamColor]
-        var adjusted = false;
-        colors.forEach((clr, idx) => {
-            var dEBackground = clr !== null ? deltaE([clr.r, clr.g, clr.b], [255,255,255]): 0
-            if (dEBackground <= 49) {
-                adjusted = true;
-                if (idx == 0) {
-                    homeTeamColor = hexToRgb("#CCCCCC")
-                } else {
-                    awayTeamColor = hexToRgb("#CCCCCC")
+        var myChart = new Chart(chart.ctx, {
+            type: 'line',
+            data: {
+                labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+                datasets: [{
+                    data: [86, 114, 106, 106, 107, 111, 133],
+                    label: "Applied",
+                    borderColor: "#3e95cd",
+                    backgroundColor: "#7bb6dd",
+                    fill: false,
+                }, {
+                    data: [70, 90, 44, 60, 83, 90, 100],
+                    label: "Accepted",
+                    borderColor: "#3cba9f",
+                    backgroundColor: "#71d1bd",
+                    fill: false,
+                }, {
+                    data: [10, 21, 60, 44, 17, 21, 17],
+                    label: "Pending",
+                    borderColor: "#ffa500",
+                    backgroundColor: "#ffc04d",
+                    fill: false,
+                }, {
+                    data: [6, 3, 2, 2, 7, 0, 16],
+                    label: "Rejected",
+                    borderColor: "#c45850",
+                    backgroundColor: "#d78f89",
+                    fill: false,
                 }
-                console.log(`updating color at index ${idx} to gray bc of background`)
-            }
-        })
+                ]
+            },
+        });
+    }, [])
 
-        // if both colors are now gray, reset the homeTeamColor
-        let dEHomeAdj = awayTeamColor !== null && homeTeamColor !== null ? deltaE([awayTeamColor.r, awayTeamColor.g, awayTeamColor.b], [homeTeamColor.r, homeTeamColor.g, homeTeamColor.b]) : 0
-        if (dEHomeAdj <= 49 && adjusted) {
-            homeTeamColor = hexToRgb(homeTeamInfo.color);
-            console.log(`resetting home color to ${JSON.stringify(homeTeamColor)} because of similarity to gray away color`)
-        }
-
-        var homeTeamWP = plays.map(p => (p.pos_team.toString() == homeTeam.id) ? translateWP(p.winProbability.before) : translateWP(1.0 - p.winProbability.before));
-
-
-    }
-    // useEffect(() => {
-    //     var ctx = document.getElementById('myChart');
-    //     var myChart = new Chart(ctx, {
-    //         type: 'line',
-    //         data: {
-    //             labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-    //             datasets: [{
-    //                 data: [86, 114, 106, 106, 107, 111, 133],
-    //                 label: "Applied",
-    //                 borderColor: "#3e95cd",
-    //                 backgroundColor: "#7bb6dd",
-    //                 fill: false,
-    //             }, {
-    //                 data: [70, 90, 44, 60, 83, 90, 100],
-    //                 label: "Accepted",
-    //                 borderColor: "#3cba9f",
-    //                 backgroundColor: "#71d1bd",
-    //                 fill: false,
-    //             }, {
-    //                 data: [10, 21, 60, 44, 17, 21, 17],
-    //                 label: "Pending",
-    //                 borderColor: "#ffa500",
-    //                 backgroundColor: "#ffc04d",
-    //                 fill: false,
-    //             }, {
-    //                 data: [6, 3, 2, 2, 7, 0, 16],
-    //                 label: "Rejected",
-    //                 borderColor: "#c45850",
-    //                 backgroundColor: "#d78f89",
-    //                 fill: false,
-    //             }
-    //             ]
-    //         },
-    //     });
-    // }, [])
     return (
         <>
-        <canvas id='myChart'></canvas>
+        <canvas
+                    id="myChart"
+                />
         </>
     )
+
 }

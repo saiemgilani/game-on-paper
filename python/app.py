@@ -11,6 +11,7 @@ from fastapi import FastAPI, HTTPException, Request, Query, Response
 from fastapi.middleware.cors import CORSMiddleware
 from sportsdataverse.cfb.cfb_pbp import CFBPlayProcess
 from sportsdataverse.cfb import espn_cfb_schedule
+from functools import reduce
 warnings.filterwarnings("ignore")
 
 logging.basicConfig(level=logging.INFO, filename = 'gp_site_logfile.txt')
@@ -18,7 +19,22 @@ logger = logging.getLogger(__name__)
 
 # from dotenv import load_dotenv, dotenv_values
 # config = dotenv_values('.env.development.local')
-
+def calculateGEI(plays, homeTeamId):
+  plays = pd.DataFrame(plays)
+  length = len(plays)
+  avg_length = 179.01777401608126
+  #Adjusting for game length
+  normalize = avg_length / length
+  def calculateHomeWinProb(row):
+    if row['pos_team']==homeTeamId:
+        homeWP = row['winProbability']['before']
+    else:
+        homeWP = 1 - row['winProbability']['before']
+  #Get win probability differences for each play
+  win_prob_change = abs(plays['home_wp_before'].diff())
+  #Normalization
+  gei = normalize * win_prob_change.sum()
+  return gei
 
 tags_metadata = [
     {
@@ -286,10 +302,12 @@ def get_cfb_game(request: Request, gameId: str) -> Optional[None]:
         pbp['mostImportantPlays'] =  [play for play in jsonified_df if sorted(jsonified_df, key=lambda x: abs(x['wpa']), reverse=True).index(play) < 10]
         pbp['bigPlays'] =  [play for play in jsonified_df if sorted(jsonified_df, key=lambda x: abs(x['EPA']), reverse=True).index(play) < 10]
         year = pbp['header']['season']['year']
+        gei = calculateGEI(jsonified_df, homeTeamId)
         percentiles = pd.read_csv(f"data/{year}/percentiles.csv").to_dict(orient="records")
         result = {
             "id": gameId,
             "count" : len(jsonified_df),
+            "gei" : gei,
             "mostImportantPlays": pbp['mostImportantPlays'],
             "bigPlays": pbp['bigPlays'],
             "plays" : jsonified_df,

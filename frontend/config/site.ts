@@ -1,9 +1,10 @@
 export type SiteConfig = typeof siteConfig
 
 export const siteConfig = {
-  name: "Game on Paper",
+  name: "the Game on Paper",
   description:
     "Where advanced stats meet paper.",
+  url: "https://thegameonpaper.com",
   mainNav: [
     {
       title: "Home",
@@ -34,6 +35,6 @@ export const siteConfig = {
   ],
   links: {
     twitter: "https://twitter.com/sportsdataverse",
-    github: "https://github.com/saiemgilani/game-on-paper-app",
+    github: "https://github.com/saiemgilani/game-on-paper",
   },
 }

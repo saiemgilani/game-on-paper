@@ -2289,7 +2289,7 @@ clsx@1.2.1, clsx@^1.1.1, clsx@^1.2.1:
 
 color-convert@^1.9.0:
   version "1.9.3"
-  resolved "https://registry.npmjs.org/color-convert/-/color-convert-1.9.3.tgz"
+  resolved "https://registry.yarnpkg.com/color-convert/-/color-convert-1.9.3.tgz#bb71850690e1f136567de629d2d5471deda4c1e8"
   integrity sha512-QfAUtd+vFdAtFQcC8CCyYt1fYWxSqAiK2cSD6zDB8N3cpsEBAvRxp9zOGg6G/SHHJYAT88/az/IuDGALsNVbGg==
   dependencies:
     color-name "1.1.3"
@@ -4522,7 +4522,7 @@ next-mdx-remote@^4.4.1:
 
 next-plausible@^3.7.2:
   version "3.7.2"
-  resolved "https://registry.npmjs.org/next-plausible/-/next-plausible-3.7.2.tgz"
+  resolved "https://registry.yarnpkg.com/next-plausible/-/next-plausible-3.7.2.tgz#33eae204a00ad01b7851b319e115eab8e0815fa6"
   integrity sha512-9PqFiVtD1kZO5gHFYTcgilHhg2WhMzD6I4NK/RUh9DGavD1N11IhNAvyGLFmvB3f4FtHC9IoAsauYDtQBt+riA==
 
 next-themes@^0.2.1:
