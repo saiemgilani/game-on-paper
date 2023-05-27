@@ -6,7 +6,6 @@ import PageTop from '@/components/page-top';
 
 import { CFBGame, Header, Competitor, Away } from '@/lib/cfb/types';
 import CFBGameHeader from '@/components/CFB/cfb-game-header';
-import CFBPlayTableRdt from '@/components/CFB/cfb-play-table-rdt';
 import CFBPlayTable from '@/components/CFB/cfb-play-table';
 import CFBPlayTableHeader from '@/components/CFB/cfb-play-table-header';
 import CFBPlayerStatsTable from '@/components/CFB/cfb-player-stats-table';
@@ -14,7 +13,6 @@ import CFBPlayerStatsHeader from '@/components/CFB/cfb-player-stats-header';
 import CFBTeamStatsTable from '@/components/CFB/cfb-team-stats-table';
 import CFBTeamStatsHeader from '@/components/CFB/cfb-team-stats-header';
 import CFBTeamStatsOverallTable from '@/components/CFB/cfb-team-stats-overall-table';
-import CFBWinProbChart from '@/components/CFB/cfb-win-prob-chart';
 import CFBWinProbChartClass from '@/components/CFB/cfb-win-prob-chart-class';
 import CFBEpaChartClass from '@/components/CFB/cfb-epa-chart-class';
 
@@ -69,7 +67,6 @@ export async function generateMetadata(
     return {
         title: title,
         description: `Advanced stats for ${subtitle}`,
-        applicationName: 'the Game on Paper',
         referrer: 'origin-when-cross-origin',
         viewport: {
             width: 'device-width',
