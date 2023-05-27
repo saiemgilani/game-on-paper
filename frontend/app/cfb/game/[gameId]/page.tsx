@@ -1,9 +1,9 @@
 
 import Link from 'next/link';
 import { Metadata, ResolvingMetadata } from 'next';
+import { DateTime } from "luxon"
 import {pyApiOrigin} from '@/lib/urlConfig';
 import PageTop from '@/components/page-top';
-
 import { CFBGame, Header, Competitor, Away } from '@/lib/cfb/types';
 import CFBGameHeader from '@/components/CFB/cfb-game-header';
 import CFBPlayTable from '@/components/CFB/cfb-play-table';
@@ -62,11 +62,17 @@ export async function generateMetadata(
         title = `Game: ${cleanName(data.header.competitions[0].competitors[1].team)} vs ${cleanName(data.header.competitions[0].competitors[0].team)} | the Game on Paper`
     }
     subtitle = `${cleanName(data.header.competitions[0].competitors[1].team)} vs ${cleanName(data.header.competitions[0].competitors[0].team)}`;
-
+    let statusDetail = data.header.competitions[0].status.type.detail;
+    let statusText;
+    if (data.header.competitions[0].status.type.completed == true || statusDetail.includes("Cancel") || statusDetail.includes("Postpone") || statusDetail.includes("Delay")) {
+        statusText = statusDetail + " - " + DateTime.fromISO(data.header.competitions[0].date, {zone: 'utc'}).setZone("America/New_York").toLocaleString(DateTime.DATETIME_FULL);
+    } else {
+        statusText = "LIVE - " + statusDetail
+    }
 
     return {
         title: title,
-        description: `Advanced stats for ${subtitle}`,
+        description: `Advanced stats for ${subtitle} - ${statusText}`,
         referrer: 'origin-when-cross-origin',
         viewport: {
             width: 'device-width',
@@ -89,7 +95,7 @@ export async function generateMetadata(
             card: 'summary',
             creator: '@SportsDataverse',
             title: title,
-            description: subtitle,
+            description: `Advanced stats for ${subtitle} - ${statusText}`,
             images: {
                 url: `https://s.espncdn.com/stitcher/sports/football/college-football/events/${params.gameId}.png?templateId=espn.com.share.1`,
                 alt: title,
@@ -97,7 +103,7 @@ export async function generateMetadata(
         },
         openGraph: {
             title: title,
-            description: subtitle,
+            description: `Advanced stats for ${subtitle} - ${statusText}`,
             url: `https://thegameonpaper.com/cfb/game/${params.gameId}`,
             siteName: 'theGameOnPaper.com',
             images: [
@@ -160,43 +166,18 @@ export default async function CFBGamePage({ params }: {
 
     return (
         <>
-            {/* <head>
-                <meta httpEquiv="content-type" content="text/html; charset=UTF-8"/>
-                <meta httpEquiv="x-ua-compatible" content="IE=edge,chrome=1"/>
-                <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-                <meta name="referrer" content="origin-when-cross-origin"/>
-                <link rel="canonical" href={`http://thegameonpaper.com/cfb/game/${params.gameId}`}/>
-                <title>{ title }</title>
-                <meta name="description" content={`Advanced stats for ${subtitle}`}/>
-
-                <meta property="og:site_name" content="theGameOnPaper.com"/>
-                <meta property="og:url" content={`http://thegameonpaper.com/cfb/game/${params.gameId}`}/>
-                <meta property="og:title" content={`${title}`}/>
-                <meta property="og:description" content={`Advanced stats for ${subtitle}`}/>
-                <meta property="og:image" content={`https://s.espncdn.com/stitcher/sports/football/college-football/events/${params.gameId}.png?templateId=espn.com.share.1`}/>
-                <meta property="og:image:width" content="1200"/>
-                <meta property="og:image:height" content="630"/>
-                <meta property="og:type" content="website"/>
-                <meta name="twitter:site" content="the Game on Paper"/>
-                <meta name="twitter:url" content={`http://thegameonpaper.com/cfb/game/${params.gameId}`}/>
-                <meta name="twitter:title" content={`${title}`}/>
-                <meta name="twitter:description" content={`${subtitle}`}/>
-                <meta name="twitter:card" content="summary"/>
-                <meta name="title" content={`${title}`}/>
-                <meta name="medium" content="website"/>
-            </head> */}
             <CFBGameHeader awayTeam={awayTeam} homeTeam={homeTeam} competitions={competitions} />
             <div className="nav-scroller py-1 mb-3">
                 <nav className="nav flex border justify-between">
-                    <Link href="#wpChart" className="p-2 link-secondary">WP Chart</Link>
-                    <Link href="#epChart" className="p-2 link-secondary">EPA Chart</Link>
-                    <Link href="#team-stats" className="p-2 link-secondary">Team Stats</Link>
-                    <Link href="#player-stats" className="p-2 link-secondary">Player Stats</Link>
-                    <Link href="#big-plays" className="p-2 link-secondary">Big Plays</Link>
-                    <Link href="#most-imp-plays" className="p-2 link-secondary">Most Important Plays</Link>
-                    <Link href="#scoring-plays" className="p-2 link-secondary">Scoring Plays</Link>
-                    <Link href="#all-plays" className="p-2 link-secondary">All Plays</Link>
-                    <Link href={`https://www.espn.com/college-football/game/_/gameId/${data.id}`} className="p-2 link-secondary">Gamecast</Link>
+                    <a href="#wpChart" className="p-2 link-secondary">WP Chart</a>
+                    <a href="#epChart" className="p-2 link-secondary">EPA Chart</a>
+                    <a href="#team-stats" className="p-2 link-secondary">Team Stats</a>
+                    <a href="#player-stats" className="p-2 link-secondary">Player Stats</a>
+                    <a href="#big-plays" className="p-2 link-secondary">Big Plays</a>
+                    <a href="#most-imp-plays" className="p-2 link-secondary">Most Important Plays</a>
+                    <a href="#scoring-plays" className="p-2 link-secondary">Scoring Plays</a>
+                    <a href="#all-plays" className="p-2 link-secondary">All Plays</a>
+                    <a href={`https://www.espn.com/college-football/game/_/gameId/${data.id}`} className="p-2 link-secondary">Gamecast</a>
                 </nav>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
@@ -222,7 +203,7 @@ export default async function CFBGamePage({ params }: {
             </div>
             <div className="px-2 py-2">
                 {data && data.advBoxScore ? (
-                    <CFBTeamStatsHeader title={"Team Stats "} href={"#team-stats"}>
+                    <CFBTeamStatsHeader title={"Team Stats "} href={`cfb/game/${params.gameId}#team-stats`}>
                     <div className="grid grid-cols-1 lg:grid-cols-3  justify-around gap-2">
                         <div className=" justify-around">
                                 <CFBTeamStatsOverallTable
@@ -299,7 +280,7 @@ export default async function CFBGamePage({ params }: {
                 <div className="px-2 py-2">
 
                 {data && data.advBoxScore ? (
-                    <CFBPlayerStatsHeader team={awayTeam} season={season} href={'#awayTeamCollapse'}>
+                    <CFBPlayerStatsHeader team={awayTeam} season={season} href={`cfb/game/${params.gameId}#awayTeamCollapse`}>
                         <CFBPlayerStatsTable
                         title={"Big Plays"}
                         advBoxScore={data?.advBoxScore ?? []}
@@ -309,7 +290,7 @@ export default async function CFBGamePage({ params }: {
                 </div>
                 <div className="justify-around px-2 py-2">
                 {data && data.advBoxScore ? (
-                    <CFBPlayerStatsHeader team={homeTeam} season={season} href={'#homeTeamCollapse'}>
+                    <CFBPlayerStatsHeader team={homeTeam} season={season} href={`cfb/game/${params.gameId}#homeTeamCollapse`}>
                         <CFBPlayerStatsTable
                         title={"Big Plays"}
                         advBoxScore={data?.advBoxScore ?? []}
@@ -323,7 +304,7 @@ export default async function CFBGamePage({ params }: {
             <div className="grid grid-cols-1 md:grid-cols-2 justify-around py-2">
                 <div className="justify-around px-2 py-2">
                     {data && data.bigPlays ? (
-                        <CFBPlayTableHeader title ={'Big Plays '} href={'#big-plays'} >
+                        <CFBPlayTableHeader title ={'Big Plays '} href={`cfb/game/${params.gameId}#big-plays`} >
                             <CFBPlayTable
                                 plays={data?.bigPlays ?? []}
                                 prefix={'big'}
@@ -338,7 +319,7 @@ export default async function CFBGamePage({ params }: {
                 </div>
                 <div className="justify-around px-2 py-2">
                     {data && data.mostImportantPlays ? (
-                        <CFBPlayTableHeader title ={'Most Important Plays '}  href={'#most-imp-plays'} >
+                        <CFBPlayTableHeader title ={'Most Important Plays '}  href={`cfb/game/${params.gameId}#most-imp-plays`} >
                             <CFBPlayTable
                                 plays={data?.mostImportantPlays ?? []}
                                 prefix={'mip'}
@@ -354,7 +335,7 @@ export default async function CFBGamePage({ params }: {
             </div>
             <div className="justify-around px-2 py-2">
                 {data && data.scoringPlays ? (
-                    <CFBPlayTableHeader title ={'Scoring Plays '} href={'#scoring-plays'} >
+                    <CFBPlayTableHeader title ={'Scoring Plays '} href={`cfb/game/${params.gameId}#scoring-plays`} >
                         <CFBPlayTable
                             plays={data?.scoringPlays ?? []}
                             prefix={'scoring'}
@@ -369,7 +350,7 @@ export default async function CFBGamePage({ params }: {
             </div>
             <div className="justify-around px-2 py-2">
                 {data && data.plays ? (
-                    <CFBPlayTableHeader title ={'All Plays '} href={'#all-plays'} >
+                    <CFBPlayTableHeader title ={'All Plays '} href={`cfb/game/${params.gameId}#all-plays`} >
                         <CFBPlayTable
                             plays={data?.plays ?? []}
                             prefix={'all'}
