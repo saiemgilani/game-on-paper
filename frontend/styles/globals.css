@@ -98,6 +98,7 @@
     --link-primary-hover: 216, 98%, 42%;
     --link-secondary: 208, 7%, 46%;
     --link-secondary-hover: 208, 7%, 36%;
+    --img-background: rgba(0, 0, 0, 0.1);
 
     --danger: 355, 70%, 91%;
     --success: 153, 31%, 86%;
@@ -141,7 +142,7 @@
     --link-primary-hover: 209, 98%, 46%;
     --link-secondary: 37, 10%, 58%;
     --link-secondary-hover: 37, 10%, 48%;
-
+    --img-background: rgba(255, 255, 255, 0.1);
     --danger: 355, 70%, 15%;
     --success: 159, 31%, 18%;
     --warning: 46, 100%, 16%;
@@ -236,6 +237,14 @@ tr.table-warning > td, tr.table-warning  {
 .numeral {
   font-family: "Chivo"; /* here to change font for just numerals in tables */
 }
+
+.img-circle-bg {
+  background: theme('colors.img-background')  !important;
+  width: 150px;
+  -webkit-clip-path: circle(closest-side);
+  clip-path: circle(closest-side);
+}
+
 .hulk-text-level-9, .hulk-text-green {
   color: rgb(52, 199, 89);
 }

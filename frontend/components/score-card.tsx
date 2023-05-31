@@ -40,7 +40,7 @@ type linescore = {
     value: string
 }
 
-function TeamRow({ team, teamAbbreviation, linescores, record, logo, darkLogo, gameStatus, score }:
+function TeamRow({ team, teamAbbreviation, linescores, record, logo, darkLogo, gameStatus, score, showRecords }:
                  {  team: string,
                     teamAbbreviation: string,
                     linescores: linescore[],
@@ -48,15 +48,16 @@ function TeamRow({ team, teamAbbreviation, linescores, record, logo, darkLogo, g
                     logo: string,
                     darkLogo: string,
                     gameStatus: string,
-                    score: string }) {
+                    score: string,
+                    showRecords: boolean }) {
     return (
       <div className="flex px-2 py-2 items-center">
         <div className="w-7/12 md:w-8/12 flex">
           <Image className="w-10 mr-2 self-center inline-block dark:hidden" src={logo} width={30} height={30} alt={team} />
           <Image className="w-10 mr-2 self-center hidden dark:inline-block" src={darkLogo} width={30} height={30} alt={team} />
-          <div className="flex flex-col">
+          <div className="flex flex-col self-center">
             <p className="text-lg font-bold">{teamAbbreviation}</p>
-            <p className="block text-xs  text-gray-600 dark:text-gray-400">{record}</p>
+            {showRecords ? <p className="block text-xs  text-gray-600 dark:text-gray-400">{record}</p>: ""}
           </div>
         </div>
         {/** Line Score */}
@@ -66,14 +67,14 @@ function TeamRow({ team, teamAbbreviation, linescores, record, logo, darkLogo, g
               )) : <p className="w-8 px-1 text-center">{""}</p>}
           </div> */}
         {/** Score */}
-        <div className="w-4/12 px-2 text-lg sm:text-xl font-bold text-right">
+        <div className="w-4/12 px-2 text-lg sm:text-xl font-bold self-center text-right">
           {gameStatus === 'pre' ? "" : score }
         </div>
       </div>
     )
   }
 
-export default function ScoreCard({ ...props }: ScoreboardEvent) {
+export default function ScoreCard({ showRecords = true, props }: {showRecords: boolean, props: ScoreboardEvent}) {
 
 
     const gameDateTime = dateTime(props.date)
@@ -82,15 +83,17 @@ export default function ScoreCard({ ...props }: ScoreboardEvent) {
     const gameId = props.game_id
     const gameStatus = props.status_type_state
     const awayConferenceId = parseInt(props.away_conference_id)
-    const awayConference = ConferenceMap[awayConferenceId]
-    const awayRecord = props.away_records.length === 0 ? `(0-0, 0-0 ${awayConference})` : `(${props.away_records[0].summary}, ${props.away_records[3].summary} ${awayConference})`
+    const awayConference = ConferenceMap[awayConferenceId] || "CONF"
+    const awayRecord = props.away_records.length === 0 ? `(0-0, 0-0 ${awayConference})` : `(${props.away_records[0].summary || props.away_records[0].displayValue}, ${props.away_records[props.away_records.length-1].summary || props.away_records[props.away_records.length-1].displayValue} ${awayConference})`
     const awayLinescores = props.away_linescores
+    const awayScore = `${props.away_score || props.away_score_value }`
     const homeConferenceId = parseInt(props.home_conference_id)
-    const homeConference = ConferenceMap[homeConferenceId]
-    const homeRecord = props.home_records.length === 0 ? `(0-0, 0-0 ${homeConference})` : `(${props.home_records[0].summary}, ${props.home_records[3].summary} ${homeConference})`
+    const homeConference = ConferenceMap[homeConferenceId] || "CONF"
+    const homeRecord = props.home_records.length === 0 ? `(0-0, 0-0 ${homeConference})` : `(${props.home_records[0].summary || props.home_records[0].displayValue}, ${props.home_records[props.home_records.length-1].summary || props.home_records[props.home_records.length-1].displayValue} ${homeConference})`
     const homeLinescores = props.home_linescores
-    const pbpAvailable = props.play_by_play_available
-    const broadcastName = props.broadcast_name
+    const homeScore = `${props.home_score || props.home_score_value }`
+    const pbpAvailable = props.play_by_play_available || props.boxscore_available
+    const broadcastName = props.broadcast_name || ""
     const broadcastUrl = NetworkMap[broadcastName]
     return (
         <div className="grid grid-flow-row auto-rows-auto">
@@ -119,7 +122,8 @@ export default function ScoreCard({ ...props }: ScoreboardEvent) {
               logo={props.away_logo}
               darkLogo={props.away_dark_logo}
               gameStatus={gameStatus}
-              score={props.away_score} />
+              score={awayScore}
+              showRecords={showRecords} />
             {/* Home Team */}
             <TeamRow
               key = {props.home_id}
@@ -130,7 +134,8 @@ export default function ScoreCard({ ...props }: ScoreboardEvent) {
               logo={props.home_logo}
               darkLogo={props.home_dark_logo}
               gameStatus={gameStatus}
-              score={props.home_score} />
+              score={homeScore}
+              showRecords={showRecords} />
             {/* Card Footer */}
             <div className="flex px-2 py-2 justify-between">
               {gameStatus === 'pre' ?

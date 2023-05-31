@@ -277,7 +277,7 @@ export default function CFBTeamStatsTable({
     }
     return(
         <>
-        <table className="whitespace-pre min-w-[50%] lg:min-w-[90%]" >
+        <table className="whitespace-pre min-w-[90%] lg:min-w-[90%]" >
             <thead>
                 <tr>
                     <th className="text-left whitespace-pre">{title}</th>
@@ -287,7 +287,7 @@ export default function CFBTeamStatsTable({
             </thead>
             <tbody>
             {awayAdvBoxscoreTeam && awayAdvBoxscoreTeam[0] ? (columns.map((item, idx) => (
-                <tr key={idx}>
+                <tr key={idx} className={"border-b"}>
                     <td className="text-left whitespace-pre">
                         {Object.keys(stat_key_title_mapping).includes(item) ? (stat_key_title_mapping[item]) : item }
                     </td>

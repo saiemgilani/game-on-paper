@@ -21,6 +21,7 @@ export type ScoreboardEvent = {
     neutral_site?:              boolean;
     conference_competition?:    boolean;
     play_by_play_available?:    boolean;
+    boxscore_available?:        boolean;
     recent?:                    boolean;
     competitors?:               Competitor[];
     start_date?:                string;
@@ -62,6 +63,7 @@ export type ScoreboardEvent = {
     home_dark_logo:            string;
     home_conference_id:        string;
     home_score:                string;
+    home_score_value?:          number;
     home_current_rank?:         number;
     home_linescores:           any[];
     home_records:              any[];
@@ -80,6 +82,7 @@ export type ScoreboardEvent = {
     away_dark_logo:            string;
     away_conference_id:        string;
     away_score:                string;
+    away_score_value?:          number;
     away_winner:               null;
     away_current_rank?:         string;
     away_linescores:           any[];

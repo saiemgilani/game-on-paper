@@ -18,16 +18,10 @@ import CFBEpaChartClass from '@/components/CFB/cfb-epa-chart-class';
 
 async function getCFBGame(params: any) {
     const endpoint = new URL(pyApiOrigin+'/cfb/game/'+params.gameId);
-    try{
-        const res = await fetch(endpoint , {
-            cache: 'no-store' ,
-            headers: { 'Content-Type': 'application/json' },
-        });
-        const resp = res.json()
-        return resp;
-    } catch (e) {
-        console.log(e)
-    }
+
+    const data = await fetch(endpoint, { cache: 'no-store' ,
+        headers: { 'Content-Type': 'application/json' }}).then((res) => res.json());
+    return data;
 }
 
  function getTeamInfo(header: Header) {
@@ -38,7 +32,11 @@ async function getCFBGame(params: any) {
 
     return { homeTeam, awayTeam, competitions, season }
 }
-
+function date(date: string) {
+    let dt = new Date(date);
+    let dtString = dt.toLocaleDateString()
+    return dtString;
+  }
 export async function generateMetadata(
     { params }: { params: { gameId: string } },
     parent: ResolvingMetadata,
@@ -163,7 +161,15 @@ export default async function CFBGamePage({ params }: {
 
     const data: CFBGame = await getCFBGame(params);
     const { homeTeam, awayTeam, competitions, season } = getTeamInfo(data.header);
-
+    let statusDetail = data.header.competitions[0].status.type.detail;
+    let statusText;
+    let statusActive: boolean = false;
+    if (data.header.competitions[0].status.type.completed == true || statusDetail.includes("Cancel") || statusDetail.includes("Postpone") || statusDetail.includes("Delay")) {
+        statusText = statusDetail + " - " + DateTime.fromISO(data.header.competitions[0].date, {zone: 'utc'}).setZone("America/New_York").toLocaleString(DateTime.DATETIME_FULL);
+    } else {
+        statusText = "LIVE - " + statusDetail
+        statusActive = true
+    }
     return (
         <>
             <CFBGameHeader awayTeam={awayTeam} homeTeam={homeTeam} competitions={competitions} />
@@ -313,7 +319,8 @@ export default async function CFBGamePage({ params }: {
                                 showGuide={false}
                                 expandingRowCallback={true}
                                 homeTeam={homeTeam}
-                                awayTeam={awayTeam} />
+                                awayTeam={awayTeam}
+                                reversed={false} />
                         </CFBPlayTableHeader>
                     ) : ("")}
                 </div>
@@ -328,7 +335,8 @@ export default async function CFBGamePage({ params }: {
                                 showGuide={false}
                                 expandingRowCallback={true}
                                 homeTeam={homeTeam}
-                                awayTeam={awayTeam} />
+                                awayTeam={awayTeam}
+                                reversed={false} />
                         </CFBPlayTableHeader>
                     ) : ("")}
                 </div>
@@ -344,7 +352,8 @@ export default async function CFBGamePage({ params }: {
                             showGuide={false}
                             expandingRowCallback={true}
                             homeTeam={homeTeam}
-                            awayTeam={awayTeam} />
+                            awayTeam={awayTeam}
+                            reversed={false} />
                     </CFBPlayTableHeader>
                 ) : ("")}
             </div>
@@ -359,7 +368,8 @@ export default async function CFBGamePage({ params }: {
                             showGuide={false}
                             expandingRowCallback={true}
                             homeTeam={homeTeam}
-                            awayTeam={awayTeam} />
+                            awayTeam={awayTeam}
+                            reversed={statusActive} />
                     </CFBPlayTableHeader>
                 ) : ("")}
             </div>

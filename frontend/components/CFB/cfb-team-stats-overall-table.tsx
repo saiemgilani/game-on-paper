@@ -329,7 +329,7 @@ export default function CFBTeamStatsOverallTable({
     }
     return(
         <>
-        <table className="whitespace-pre min-w-[50%] lg:min-w-[90%]">
+        <table className="whitespace-pre min-w-[90%] lg:min-w-[90%]">
             <thead>
                 <tr>
                     <th className="text-left whitespace-pre overflow-auto">{title}</th>

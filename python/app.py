@@ -5,6 +5,7 @@ import numpy as np
 import pandas as pd
 import logging
 import warnings
+import re
 from datetime import datetime
 from typing import Optional
 from fastapi import FastAPI, HTTPException, Request, Query, Response
@@ -348,7 +349,139 @@ def get_cfb_percentiles_year(request: Request,
     percentiles = requests.get(url = f"http://summary:3000/percentiles/{year}")
     return Response(json.dumps(percentiles.json()), media_type="application/json")
 
+@app.get("/py/cfb/percentiles/{year}/{teamId}", tags=["College Football"])
+def get_cfb_percentiles_team(request: Request,
+                             year: str,
+                             teamId: str) -> Optional[None]:
+    headers = {"accept": "application/json"}
+    team_data = populate("", year, teamId)
+    populatable_keys = ["record", "athletes", "ranks", "leaders"]
+    type_keys = ["record", "leaders"]
+    val_promises = []
+    for item in populatable_keys:
+        val_promises.append(populate(item, year, teamId, "2" if item in type_keys else None))
 
+    populating_values = val_promises
+    for idx, item in enumerate(populatable_keys):
+        team_data[item] = populating_values[idx].get("items", None)
+    types = [2,3]
+    data = requests.get(url = f"https://site.api.espn.com/apis/site/v2/sports/football/college-football/teams/{teamId}/schedule?season={year}&seasontype=2")
+    data_bowl = requests.get(url = f"https://site.api.espn.com/apis/site/v2/sports/football/college-football/teams/{teamId}/schedule?season={year}&seasontype=3")
+    data_json = data.json()
+    data_bowl_json = data_bowl.json()
+    data_json['events'] = data_json['events']+ data_bowl_json['events']
+    ev = pd.DataFrame()
+    for event in data_json['events']:
+        event.get('competitions')[0].get('competitors')[0].get('team').pop('links',None)
+        event.get('competitions')[0].get('competitors')[1].get('team').pop('links',None)
+        if event.get('competitions')[0].get('competitors')[0].get('homeAway')=='home':
+            event['competitions'][0]['home'] = event.get('competitions')[0].get('competitors')[0].get('team')
+            event['competitions'][0]['home']['score'] = event.get('competitions')[0].get('competitors')[0].get('score')
+            event['competitions'][0]['home']['winner'] = event.get('competitions')[0].get('competitors')[0].get('winner')
+            event['competitions'][0]['home']['currentRank'] = event.get('competitions')[0].get('competitors')[0].get('curatedRank', {}).get('current', '99')
+            event['competitions'][0]['home']['linescores'] = event.get('competitions')[0].get('competitors')[0].get('linescores', [])
+            event['competitions'][0]['home']['records'] = event.get('competitions')[0].get('competitors')[0].get('record', [])
+            event['competitions'][0]['home']['logo'] = event.get('competitions')[0].get('competitors')[0].get('team').get('logos')[0].get('href')
+            event['competitions'][0]['away'] = event.get('competitions')[0].get('competitors')[1].get('team')
+            event['competitions'][0]['away']['score'] = event.get('competitions')[0].get('competitors')[1].get('score')
+            event['competitions'][0]['away']['winner'] = event.get('competitions')[0].get('competitors')[1].get('winner')
+            event['competitions'][0]['away']['currentRank'] = event.get('competitions')[0].get('competitors')[1].get('curatedRank', {}).get('current', '99')
+            event['competitions'][0]['away']['linescores'] = event.get('competitions')[0].get('competitors')[1].get('linescores', [])
+            event['competitions'][0]['away']['records'] = event.get('competitions')[0].get('competitors')[1].get('record', [])
+            event['competitions'][0]['away']['logo'] = event.get('competitions')[0].get('competitors')[1].get('team').get('logos')[0].get('href')
+        else:
+            event['competitions'][0]['away'] = event.get('competitions')[0].get('competitors')[0].get('team')
+            event['competitions'][0]['away']['score'] = event.get('competitions')[0].get('competitors')[0].get('score')
+            event['competitions'][0]['away']['winner'] = event.get('competitions')[0].get('competitors')[0].get('winner')
+            event['competitions'][0]['away']['currentRank'] = event.get('competitions')[0].get('competitors')[0].get('curatedRank', {}).get('current', '99')
+            event['competitions'][0]['away']['linescores'] = event.get('competitions')[0].get('competitors')[0].get('linescores', [])
+            event['competitions'][0]['away']['records'] = event.get('competitions')[0].get('competitors')[0].get('record', [])
+            event['competitions'][0]['away']['logo'] = event.get('competitions')[0].get('competitors')[0].get('team').get('logos')[0].get('href')
+            event['competitions'][0]['home'] = event.get('competitions')[0].get('competitors')[1].get('team')
+            event['competitions'][0]['home']['score'] = event.get('competitions')[0].get('competitors')[1].get('score')
+            event['competitions'][0]['home']['winner'] = event.get('competitions')[0].get('competitors')[1].get('winner')
+            event['competitions'][0]['home']['currentRank'] = event.get('competitions')[0].get('competitors')[1].get('curatedRank', {}).get('current', '99')
+            event['competitions'][0]['home']['linescores'] = event.get('competitions')[0].get('competitors')[1].get('linescores', [])
+            event['competitions'][0]['home']['records'] = event.get('competitions')[0].get('competitors')[1].get('record', [])
+            event['competitions'][0]['home']['logo'] = event.get('competitions')[0].get('competitors')[1].get('team').get('logos')[0].get('href')
+
+        del_keys = ['geoBroadcasts', 'headlines', 'series', 'situation', 'tickets', 'odds']
+        for k in del_keys:
+            event.get('competitions')[0].pop(k, None)
+        if len(event.get('competitions')[0]['notes'])>0:
+            event.get('competitions')[0]['notes_type'] = event.get('competitions')[0]['notes'][0].get("type")
+            event.get('competitions')[0]['notes_headline'] = event.get('competitions')[0]['notes'][0].get("headline").replace('"','')
+        else:
+            event.get('competitions')[0]['notes_type'] = ''
+            event.get('competitions')[0]['notes_headline'] = ''
+        event.get('competitions')[0].pop('broadcasts', None)
+        event.get('competitions')[0].pop('notes', None)
+        x = pd.json_normalize(event.get('competitions')[0], sep='_')
+        x['game_id'] = int(x['id'])
+        x['season'] = event.get('season').get('year')
+        x['season_type'] = event.get('season').get('type')
+        x['week'] = event.get('week', {}).get('number')
+        event = x
+        ev = pd.concat([ev, event], axis = 0, ignore_index = True)
+    ev = pd.DataFrame(ev).replace({np.nan:None})
+    ev.columns = [underscore(col) for col in ev.columns]
+    ev['home_dark_logo'] = ev['home_logo'].apply(lambda x: x.replace("https://a.espncdn.com/i/teamlogos/ncaa/500/", "https://a.espncdn.com/i/teamlogos/ncaa/500-dark/"))
+    ev['away_dark_logo'] = ev['away_logo'].apply(lambda x: x.replace("https://a.espncdn.com/i/teamlogos/ncaa/500/", "https://a.espncdn.com/i/teamlogos/ncaa/500-dark/"))
+    team_data['events'] = ev.to_dict(orient="records")
+
+    # print(data_json['events']+ data_bowl_json['events'])
+    breakdown = pd.read_csv(f"data/{year}/overall.csv")
+    breakdown_team = breakdown[breakdown['team_id'] == int(teamId)].replace({np.nan:None}).to_dict(orient="records")
+    passing = pd.read_csv(f"data/{year}/passing.csv")
+    passing_team = passing[passing['team_id'] == int(teamId)].replace({np.nan:None}).to_dict(orient="records")
+    rushing = pd.read_csv(f"data/{year}/rushing.csv")
+    rushing_team = rushing[rushing['team_id'] == int(teamId)].replace({np.nan:None}).to_dict(orient="records")
+    receiving = pd.read_csv(f"data/{year}/receiving.csv")
+    receiving_team = receiving[receiving['team_id'] == int(teamId)].replace({np.nan:None}).to_dict(orient="records")
+    result = {
+        "teamData": team_data,
+        "breakdown": breakdown_team,
+        "players": {
+            "passing": passing_team,
+            "rushing": rushing_team,
+            "receiving": receiving_team
+        },
+        "season": year
+    }
+    return Response(json.dumps(result), media_type="application/json")
+
+def populate(endpoint, season, teamId, type = None):
+    seasonType = f'/types/{type}' if type is not None else ""
+    url = f'https://sports.core.api.espn.com/v2/sports/football/leagues/college-football/seasons/{season}{seasonType}/teams/{teamId}/{endpoint}?lang=en&region=us&limit=300'
+    res = requests.get(url)
+
+    espnContent = res.json()
+    if espnContent is None:
+        raise ValueError(f'Data not available for ESPN endpoint {endpoint} with year {season} and team {teamId}.')
+    return espnContent
+
+
+
+def underscore(word):
+    """
+    Make an underscored, lowercase form from the expression in the string.
+
+    Example::
+
+        >>> underscore("DeviceType")
+        'device_type'
+
+    As a rule of thumb you can think of :func:`underscore` as the inverse of
+    :func:`camelize`, though there are cases where that does not hold::
+
+        >>> camelize(underscore("IOError"))
+        'IoError'
+
+    """
+    word = re.sub(r"([A-Z]+)([A-Z][a-z])", r'\1_\2', word)
+    word = re.sub(r"([a-z\d])([A-Z])", r'\1_\2', word)
+    word = word.replace("-", "_")
+    return word.lower()
 
 if __name__ == "__main__":
   uvicorn.run("app:app", host='0.0.0.0', port=7000, reload=True )

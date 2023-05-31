@@ -30,6 +30,7 @@ module.exports = {
         "border-heading": "hsl(var(--border-heading))",
         "link-primary": "hsl(var(--link-primary))",
         "link-secondary": "hsl(var(--link-secondary))",
+        "img-background": "var(--img-background)",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",

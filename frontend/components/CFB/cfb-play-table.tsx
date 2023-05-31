@@ -345,7 +345,8 @@ export default function CFBPlayTable(
         showGuide,
         expandingRowCallback,
         homeTeam,
-        awayTeam
+        awayTeam,
+        reversed
     }:
     {   plays: any,
         prefix: string,
@@ -354,7 +355,8 @@ export default function CFBPlayTable(
         showGuide: boolean,
         expandingRowCallback: any,
         homeTeam: Competitor,
-        awayTeam: Competitor
+        awayTeam: Competitor,
+        reversed: boolean
     }){
     if (plays == null || plays.length == 0) {
         return (<p className="text-center text-muted">{errorMsg}</p>);
@@ -375,6 +377,9 @@ export default function CFBPlayTable(
 
     })
 
+    if (reversed) {
+        newPlays.reverse()
+    }
 
     return(
         <>

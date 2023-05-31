@@ -51,7 +51,7 @@ export default async function Schedule({ params }: {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 ">
             {filtered?.map((score: any, i: number) => (
-                <ScoreCard key={i} away_logo={score.away_logo} home_logo={score.home_logo} {...score} />
+                <ScoreCard key={i} showRecords={true} props={score} />
             ))}
         </div>
         </>

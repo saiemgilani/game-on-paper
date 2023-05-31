@@ -1,3 +1,679 @@
+export type CFBTeamSummary = {
+    teamData?:  TeamData;
+    breakdown?: Breakdown[];
+    players?:   Players;
+    season?:    string;
+}
+
+export type Breakdown = {
+    team_id?:                           number;
+    pos_team?:                          string;
+    abbreviation?:                      string;
+    season?:                            number;
+    plays_off?:                         number;
+    playsgame_off?:                     number;
+    passrate_off?:                      number;
+    rushrate_off?:                      number;
+    havoc_off?:                         number;
+    explosive_off?:                     number;
+    TEPA_off?:                          number;
+    EPAplay_off?:                       number;
+    EPAgame_off?:                       number;
+    yards_off?:                         number;
+    yardsplay_off?:                     number;
+    yardsgame_off?:                     number;
+    play_stuffed_off?:                  number;
+    drives_off?:                        number;
+    drivesgame_off?:                    number;
+    yardsdrive_off?:                    number;
+    playsdrive_off?:                    number;
+    success_off?:                       number;
+    red_zone_success_off?:              number;
+    third_down_success_off?:            number;
+    start_position_off?:                number;
+    playsgame_off_rank?:                number;
+    TEPA_off_rank?:                     number;
+    EPAgame_off_rank?:                  number;
+    EPAplay_off_rank?:                  number;
+    success_off_rank?:                  number;
+    yards_off_rank?:                    number;
+    yardsplay_off_rank?:                number;
+    yardsgame_off_rank?:                number;
+    yardsdrive_off_rank?:               number;
+    playsdrive_off_rank?:               number;
+    play_stuffed_off_rank?:             number;
+    red_zone_success_off_rank?:         number;
+    third_down_success_off_rank?:       number;
+    start_position_off_rank?:           number;
+    havoc_off_rank?:                    number;
+    explosive_off_rank?:                number;
+    passrate_off_rank?:                 number;
+    rushrate_off_rank?:                 number;
+    plays_def?:                         number;
+    playsgame_def?:                     number;
+    passrate_def?:                      number;
+    rushrate_def?:                      number;
+    havoc_def?:                         number;
+    explosive_def?:                     number;
+    TEPA_def?:                          number;
+    EPAplay_def?:                       number;
+    EPAgame_def?:                       number;
+    yards_def?:                         number;
+    yardsplay_def?:                     number;
+    yardsgame_def?:                     number;
+    play_stuffed_def?:                  number;
+    drives_def?:                        number;
+    drivesgame_def?:                    number;
+    yardsdrive_def?:                    number;
+    playsdrive_def?:                    number;
+    success_def?:                       number;
+    red_zone_success_def?:              number;
+    third_down_success_def?:            number;
+    start_position_def?:                number;
+    playsgame_def_rank?:                number;
+    TEPA_def_rank?:                     number;
+    EPAgame_def_rank?:                  number;
+    EPAplay_def_rank?:                  number;
+    success_def_rank?:                  number;
+    yards_def_rank?:                    number;
+    yardsplay_def_rank?:                number;
+    yardsgame_def_rank?:                number;
+    drivesgame_rank?:                   number;
+    yardsdrive_def_rank?:               number;
+    playsdrive_def_rank?:               number;
+    play_stuffed_def_rank?:             number;
+    red_zone_success_def_rank?:         number;
+    third_down_success_def_rank?:       number;
+    start_position_def_rank?:           number;
+    havoc_def_rank?:                    number;
+    explosive_def_rank?:                number;
+    passrate_def_rank?:                 number;
+    rushrate_def_rank?:                 number;
+    TEPA_margin?:                       number;
+    EPAplay_margin?:                    number;
+    EPAgame_margin?:                    number;
+    success_margin?:                    number;
+    yardsplay_margin?:                  number;
+    TEPA_margin_rank?:                  number;
+    EPAgame_margin_rank?:               number;
+    EPAplay_margin_rank?:               number;
+    success_margin_rank?:               number;
+    yardsplay_margin_rank?:             number;
+    start_position_margin?:             number;
+    start_position_margin_rank?:        number;
+    total_available_yards_off?:         number;
+    total_gained_yards_off?:            number;
+    available_yards_pct_off?:           number;
+    total_available_yards_def?:         number;
+    total_gained_yards_def?:            number;
+    available_yards_pct_def?:           number;
+    total_available_yards_margin?:      number;
+    total_gained_yards_margin?:         number;
+    available_yards_pct_margin?:        number;
+    total_available_yards_margin_rank?: number;
+    total_gained_yards_margin_rank?:    number;
+    available_yards_pct_margin_rank?:   number;
+    plays_off_pass?:                    number;
+    playsgame_off_pass?:                number;
+    passrate_off_pass?:                 number;
+    rushrate_off_pass?:                 number;
+    havoc_off_pass?:                    number;
+    explosive_off_pass?:                number;
+    TEPA_off_pass?:                     number;
+    EPAplay_off_pass?:                  number;
+    EPAgame_off_pass?:                  number;
+    yards_off_pass?:                    number;
+    yardsplay_off_pass?:                number;
+    yardsgame_off_pass?:                number;
+    play_stuffed_off_pass?:             number;
+    drives_off_pass?:                   number;
+    drivesgame_off_pass?:               number;
+    yardsdrive_off_pass?:               number;
+    playsdrive_off_pass?:               number;
+    success_off_pass?:                  number;
+    red_zone_success_off_pass?:         number;
+    third_down_success_off_pass?:       number;
+    playsgame_off_pass_rank?:           number;
+    TEPA_off_pass_rank?:                number;
+    EPAgame_off_pass_rank?:             number;
+    EPAplay_off_pass_rank?:             number;
+    success_off_pass_rank?:             number;
+    yards_off_pass_rank?:               number;
+    yardsplay_off_pass_rank?:           number;
+    yardsgame_off_pass_rank?:           number;
+    yardsdrive_off_pass_rank?:          number;
+    playsdrive_off_pass_rank?:          number;
+    play_stuffed_off_pass_rank?:        number;
+    red_zone_success_off_pass_rank?:    number;
+    third_down_success_off_pass_rank?:  number;
+    havoc_off_pass_rank?:               number;
+    explosive_off_pass_rank?:           number;
+    passrate_off_pass_rank?:            number;
+    rushrate_off_pass_rank?:            number;
+    plays_def_pass?:                    number;
+    playsgame_def_pass?:                number;
+    passrate_def_pass?:                 number;
+    rushrate_def_pass?:                 number;
+    havoc_def_pass?:                    number;
+    explosive_def_pass?:                number;
+    TEPA_def_pass?:                     number;
+    EPAplay_def_pass?:                  number;
+    EPAgame_def_pass?:                  number;
+    yards_def_pass?:                    number;
+    yardsplay_def_pass?:                number;
+    yardsgame_def_pass?:                number;
+    play_stuffed_def_pass?:             number;
+    drives_def_pass?:                   number;
+    drivesgame_def_pass?:               number;
+    yardsdrive_def_pass?:               number;
+    playsdrive_def_pass?:               number;
+    success_def_pass?:                  number;
+    red_zone_success_def_pass?:         number;
+    third_down_success_def_pass?:       number;
+    playsgame_def_pass_rank?:           number;
+    TEPA_def_pass_rank?:                number;
+    EPAgame_def_pass_rank?:             number;
+    EPAplay_def_pass_rank?:             number;
+    success_def_pass_rank?:             number;
+    yards_def_pass_rank?:               number;
+    yardsplay_def_pass_rank?:           number;
+    yardsgame_def_pass_rank?:           number;
+    drivesgame_pass_rank?:              number;
+    yardsdrive_def_pass_rank?:          number;
+    playsdrive_def_pass_rank?:          number;
+    play_stuffed_def_pass_rank?:        number;
+    red_zone_success_def_pass_rank?:    number;
+    third_down_success_def_pass_rank?:  number;
+    havoc_def_pass_rank?:               number;
+    explosive_def_pass_rank?:           number;
+    passrate_def_pass_rank?:            number;
+    rushrate_def_pass_rank?:            number;
+    TEPA_margin_pass?:                  number;
+    EPAplay_margin_pass?:               number;
+    EPAgame_margin_pass?:               number;
+    success_margin_pass?:               number;
+    yardsplay_margin_pass?:             number;
+    TEPA_margin_pass_rank?:             number;
+    EPAgame_margin_pass_rank?:          number;
+    EPAplay_margin_pass_rank?:          number;
+    success_margin_pass_rank?:          number;
+    yardsplay_margin_pass_rank?:        number;
+    plays_off_rush?:                    number;
+    playsgame_off_rush?:                number;
+    passrate_off_rush?:                 number;
+    rushrate_off_rush?:                 number;
+    havoc_off_rush?:                    number;
+    explosive_off_rush?:                number;
+    TEPA_off_rush?:                     number;
+    EPAplay_off_rush?:                  number;
+    EPAgame_off_rush?:                  number;
+    yards_off_rush?:                    number;
+    yardsplay_off_rush?:                number;
+    yardsgame_off_rush?:                number;
+    play_stuffed_off_rush?:             number;
+    drives_off_rush?:                   number;
+    drivesgame_off_rush?:               number;
+    yardsdrive_off_rush?:               number;
+    playsdrive_off_rush?:               number;
+    success_off_rush?:                  number;
+    red_zone_success_off_rush?:         number;
+    third_down_success_off_rush?:       number;
+    playsgame_off_rush_rank?:           number;
+    TEPA_off_rush_rank?:                number;
+    EPAgame_off_rush_rank?:             number;
+    EPAplay_off_rush_rank?:             number;
+    success_off_rush_rank?:             number;
+    yards_off_rush_rank?:               number;
+    yardsplay_off_rush_rank?:           number;
+    yardsgame_off_rush_rank?:           number;
+    yardsdrive_off_rush_rank?:          number;
+    playsdrive_off_rush_rank?:          number;
+    play_stuffed_off_rush_rank?:        number;
+    red_zone_success_off_rush_rank?:    number;
+    third_down_success_off_rush_rank?:  number;
+    havoc_off_rush_rank?:               number;
+    explosive_off_rush_rank?:           number;
+    passrate_off_rush_rank?:            number;
+    rushrate_off_rush_rank?:            number;
+    plays_def_rush?:                    number;
+    playsgame_def_rush?:                number;
+    passrate_def_rush?:                 number;
+    rushrate_def_rush?:                 number;
+    havoc_def_rush?:                    number;
+    explosive_def_rush?:                number;
+    TEPA_def_rush?:                     number;
+    EPAplay_def_rush?:                  number;
+    EPAgame_def_rush?:                  number;
+    yards_def_rush?:                    number;
+    yardsplay_def_rush?:                number;
+    yardsgame_def_rush?:                number;
+    play_stuffed_def_rush?:             number;
+    drives_def_rush?:                   number;
+    drivesgame_def_rush?:               number;
+    yardsdrive_def_rush?:               number;
+    playsdrive_def_rush?:               number;
+    success_def_rush?:                  number;
+    red_zone_success_def_rush?:         number;
+    third_down_success_def_rush?:       number;
+    playsgame_def_rush_rank?:           number;
+    TEPA_def_rush_rank?:                number;
+    EPAgame_def_rush_rank?:             number;
+    EPAplay_def_rush_rank?:             number;
+    success_def_rush_rank?:             number;
+    yards_def_rush_rank?:               number;
+    yardsplay_def_rush_rank?:           number;
+    yardsgame_def_rush_rank?:           number;
+    drivesgame_rush_rank?:              number;
+    yardsdrive_def_rush_rank?:          number;
+    playsdrive_def_rush_rank?:          number;
+    play_stuffed_def_rush_rank?:        number;
+    red_zone_success_def_rush_rank?:    number;
+    third_down_success_def_rush_rank?:  number;
+    havoc_def_rush_rank?:               number;
+    explosive_def_rush_rank?:           number;
+    passrate_def_rush_rank?:            number;
+    rushrate_def_rush_rank?:            number;
+    TEPA_margin_rush?:                  number;
+    EPAplay_margin_rush?:               number;
+    EPAgame_margin_rush?:               number;
+    success_margin_rush?:               number;
+    yardsplay_margin_rush?:             number;
+    TEPA_margin_rush_rank?:             number;
+    EPAgame_margin_rush_rank?:          number;
+    EPAplay_margin_rush_rank?:          number;
+    success_margin_rush_rank?:          number;
+    yardsplay_margin_rush_rank?:        number;
+}
+
+
+
+export type Players = {
+    passing:   Passing[];
+    rushing:   Receiving[];
+    receiving: Receiving[];
+}
+
+export type Passing = {
+    team_id?:             number;
+    pos_team?:            string;
+    abbreviation?:        string;
+    season?:              number;
+    passer_player_name:   string;
+    player_id?:           number;
+    plays:                number;
+    games?:               number;
+    playsgame?:           number;
+    TEPA?:                number;
+    EPAplay?:             number;
+    EPAgame?:             number;
+    yards?:               number;
+    yardsplay?:           number;
+    yardsgame?:           number;
+    success?:             number;
+    comp?:                number;
+    att?:                 number;
+    comppct?:             number;
+    passing_td?:          number;
+    sacked?:              number;
+    sack_yds?:            number;
+    pass_int?:            number;
+    detmer?:              number;
+    detmergame?:          number;
+    dropbacks?:           number;
+    sack_adj_yards?:      number;
+    yardsdropback?:       number;
+    TEPA_rank?:           number;
+    EPAgame_rank?:        number;
+    EPAplay_rank?:        number;
+    success_rank?:        number;
+    comppct_rank?:        number;
+    yards_rank?:          number;
+    yardsplay_rank?:      number;
+    yardsgame_rank?:      number;
+    sack_adj_yards_rank?: number;
+    yardsdropback_rank?:  number;
+    detmer_rank?:         number;
+    detmergame_rank?:     number;
+}
+
+export type Receiving = {
+    team_id?:              number;
+    pos_team?:             string;
+    abbreviation?:         string;
+    season?:               number;
+    receiver_player_name:  string;
+    player_id?:            number | null;
+    plays:                 number;
+    games?:                number;
+    playsgame?:            number;
+    TEPA?:                 number;
+    EPAplay?:              number;
+    EPAgame?:              number;
+    yards?:                number;
+    yardsplay?:            number;
+    yardsgame?:            number;
+    success?:              number;
+    comp?:                 number;
+    targets?:              number;
+    catchpct?:             number;
+    passing_td?:           number;
+    fumbles?:              number;
+    TEPA_rank?:            number;
+    EPAgame_rank?:         number;
+    EPAplay_rank?:         number;
+    success_rank?:         number;
+    catchpct_rank?:        number;
+    yards_rank?:           number;
+    yardsplay_rank?:       number;
+    yardsgame_rank?:       number;
+    rusher_player_name:    string;
+    rushing_td?:           number;
+}
+
+
+
+export enum BreakdownAbbreviation {
+    Uga = "UGA",
+}
+
+
+
+export type TeamData = {
+    $ref?:                    string;
+    id:                       string;
+    guid?:                    string;
+    uid?:                     string;
+    alternateIds?:            AlternateIDS;
+    slug?:                    string;
+    location:                 string;
+    name:                     string;
+    nickname:                 string;
+    abbreviation:             string;
+    displayName:              string;
+    shortDisplayName?:        string;
+    color?:                   string;
+    alternateColor?:          string;
+    isActive?:                boolean;
+    isAllStar?:               boolean;
+    logos:                    Logo[];
+    record:                   RecordTeam[];
+    oddsRecords?:             OddsRecords;
+    athletes?:                any[];
+    venue?:                   OddsRecords;
+    groups?:                  AgainstTheSpreadRecords;
+    ranks?:                   any[];
+    statistics?:              OddsRecords;
+    leaders?:                 null;
+    links?:                   any[];
+    injuries?:                AgainstTheSpreadRecords;
+    notes?:                   AgainstTheSpreadRecords;
+    againstTheSpreadRecords?: AgainstTheSpreadRecords;
+    awards?:                  AgainstTheSpreadRecords;
+    franchise?:               AgainstTheSpreadRecords;
+    projection?:              AgainstTheSpreadRecords;
+    events?:                  Event[];
+    coaches?:                 AgainstTheSpreadRecords;
+    college?:                 AgainstTheSpreadRecords;
+}
+
+export type AgainstTheSpreadRecords = {
+    $ref?: string;
+}
+
+export type AlternateIDS = {
+    sdr?: string;
+}
+
+export type Event = {
+    id?:                       string;
+    date?:                     string;
+    attendance?:               number;
+    time_valid?:               boolean;
+    neutral_site?:             boolean;
+    boxscore_available?:       boolean;
+    tickets_available?:        boolean;
+    competitors?:              CompetitorTeam[];
+    notes_type?:               NotesType;
+    notes_headline?:           string;
+    type_id?:                  string;
+    type_text?:                TypeText;
+    type_abbreviation?:        TypeAbbreviation;
+    type_slug?:                TypeSlugEnum;
+    type_type?:                TypeSlugEnum;
+    venue_full_name?:          string;
+    venue_address_city?:       string;
+    venue_address_state?:      string;
+    venue_address_zip_code?:   string;
+    status_clock?:             number;
+    status_display_clock?:     StatusDisplayClock;
+    status_period?:            number;
+    status_type_id?:           string;
+    status_type_name?:         StatusTypeName;
+    status_type_state?:        StatusTypeState;
+    status_type_completed?:    boolean;
+    status_type_description?:  StatusType;
+    status_type_detail?:       StatusType;
+    status_type_short_detail?: StatusType;
+    home_id?:                  string;
+    home_location?:            string;
+    home_nickname?:            string;
+    home_abbreviation?:        string;
+    home_display_name?:        string;
+    home_short_display_name?:  string;
+    home_logos?:               Logo[];
+    home_score_value?:         number;
+    home_score_display_value?: string;
+    home_winner?:              boolean;
+    home_current_rank?:        number;
+    home_linescores?:          any[];
+    home_records?:             AwayRecord[];
+    home_logo?:                string;
+    away_id?:                  string;
+    away_location?:            string;
+    away_nickname?:            string;
+    away_abbreviation?:        string;
+    away_display_name?:        string;
+    away_short_display_name?:  string;
+    away_logos?:               Logo[];
+    away_score_value?:         number;
+    away_score_display_value?: string;
+    away_winner?:              boolean;
+    away_current_rank?:        number;
+    away_linescores?:          any[];
+    away_records?:             AwayRecord[];
+    away_logo?:                string;
+    game_id?:                  number;
+    season?:                   number;
+    season_type?:              null;
+    week?:                     number;
+    home_dark_logo?:           string;
+    away_dark_logo?:           string;
+}
+
+export type Logo = {
+    href:         string;
+    width?:       number;
+    height?:      number;
+    alt?:         string;
+    rel?:         LogoRel[];
+    lastUpdated?: string;
+}
+
+export enum LogoRel {
+    Dark = "dark",
+    Default = "default",
+    Full = "full",
+}
+
+export type AwayRecord = {
+    id?:               string;
+    abbreviation?:     string;
+    displayName?:      string;
+    shortDisplayName?: string;
+    description?:      string;
+    type?:             string;
+    displayValue?:     string;
+    name?:             string;
+    value?:            number;
+}
+
+export type CompetitorTeam = {
+    id?:          string;
+    type?:        Type;
+    order?:       number;
+    homeAway?:    HomeAway;
+    winner?:      boolean;
+    team?:        Team;
+    score?:       Score;
+    leaders?:     CompetitorLeader[];
+    record?:      AwayRecord[];
+    curatedRank?: CuratedRank;
+}
+
+export type CuratedRank = {
+    current?: number;
+}
+
+export enum HomeAway {
+    Away = "away",
+    Home = "home",
+}
+
+export type CompetitorLeader = {
+    name?:         string;
+    displayName?:  string;
+    abbreviation?: LeaderAbbreviation;
+    leaders?:      LeaderLeader[];
+}
+
+export enum LeaderAbbreviation {
+    Cmp = "CMP",
+    ESPNRating = "ESPNRating",
+    F = "F",
+    FL = "FL",
+    Int = "INT",
+    Kr = "KR",
+    P = "P",
+    PR = "PR",
+    Pyds = "PYDS",
+    Rat = "RAT",
+    Rec = "REC",
+    Recyds = "RECYDS",
+    Ryds = "RYDS",
+    Td = "TD",
+    Tot = "TOT",
+    Tp = "TP",
+    Yds = "YDS",
+}
+
+export type LeaderLeader = {
+    displayValue?: string;
+    value?:        number;
+    athlete?:      Athlete;
+}
+
+export type Athlete = {
+    id?:          string;
+    lastName?:    string;
+    displayName?: string;
+    shortName?:   string;
+    links?:       Link[];
+}
+
+export type Link = {
+    rel?:  LinkRel[];
+    href?: string;
+}
+
+export enum LinkRel {
+    Athlete = "athlete",
+    Bio = "bio",
+    Desktop = "desktop",
+    Gamelog = "gamelog",
+    News = "news",
+    Overview = "overview",
+    Playercard = "playercard",
+    Splits = "splits",
+    Stats = "stats",
+}
+
+export type Score = {
+    value?:        number;
+    displayValue?: string;
+}
+
+export type Team = {
+    id?:               string;
+    location?:         string;
+    nickname?:         string;
+    abbreviation?:     string;
+    displayName?:      string;
+    shortDisplayName?: string;
+    logos?:            Logo[];
+    score?:            Score;
+    winner?:           boolean;
+    currentRank?:      number;
+    linescores?:       any[];
+    records?:          AwayRecord[];
+    logo?:             string;
+}
+
+export enum Type {
+    Team = "team",
+}
+
+export enum NotesType {
+    Empty = "",
+    Event = "event",
+}
+
+export enum StatusDisplayClock {
+    The000 = "0:00",
+}
+
+
+export enum StatusTypeName {
+    StatusFinal = "STATUS_FINAL",
+}
+
+export enum StatusTypeState {
+    Post = "post",
+}
+
+export enum TypeAbbreviation {
+    Std = "STD",
+}
+
+export enum TypeSlugEnum {
+    Standard = "standard",
+}
+
+export enum TypeText {
+    Standard = "Standard",
+}
+
+export type OddsRecords = {
+}
+
+export type RecordTeam = {
+    $ref?:             string;
+    id?:               string;
+    name?:             string;
+    abbreviation?:     string;
+    displayName?:      string;
+    shortDisplayName?: string;
+    description?:      string;
+    type?:             string;
+    summary?:          string;
+    displayValue?:     string;
+    value?:            number;
+    stats?:            AwayRecord[];
+}
+
+
+
+
+
 export type CFBGame = {
     id?:                 string;
     count?:              number;
