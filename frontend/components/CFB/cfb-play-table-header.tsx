@@ -15,7 +15,7 @@ export default function CFBPlayTableHeader({
     return(
         <>
             <div className="flex justify-between">
-                <h2 className="text-2xl font-chivo text-left justify-around py-2">
+                <h2 className="text-3xl font-medium font-chivo text-left justify-around py-2">
                     {title}
                     <span className="inline text-sm"  onClick={toggleExpanded}>
                         <Link href={href}  role="button" aria-expanded="true">[show/hide]</Link>

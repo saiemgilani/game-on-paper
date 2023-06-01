@@ -32,7 +32,7 @@ export default function CFBPlayerStatsHeader({
     return(
         <>
             <div className="flex justify-between">
-            <h2 className="text-2xl font-chivo text-left justify-around py-2">{team.team.location+ " "}<span className="inline text-sm"  onClick={toggleExpanded}>
+            <h2 className="text-3xl font-medium font-chivo text-left justify-around py-2">{team.team.location+ " "}<span className="inline text-sm"  onClick={toggleExpanded}>
                 <Link href={href}  role="button" aria-expanded="true">[show/hide]</Link></span></h2>
             {logo}
             </div>

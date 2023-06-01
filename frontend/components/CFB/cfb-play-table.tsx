@@ -383,7 +383,7 @@ export default function CFBPlayTable(
 
     return(
         <>
-        <div className="flex justify-center w-full">
+        <div className="flex justify-center w-full m-auto">
             <table className="table w-full table-sm table-responsive border-collapse">
                 {guideText}
                 <thead>

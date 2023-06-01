@@ -540,8 +540,8 @@ export default class CFBWinProbChartClass extends Component<{
         const gei = this.props.gei;
         return (
             <>
-                <h2 className="text-2xl font-chivo text-left justify-around py-2">Win Probability</h2>
-                <p className="text-md"><a href="https://www.opensourcefootball.com/posts/2020-08-21-game-excitement-and-win-probability-in-the-nfl/">Game Excitement Index: </a>
+                <h2 className="text-3xl font-medium font-chivo text-left justify-around py-2">Win Probability</h2>
+                <p className="text-sm px-2"><a href="https://www.opensourcefootball.com/posts/2020-08-21-game-excitement-and-win-probability-in-the-nfl/">Game Excitement Index: </a>
                     {roundNumber(gei, 2, 2)}{"| Odds: "}{printSpread(homeTeamSpread, awayTeam, homeTeam)}{", O/U: "}{roundNumber(overUnder, 2 , 1)}
                 </p>
                 <canvas

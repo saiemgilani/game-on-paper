@@ -159,7 +159,7 @@ export default function CFBSummaryTeamStatsTable({
     };
     return(
         <>
-    <table className="min-w-[30%]">
+    <table className="min-w-[90%] ">
         <thead>
             <tr className="h-5">
                 <th className={`text-left w-[${width}%] h-5`}>{title}</th>

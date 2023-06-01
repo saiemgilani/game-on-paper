@@ -38,10 +38,10 @@ function formatLogo(team: TeamData, season: number) {
     return (
     <>
         <Link className="inline-block dark:hidden" href={`/cfb/year/${season}/team/${team.id}`}>
-            <Image className="inline-block self-center dark:hidden" width={"35"} height={"35"} src={team.logos[0].href} alt={`ESPN team id ${team.id}`}/>
+            <Image className="inline-block self-center dark:hidden" width={"50"} height={"50"} src={team.logos[0].href} alt={`ESPN team id ${team.id}`}/>
         </Link>
         <Link className="hidden dark:inline-block" href={`/cfb/year/${season}/team/${team.id}`}>
-            <Image className="self-center hidden dark:inline-block" width={"35"} height={"35"} src={team.logos[1].href} alt={`ESPN team id ${team.id}`}/>
+            <Image className="self-center hidden dark:inline-block" width={"50"} height={"50"} src={team.logos[1].href} alt={`ESPN team id ${team.id}`}/>
         </Link>
     </>
     );
@@ -138,13 +138,13 @@ export default function CFBSummaryPlayerCard({
         <>
 
             <div className="m-8 lg:m-6 xl:mg-4 my-4 max-w-2xl rounded-md overflow-hidden border hover:border-blue-100" >
-                <div className="flex self-center justify-between px-2 py-2">
-                    <h2 className="self-center">{season} {cleanLocation(team)} Leaders</h2>
+                <div className="flex self-center justify-between py-2 mx-2">
+                    <h2 className="text-3xl font-medium font-chivo self-center">{season} {cleanLocation(team)} Leaders</h2>
                     {logo}
                 </div>
-                <div className="grid grid-cols-3">
+                <div className="grid grid-cols-3 mx-2">
 
-                    <div className="grid grid-cols-1">
+                    <div className="grid grid-cols-1 mb-4 mx-2">
                             <p className="self-center content-center items-center text-center ">Passing</p>
                             {pass.player_id && pass.player_id.toString() !== 'NA' ?
                                 (<a className="self-center justify-self-center justify-center content-center items-center" href={`https://www.espn.com/college-football/player/_/id/${pass.player_id}`}>
@@ -153,9 +153,9 @@ export default function CFBSummaryPlayerCard({
                                 (<Image className="self-center justify-self-center justify-center content-center items-center img-circle-bg " src="https://a.espncdn.com/combiner/i?img=/i/headshots/nophoto.png&w=150&scale=crop" width={150} height={150} alt={pass.passer_player_name}/>)
                             }
                             <h5 className="self-center content-center items-center  text-center ">{ pass.passer_player_name }</h5>
-                            <p className="text-sm self-center content-center items-center  text-center ">{roundNumber(pass.EPAplay, 2, 2)} EPA/Play, {roundNumber(100 * (pass.comppct || 0), 2, 0)}% Comp%, {pass.yards} yd{(Math.abs(parseFloat(pass.yards?.toString() || "0")) == 1) ? "" : "s"}, {pass.passing_td} TD, {roundNumber(pass.detmer || 0, 2, 2) } DETMER</p>
+                            <p className="text-xs self-center content-center items-center  text-center ">{roundNumber(pass.EPAplay, 2, 2)} EPA/Play, {roundNumber(100 * (pass.comppct || 0), 2, 0)}% Comp%, {pass.yards} yd{(Math.abs(parseFloat(pass.yards?.toString() || "0")) == 1) ? "" : "s"}, {pass.passing_td} TD, {roundNumber(pass.detmer || 0, 2, 2) } DETMER</p>
                     </div>
-                    <div className="grid grid-cols-1">
+                    <div className="grid grid-cols-1 mb-4 mx-2">
                             <p className="self-center content-center items-center text-center ">Rushing</p>
                             {rush.player_id && rush.player_id.toString() !== 'NA' ?
                                 (<a className="self-center justify-self-center justify-center content-center items-center" href={`https://www.espn.com/college-football/player/_/id/${rush.player_id}`}>
@@ -164,9 +164,9 @@ export default function CFBSummaryPlayerCard({
                                 (<Image className="self-center justify-self-center justify-center content-center items-center img-circle-bg " src="https://a.espncdn.com/combiner/i?img=/i/headshots/nophoto.png&w=150&scale=crop" width={150} height={150} alt={rush.rusher_player_name}/>)
                             }
                             <h5 className="self-center content-center items-center  text-center ">{ rush.rusher_player_name }</h5>
-                            <p className="text-sm self-center content-center items-center  text-center ">{roundNumber(rush.EPAplay, 2, 2)} EPA/Play, {rush.plays} Car, {rush.yards} yd{(Math.abs(rush.yards || 0) == 1) ? "" : "s"},  {rush.rushing_td} TD </p>
+                            <p className="text-xs self-center content-center items-center  text-center ">{roundNumber(rush.EPAplay, 2, 2)} EPA/Play, {rush.plays} Car, {rush.yards} yd{(Math.abs(rush.yards || 0) == 1) ? "" : "s"},  {rush.rushing_td} TD </p>
                     </div>
-                    <div className="grid grid-cols-1">
+                    <div className="grid grid-cols-1 mb-4 mx-2">
                             <p className="self-center content-center items-center text-center ">Receiving</p>
                             {rec.player_id && rec.player_id.toString() !== 'NA' ?
                                 (<a className="self-center justify-self-center justify-center content-center items-center" href={`https://www.espn.com/college-football/player/_/id/${rec.player_id}`}>
@@ -175,7 +175,7 @@ export default function CFBSummaryPlayerCard({
                                 (<Image className="self-center justify-self-center justify-center content-center items-center img-circle-bg " src="https://a.espncdn.com/combiner/i?img=/i/headshots/nophoto.png&w=150&scale=crop" width={150} height={150} alt={rec.receiver_player_name}/>)
                             }
                             <h5 className="self-center content-center items-center  text-center ">{ rec.receiver_player_name }</h5>
-                            <p className="text-sm self-center content-center items-center  text-center ">{roundNumber(rec.EPAplay, 2, 2)} EPA/Play, {rec.comp} Cat ({roundNumber(100 * (rec.catchpct || 0), 2, 0)}% Catch%), {rec.yards} yd{(Math.abs(rec.yards || 0) == 1) ? "" : "s"},  {rec.passing_td} TD </p>
+                            <p className="text-xs self-center content-center items-center  text-center ">{roundNumber(rec.EPAplay, 2, 2)} EPA/Play, {rec.comp} Cat ({roundNumber(100 * (rec.catchpct || 0), 2, 0)}% Catch%), {rec.yards} yd{(Math.abs(rec.yards || 0) == 1) ? "" : "s"},  {rec.passing_td} TD </p>
                     </div>
                 </div>
             </div>

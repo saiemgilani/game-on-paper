@@ -486,7 +486,6 @@ export default async function CFBYearTeamPage({ params }: { params: { year: numb
             <div className="px-2 py-2">
                 <CFBTeamStatsHeader title={"Breakdown"} href={`cfb/year/${params.year}/team/${params.teamId}#breakdown`}>
                 <div className="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-3 gap-2 mb-4">
-
                     <CFBSummaryTeamStatsTable
                         breakdown={breakdown}
                         title={"Offensive"}
@@ -508,7 +507,6 @@ export default async function CFBYearTeamPage({ params }: { params: { year: numb
                         situation={"rushing"}
                         team = {teamData.team}
                         showTeamLogos={false} />
-
 
                 </div>
                 <div className="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-3 gap-2 mb-4">

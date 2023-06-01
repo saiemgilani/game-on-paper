@@ -172,7 +172,7 @@ export default function CFBSummaryPlayerStatsTable({
     }
     return(
         <>
-            <table className="whitespace-pre min-w-[90%] lg:min-w-[90%]">
+            <table className="whitespace-pre min-w-[90%] lg:min-w-[90%] m-auto">
                 <thead>
                     <tr>
                     { headerCallback() }

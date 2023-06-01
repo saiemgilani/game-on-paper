@@ -385,7 +385,7 @@ export default class CFBEpaChartClass extends Component<{
 
         return (
             <>
-                <h2 className="text-2xl font-chivo text-left justify-around py-2">Expected Points</h2>
+                <h2 className="text-3xl font-medium font-chivo text-left justify-around py-2">Expected Points</h2>
                 <canvas
                     id="epaChart"
                     // @ts-ignore
