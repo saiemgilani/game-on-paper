@@ -20,7 +20,7 @@ const stat_key_title_mapping: StatKeyNames = {
     "EPA_rushing_per_play" : "        EPA/Play",
     "rushes" : "Rushes",
     "rushing_power" : "        Power Run Attempts\n        (Down  ≥ 3, Distance ≤ 2)",
-    "rushing_power_success" : "        Successful Power Runs (Rate)",
+    "rushing_power_success" : "        Successful Power Runs\n        (Rate)",
     "rushing_stuff" : "        Stuffed Runs\n        (Yds Gained ≤ 0)",
     "rushing_stopped" : "        Stopped Runs\n        (Yds Gained ≤ 2)",
     "rushing_opportunity" : "        Opportunity Runs\n        (Yds Gained ≥ 4)",

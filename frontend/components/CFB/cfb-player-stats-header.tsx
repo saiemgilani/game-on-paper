@@ -29,10 +29,12 @@ export default function CFBPlayerStatsHeader({
     const [expanded, setExpanded] = useState(false)
     const toggleExpanded = () => setExpanded((current) => !current)
     const logo = formatLogo(team, season);
+
+    const teamLocation = team.id === '61' ? team.team.location.toLocaleLowerCase() : team.team.location
     return(
         <>
             <div className="flex justify-between">
-            <h2 className="text-3xl font-medium font-chivo text-left justify-around py-2">{team.team.location+ " "}<span className="inline text-sm"  onClick={toggleExpanded}>
+            <h2 className="text-3xl font-medium font-chivo text-left justify-around py-2">{teamLocation+ " "}<span className="inline text-sm"  onClick={toggleExpanded}>
                 <Link href={href}  role="button" aria-expanded="true">[show/hide]</Link></span></h2>
             {logo}
             </div>

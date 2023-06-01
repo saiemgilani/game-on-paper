@@ -8,7 +8,7 @@ import { Conferences } from "@lib/utils"
 
 export function CfbScheduleSelect() {
     let range = (start: number, end: number) => Array.from(Array(end + 1).keys()).slice(start);
-    let yrRange = range(2002, 2022);
+    let yrRange = range(2002, 2023);
     let weeks;
     weeks = [
     '1','2','3',

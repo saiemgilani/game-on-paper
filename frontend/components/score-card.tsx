@@ -87,11 +87,13 @@ export default function ScoreCard({ showRecords = true, props }: {showRecords: b
     const awayRecord = props.away_records.length === 0 ? `(0-0, 0-0 ${awayConference})` : `(${props.away_records[0].summary || props.away_records[0].displayValue}, ${props.away_records[props.away_records.length-1].summary || props.away_records[props.away_records.length-1].displayValue} ${awayConference})`
     const awayLinescores = props.away_linescores
     const awayScore = `${props.away_score || props.away_score_value }`
+    const awayAbbrev = props.away_id === '61' ? props.away_abbreviation.toLocaleLowerCase() : props.away_abbreviation
     const homeConferenceId = parseInt(props.home_conference_id)
     const homeConference = ConferenceMap[homeConferenceId] || "CONF"
     const homeRecord = props.home_records.length === 0 ? `(0-0, 0-0 ${homeConference})` : `(${props.home_records[0].summary || props.home_records[0].displayValue}, ${props.home_records[props.home_records.length-1].summary || props.home_records[props.home_records.length-1].displayValue} ${homeConference})`
     const homeLinescores = props.home_linescores
     const homeScore = `${props.home_score || props.home_score_value }`
+    const homeAbbrev = props.home_id === '61' ? props.home_abbreviation.toLocaleLowerCase() : props.home_abbreviation
     const pbpAvailable = props.play_by_play_available || props.boxscore_available
     const broadcastName = props.broadcast_name || ""
     const broadcastUrl = NetworkMap[broadcastName]
@@ -116,7 +118,7 @@ export default function ScoreCard({ showRecords = true, props }: {showRecords: b
             <TeamRow
               key = {props.away_id}
               team={props.away_name}
-              teamAbbreviation={props.away_abbreviation}
+              teamAbbreviation={awayAbbrev}
               linescores= {awayLinescores}
               record={awayRecord}
               logo={props.away_logo}
@@ -128,7 +130,7 @@ export default function ScoreCard({ showRecords = true, props }: {showRecords: b
             <TeamRow
               key = {props.home_id}
               team={props.home_name}
-              teamAbbreviation={props.home_abbreviation}
+              teamAbbreviation={homeAbbrev}
               linescores= {homeLinescores}
               record={homeRecord}
               logo={props.home_logo}

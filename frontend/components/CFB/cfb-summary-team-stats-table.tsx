@@ -57,7 +57,7 @@ function handleRatesNew(item: string, teamInfo: any, baseKey:any, subKey: any, u
         let teamData = finalTeamInfo;
         let result;
         if (!(baseKey in teamData)) {
-            let result = <td className={`text-center w-[${widthPct}%]`}>N/A <small className="align-center opacity-[50%]"> N/A</small></td>
+            let result = <td className={`text-center w-[${widthPct}%]`}>N/A <small className="align-center opacity-[80%]"> N/A</small></td>
             return result;
 
         } else {
@@ -82,15 +82,15 @@ function handleRatesNew(item: string, teamInfo: any, baseKey:any, subKey: any, u
             let tied = rank === undefined ?  false : rank.toString().includes(".5")
             let rankString: any;
             if (rank && tied) {
-                rankString = <small className="align-center opacity-[50%]"> {`T-#${roundNumber(Math.floor(parseFloat(rank)), 2, 0)}`}</small>;
+                rankString = <small className="align-center opacity-[80%]"> {`T-#${roundNumber(Math.floor(parseFloat(rank)), 2, 0)}`}</small>;
             } else if (rank) {
-                rankString = <small className="align-center opacity-[50%]">{`#${roundNumber(Math.floor(parseFloat(rank)), 2, 0)}`}</small>
+                rankString = <small className="align-center opacity-[80%]">{`#${roundNumber(Math.floor(parseFloat(rank)), 2, 0)}`}</small>
             }
 
             if (colorClass) {
-                result = <td className={`align-center numeral${colorClass} text-center width-[${widthPct}%] h-5`}>{`${sign}${valueFormatter(val)}`}{rankString}</td>;
+                result = <td className={`align-center numeral${colorClass} text-center width-[${widthPct}%] h-5`}>{`${sign}${valueFormatter(val)} `}{rankString}</td>;
             } else {
-                result = <td className={`align-center numeral${colorClass} text-center width-[${widthPct}%] h-5`}>{`${sign}${valueFormatter(val)}`}{rankString}</td>;
+                result = <td className={`align-center numeral${colorClass} text-center width-[${widthPct}%] h-5`}>{`${sign}${valueFormatter(val)} `}{rankString}</td>;
             }
         }
         return result;

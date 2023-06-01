@@ -127,7 +127,7 @@ export default function CFBSummaryTeamCard({
                             <td className="numeral text-center w-[33%]">{overall} {conf}</td>
                             <td className="numeral text-center w-[33%]">{finish}</td>
                             <td className={`numeral text-center w-[33%]  ${generateColorRampValue(breakdown[0].differential?.overall?.epaPerPlayRank, maxTeams, null)}`}>{ generateMarginalString(parseFloat(breakdown[0].differential?.overall?.epaPerPlay), 2, 2) }
-                                <small className="align-center opacity-[50%]"> #{breakdown[0].differential?.overall?.epaPerPlayRank}</small>
+                                <small className="align-center opacity-[80%]"> #{breakdown[0].differential?.overall?.epaPerPlayRank}</small>
                             </td>
                         </tr>
                     </tbody>
@@ -144,15 +144,15 @@ export default function CFBSummaryTeamCard({
                         <tr>
                             <td className={`numeral text-center w-[33%] ${generateColorRampValue(breakdown[0].differential?.overall?.yardsPerPlayRank, maxTeams, null)}`} >
                                 {generateMarginalString(parseFloat(breakdown[0].differential?.overall?.yardsPerPlay), 2, 2) }
-                                <small className="align-center opacity-[50%]"> #{breakdown[0].differential?.overall?.yardsPerPlayRank}</small>
+                                <small className="align-center opacity-[80%]"> #{breakdown[0].differential?.overall?.yardsPerPlayRank}</small>
                             </td>
                             <td className={`numeral text-center w-[33%] ${generateColorRampValue(breakdown[0].differential?.overall?.availableYardsPctRank, maxTeams, null)}`}>
                                 {generateMarginalString(100 * parseFloat(breakdown[0].differential?.overall?.availableYardsPct), 2, 1)}%
-                                <small className="align-center opacity-[50%]"> #{breakdown[0].differential?.overall?.availableYardsPctRank}</small>
+                                <small className="align-center opacity-[80%]"> #{breakdown[0].differential?.overall?.availableYardsPctRank}</small>
                             </td>
                             <td className={`numeral text-center w-[33%] ${generateColorRampValue(breakdown[0].differential?.overall?.successRateRank, maxTeams, null)}`} >
                                 {generateMarginalString(100 * parseFloat(breakdown[0].differential?.overall?.successRate), 2, 1)}
-                                <small className="align-center opacity-[50%]"> #{breakdown[0].differential?.overall?.successRateRank}</small>
+                                <small className="align-center opacity-[80%]"> #{breakdown[0].differential?.overall?.successRateRank}</small>
                             </td>
                         </tr>
                     </tbody>

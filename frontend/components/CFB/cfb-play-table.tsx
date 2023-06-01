@@ -245,12 +245,15 @@ function formatPlayDescription(play: CFBGamePlay, homeTeam: Competitor, awayTeam
     let offense = (play.start.pos_team.id == play.homeTeamId) ? play.homeTeamId : play.awayTeamId;
     let defense = (play.start.pos_team.id == play.homeTeamId) ? play.awayTeamId : play.homeTeamId;
     let offenseAbbrev = (play.start.pos_team.id == play.homeTeamId) ? play.homeTeamAbbrev : play.awayTeamAbbrev;
+    let offenseAbbreviation = (play.start.pos_team.id == 61) ? offenseAbbrev.toLocaleLowerCase() : offenseAbbrev;
     let defenseAbbrev = (play.start.pos_team.id == play.homeTeamId) ? play.awayTeamAbbrev : play.homeTeamAbbrev;
-
+    let defenseAbbreviation = (play.start.def_pos_team.id == 61) ? defenseAbbrev.toLocaleLowerCase(): defenseAbbrev;
+    let awayTeamAbbrev = (play.awayTeamId == 61) ? play.awayTeamAbbrev.toLocaleLowerCase() : play.awayTeamAbbrev;
+    let homeTeamAbbrev = (play.homeTeamId == 61) ? play.homeTeamAbbrev.toLocaleLowerCase() : play.homeTeamAbbrev;
     return <p>{`(${formatDistance(play.start.down, play.type.text, play.start.distance, play.start.yardsToEndzone)}`+
-    ' at '+`${formatYardline(play.start.yardsToEndzone, offenseAbbrev, defenseAbbrev)}`+') '+
+    ' at '+`${formatYardline(play.start.yardsToEndzone, offenseAbbreviation, defenseAbbreviation)}`+') '+
      play.text}{
-     ((play.scoringPlay == true) ? <b>{` - ${play.awayTeamAbbrev} ${play.awayScore}, ${play.homeTeamAbbrev} ${play.homeScore}`}</b> : ` - ${play.awayTeamAbbrev} ${play.awayScore}, ${play.homeTeamAbbrev} ${play.homeScore}`)
+     ((play.scoringPlay == true) ? <b>{` - ${awayTeamAbbrev} ${play.awayScore}, ${homeTeamAbbrev} ${play.homeScore}`}</b> : ` - ${awayTeamAbbrev} ${play.awayScore}, ${homeTeamAbbrev} ${play.homeScore}`)
      }</p>
 }
 function formatOffenseLogo(row: CFBGamePlay, homeTeam: Competitor, awayTeam: Competitor){
@@ -287,7 +290,11 @@ function PlayRow(play: CFBGameRow,
     let defense = (play.start.pos_team.id == play.homeTeamId) ? play.awayTeamId : play.homeTeamId;
     let offenseLocation = (play.start.pos_team.id == play.homeTeamId) ? play.homeTeamName : play.awayTeamName;
     let offenseAbbrev = (play.start.pos_team.id == play.homeTeamId) ? play.homeTeamAbbrev : play.awayTeamAbbrev;
+    let offenseAbbreviation = (play.start.pos_team.id == 61) ? offenseAbbrev.toLocaleLowerCase() : offenseAbbrev;
     let defenseAbbrev = (play.start.pos_team.id == play.homeTeamId) ? play.awayTeamAbbrev : play.homeTeamAbbrev;
+    let defenseAbbreviation = (play.start.def_pos_team.id == 61) ? defenseAbbrev.toLocaleLowerCase(): defenseAbbrev;
+    let awayTeamAbbrev = (play.awayTeamId == 61) ? play.awayTeamAbbrev.toLocaleLowerCase() : play.awayTeamAbbrev;
+    let homeTeamAbbrev = (play.homeTeamId == 61) ? play.homeTeamAbbrev.toLocaleLowerCase() : play.homeTeamAbbrev;
     let fourthDownLink = `https://kazink.shinyapps.io/cfb_fourth_down/?team=${offenseLocation}&pos_score=${play.start.pos_team_score}&def_pos_score=${play.start.def_pos_team_score}&pos_timeouts=${play.start.posTeamTimeouts}&def_timeouts=${play.start.defTeamTimeouts}&distance=${play.start.distance}&yards_to_goal=${play.start.yardsToEndzone}&qtr=${play.period}&minutes=${play.clock.minutes}&seconds=${play.clock.seconds}&posteam_spread=${-1 * parseFloat(play.start.posTeamSpread.toString())}&vegas_ou=${play.overUnder}&season=${play.season}&pos_team_receives_2H_kickoff=${play.modelInputs.start.pos_team_receives_2H_kickoff}&is_home=${play.modelInputs.start.is_home}`;
     let classText = formatColorRow(play);
     const [expanded, setExpanded] = useState(false)
@@ -311,14 +318,14 @@ function PlayRow(play: CFBGameRow,
                         <div className="flex flex-col gap-2 p-1 align-center justify-center">
                             <p className="text-left"><b>{"Play Type:"}</b> {play.type.text}</p>
                             <p className="text-left"><b>{"Yards to End Zone (Before -> After):"}</b> {play.start.yardsToEndzone}{" -> "}{play.end.yardsToEndzone}</p>
-                            <p className="text-left"><b>{"Started Drive at:"}</b> {` ${formatYardline(play.drive_start, offenseAbbrev, defenseAbbrev)}`}</p>
+                            <p className="text-left"><b>{"Started Drive at:"}</b> {` ${formatYardline(play.drive_start, offenseAbbreviation, defenseAbbreviation)}`}</p>
                             <p className="text-left"><b>{"ExpPts (After - Before = Added):"}</b> {` ${roundNumber(parseFloat(play.expectedPoints.after.toString()), 2, 2)} - ${roundNumber(parseFloat(play.expectedPoints.before.toString()), 2, 2)} = ${roundNumber(parseFloat(play.expectedPoints.added.toString()), 2, 2)}`}</p>
                             <p className="text-left"><b>{"Score Difference (Before):"}</b> {` ${play.start.pos_score_diff} (${roundNumber(parseFloat(play.start.ExpScoreDiff.toString()), 2, 2)})`}</p>
                             <p className="text-left"><b>{"Score Difference (End):"}</b> {` ${play.end.pos_score_diff} (${roundNumber(parseFloat(play.end.ExpScoreDiff.toString()), 2, 2)})`}</p>
                             <p className="text-left"><b>{"Change of Possession:"}</b> {` ${play.change_of_poss}`}</p>
                         </div>
                         <div className="flex flex-col gap-2 p-1 align-center justify-center">
-                            <p className="text-left"><b>Score:</b> {` ${play.awayTeamAbbrev} ${play.awayScore}, ${play.homeTeamAbbrev} ${play.homeScore}`}</p>
+                            <p className="text-left"><b>Score:</b> {` ${awayTeamAbbrev} ${play.awayScore}, ${homeTeamAbbrev} ${play.homeScore}`}</p>
                             <p className="text-left"><b>Drive Summary:</b> {` ${play.drive_play_index} plays, ${play.drive_total_yards} yards`}</p>
                             <p className="text-left"><b>Win Probability (Before):</b> {` ${roundNumber(parseFloat(play.winProbability.before.toString()) * 100, 3, 1)}`}%</p>
                             <p className="text-left"><b>Win Probability (After):</b> {` ${roundNumber(parseFloat(play.winProbability.after.toString()) * 100, 3, 1)}`}%</p>

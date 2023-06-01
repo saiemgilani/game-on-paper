@@ -10,34 +10,7 @@ interface StatKeyNames {
 let boxScoreNonRateDecimalColumns = ["expected_turnovers","expected_turnover_margin","turnover_luck","EPA_middle_8_per_play","EPA_middle_8","EPA_middle_8_per_play","EPA_middle_8","EPA_early_down_per_play","EPA_early_down","EPA_sp","EPA_special_teams","EPA_kickoff","EPA_punt","EPA_fg","EPA_overall_off","EPA_per_play","EPA_passing_overall","EPA_passing_per_play", "EPA_rushing_overall","EPA_rushing_per_play","points_per_drive","yards_per_drive","plays_per_drive","avg_field_position","rushing_highlight_yards_per_opp","line_yards_per_carry","yards_per_rush","yards_per_pass","yards_per_play","drive_stopped_rate","EPA_non_explosive","EPA_non_explosive_passing","EPA_non_explosive_rushing","EPA_non_explosive_per_play","EPA_non_explosive_passing_per_play","EPA_non_explosive_rushing_per_play"];
 let boxScoreNonRateColumns = ["EPA_plays","scrimmage_plays","expected_turnover_margin","turnover_margin","turnovers","expected_turnovers","turnover_luck","early_downs","late_downs","fumbles","INT","PD","middle_8","EPA_middle_8_per_play","EPA_middle_8","EPA_early_down_per_play","EPA_early_down","fumbles_lost","fumbles_recovered","Int","TFL","TFL_pass","TFL_rush","total_fumbles","def_int","points_per_drive","drives","points_per_drive","yards_per_drive","plays_per_drive","drive_total_gained_yards_rate","avg_field_position","rushing_highlight_yards","line_yards","yards_per_rush","yards_per_pass","yards_per_play","off_yards","pass_yards","rush_yards","EPA_overall_offense","EPA_penalty","EPA_overall_total","second_level_yards","open_field_yards","drive_stopped_rate","EPA_non_explosive","EPA_non_explosive_passing","EPA_non_explosive_rushing","EPA_non_explosive_per_play","EPA_non_explosive_passing_per_play","EPA_non_explosive_rushing_per_play"];
 let boxScoreNonRatePercentColumns = ["drive_total_gained_yards_rate","drive_stopped_rate","EPA_success_rate_third","EPA_success_rate_rz"];
-function boxScoreGetOrdinal(n: any) {
-    var s = ["th", "st", "nd", "rd"];
-    let v = n % 100;
-    return n + (s[(v - 20) % 10] || s[v] || s[0]);
-}
 
-function boxScoreGenerateColorRampValue(percentiles: any, input: string, max: any, midColor: any) {
-    if (percentiles.length == 0) {
-        //console.log('no pctls logged')
-        return null;
-    }
-    if (!input) {
-        //console.log('no input logged')
-        return null;
-    }
-    //console.log(`calc color ramp for val ${input}`)
-
-    let value = parseFloat(input) / parseFloat(max)
-    let step = Math.round(value / 0.1)
-    let clampedStep = Math.min(Math.max(step, 0), 9)
-
-    let hex = null
-    if (clampedStep == 4 || clampedStep == 5) {
-        return null
-    } else {
-        return ` hulk-bg-level-${clampedStep}`
-    }
-}
 
 function boxScoreRoundNumber(value: any, power10: any, fixed: any) {
     return (Math.round(parseFloat(value || 0) * (Math.pow(10, power10))) / (Math.pow(10, power10))).toFixed(fixed)
@@ -71,6 +44,34 @@ const slim_title_mapping: StatKeyNames = {
     "yards_per_play": "Yards/Play",
 }
 
+function boxScoreGetOrdinal(n: any) {
+    var s = ["th", "st", "nd", "rd"];
+    let v = n % 100;
+    return n + (s[(v - 20) % 10] || s[v] || s[0]);
+}
+
+function boxScoreGenerateColorRampValue(percentiles: any, input: string, max: any, midColor: any) {
+    if (percentiles.length == 0) {
+        //console.log('no pctls logged')
+        return null;
+    }
+    if (!input) {
+        //console.log('no input logged')
+        return null;
+    }
+    //console.log(`calc color ramp for val ${input}`)
+
+    let value = parseFloat(input) / parseFloat(max)
+    let step = Math.round(value / 0.1)
+    let clampedStep = Math.min(Math.max(step, 0), 9)
+
+    let hex = null
+    if (clampedStep == 4 || clampedStep == 5) {
+        return null
+    } else {
+        return ` hulk-bg-level-${clampedStep}`
+    }
+}
 
 function boxScoreRetrievePercentile(percentiles: any, value: any, key: any) {
     if (percentiles.length == 0) {
@@ -164,13 +165,25 @@ function handleBoxScoreRates(percentiles: any, item: any, teamInfo: any, team: a
             let pct = boxScoreRetrievePercentile(percentiles, val, item);
             let colorRampClass = boxScoreGenerateColorRampValue(percentiles, pct.pctl || "0", 100, null)
             // console.log(`calculated pctl for key ${finalKey}, with val ${val}, rate ${rate} with pct value ${pct} and class ${colorRampClass}`)
-            result = <td className={`numeral${colorRampClass} text-center`} title={`Worst: ${boxScoreRoundNumber(100 * parseFloat(pct.min || "0"), 2, 0)}%\nMedian: ${boxScoreRoundNumber(100 * parseFloat(pct.mid || "0"), 2, 0)}%\nBest: ${boxScoreRoundNumber(100 * parseFloat(pct.max || "0"), 2, 0)}%`}>{`${boxScoreRoundNumber(parseFloat(rate.toString() || "0"), 2, 0)}%`} <small className="align-center opacity-50">{`${boxScoreGetOrdinal(pct.pctl)} %ile`}</small></td>;
+            result = <td className={`numeral${colorRampClass} text-center`}
+                         title={`Worst: ${boxScoreRoundNumber(100 * parseFloat(pct.min || "0"), 2, 0)}%\nMedian: ${boxScoreRoundNumber(100 * parseFloat(pct.mid || "0"), 2, 0)}%\nBest: ${boxScoreRoundNumber(100 * parseFloat(pct.max || "0"), 2, 0)}%`}>
+                        {`${boxScoreRoundNumber(parseFloat(rate.toString() || "0"), 2, 0)}% `}
+                        <small className="align-center opacity-[80%]">
+                            {`${boxScoreGetOrdinal(pct.pctl)} %ile`}
+                        </small>
+                     </td>;
     } else if (boxScoreNonRateDecimalColumns.includes(item)) {
             let val = finalTeamInfo[0][item] || 0;
             let pct = boxScoreRetrievePercentile(percentiles, val, item);
             let colorRampClass = boxScoreGenerateColorRampValue(percentiles, pct.pctl || "0", 100, null)
             // console.log(`calculated pctl for key ${finalKey} with pct value ${pct} and class ${colorRampClass}`)
-            result = <td className={`numeral${colorRampClass} text-center`} title={`Worst: ${boxScoreRoundNumber(parseFloat(pct.min || "0"), 2, finalDecimalPoints)}\nMedian: ${boxScoreRoundNumber(parseFloat(pct.mid || "0"), 2, finalDecimalPoints)}\nBest: ${boxScoreRoundNumber(parseFloat(pct.max || "0"), 2, finalDecimalPoints)}`}>{`${boxScoreRoundNumber(parseFloat(val), 2, finalDecimalPoints)}`} <small className="align-center opacity-50">{`${boxScoreGetOrdinal(pct.pctl)} %ile`}</small></td>
+            result = <td className={`numeral${colorRampClass} text-center`}
+                         title={`Worst: ${boxScoreRoundNumber(parseFloat(pct.min || "0"), 2, finalDecimalPoints)}\nMedian: ${boxScoreRoundNumber(parseFloat(pct.mid || "0"), 2, finalDecimalPoints)}\nBest: ${boxScoreRoundNumber(parseFloat(pct.max || "0"), 2, finalDecimalPoints)}`}>
+                        {`${boxScoreRoundNumber(parseFloat(val), 2, finalDecimalPoints)} `}
+                        <small className="align-center opacity-[80%]">
+                            {`${boxScoreGetOrdinal(pct.pctl)} %ile`}
+                        </small>
+                    </td>
 
     } else if (boxScoreNonRateColumns.includes(item)) {
 
@@ -178,7 +191,12 @@ function handleBoxScoreRates(percentiles: any, item: any, teamInfo: any, team: a
             let pct = boxScoreRetrievePercentile(percentiles, val, item);
             let colorRampClass = boxScoreGenerateColorRampValue(percentiles, pct.pctl || "0", 100, null)
             // console.log(`calculated pctl for key ${finalKey} with pct value ${pct} and class ${colorRampClass}`)
-            result = <td className={`numeral${colorRampClass} text-center`} title={`Worst: ${pct.min}\nMedian: ${pct.mid}\nBest: ${pct.max}`}>{`${val}`} <small className="align-center opacity-50">{`${boxScoreGetOrdinal(parseFloat(pct.pctl || "0"))} %ile`}</small></td>;
+            result = <td className={`numeral${colorRampClass} text-center`} title={`Worst: ${pct.min}\nMedian: ${pct.mid}\nBest: ${pct.max}`}>
+                        {`${val} `}
+                        <small className="align-center opacity-[80%]">
+                            {`${boxScoreGetOrdinal(parseFloat(pct.pctl || "0"))} %ile`}
+                        </small>
+                    </td>;
 
     } else {
 
@@ -192,21 +210,20 @@ function handleBoxScoreRates(percentiles: any, item: any, teamInfo: any, team: a
             let pct = boxScoreRetrievePercentile(percentiles, rate, item);
             let colorRampClass = boxScoreGenerateColorRampValue(percentiles, pct.pctl || "0", 100, null)
             //console.log(`calculated pctl for key ${finalKey} with pct value ${pct} and class ${colorRampClass}`)
-            result = <td className={`numeral${colorRampClass} text-center`} title={`Worst: ${boxScoreRoundNumber(100.0 * parseFloat( (pct.min || "0")), 2, 0)}%\nMedian: ${boxScoreRoundNumber(100.0 * parseFloat(pct.mid || "0"), 2, 0)}%\nBest: ${boxScoreRoundNumber(100.0 * parseFloat(pct.max || "0"), 2, 0)}%`}>{`${boxScoreRoundNumber(100.0 * parseFloat( rate.toString() || "0"), 2, 0)}%` } <small className="align-center opacity-50">{`${boxScoreGetOrdinal(pct.pctl)} %ile`}</small></td>;
+            result = <td className={`numeral${colorRampClass} text-center`}
+                         title={`Worst: ${boxScoreRoundNumber(100.0 * parseFloat( (pct.min || "0")), 2, 0)}%\nMedian: ${boxScoreRoundNumber(100.0 * parseFloat(pct.mid || "0"), 2, 0)}%\nBest: ${boxScoreRoundNumber(100.0 * parseFloat(pct.max || "0"), 2, 0)}%`}>
+                        {`${boxScoreRoundNumber(100.0 * parseFloat( rate.toString() || "0"), 2, 0)}% ` }
+                        <small className="align-center opacity-[80%]">
+                            {`${boxScoreGetOrdinal(pct.pctl)} %ile`}
+                        </small>
+                     </td>;
 
     }
     // console.log(result)
     return result;
 }
 
-function retrieveValue(dictionary: any, key: any) {
-    const subKeys = key.split('.')
-    let sub = dictionary;
-    for (const k of subKeys) {
-        sub = sub[k];
-    }
-    return sub;
-}
+
 
 function roundNumber(value: any, power10: number, fixed: number) {
     return (Math.round(parseFloat(value || '0') * (Math.pow(10, power10))) / (Math.pow(10, power10))).toFixed(fixed)
@@ -223,49 +240,6 @@ function formatLogo(team: Competitor, season: number) {
     </>
     );
 }
-
-let nonRateDecimalColumns = ["expected_turnovers","expected_turnover_margin","turnover_luck","EPA_middle_8_per_play","EPA_middle_8","EPA_middle_8_per_play","EPA_middle_8","EPA_early_down_per_play","EPA_early_down","EPA_sp","EPA_special_teams","EPA_kickoff","EPA_punt","EPA_fg","EPA_overall_off","EPA_per_play","EPA_passing_overall","EPA_passing_per_play", "EPA_rushing_overall","EPA_rushing_per_play","points_per_drive","yards_per_drive","plays_per_drive","avg_field_position","rushing_highlight_yards_per_opp","line_yards_per_carry","yards_per_rush","yards_per_pass","yards_per_play","drive_stopped_rate","EPA_non_explosive","EPA_non_explosive_passing","EPA_non_explosive_rushing","EPA_non_explosive_per_play","EPA_non_explosive_passing_per_play","EPA_non_explosive_rushing_per_play"];
-let nonRateColumns = ["EPA_plays","scrimmage_plays","expected_turnover_margin","turnover_margin","turnovers","expected_turnovers","turnover_luck","early_downs","late_downs","fumbles","INT","PD","middle_8","EPA_middle_8_per_play","EPA_middle_8","EPA_early_down_per_play","EPA_early_down","fumbles_lost","fumbles_recovered","Int","TFL","TFL_pass","TFL_rush","total_fumbles","def_int","points_per_drive","drives","points_per_drive","yards_per_drive","plays_per_drive","drive_total_gained_yards_rate","avg_field_position","rushing_highlight_yards","line_yards","yards_per_rush","yards_per_pass","yards_per_play","off_yards","pass_yards","rush_yards","EPA_overall_offense","EPA_penalty","EPA_overall_total","second_level_yards","open_field_yards","drive_stopped_rate","EPA_non_explosive","EPA_non_explosive_passing","EPA_non_explosive_rushing","EPA_non_explosive_per_play","EPA_non_explosive_passing_per_play","EPA_non_explosive_rushing_per_play"];
-let nonRatePercentColumns = ["drive_total_gained_yards_rate","drive_stopped_rate"];
-function handleRates(item: string, teamInfo: any, useSuffix: boolean, decimalPoints: number) {
-    let finalTeamInfo = teamInfo;
-    let finalDecimalPoints = decimalPoints || 1;
-    let result;
-    if (item == "EPA_misc") {
-        let overall = parseFloat(finalTeamInfo['EPA_overall_total']) || 0;
-        let off = parseFloat(finalTeamInfo['EPA_overall_offense']) || 0;
-        let sp_epa = parseFloat(finalTeamInfo['EPA_special_teams']) || 0;
-        let pen_epa = parseFloat(finalTeamInfo['EPA_penalty']) || 0;
-        let val = (overall - off - sp_epa - pen_epa)
-        result = <td>{roundNumber(val, 2, 2)}</td>;
-    } else if (item == "avg_field_position") {
-        let val = finalTeamInfo[item] || 0;
-        let prefix = (val >= 50) ? "Own" : "Opp"
-        let printedVal = (val >= 50) ? (100 - parseFloat(val)) : val
-        result = <td>{`${prefix} ${roundNumber(printedVal, 2, 0)}`}</td>;
-    } else if (nonRatePercentColumns.includes(item)) {
-        let val = finalTeamInfo[item] || 0;
-        result = <td>{`${roundNumber(parseFloat(val), 2, 0)+"%"}`}</td>;
-    } else if (nonRateDecimalColumns.includes(item)) {
-        let val = finalTeamInfo[item] || 0;
-        result = <td>{`${roundNumber(parseFloat(val), 2, finalDecimalPoints)}`}</td>;
-    } else if (nonRateColumns.includes(item)) {
-        let val = finalTeamInfo[item] || 0;
-        result = <td>{`${val}`}</td>;
-    } else {
-        let val = finalTeamInfo[item] || 0;
-        var rate = 0.0;
-        if (useSuffix) {
-            rate = 100.0 * finalTeamInfo[`${item}_rate`]
-        } else {
-            rate = 100.0 * (parseFloat(val) / parseFloat(finalTeamInfo["scrimmage_plays"]))
-        }
-        result = <td>{`${val} (${roundNumber(parseFloat(rate.toString()), 2, 0)}%)`}</td>;
-
-    }
-    return result;
-}
-
 
 
 export default function CFBTeamStatsOverallTable({
@@ -339,7 +313,7 @@ export default function CFBTeamStatsOverallTable({
             </thead>
             <tbody>
             {awayAdvBoxscoreTeam && awayAdvBoxscoreTeam[0] ? (columns.map((item, idx) => (
-                <tr key={idx}>
+                <tr key={idx} className="border-b">
                     <td className="text-left whitespace-pre overflow-auto">
                         {Object.keys(slim_title_mapping).includes(item) ? (slim_title_mapping[item]) : item }
                     </td>

@@ -12,6 +12,7 @@ from fastapi import FastAPI, HTTPException, Request, Query, Response
 from fastapi.middleware.cors import CORSMiddleware
 from sportsdataverse.cfb.cfb_pbp import CFBPlayProcess
 from sportsdataverse.cfb import espn_cfb_schedule
+from sportsdataverse.dl_utils import underscore
 from functools import reduce
 warnings.filterwarnings("ignore")
 
@@ -20,22 +21,7 @@ logger = logging.getLogger(__name__)
 
 # from dotenv import load_dotenv, dotenv_values
 # config = dotenv_values('.env.development.local')
-def calculateGEI(plays, homeTeamId):
-  plays = pd.DataFrame(plays)
-  length = len(plays)
-  avg_length = 179.01777401608126
-  #Adjusting for game length
-  normalize = avg_length / length
-  def calculateHomeWinProb(row):
-    if row['pos_team']==homeTeamId:
-        homeWP = row['winProbability']['before']
-    else:
-        homeWP = 1 - row['winProbability']['before']
-  #Get win probability differences for each play
-  win_prob_change = abs(plays['home_wp_before'].diff())
-  #Normalization
-  gei = normalize * win_prob_change.sum()
-  return gei
+
 
 tags_metadata = [
     {
@@ -117,8 +103,9 @@ def get_cfb_scoreboard(request: Request,
 
     headers = {"accept": "application/json"}
     schedule = espn_cfb_schedule(groups = groups, dates = dates, week = week, season_type = seasontype)
-    schedule['home_dark_logo'] = schedule['home_logo'].apply(lambda x: x.replace("https://a.espncdn.com/i/teamlogos/ncaa/500/", "https://a.espncdn.com/i/teamlogos/ncaa/500-dark/"))
-    schedule['away_dark_logo'] = schedule['away_logo'].apply(lambda x: x.replace("https://a.espncdn.com/i/teamlogos/ncaa/500/", "https://a.espncdn.com/i/teamlogos/ncaa/500-dark/"))
+    if 'home_logo' in schedule.columns:
+        schedule['home_dark_logo'] = schedule['home_logo'].apply(lambda x: x.replace("https://a.espncdn.com/i/teamlogos/ncaa/500/", "https://a.espncdn.com/i/teamlogos/ncaa/500-dark/"))
+        schedule['away_dark_logo'] = schedule['away_logo'].apply(lambda x: x.replace("https://a.espncdn.com/i/teamlogos/ncaa/500/", "https://a.espncdn.com/i/teamlogos/ncaa/500-dark/"))
     return Response(schedule.to_json(orient="records"), media_type="application/json")
 
 
@@ -354,6 +341,15 @@ def get_cfb_percentiles_team(request: Request,
                              year: str,
                              teamId: str) -> Optional[None]:
     headers = {"accept": "application/json"}
+    def populate(endpoint, season, teamId, type = None):
+        seasonType = f'/types/{type}' if type is not None else ""
+        url = f'https://sports.core.api.espn.com/v2/sports/football/leagues/college-football/seasons/{season}{seasonType}/teams/{teamId}/{endpoint}?lang=en&region=us&limit=300'
+        res = requests.get(url)
+
+        espnContent = res.json()
+        if espnContent is None:
+            raise ValueError(f'Data not available for ESPN endpoint {endpoint} with year {season} and team {teamId}.')
+        return espnContent
     team_data = populate("", year, teamId)
     populatable_keys = ["record", "athletes", "ranks", "leaders"]
     type_keys = ["record", "leaders"]
@@ -425,8 +421,9 @@ def get_cfb_percentiles_team(request: Request,
         ev = pd.concat([ev, event], axis = 0, ignore_index = True)
     ev = pd.DataFrame(ev).replace({np.nan:None})
     ev.columns = [underscore(col) for col in ev.columns]
-    ev['home_dark_logo'] = ev['home_logo'].apply(lambda x: x.replace("https://a.espncdn.com/i/teamlogos/ncaa/500/", "https://a.espncdn.com/i/teamlogos/ncaa/500-dark/"))
-    ev['away_dark_logo'] = ev['away_logo'].apply(lambda x: x.replace("https://a.espncdn.com/i/teamlogos/ncaa/500/", "https://a.espncdn.com/i/teamlogos/ncaa/500-dark/"))
+    if 'home_logo' in ev.columns:
+        ev['home_dark_logo'] = ev['home_logo'].apply(lambda x: x.replace("https://a.espncdn.com/i/teamlogos/ncaa/500/", "https://a.espncdn.com/i/teamlogos/ncaa/500-dark/"))
+        ev['away_dark_logo'] = ev['away_logo'].apply(lambda x: x.replace("https://a.espncdn.com/i/teamlogos/ncaa/500/", "https://a.espncdn.com/i/teamlogos/ncaa/500-dark/"))
     team_data['events'] = ev.to_dict(orient="records")
 
     # print(data_json['events']+ data_bowl_json['events'])
@@ -450,38 +447,24 @@ def get_cfb_percentiles_team(request: Request,
     }
     return Response(json.dumps(result), media_type="application/json")
 
-def populate(endpoint, season, teamId, type = None):
-    seasonType = f'/types/{type}' if type is not None else ""
-    url = f'https://sports.core.api.espn.com/v2/sports/football/leagues/college-football/seasons/{season}{seasonType}/teams/{teamId}/{endpoint}?lang=en&region=us&limit=300'
-    res = requests.get(url)
+def calculateGEI(plays, homeTeamId):
+  plays = pd.DataFrame(plays)
+  length = len(plays)
+  avg_length = 179.01777401608126
+  #Adjusting for game length
+  normalize = avg_length / length
+  def calculateHomeWinProb(row):
+    if row['pos_team']==homeTeamId:
+        homeWP = row['winProbability']['before']
+    else:
+        homeWP = 1 - row['winProbability']['before']
+  #Get win probability differences for each play
+  win_prob_change = abs(plays['home_wp_before'].diff())
+  #Normalization
+  gei = normalize * win_prob_change.sum()
+  return gei
 
-    espnContent = res.json()
-    if espnContent is None:
-        raise ValueError(f'Data not available for ESPN endpoint {endpoint} with year {season} and team {teamId}.')
-    return espnContent
 
-
-
-def underscore(word):
-    """
-    Make an underscored, lowercase form from the expression in the string.
-
-    Example::
-
-        >>> underscore("DeviceType")
-        'device_type'
-
-    As a rule of thumb you can think of :func:`underscore` as the inverse of
-    :func:`camelize`, though there are cases where that does not hold::
-
-        >>> camelize(underscore("IOError"))
-        'IoError'
-
-    """
-    word = re.sub(r"([A-Z]+)([A-Z][a-z])", r'\1_\2', word)
-    word = re.sub(r"([a-z\d])([A-Z])", r'\1_\2', word)
-    word = word.replace("-", "_")
-    return word.lower()
 
 if __name__ == "__main__":
   uvicorn.run("app:app", host='0.0.0.0', port=7000, reload=True )
