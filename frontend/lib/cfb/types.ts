@@ -2162,3 +2162,27 @@ interface ConferenceNames {
         "name": "Div II/III"
     }
   ]
+
+  interface GlossaryNames {
+    [key: string]: string
+  }
+  export type Glossary = {
+    E?: A[];
+    H?: A[];
+    W?: A[];
+    P?: A[];
+    L?: A[];
+    R?: A[];
+    O?: A[];
+    S?: A[];
+    M?: A[];
+    T?: A[];
+    A?: A[];
+    D?: A[];
+}
+
+export type A = {
+    term?:       string;
+    definition?: string;
+    source?:     string;
+}
