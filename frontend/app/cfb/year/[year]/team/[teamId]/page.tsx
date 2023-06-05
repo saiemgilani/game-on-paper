@@ -35,8 +35,8 @@ export async function generateMetadata(
 
 
     // optionally access and extend (rather than replace) parent metadata
-    var title = ""
-    var subtitle = ""
+    var title = "Team season stats summary for " + data.teamData.location
+    var subtitle = params.year + "Season"
 
     return {
         title: title,
@@ -64,23 +64,23 @@ export async function generateMetadata(
             creator: '@SportsDataverse',
             title: title,
             description: `Advanced stats for ${subtitle}`,
-            // images: {
-            //     url: `https://s.espncdn.com/stitcher/sports/football/college-football/events/${params.gameId}.png?templateId=espn.com.share.1`,
-            //     alt: title,
-            // },
+            images: {
+                url: `${data.teamData.logos[0].href}`,
+                alt: title,
+            },
         },
         openGraph: {
             title: title,
             description: `Advanced stats for ${subtitle}`,
             url: `https://thegameonpaper.com/cfb/year/${params.year}/team/${params.teamId}`,
             siteName: 'theGameOnPaper.com',
-            // images: [
-            //     {
-            //         url: `https://s.espncdn.com/stitcher/sports/football/college-football/events/${params.gameId}.png?templateId=espn.com.share.1`,
-            //         width: 1200,
-            //         height: 630,
-            //     },
-            // ],
+            images: [
+                {
+                    url: '/gameonpapertext.png',
+                    width: 1200,
+                    height: 630,
+                },
+            ],
             locale: 'en_US',
             type: 'website',
         },
