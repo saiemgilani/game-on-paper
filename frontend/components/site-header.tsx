@@ -184,7 +184,15 @@ const MobileMenu = ({
             <span className="sr-only">Twitter</span>
           </motion.div>
         </Link>
-        <ThemeToggle />
+        <div>
+        <motion.div
+                initial="hidden"
+                animate="visible"
+                variants={FadeContainer}
+                className={buttonVariants({ size: "sm", variant: "ghost"})}>
+          <ThemeToggle />
+        </motion.div>
+        </div>
       </motion.nav>
       ) : null}
     </motion.div>
@@ -252,7 +260,13 @@ export function SiteHeader() {
                 <span className="sr-only">Twitter</span>
               </motion.div>
             </Link>
-            <ThemeToggle />
+            <motion.div
+                initial="hidden"
+                animate="visible"
+                variants={FadeContainer}
+                className={buttonVariants({ size: "sm", variant: "ghost"})}>
+              <ThemeToggle />
+            </motion.div>
           </motion.nav>
         </div>
       </div>

@@ -31,7 +31,7 @@ export default function Footer() {
 
   return (
     <>
-    <footer className="w-screen text-center text-gray-600 dark:text-gray-400/50 font-inter mb-14 print:hidden">
+    <footer className="w-full text-center text-gray-600 dark:text-gray-400/50 font-inter mb-14 print:hidden">
       <p>Built by <a href="https://github.com/akeaswaran/">Akshay Easwaran</a>, <a href="https://github.com/saiemgilani">Saiem Gilani</a>, and others. Data from <a href="https://espn.com/college-football">ESPN.com</a>. Learn more about the stats used in our <a href="/cfb/glossary">Glossary</a>.</p>
       <p>Contribute on <a href="https://github.com/saiemgilani/game-on-paper">GitHub</a>.</p>
       <p>

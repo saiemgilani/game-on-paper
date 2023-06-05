@@ -163,12 +163,12 @@ export default function RootLayout({ children }: RootLayoutProps) {
             crossOrigin="anonymous"
           />
         </head>
-        <body className={"min-h-screen bg-background font-sans-serif antialiased --font-chivo"}>
+        <body className={"bg-background font-sans-serif antialiased --font-chivo"}>
           <PlausibleProvider domain="thegameonpaper.com">
             <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-              <div className="relative flex min-h-screen flex-col">
+              <div className="flex flex-col">
                 <SiteHeader />
-                <div className="flex-1">{children}</div>
+                <div>{children}</div>
                 <Footer />
               </div>
               <TailwindIndicator />
