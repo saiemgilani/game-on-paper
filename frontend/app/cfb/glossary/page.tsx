@@ -1,10 +1,66 @@
 import Image from 'next/image'
 import glossary from '@/lib/cfb/glossary.json'
 import { Glossary } from '@/lib/cfb/types'
+import { Metadata, ResolvingMetadata } from 'next';
 
-interface GlossaryProps {
-    [k: string]: string;
+
+export async function generateMetadata(parent: ResolvingMetadata): Promise<Metadata> {
+
+  var title = "Glossary | College Football | Game on Paper"
+  var subtitle = "Advanced stats glossary for college football"
+
+  return {
+      title: title,
+      description: `${subtitle}`,
+      referrer: 'origin-when-cross-origin',
+      viewport: {
+          width: 'device-width',
+          initialScale: 1.0,
+          maximumScale: 1.0,
+          userScalable: false,
+      },
+      authors: [{ name: 'Akshay Easwaran' }, { name: 'Saiem Gilani'}],
+      creator: 'Akshay Easwaran'+', '+'Saiem Gilani',
+      themeColor: [
+          { media: "(prefers-color-scheme: light)", color: "white" },
+          { media: "(prefers-color-scheme: dark)", color: "black" },
+      ],
+      icons: {
+          icon: "/favicon.ico",
+          shortcut: "/favicon-16x16.png",
+          apple: "/apple-touch-icon.png",
+      },
+      twitter: {
+          card: 'summary',
+          creator: '@SportsDataverse',
+          title: title,
+          description: `Advanced stats for ${subtitle}`,
+          images: {
+              url: `/gameonpapertext.png`,
+              alt: title,
+          },
+      },
+      openGraph: {
+          title: title,
+          description: `Advanced stats for ${subtitle}`,
+          url: `https://thegameonpaper.com/cfb/glossary`,
+          siteName: 'theGameOnPaper.com',
+          images: [
+              {
+                  url: '/gameonpapertext.png',
+                  width: 1200,
+                  height: 630,
+              },
+          ],
+          locale: 'en_US',
+          type: 'website',
+      },
+      other: {
+          medium: 'website',
+      }
+  };
 }
+
 
 export default function Glossary() {
 

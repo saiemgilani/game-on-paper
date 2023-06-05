@@ -29,20 +29,6 @@ async function getCFBGame(params: any) {
     return data;
 }
 
- function getTeamInfo(header: Header) {
-    const homeTeam = header.competitions[0].competitors[0].homeAway === 'home' ? header.competitions[0].competitors[0] : header.competitions[0].competitors[1];
-    const awayTeam = header.competitions[0].competitors[0].homeAway === 'away' ? header.competitions[0].competitors[0] : header.competitions[0].competitors[1];
-    const competitions = header.competitions[0];
-    const season = header.season?.year
-
-    return { homeTeam, awayTeam, competitions, season }
-}
-function date(date: string) {
-    let dt = new Date(date);
-    let dtString = dt.toLocaleDateString()
-    return dtString;
-}
-
 export async function generateMetadata(
     { params }: { params: { gameId: string } },
     parent: ResolvingMetadata,
@@ -68,10 +54,15 @@ export async function generateMetadata(
     subtitle = `${cleanName(data.header.competitions[0].competitors[1].team)} vs ${cleanName(data.header.competitions[0].competitors[0].team)}`;
     let statusDetail = data.header.competitions[0].status.type.detail;
     let statusText;
+    let statusActive: boolean = false;
     if (data.header.competitions[0].status.type.completed == true || statusDetail.includes("Cancel") || statusDetail.includes("Postpone") || statusDetail.includes("Delay")) {
         statusText = statusDetail + " - " + DateTime.fromISO(data.header.competitions[0].date, {zone: 'utc'}).setZone("America/New_York").toLocaleString(DateTime.DATETIME_FULL);
-    } else {
+    } else if (data.header.competitions[0].status.type.state !== 'pre'){
         statusText = "LIVE - " + statusDetail
+        statusActive = true
+    } else if (data.header.competitions[0].status.type.state === 'pre') {
+        statusText = "Pre-game - " + statusDetail
+        statusActive = false
     }
 
     return {
@@ -124,6 +115,21 @@ export async function generateMetadata(
             medium: 'website',
         }
     };
+}
+
+
+function getTeamInfo(header: Header) {
+    const homeTeam = header.competitions[0].competitors[0].homeAway === 'home' ? header.competitions[0].competitors[0] : header.competitions[0].competitors[1];
+    const awayTeam = header.competitions[0].competitors[0].homeAway === 'away' ? header.competitions[0].competitors[0] : header.competitions[0].competitors[1];
+    const competitions = header.competitions[0];
+    const season = header.season?.year
+
+    return { homeTeam, awayTeam, competitions, season }
+}
+function date(date: string) {
+    let dt = new Date(date);
+    let dtString = dt.toLocaleDateString()
+    return dtString;
 }
 
 const CLEAN_LIST = [61]

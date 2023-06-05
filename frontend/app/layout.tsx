@@ -20,15 +20,52 @@ import { ThemeProvider } from "@/components/theme-provider"
 export const metadata: Metadata = {
   title: siteConfig.name,
   description: siteConfig.description,
+  referrer: 'origin-when-cross-origin',
+  viewport: {
+      width: 'device-width',
+      initialScale: 1.0,
+      maximumScale: 1.0,
+      userScalable: false,
+  },
+  authors: [{ name: 'Akshay Easwaran' }, { name: 'Saiem Gilani'}],
+  creator: 'Akshay Easwaran'+', '+'Saiem Gilani',
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "white" },
-    { media: "(prefers-color-scheme: dark)", color: "black" },
+      { media: "(prefers-color-scheme: light)", color: "white" },
+      { media: "(prefers-color-scheme: dark)", color: "black" },
   ],
   icons: {
-    icon: "/favicon.ico",
-    shortcut: "/favicon-16x16.png",
-    apple: "/apple-touch-icon.png",
+      icon: "/favicon.ico",
+      shortcut: "/favicon-16x16.png",
+      apple: "/apple-touch-icon.png",
   },
+  twitter: {
+      card: 'summary',
+      creator: '@SportsDataverse',
+      title: siteConfig.name,
+      description: siteConfig.description,
+      images: {
+          url: `/gameonpapertext.png`,
+          alt: siteConfig.name,
+      },
+  },
+  openGraph: {
+      title: siteConfig.name,
+      description: siteConfig.description,
+      url: `https://thegameonpaper.com/cfb/glossary`,
+      siteName: 'theGameOnPaper.com',
+      images: [
+          {
+              url: '/gameonpapertext.png',
+              width: 1200,
+              height: 630,
+          },
+      ],
+      locale: 'en_US',
+      type: 'website',
+  },
+  other: {
+      medium: 'website',
+  }
 
 }
 
