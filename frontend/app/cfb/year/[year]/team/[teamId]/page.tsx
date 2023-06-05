@@ -41,6 +41,7 @@ export async function generateMetadata(
     return {
         title: title,
         description: `Advanced stats for ${subtitle}`,
+        metadataBase: new URL('https://thegameonpaper.com/'),
         referrer: 'origin-when-cross-origin',
         viewport: {
             width: 'device-width',
