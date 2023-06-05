@@ -4,7 +4,7 @@ import { Glossary } from '@/lib/cfb/types'
 import { Metadata, ResolvingMetadata } from 'next';
 
 
-export async function generateMetadata(parent: ResolvingMetadata): Promise<Metadata> {
+export async function generateMetadata(): Promise<Metadata> {
 
   var title = "Glossary | College Football | Game on Paper"
   var subtitle = "Advanced stats glossary for college football"

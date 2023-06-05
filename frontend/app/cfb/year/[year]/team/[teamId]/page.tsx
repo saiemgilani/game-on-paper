@@ -457,15 +457,7 @@ export default async function CFBYearTeamPage({ params }: { params: { year: numb
     const filtered = teamData.events?.filter((x: any) => ( x.status_type_name !== 'STATUS_CANCELED' && x.status_type_name !== 'STATUS_POSTPONED') )
     return (
         <>
-            {/* <div className="container">
-                <nav aria-label="breadcrumb">
-                    <ol className="breadcrumb">
-                    <li className="breadcrumb-item" aria-current="page">Seasons</li>
-                    <li className="breadcrumb-item" aria-current="page"><a href={`/cfb/year/${params.year}`}>{params.year}</a></li>
-                    <li className="breadcrumb-item active" aria-current="page">{cleanLocation(teamData.team)}</li>
-                    </ol>
-                </nav>
-            </div> */}
+
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 mb-2">
                 <div className="col-span-1 min-w-[90%]">
                     <CFBSummaryTeamCard
@@ -556,13 +548,13 @@ export default async function CFBYearTeamPage({ params }: { params: { year: numb
             </div>
 
             <div className="px-2 py-2">
-            <CFBTeamStatsHeader title={"Schedule"} href={`cfb/year/${params.year}/team/${params.teamId}#schedule`}>
-                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 ">
-                {filtered?.map((score: any, i: number) => (
-                    <ScoreCard key={i} showRecords={false} props={score} />
-                ))}
-                </div>
-            </CFBTeamStatsHeader>
+                <CFBTeamStatsHeader title={"Schedule"} href={`cfb/year/${params.year}/team/${params.teamId}#schedule`}>
+                    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 ">
+                    {filtered?.map((score: any, i: number) => (
+                        <ScoreCard key={i} showRecords={false} props={score} />
+                    ))}
+                    </div>
+                </CFBTeamStatsHeader>
             </div>
         </>
     )

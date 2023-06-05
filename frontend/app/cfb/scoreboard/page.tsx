@@ -16,9 +16,7 @@ async function getCFBScoreboard() {
 
 }
 
-export async function generateMetadata(
-    parent: ResolvingMetadata,
-  ): Promise<Metadata> {
+export async function generateMetadata(): Promise<Metadata> {
     // read route params
 
 
