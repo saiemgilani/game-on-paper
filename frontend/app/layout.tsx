@@ -43,23 +43,12 @@ export const metadata: Metadata = {
       creator: '@SportsDataverse',
       title: siteConfig.name,
       description: siteConfig.description,
-      images: {
-          url: `/gameonpapertext.png`,
-          alt: siteConfig.name,
-      },
   },
   openGraph: {
       title: siteConfig.name,
       description: siteConfig.description,
-      url: `https://thegameonpaper.com/cfb/glossary`,
+      url: `https://thegameonpaper.com/`,
       siteName: 'theGameOnPaper.com',
-      images: [
-          {
-              url: '/gameonpapertext.png',
-              width: 1200,
-              height: 630,
-          },
-      ],
       locale: 'en_US',
       type: 'website',
   },

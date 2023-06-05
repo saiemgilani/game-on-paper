@@ -66,23 +66,12 @@ export async function generateMetadata(
             creator: '@SportsDataverse',
             title: title,
             description: `${subtitle}`,
-            images: {
-                url: '/gameonpapertext.png',
-                alt: title,
-            },
         },
         openGraph: {
             title: title,
             description: `Advanced stats for ${subtitle}`,
             url: `https://thegameonpaper.com/cfb/season/${params.season}/group/${params.group}/type/${params.seasontype}/week/${params.week}`,
             siteName: 'theGameOnPaper.com',
-            images: [
-                {
-                    url: '/gameonpapertext.png',
-                    width: 1200,
-                    height: 630,
-                },
-            ],
             locale: 'en_US',
             type: 'website',
         },

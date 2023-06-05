@@ -76,9 +76,10 @@ export async function generateMetadata(
             siteName: 'theGameOnPaper.com',
             images: [
                 {
-                    url: '/gameonpapertext.png',
-                    width: 1200,
-                    height: 630,
+                    url: `${data.teamData.logos[0].href}`,
+                    width: 50,
+                    height: 50,
+                    alt: title,
                 },
             ],
             locale: 'en_US',

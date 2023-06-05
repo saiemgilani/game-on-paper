@@ -36,23 +36,12 @@ export async function generateMetadata(): Promise<Metadata> {
           creator: '@SportsDataverse',
           title: title,
           description: `${subtitle}`,
-          images: {
-              url: `/gameonpapertext.png`,
-              alt: title,
-          },
       },
       openGraph: {
           title: title,
           description: `${subtitle}`,
           url: `https://thegameonpaper.com/cfb/glossary`,
           siteName: 'theGameOnPaper.com',
-          images: [
-              {
-                  url: '/gameonpapertext.png',
-                  width: 1200,
-                  height: 630,
-              },
-          ],
           locale: 'en_US',
           type: 'website',
       },
