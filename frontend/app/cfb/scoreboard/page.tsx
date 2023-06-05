@@ -63,7 +63,7 @@ export async function generateMetadata(): Promise<Metadata> {
         },
         openGraph: {
             title: title,
-            description: `Advanced stats for ${subtitle}`,
+            description: `${subtitle}`,
             url: `https://thegameonpaper.com/cfb/scoreboard`,
             siteName: 'theGameOnPaper.com',
             images: [

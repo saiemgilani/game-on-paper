@@ -34,7 +34,7 @@ export async function generateMetadata(): Promise<Metadata> {
           card: 'summary',
           creator: '@SportsDataverse',
           title: title,
-          description: `Advanced stats for ${subtitle}`,
+          description: `${subtitle}`,
           images: {
               url: `/gameonpapertext.png`,
               alt: title,
@@ -42,7 +42,7 @@ export async function generateMetadata(): Promise<Metadata> {
       },
       openGraph: {
           title: title,
-          description: `Advanced stats for ${subtitle}`,
+          description: `${subtitle}`,
           url: `https://thegameonpaper.com/cfb/glossary`,
           siteName: 'theGameOnPaper.com',
           images: [
