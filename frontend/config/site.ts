@@ -38,3 +38,8 @@ export const siteConfig = {
     github: "https://github.com/saiemgilani/game-on-paper",
   },
 }
+
+export const navigationRoutes: string[] = [
+  "home",
+  "CFB",
+];

@@ -2,7 +2,7 @@
 import * as React from "react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Conferences } from "@lib/utils"
+import { Conferences } from "@lib/cfb/types"
   // Handles the submit event on form submit.
 
 

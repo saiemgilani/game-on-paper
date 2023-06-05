@@ -30,7 +30,7 @@ export default function CFBTeamStatsHeader({
     return(
         <>
             <div className="justify-around">
-            <h2 className="text-3xl font-medium font-chivo text-left justify-around py-2">{title+ " "}<span className="inline text-sm"  onClick={toggleExpanded}>
+            <h2 className="text-3xl font-medium font-chivo px-4 py-2 mx-6">{title+ " "}<span className="inline text-sm"  onClick={toggleExpanded}>
                 <Link href={href}  role="button" aria-expanded="true">[show/hide]</Link></span></h2>
 
             </div>

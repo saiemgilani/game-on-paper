@@ -3,14 +3,6 @@ import React from "react";
 import { IconType } from "react-icons/lib";
 
 
-export interface NavItem {
-  title: string
-  href?: string
-  dropdown?: boolean
-  items?: NavItem[]
-  disabled?: boolean
-  external?: boolean
-}
 
 export type ScoreboardEvent = {
     id?:                        string;
@@ -153,6 +145,8 @@ export type ScoreCardProps = {
   noMargin?: boolean
 }
 
+
+
 /* Custom Animated Components types */
 export type AnimatedTAGProps = {
   variants: Variants;
@@ -161,67 +155,14 @@ export type AnimatedTAGProps = {
   infinity?: boolean;
 };
 
-export type ProjectType = {
-  id: string;
-  name: string;
-  coverImage: string;
-  description: string;
-  githubURL: string;
-  previewURL?: string;
-  tools?: string[];
-  pinned?: boolean;
-};
-
-export type SkillType = {
-  name: string;
-  Icon: IconType;
-};
-
-
-export type SocialPlatform = {
-  title: string;
-  Icon: IconType;
-  url: string;
-};
-
-export type UtilityType = {
-  title: string;
-  data: {
-    name: string;
-    description: string;
-    Icon: IconType | JSX.Element;
-    link: string;
-  }[];
-};
-
-export type Utilities = {
-  title: string;
-  description: string;
-  lastUpdate: string;
-  data: UtilityType[];
-};
-
-export type Author = {
-  name?: string
-  picture?: string
+export interface NavItem {
+  title: string
+  href?: string
+  dropdown?: boolean
+  items?: NavItem[]
+  disabled?: boolean
+  external?: boolean
 }
-
-export type FrontMatter = {
-  slug: string;
-  readingTime: any;
-  excerpt: string;
-  title: string;
-  author?: Author;
-  date: string;
-  keywords: string;
-  image: string;
-};
-
-export type PostType = {
-  meta: FrontMatter;
-  tableOfContents: TableOfContents[];
-  source?: any;
-};
 
 export type TableOfContents = {
   level: number;
@@ -256,27 +197,6 @@ export type PageData = {
   image: string;
   keywords: string;
 };
-
-export type PageMeta = {
-  home: PageData;
-  packages: PageData;
-  stats: PageData;
-  blog: PageData;
-  bookmark: PageData;
-  projects: PageData;
-  about: PageData;
-  privacy: PageData;
-  snippets: PageData;
-};
-
-export type Snippet = {
-  slug: string;
-  title: string;
-  date: string;
-  excerpt: string;
-  image: string;
-};
-
 
 export type subscriptionURL = {
   url: string;

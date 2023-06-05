@@ -6,6 +6,7 @@ import pandas as pd
 import logging
 import warnings
 import re
+import time
 from datetime import datetime
 from typing import Optional
 from fastapi import FastAPI, HTTPException, Request, Query, Response
@@ -113,6 +114,37 @@ def get_cfb_scoreboard(request: Request,
 @app.get("/py/cfb/game/{gameId}", tags=["College Football"])
 def get_cfb_game(request: Request, gameId: str) -> Optional[None]:
     try:
+        cacheBuster = str(int(time.time() * 1000))
+        # check if the game is active or in the future
+        pbp_url = f'http://cdn.espn.com/core/college-football/playbyplay?gameId={gameId}&xhr=1&render=false&userab=18&{cacheBuster}'
+        response = requests.get(pbp_url)
+        game = response.json()['gamepackageJSON']['header']['competitions'][0]
+        season = response.json()['gamepackageJSON']['header']['season']['year']
+        week = response.json()['gamepackageJSON']['header']['week']
+        if game['competitors'][0]['homeAway'] == 'home':
+            homeTeamId = game['competitors'][0]['team']['id']
+            homeComp = game['competitors'][0]
+            awayTeamId = game['competitors'][1]['team']['id']
+            awayComp = game['competitors'][1]
+        else:
+            homeTeamId = game['competitors'][1]['team']['id']
+            homeComp = game['competitors'][1]
+            awayTeamId = game['competitors'][0]['team']['id']
+            awayComp = game['competitors'][0]
+        homeTeam = homeComp['team']
+        awayTeam = awayComp['team']
+        if (game["status"]["type"]["name"] == 'STATUS_SCHEDULED'):
+            homePercentiles = cfb_percentiles_team(year = season-1, teamId=homeTeam['id'])
+            awayPercentiles = cfb_percentiles_team(year = season-1, teamId=awayTeam['id'])
+            result = {
+                "season": season,
+                "week": week,
+                "gameInfo": game,
+                "header": response.json()['gamepackageJSON']['header'],
+                "awayTeamMatchup": awayPercentiles,
+                "homeTeamMatchup": homePercentiles
+            }
+            return Response(json.dumps(result), media_type="application/json")
         headers = {"accept": "application/json"}
         # gameId = request.get_json(force=True)['gameId']
         processed_data = CFBPlayProcess(gameId = gameId)
@@ -340,6 +372,11 @@ def get_cfb_percentiles_year(request: Request,
 def get_cfb_percentiles_team(request: Request,
                              year: str,
                              teamId: str) -> Optional[None]:
+    result = cfb_percentiles_team(year, teamId)
+
+    return Response(json.dumps(result), media_type="application/json")
+
+def cfb_percentiles_team(year, teamId):
     headers = {"accept": "application/json"}
     def populate(endpoint, season, teamId, type = None):
         seasonType = f'/types/{type}' if type is not None else ""
@@ -445,7 +482,8 @@ def get_cfb_percentiles_team(request: Request,
         },
         "season": year
     }
-    return Response(json.dumps(result), media_type="application/json")
+
+    return result
 
 def calculateGEI(plays, homeTeamId):
   plays = pd.DataFrame(plays)

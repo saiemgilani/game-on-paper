@@ -137,8 +137,8 @@ export default function CFBSummaryPlayerCard({
     return(
         <>
 
-            <div className="m-8 lg:m-6 xl:mg-4 my-4 max-w-2xl rounded-md overflow-hidden border hover:border-blue-100" >
-                <div className="flex self-center justify-between py-2 mx-2">
+            <div className="m-8 lg:m-6 xl:mg-4 my-4 max-w-2xl rounded-md overflow-hidden border hover:border-blue-100 min-w-[90%]  w-[100%] min-h-[84%]" >
+                <div className="flex self-center justify-between px-4 py-4 mx-2">
                     <h2 className="text-3xl font-medium font-chivo self-center">{season} {cleanLocation(team)} Leaders</h2>
                     {logo}
                 </div>

@@ -467,14 +467,14 @@ export default async function CFBYearTeamPage({ params }: { params: { year: numb
                 </nav>
             </div> */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 mb-2">
-                <div className="col-span-1">
+                <div className="col-span-1 min-w-[90%]">
                     <CFBSummaryTeamCard
                         breakdown={breakdown}
                         season = {params.year}
                         team={teamData}
                         />
                 </div>
-                <div className="col-span-2">
+                <div className="col-span-2 min-w-[90%]">
                     <CFBSummaryPlayerCard
                         breakdown={breakdown}
                         players={data.players}
@@ -492,21 +492,24 @@ export default async function CFBYearTeamPage({ params }: { params: { year: numb
                         target={"offensive"}
                         situation={"overall"}
                         team = {teamData.team}
-                        showTeamLogos={false} />
+                        showTeamLogos={false}
+                        season = {params.year} />
                     <CFBSummaryTeamStatsTable
                         breakdown={breakdown}
                         title={"When Passing"}
                         target={"offensive"}
                         situation={"passing"}
                         team = {teamData.team}
-                        showTeamLogos={false} />
+                        showTeamLogos={false}
+                        season = {params.year} />
                     <CFBSummaryTeamStatsTable
                         breakdown={breakdown}
                         title={"When Rushing"}
                         target={"offensive"}
                         situation={"rushing"}
                         team = {teamData.team}
-                        showTeamLogos={false} />
+                        showTeamLogos={false}
+                        season = {params.year} />
 
                 </div>
                 <div className="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-3 gap-2 mb-4">
@@ -517,21 +520,24 @@ export default async function CFBYearTeamPage({ params }: { params: { year: numb
                         target={"defensive"}
                         situation={"overall"}
                         team = {teamData.team}
-                        showTeamLogos={false} />
+                        showTeamLogos={false}
+                        season = {params.year} />
                     <CFBSummaryTeamStatsTable
                         breakdown={breakdown}
                         title={"Against the Pass"}
                         target={"defensive"}
                         situation={"passing"}
                         team = {teamData.team}
-                        showTeamLogos={false} />
+                        showTeamLogos={false}
+                        season = {params.year} />
                     <CFBSummaryTeamStatsTable
                         breakdown={breakdown}
                         title={"Against the Rush"}
                         target={"defensive"}
                         situation={"rushing"}
                         team = {teamData.team}
-                        showTeamLogos={false} />
+                        showTeamLogos={false}
+                        season = {params.year} />
 
 
                     </div>

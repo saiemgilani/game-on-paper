@@ -10,7 +10,7 @@ import {
 import { ScoreboardEvent } from "@/lib/types"
 import Image, { ImageProps } from "next/image"
 import Link from "next/link"
-import { ConferenceMap, NetworkMap } from "@/lib/utils"
+import { ConferenceMap, NetworkMap } from "@/lib/cfb/types"
 
 
 

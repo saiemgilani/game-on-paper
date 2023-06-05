@@ -136,8 +136,7 @@ const MobileMenu = ({
       variants={hamFastFadeContainer}
       initial="hidden"
       animate="visible"
-      exit="hidden"
-    >
+      exit="hidden">
     {items?.length ? (
       <motion.nav className="flex flex-col mx-8 mt-28 ">
         {items?.map(
@@ -154,44 +153,38 @@ const MobileMenu = ({
               </motion.p>
               </Link>
             )
-      )}
-            <Link
-              href={siteConfig.links.github}
-              target="_blank"
-              rel="noreferrer"
-            >
-            <motion.div
-              initial="hidden"
-              animate="visible"
-              variants={FadeContainer}
-                className={buttonVariants({
-                  size: "sm",
-                  variant: "ghost",
-                })}
-              >
-                <Icons.gitHub className="h-5 w-5" />
-                <span className="sr-only">GitHub</span>
-              </motion.div>
-            </Link>
-            <Link
-              href={siteConfig.links.twitter}
-              target="_blank"
-              rel="noreferrer"
-            >
-              <motion.div
-                initial="hidden"
-                animate="visible"
-                variants={FadeContainer}
-                className={buttonVariants({
-                  size: "sm",
-                  variant: "ghost",
-                })}
-              >
-                <Icons.twitter className="h-5 w-5 fill-current" />
-                <span className="sr-only">Twitter</span>
-              </motion.div>
-            </Link>
-            <ThemeToggle />
+        )}
+        <Link
+          href={siteConfig.links.github}
+          target="_blank"
+          rel="noreferrer">
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={FadeContainer}
+            className={buttonVariants({ size: "sm", variant: "ghost"})}>
+            <Icons.gitHub className="h-5 w-5" />
+            <span className="sr-only">GitHub</span>
+          </motion.div>
+        </Link>
+        <Link
+          href={siteConfig.links.twitter}
+          target="_blank"
+          rel="noreferrer">
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={FadeContainer}
+            className={buttonVariants({
+              size: "sm",
+              variant: "ghost",
+            })}
+          >
+            <Icons.twitter className="h-5 w-5 fill-current" />
+            <span className="sr-only">Twitter</span>
+          </motion.div>
+        </Link>
+        <ThemeToggle />
       </motion.nav>
       ) : null}
     </motion.div>
@@ -226,7 +219,7 @@ export function SiteHeader() {
         )}
       </AnimatePresence>
         <MainNav items={siteConfig.mainNav} />
-        <div className="flex flex-1 items-center justify-end space-x-4 hidden lg:flex">
+        <div className="flex-1 items-center justify-end space-x-4 hidden lg:flex">
           <motion.nav className="flex items-center space-x-1">
             <Link
               href={siteConfig.links.github}
@@ -249,17 +242,12 @@ export function SiteHeader() {
             <Link
               href={siteConfig.links.twitter}
               target="_blank"
-              rel="noreferrer"
-            >
+              rel="noreferrer">
               <motion.div
                 initial="hidden"
                 animate="visible"
                 variants={FadeContainer}
-                className={buttonVariants({
-                  size: "sm",
-                  variant: "ghost",
-                })}
-              >
+                className={buttonVariants({ size: "sm", variant: "ghost"})}>
                 <Icons.twitter className="h-5 w-5 fill-current" />
                 <span className="sr-only">Twitter</span>
               </motion.div>

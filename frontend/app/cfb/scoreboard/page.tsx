@@ -21,13 +21,10 @@ async function getCFBScoreboard() {
 
 }
 
-type ScoreboardEvents = {
-    events: ScoreboardEvent[]
-}
 export default async function Scoreboard() {
     const data: ScoreboardEvent[] = await getCFBScoreboard();
     const filtered = data?.filter((x: any) => ( x.status_type_name !== 'STATUS_CANCELED' && x.status_type_name !== 'STATUS_POSTPONED') )
-    console.log(filtered)
+    // console.log(filtered)
     return (
         <>
         <div>
@@ -36,7 +33,7 @@ export default async function Scoreboard() {
         <div className="flex flex-row justify-center">
             <CfbScheduleSelect />
         </div>
-        {filtered.length > 0 ? (
+        {filtered !== undefined && filtered.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 ">
                 {filtered?.map((score: any, i: number) => (
                     <ScoreCard key={i} showRecords={true} props={score} />

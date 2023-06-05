@@ -52,17 +52,17 @@ function playerRowCallback(p: any) {
 function passerPlayerHeaderCallback() {
     return (
         <>
-            <th ></th>
-            <th className="box-heading text-center;">Comp/Att</th>
-            <th className="box-heading text-center;">Yds</th>
-            <th className="box-heading text-center;">TD</th>
-            <th className="box-heading text-center;">INT</th>
-            <th className="box-heading text-center;">Sacks</th>
-            <th className="box-heading text-center;">{injectDetmerSpan()}</th>
-            <th className="box-heading text-center;" title="Includes sacks, sack yards, and all pass attempts.">Yds/dropback</th>
-            <th className="box-heading text-center;" title="Expected Points Added per Dropback">EPA/dropback</th>
-            <th className="box-heading text-center;" title="Total Expected Points Added">EPA</th>
-            <th className="box-heading text-center;" title="Success Rate">SR</th>
+            <th></th>
+            <th className="box-heading text-center break-words max-w-[10%]" title="Completions over Attempts">C/Att</th>
+            <th className="box-heading text-center break-words max-w-[10%]">Yds</th>
+            <th className="box-heading text-center break-words max-w-[10%]">TD</th>
+            <th className="box-heading text-center break-words max-w-[10%]">INT</th>
+            <th className="box-heading text-center break-words max-w-[10%]">Sacks</th>
+            <th className="box-heading text-center break-words max-w-[10%]">{injectDetmerSpan()}</th>
+            <th className="box-heading text-center break-words max-w-[10%]" title="Yards per Dropback. Includes sacks, sack yards, and all pass attempts.">Yds/db</th>
+            <th className="box-heading text-center break-words max-w-[10%]" title="Expected Points Added per Dropback">EPA/db</th>
+            <th className="box-heading text-center break-words max-w-[10%]" title="Total Expected Points Added">EPA</th>
+            <th className="box-heading text-center break-words max-w-[10%]" title="Success Rate">SR</th>
         </>
     )
 }
@@ -74,7 +74,7 @@ function passerPlayerRowCallback(p: any) {
         <td className="text-left">{ p.passer_player_name }</td>
         <td className="numeral text-center">{`${ p.comp }/${ p.att }`} ({`${roundNumber(compPct * 100, 2, 0)}`}% Comp)</td>
         <td className="numeral text-center">{ p.yards }</td>
-        <td className="numeral text-center">{ p.touchdowns }</td>
+        <td className="numeral text-center">{ p.passing_td }</td>
         <td className="numeral text-center">{ p.pass_int }</td>
         <td className="numeral text-center">{ p.sacked }</td>
         <td className="numeral text-center">{ roundNumber(parseFloat(p.detmer || 0), 2, 2) }</td>
@@ -90,14 +90,14 @@ function rusherPlayerHeaderCallback() {
     return (
     <>
     <th ></th>
-    <th className="box-heading text-center">Carries</th>
-    <th className="box-heading text-center">Yds</th>
-    <th className="box-heading text-center">TD</th>
-    <th className="box-heading text-center">Fum</th>
-    <th className="box-heading text-center">Yds/rush</th>
-    <th className="box-heading text-center" title="Expected Points Added per Rush">EPA/rush</th>
-    <th className="box-heading text-center" title="Total Expected Points Added">EPA</th>
-    <th className="box-heading text-center" title="Success Rate">SR</th>
+    <th className="box-heading text-center break-words max-w-[10%]">Carries</th>
+    <th className="box-heading text-center break-words max-w-[10%]">Yds</th>
+    <th className="box-heading text-center break-words max-w-[10%]">TD</th>
+    <th className="box-heading text-center break-words max-w-[10%]">Fum</th>
+    <th className="box-heading text-center break-words max-w-[10%]">Yds / rush</th>
+    <th className="box-heading text-center break-words max-w-[10%]" title="Expected Points Added per Rush">EPA / rush</th>
+    <th className="box-heading text-center break-words max-w-[10%]" title="Total Expected Points Added">EPA</th>
+    <th className="box-heading text-center break-words max-w-[10%]" title="Success Rate">SR</th>
     </>
     )
 }
@@ -121,16 +121,16 @@ function receiverPlayerHeaderCallback() {
     return (
     <>
     <th></th>
-    <th className="text-center">Catches</th>
-    <th className="text-center">Targets</th>
-    <th className="text-center">Catch Rate</th>
-    <th className="text-center">Yds</th>
-    <th className="text-center">TD</th>
-    <th className="text-center">Fum</th>
-    <th className="text-center">Yds/play</th>
-    <th className="text-center" title="Expected Points Added per Play">EPA/play</th>
-    <th className="text-center" title="Total Expected Points Added">EPA</th>
-    <th className="text-center" title="Success Rate">SR</th>
+    <th className="text-center break-words max-w-[10%]">Catches</th>
+    <th className="text-center break-words max-w-[10%]">Targets</th>
+    <th className="text-center break-words max-w-[10%]">Catch Rate</th>
+    <th className="text-center break-words max-w-[10%]">Yds</th>
+    <th className="text-center break-words max-w-[10%]">TD</th>
+    <th className="text-center break-words max-w-[10%]">Fum</th>
+    <th className="text-center break-words max-w-[10%]">Yds / play</th>
+    <th className="text-center break-words max-w-[10%]" title="Expected Points Added per Play">EPA / play</th>
+    <th className="text-center break-words max-w-[10%]" title="Total Expected Points Added">EPA</th>
+    <th className="text-center break-words max-w-[10%]" title="Success Rate">SR</th>
     </>
     )
 }
@@ -172,7 +172,7 @@ export default function CFBSummaryPlayerStatsTable({
     }
     return(
         <>
-            <table className="whitespace-pre min-w-[90%] lg:min-w-[90%] m-auto">
+            <table className="overflow-x-auto min-w-[90%] lg:min-w-[90%] w-[95%] m-auto">
                 <thead>
                     <tr>
                     { headerCallback() }

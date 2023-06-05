@@ -2,7 +2,7 @@ import useSWR from "swr";
 
 // fetcher to fetch the data
 // const fetcher = (...args) => fetch(...args).then((res) => res.json());
-import fetcher from "@lib/fetcher";
+import fetcher from "@/lib/hooks/fetcher";
 
 export default function useFetchWithSWR(url: string) {
   const { data, error } = useSWR(url, fetcher);

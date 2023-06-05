@@ -26,9 +26,6 @@ async function getCFBSchedule(params: any) {
 
 }
 
-type ScoreboardEvents = {
-    events: ScoreboardEvent[]
-}
 export default async function Schedule({ params }: {
                                          params: {
                                             group: number,
@@ -49,7 +46,7 @@ export default async function Schedule({ params }: {
         <div className="flex flex-row justify-center">
             <CfbScheduleSelect />
         </div>
-        {filtered.length > 0 ? (
+        {filtered !== undefined && filtered.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 ">
                 {filtered?.map((score: any, i: number) => (
                     <ScoreCard key={i} showRecords={true} props={score} />

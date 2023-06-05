@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Competitor, Breakdown } from '@/lib/cfb/types';
+import { Competitor, Breakdown, TeamData } from '@/lib/cfb/types';
 
 
 interface StatKeyNames {
@@ -19,14 +19,14 @@ const stat_key_title_mapping: StatKeyNames =  {
 function roundNumber(value: any, power10: number, fixed: number) {
     return (Math.round(parseFloat(value || '0') * (Math.pow(10, power10))) / (Math.pow(10, power10))).toFixed(fixed)
 }
-function formatLogo(team: Competitor, season: number) {
+function formatLogo(team: TeamData, season: number) {
     return (
     <>
         <Link className="inline-block dark:hidden" href={`/cfb/year/${season}/team/${team.id}`}>
-            <Image className="inline-block align-middle dark:hidden" width={"35"} height={"35"} src={team.team.logos[0].href} alt={`ESPN team id ${team.id}`}/>
+            <Image className="inline-block align-middle dark:hidden" width={"35"} height={"35"} src={team.logos[0].href} alt={`ESPN team id ${team.id}`}/>
         </Link>
         <Link className="hidden dark:inline-block" href={`/cfb/year/${season}/team/${team.id}`}>
-            <Image className="align-middle hidden dark:inline-block" width={"35"} height={"35"} src={team.team.logos[1].href} alt={`ESPN team id ${team.id}`}/>
+            <Image className="align-middle hidden dark:inline-block" width={"35"} height={"35"} src={team.logos[1].href} alt={`ESPN team id ${team.id}`}/>
         </Link>
     </>
     );
@@ -123,21 +123,27 @@ function handleRatesNew(item: string, teamInfo: any, baseKey:any, subKey: any, u
 
 export default function CFBSummaryTeamStatsTable({
     breakdown,
+    awayBreakdown,
+    homeBreakdown,
     title,
     target,
     situation,
     team,
     awayTeam,
     homeTeam,
-    showTeamLogos }: {
+    showTeamLogos,
+    season }: {
         breakdown: any[],
+        awayBreakdown?: any[],
+        homeBreakdown?: any[],
         title: string,
         target: string,
         situation: string,
-        team: Competitor,
-        awayTeam?: Competitor,
-        homeTeam?: Competitor,
-        showTeamLogos: boolean }){
+        team: TeamData,
+        awayTeam?: TeamData,
+        homeTeam?: TeamData,
+        showTeamLogos: boolean,
+        season: number }){
 
     const width = (showTeamLogos && homeTeam && awayTeam) ? 33 : 50
     const columns: any = {
@@ -157,28 +163,57 @@ export default function CFBSummaryTeamStatsTable({
             rushing: ["totalEPA","epaPerPlay","epaPerGame","successRate"]
         }
     };
-    return(
-        <>
-    <table className="min-w-[90%] ">
-        <thead>
-            <tr className="h-5">
-                <th className={`text-left w-[${width}%] h-5`}>{title}</th>
-                <th className={`text-left w-[${width}%] h-5`}><span hidden>Value</span></th>
-            </tr>
-        </thead>
-        <tbody>
-        {columns[target][situation].map((item: any, idx: any) => (
-            <tr key={idx} className="h-5 border-b">
-                <td className="text-left whitespace-pre overflow-auto h-5">
-                    {Object.keys(stat_key_title_mapping).includes(item) ? (stat_key_title_mapping[item]) : item }
-                </td>
-                    {handleRatesNew(item, breakdown[0], target, situation, false, 1, width)}
+    if(showTeamLogos === false){
+        return(
+            <>
+            <table className="min-w-[90%] m-auto">
+                <thead>
+                    <tr className="h-5">
+                        <th className={`text-left w-[${width}%] h-5`}>{title}</th>
+                        <th className={`text-left w-[${width}%] h-5`}><span hidden>Value</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                {columns[target][situation].map((item: any, idx: any) => (
+                    <tr key={idx} className="h-5 border-b">
+                        <td className="text-left whitespace-pre overflow-auto h-5">
+                            {Object.keys(stat_key_title_mapping).includes(item) ? (stat_key_title_mapping[item]) : item }
+                        </td>
+                            {handleRatesNew(item, breakdown[0], target, situation, false, 1, width)}
 
-            </tr>
-            ))
-        }
-        </tbody>
-    </table>
-        </>
-    );
+                    </tr>
+                    ))
+                }
+                </tbody>
+            </table>
+            </>
+        );
+    } else {
+        return(
+            <>
+            <table className="min-w-[90%] m-auto">
+                <thead>
+                    <tr className="h-5">
+                        <th className={`text-left w-[${width}%] h-5`}>{title}</th>
+                        <th className={`text-center w-[${width}%] h-5`}>{formatLogo(team = awayTeam || team, season = season)}</th>
+                        <th className={`text-center w-[${width}%] h-5`}>{formatLogo(team = homeTeam || team, season = season)}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {columns[target][situation].map((item: any, idx: any) => (
+                    <tr key={idx} className="h-5 border-b">
+                        <td className="text-left whitespace-pre overflow-auto h-5">
+                            {Object.keys(stat_key_title_mapping).includes(item) ? (stat_key_title_mapping[item]) : item }
+                        </td>
+                            {handleRatesNew(item, (awayBreakdown || breakdown)[0], target, situation, false, 1, width)}
+                            {handleRatesNew(item, (homeBreakdown || breakdown)[0], target, situation, false, 1, width)}
+
+                    </tr>
+                    ))
+                }
+                </tbody>
+            </table>
+            </>
+        );
+    }
 }

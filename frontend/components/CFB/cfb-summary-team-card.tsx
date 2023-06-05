@@ -107,13 +107,13 @@ export default function CFBSummaryTeamCard({
     return(
         <>
 
-        <div className="m-8 lg:m-6 xl:mg-4 my-4 max-w-sm rounded-md overflow-hidden border hover:border-blue-100  w-[100%] h-[84%]" >
-            <div className="flex self-center justify-between px-4 py-4">
+        <div className="m-8 lg:m-6 xl:mg-4 my-4 max-w-sm rounded-md overflow-hidden border hover:border-blue-100 min-w-[90%]  w-[100%] min-h-[84%]" >
+            <div className="flex self-center justify-between px-4 py-4 mx-2">
                 <h2 className="text-3xl font-medium font-chivo self-center">{ cleanLocation(team) }</h2>
                 {logo}
             </div>
             <div className="table-responsive px-2 py-2">
-                <table className="min-w-[30%] w-[100%]  px-4 py-4 mb-4">
+                <table className="min-w-[90%] w-[100%]  px-4 py-4 mb-4">
                     <thead>
                         <tr className="h-5">
 
@@ -132,7 +132,7 @@ export default function CFBSummaryTeamCard({
                         </tr>
                     </tbody>
                 </table>
-                <table className="min-w-[30%] w-[100%] px-4 py-4 mb-4">
+                <table className="min-w-[90%] w-[100%] px-4 py-4 mb-4">
                     <thead>
                         <tr className="h-5">
                             <th className="text-center w-[33%]">Yards/Play</th>
