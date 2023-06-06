@@ -9,7 +9,7 @@ import re
 import time
 from datetime import datetime
 from typing import Optional
-from fastapi import FastAPI, HTTPException, Request, Query, Response, JSONResponse
+from fastapi import FastAPI, HTTPException, Request, Query, Response
 from fastapi.middleware.cors import CORSMiddleware
 from sportsdataverse.cfb.cfb_pbp import CFBPlayProcess
 from sportsdataverse.cfb import espn_cfb_schedule

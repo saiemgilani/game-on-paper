@@ -33,6 +33,7 @@ export async function generateMetadata(): Promise<Metadata> {
     return {
         title: title,
         description: `${subtitle}`,
+        metadataBase: new URL('https://thegameonpaper.com/'),
         referrer: 'origin-when-cross-origin',
         viewport: {
             width: 'device-width',
