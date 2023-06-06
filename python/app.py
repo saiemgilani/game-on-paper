@@ -10,6 +10,7 @@ import time
 from datetime import datetime
 from typing import Optional
 from fastapi import FastAPI, HTTPException, Request, Query, Response
+from fastapi.responses import ORJSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from sportsdataverse.cfb.cfb_pbp import CFBPlayProcess
 from sportsdataverse.cfb import espn_cfb_schedule
@@ -87,15 +88,15 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/py")
+@app.get("/py", response_class = ORJSONResponse)
 def healthcheck():
-    return Response(json.dumps({
+    return ORJSONResponse({
         "status" : "good",
         "message" : "Python API is running"
-    }), media_type="application/json")
+    }, status_code = 200, media_type="application/json")
 
 
-@app.get("/py/cfb/scoreboard", tags=["College Football"])
+@app.get("/py/cfb/scoreboard", tags=["College Football"], response_class = ORJSONResponse)
 def get_cfb_scoreboard(request: Request,
                         groups:Optional[str] = Query(None),
                         dates:Optional[str] = Query(None),
@@ -107,11 +108,12 @@ def get_cfb_scoreboard(request: Request,
     if 'home_logo' in schedule.columns:
         schedule['home_dark_logo'] = schedule['home_logo'].apply(lambda x: x.replace("https://a.espncdn.com/i/teamlogos/ncaa/500/", "https://a.espncdn.com/i/teamlogos/ncaa/500-dark/"))
         schedule['away_dark_logo'] = schedule['away_logo'].apply(lambda x: x.replace("https://a.espncdn.com/i/teamlogos/ncaa/500/", "https://a.espncdn.com/i/teamlogos/ncaa/500-dark/"))
-    return Response(schedule.to_json(orient="records"), media_type="application/json")
+
+    return ORJSONResponse(content = schedule.to_dict(orient="records"), status_code = 200, media_type = "application/json")
 
 
 
-@app.get("/py/cfb/game/{gameId}", tags=["College Football"])
+@app.get("/py/cfb/game/{gameId}", tags=["College Football"], response_class = ORJSONResponse)
 def get_cfb_game(request: Request, gameId: str) -> Optional[None]:
     try:
         cacheBuster = str(int(time.time() * 1000))
@@ -144,7 +146,7 @@ def get_cfb_game(request: Request, gameId: str) -> Optional[None]:
                 "awayTeamMatchup": awayPercentiles,
                 "homeTeamMatchup": homePercentiles
             }
-            return Response(json.dumps(result), media_type="application/json")
+            return ORJSONResponse(content = result, status_code = 200, media_type = "application/json")
         headers = {"accept": "application/json"}
         # gameId = request.get_json(force=True)['gameId']
         processed_data = CFBPlayProcess(gameId = gameId)
@@ -349,32 +351,32 @@ def get_cfb_game(request: Request, gameId: str) -> Optional[None]:
         }
         # logging.getLogger("root").info(result)
         logging.getLogger("root").info("Successfully processed game: " + gameId)
-        return Response(json.dumps(result), media_type="application/json")
+        return ORJSONResponse(result, status_code = 200, media_type="application/json")
     except KeyError:
-        return Response({
+        return ORJSONResponse(content = {
             "status" : "bad",
             "message" : "ESPN payload is malformed. Data not available."
-        }, media_type = "application/json"), 404
+        }, status_code = 404, media_type = "application/json")
     except:
-        return Response({
+        return ORJSONResponse(content = {
             "status" : "bad",
             "message" : "Unknown error occurred, check logs."
-        }, media_type = "application/json"), 500
+        }, status_code = 500, media_type = "application/json")
 
-@app.get("/py/cfb/percentiles/{year}", tags=["College Football"])
+@app.get("/py/cfb/percentiles/{year}", tags=["College Football"], response_class = ORJSONResponse)
 def get_cfb_percentiles_year(request: Request,
                                    year: str) -> Optional[None]:
     headers = {"accept": "application/json"}
-    percentiles = requests.get(url = f"http://summary:3000/percentiles/{year}")
-    return Response(json.dumps(percentiles.json()), media_type="application/json")
+    result = pd.read_csv(f"data/{year}/percentiles.csv").to_dict(orient="records")
+    return ORJSONResponse(result, status_code = 200, media_type="application/json")
 
-@app.get("/py/cfb/percentiles/{year}/{teamId}", tags=["College Football"])
+@app.get("/py/cfb/percentiles/{year}/{teamId}", tags=["College Football"], response_class = ORJSONResponse)
 def get_cfb_percentiles_team(request: Request,
                              year: str,
                              teamId: str) -> Optional[None]:
     result = cfb_percentiles_team(year, teamId)
 
-    return Response(json.dumps(result), media_type="application/json")
+    return ORJSONResponse(result, status_code = 200, media_type="application/json")
 
 def cfb_percentiles_team(year, teamId):
     headers = {"accept": "application/json"}
