@@ -57,8 +57,10 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
+    env_file:
+      - .env
     environment:
-      RDATA_BASE_URL: "http://python:7000/py"
+      RDATA_BASE_URL: "${RDATA_BASE_URL}"
     restart: unless-stopped
     healthcheck:
       test: curl --fail http://node:8000/cfb/scoreboard || exit 1

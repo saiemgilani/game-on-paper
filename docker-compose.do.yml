@@ -41,8 +41,10 @@ services:
     networks:
       - game-on-paper-site
     command: ["node","server.js"]
+    env_file:
+      - .env
     environment:
-      RDATA_BASE_URL: "http://python:7000"
+      RDATA_BASE_URL: "${RDATA_BASE_URL}"
     ports:
       - 8000:8000
     depends_on:
