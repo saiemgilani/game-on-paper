@@ -35,8 +35,8 @@ export async function generateMetadata(
 
 
     // optionally access and extend (rather than replace) parent metadata
-    var title = "Team season stats summary for " + data.teamData.location
-    var subtitle = params.year + "Season"
+    var title = params.year + " team season stats for " + data.teamData.location
+    var subtitle = params.year + " season"
 
     return {
         title: title,

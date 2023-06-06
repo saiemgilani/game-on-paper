@@ -38,7 +38,7 @@ export async function generateMetadata(
                                           headers: { 'Content-Type': 'application/json' }}).then((res) => res.json());
 
     var title = "College Football | Game on Paper"
-    var subtitle = `College Football Schedule - Season ${year}, week ${params.week}, group ${params.group}`
+    var subtitle = `College Football Schedule -  ${year} season, week ${params.week}, group ${params.group}`
 
     return {
         title: title,
@@ -74,8 +74,8 @@ export async function generateMetadata(
         },
         openGraph: {
             title: title,
-            description: `Advanced stats for ${subtitle}`,
-            url: `https://thegameonpaper.com/cfb/season/${params.season}/group/${params.group}/type/${params.seasontype}/week/${params.week}`,
+            description: `${subtitle}`,
+            url: `https://thegameonpaper.com/cfb/schedule/season/${params.season}/group/${params.group}/type/${params.seasontype}/week/${params.week}`,
             siteName: 'theGameOnPaper.com',
             images: [
                 {
