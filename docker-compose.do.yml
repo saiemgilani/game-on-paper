@@ -2,6 +2,10 @@ version: "3.7"
 services:
   redis:
     image: ghcr.io/saiemgilani/saiemgilani/gp-redis:latest
+    networks:
+      - game-on-paper-site
+    labels:
+      com.datadoghq.ad.logs: '[{"source": "redis", "service": "redis"}]'
     expose:
       - 6379
     healthcheck:
@@ -10,8 +14,16 @@ services:
       retries: 5
       start_period: 20s
       timeout: 10s
+    depends_on:
+      - dd_agent
+    links:
+      - dd_agent
   cache:
     image: ghcr.io/saiemgilani/saiemgilani/gp-cache:latest
+    networks:
+      - game-on-paper-site
+    labels:
+      com.datadoghq.ad.logs: '[{"source": "cache", "service": "cache"}]'
     expose:
       - 6380
     healthcheck:
@@ -20,20 +32,14 @@ services:
       retries: 5
       start_period: 20s
       timeout: 10s
-  summary:
-    image: ghcr.io/akeaswaran/akeaswaran/cfb-team-summaries:latest
-    expose:
-      - 3000
-    ports:
-      - 3000:3000
-    healthcheck:
-      test: curl --fail http://summary:3000/health || exit 1
-      interval: 60s
-      retries: 5
-      start_period: 20s
-      timeout: 10s
+    depends_on:
+      - dd_agent
+    links:
+      - dd_agent
   node:
     image: ghcr.io/saiemgilani/saiemgilani/gp-node:latest
+    networks:
+      - game-on-paper-site
     command: ["node","server.js"]
     environment:
       RDATA_BASE_URL: "http://python:7000"
@@ -44,11 +50,13 @@ services:
       - summary
       - redis
       - cache
+      - dd_agent
     links:
       - python
       - summary
       - redis
       - cache
+      - dd_agent
     healthcheck:
       test: curl --fail http://localhost:8000/healthcheck || exit 1
       interval: 60s
@@ -57,6 +65,8 @@ services:
       timeout: 10s
   python:
     image: ghcr.io/saiemgilani/saiemgilani/gp-python:latest
+    networks:
+      - game-on-paper-site
     expose:
       - 7000
     ports:
@@ -67,3 +77,37 @@ services:
       retries: 5
       start_period: 20s
       timeout: 10s
+    depends_on:
+      - dd_agent
+    links:
+      - dd_agent
+  dd_agent:
+    image: gcr.io/datadoghq/agent:7
+    container_name: dd-agent
+    restart: always
+    networks:
+      - game-on-paper-site
+    env_file:
+      - .env
+    environment:
+      DD_API_KEY: "${DD_API_KEY}"
+      DD_SITE: "datadoghq.com"
+      DD_HOSTNAME: "gameonpaper"
+      DD_APM_ENABLED: "true"
+      DD_LOGS_ENABLED: "true"
+      DD_LOGS_CONFIG_CONTAINER_COLLECT_ALL: "true"
+      DD_DOGSTATSD_NON_LOCAL_TRAFFIC: "true"
+      DD_CONTAINER_LABELS_AS_TAGS: "true"
+      DD_CONTAINER_EXCLUDE: "image:gcr.io/datadoghq/agent*"
+      DD_CONTAINER_EXCLUDE_METRICS: "image:gcr.io/datadoghq/agent*"
+      DD_CONTAINER_EXCLUDE_LOGS: "image:gcr.io/datadoghq/agent*"
+      DD_PROCESS_AGENT_ENABLED: "true"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /proc/:/host/proc/:ro
+      - /sys/fs/cgroup/:/host/sys/fs/cgroup:ro
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+        #- /opt/datadog-agent/run:/opt/datadog-agent/run:rw
+
+networks:
+  game-on-paper-site:
