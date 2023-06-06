@@ -18,6 +18,8 @@ jobs:
           repository: saiemgilani/game-on-paper
       - name: Publish Node container to GitHub
         uses: mr-smithers-excellent/docker-build-push@v6
+        env:
+            RDATA_BASE_URL: ${{ secrets.RDATA_BASE_URL }}
         with:
           image: saiemgilani/gp-node
           registry: ghcr.io
@@ -95,13 +97,14 @@ jobs:
             DOCKER_COMPOSE_FILE: ${{ env.DOCKER_COMPOSE_FILE }}
             DOCKER_COMPOSE_OVERRIDE_FILE: ${{ env.DOCKER_COMPOSE_OVERRIDE_FILE }}
             DD_API_KEY: ${{ secrets.DD_API_KEY }}
+            RDATA_BASE_URL: ${{ secrets.RDATA_BASE_URL }}
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           command_timeout: 15m
-          envs: GITHUB_USERNAME, GITHUB_TOKEN, DOCKER_COMPOSE_FILE, DOCKER_COMPOSE_OVERRIDE_FILE, DD_API_KEY
+          envs: GITHUB_USERNAME, GITHUB_TOKEN, DOCKER_COMPOSE_FILE, DOCKER_COMPOSE_OVERRIDE_FILE, DD_API_KEY, RDATA_BASE_URL
           script: |
             docker stop $(docker ps -a -q)
             docker system prune --force
