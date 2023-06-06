@@ -2,6 +2,7 @@ version: "3.7"
 services:
   redis:
     image: ghcr.io/saiemgilani/saiemgilani/gp-redis:latest
+    restart: always
     networks:
       - game-on-paper-site
     labels:
@@ -20,6 +21,7 @@ services:
       - dd_agent
   cache:
     image: ghcr.io/saiemgilani/saiemgilani/gp-cache:latest
+    restart: always
     networks:
       - game-on-paper-site
     labels:
@@ -38,8 +40,11 @@ services:
       - dd_agent
   node:
     image: ghcr.io/saiemgilani/saiemgilani/gp-node:latest
+    restart: always
     networks:
       - game-on-paper-site
+    labels:
+      com.datadoghq.ad.logs: '[{"source": "next.js", "service": "next.js"}]'
     command: ["node","server.js"]
     env_file:
       - .env
@@ -58,22 +63,25 @@ services:
       - cache
       - dd_agent
     healthcheck:
-      test: curl --fail http://localhost:8000/healthcheck || exit 1
-      interval: 60s
+      test: curl --fail http://localhost:8000/cfb/scoreboard || exit 1
+      interval: 180s
       retries: 5
       start_period: 20s
       timeout: 10s
   python:
     image: ghcr.io/saiemgilani/saiemgilani/gp-python:latest
+    restart: always
     networks:
       - game-on-paper-site
+    labels:
+      com.datadoghq.ad.logs: '[{"source": "fastapi", "service": "fastapi"}]'
     expose:
       - 7000
     ports:
       - 7000:7000
     healthcheck:
-      test: curl --fail http://python:7000/healthcheck || exit 1
-      interval: 60s
+      test: curl --fail http://python:7000/py || exit 1
+      interval: 120s
       retries: 5
       start_period: 20s
       timeout: 10s

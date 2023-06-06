@@ -32,6 +32,5 @@ COPY --from=rbase /src/data ./data
 
 COPY . ./
 
-EXPOSE 7000
 ENV PORT=7000
 CMD python app.py
