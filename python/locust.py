@@ -3,6 +3,8 @@ import random
 import logging
 import sportsdataverse as sdv
 import sys
+import traceback
+
 
 from locust import HttpUser, task, between
 logging.basicConfig(level=logging.INFO, filename = 'lc.log')

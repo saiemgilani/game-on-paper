@@ -5,6 +5,7 @@ import asyncer
 import uvicorn
 import numpy as np
 import pandas as pd
+import traceback
 import logging
 import warnings
 import re
