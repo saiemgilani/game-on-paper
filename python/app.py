@@ -565,7 +565,7 @@ def calculateGEI(plays, homeTeamId):
 
 async def main():
     loop = asyncio.get_event_loop()
-    config = uvicorn.Config(app=app, port=7000, loop = loop, reload = True)
+    config = uvicorn.Config(app=app, port=7000, loop = loop)
     server = uvicorn.Server(config)
     await server.serve()
 
