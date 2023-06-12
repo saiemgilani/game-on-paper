@@ -15,5 +15,4 @@ opentelemetry-api==1.18.0
 opentelemetry-sdk==1.18.0
 redis[hiredis]==4.5.5
 fastapi-redis-cache==0.2.5
-aioify==0.4.1
 asyncer==0.0.2
