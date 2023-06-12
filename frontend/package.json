@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "dependencies": {
     "@fontsource/chivo": "^4.5.11",
@@ -36,6 +38,7 @@
     "next-mdx-remote": "^4.4.1",
     "next-plausible": "^3.7.2",
     "next-themes": "^0.2.1",
+    "nodejs-polars": "^0.7.4",
     "postcss": "8.4.23",
     "react": "18.2.0",
     "react-data-table-component": "^7.5.3",
@@ -59,8 +62,17 @@
     "typescript": "5.0.4"
   },
   "devDependencies": {
+    "@storybook/addon-essentials": "7.0.20",
+    "@storybook/addon-interactions": "7.0.20",
+    "@storybook/addon-links": "7.0.20",
+    "@storybook/blocks": "7.0.20",
+    "@storybook/nextjs": "7.0.20",
+    "@storybook/react": "7.0.20",
+    "@storybook/testing-library": "0.0.14-next.2",
     "@tailwindcss/typography": "^0.5.9",
     "@types/nprogress": "^0.2.0",
-    "cross-env": "^7.0.3"
+    "cross-env": "^7.0.3",
+    "eslint-plugin-storybook": "^0.6.12",
+    "storybook": "7.0.20"
   }
 }

@@ -1,5 +1,7 @@
 import json
+import asyncio
 import requests
+import asyncer
 import uvicorn
 import numpy as np
 import pandas as pd
@@ -7,20 +9,45 @@ import logging
 import warnings
 import re
 import time
+import os
+import redis
+import anyio
+# from aioify import aioify
+
+from functools import wraps, partial
 from datetime import datetime
 from typing import Optional
 from fastapi import FastAPI, HTTPException, Request, Query, Response
+
 from fastapi.responses import ORJSONResponse, FileResponse
 from fastapi.middleware.cors import CORSMiddleware
+from starlette.middleware.base import BaseHTTPMiddleware
+
 from sportsdataverse.cfb.cfb_pbp import CFBPlayProcess
 from sportsdataverse.cfb import espn_cfb_schedule
 from sportsdataverse.dl_utils import underscore
 from functools import reduce
+from asyncer import asyncify
+
 warnings.filterwarnings("ignore")
+
+
 
 logging.basicConfig(level=logging.INFO, filename = 'gp_site_logfile.txt')
 logger = logging.getLogger(__name__)
+REDIS_URL = os.environ.get("REDIS_URL", "redis://localhost:6379/3")
+redis_client = redis.Redis.from_url(REDIS_URL)
 
+def aioify(func):
+    @wraps(func)
+    async def run(*args, loop=None, executor=None, **kwargs):
+        if loop is None:
+            loop = asyncio.get_event_loop()
+        pfunc = partial(func, *args, **kwargs)
+        response = await loop.run_in_executor(executor, pfunc)
+        logging.info(f"Successfully processed request: {response} for {args[1:]}")
+        return response
+    return run
 # from dotenv import load_dotenv, dotenv_values
 # config = dotenv_values('.env.development.local')
 
@@ -61,6 +88,7 @@ app = FastAPI(
     redoc_url=None,
     openapi_tags = tags_metadata
 )
+
 origins = [
     "http://localhost.gameonpaper.com",
     "https://localhost.gameonpaper.com",
@@ -90,14 +118,19 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+
 favicon_path = 'favicon.ico'
 
+@aioify
 @app.get('/favicon.ico', include_in_schema=False)
 async def favicon():
     return FileResponse(favicon_path)
 
+
 @app.get("/py", response_class = ORJSONResponse)
-def healthcheck():
+async def healthcheck():
     return ORJSONResponse({
         "status" : "good",
         "message" : "Python API is running"
@@ -105,14 +138,14 @@ def healthcheck():
 
 
 @app.get("/py/cfb/scoreboard", tags=["College Football"], response_class = ORJSONResponse)
-def get_cfb_scoreboard(request: Request,
+async def get_cfb_scoreboard(request: Request,
                         groups:Optional[str] = Query(None),
                         dates:Optional[str] = Query(None),
                         week:Optional[str] = Query(None),
                         seasontype:Optional[str] = Query(None)) -> Optional[None]:
 
     headers = {"accept": "application/json"}
-    schedule = espn_cfb_schedule(groups = groups, dates = dates, week = week, season_type = seasontype)
+    schedule = await asyncify(espn_cfb_schedule)(groups = groups, dates = dates, week = week, season_type = seasontype)
     if 'home_logo' in schedule.columns:
         schedule['home_dark_logo'] = schedule['home_logo'].apply(lambda x: x.replace("https://a.espncdn.com/i/teamlogos/ncaa/500/", "https://a.espncdn.com/i/teamlogos/ncaa/500-dark/"))
         schedule['away_dark_logo'] = schedule['away_logo'].apply(lambda x: x.replace("https://a.espncdn.com/i/teamlogos/ncaa/500/", "https://a.espncdn.com/i/teamlogos/ncaa/500-dark/"))
@@ -122,6 +155,26 @@ def get_cfb_scoreboard(request: Request,
 
 
 @app.get("/py/cfb/game/{gameId}", tags=["College Football"], response_class = ORJSONResponse)
+async def cfb_game(request: Request, gameId: str) -> Optional[None]:
+    return await asyncify(get_cfb_game)(request, gameId)
+
+
+@app.get("/py/cfb/percentiles/{year}", tags=["College Football"], response_class = ORJSONResponse)
+def get_cfb_percentiles_year(request: Request,
+                                   year: str) -> Optional[None]:
+    headers = {"accept": "application/json"}
+    result = pd.read_csv(f"data/{year}/percentiles.csv").to_dict(orient="records")
+    return ORJSONResponse(result, status_code = 200, media_type="application/json")
+
+
+@app.get("/py/cfb/percentiles/{year}/{teamId}", tags=["College Football"], response_class = ORJSONResponse)
+async def get_cfb_percentiles_team(request: Request,
+                             year: str,
+                             teamId: str) -> Optional[None]:
+    result = await asyncify(cfb_percentiles_team)(year, teamId)
+
+    return ORJSONResponse(result, status_code = 200, media_type="application/json")
+
 def get_cfb_game(request: Request, gameId: str) -> Optional[None]:
     try:
         cacheBuster = str(int(time.time() * 1000))
@@ -154,237 +207,232 @@ def get_cfb_game(request: Request, gameId: str) -> Optional[None]:
                 "awayTeamMatchup": awayPercentiles,
                 "homeTeamMatchup": homePercentiles
             }
+            logging.info(f"Successfully processed cfb_game_pre-game: {gameId}")
             return ORJSONResponse(content = result, status_code = 200, media_type = "application/json")
-        headers = {"accept": "application/json"}
-        # gameId = request.get_json(force=True)['gameId']
-        processed_data = CFBPlayProcess(gameId = gameId)
-        pbp = processed_data.espn_cfb_pbp()
-        processed_data.run_processing_pipeline()
-        tmp_json = processed_data.plays_json.to_json(orient="records")
-        jsonified_df = json.loads(tmp_json)
+        def cfb_game_in_play(gameId):
+            headers = {"accept": "application/json"}
+            # gameId = request.get_json(force=True)['gameId']
 
-        box = processed_data.create_box_score()
-        bad_cols = [
-            'start.distance', 'start.yardLine', 'start.team.id', 'start.down', 'start.yardsToEndzone', 'start.posTeamTimeouts', 'start.defTeamTimeouts',
-            'start.shortDownDistanceText', 'start.possessionText', 'start.downDistanceText', 'start.pos_team_timeouts', 'start.def_pos_team_timeouts',
-            'clock.displayValue',
-            'type.id', 'type.text', 'type.abbreviation',
-            'end.distance', 'end.yardLine', 'end.team.id','end.down', 'end.yardsToEndzone', 'end.posTeamTimeouts','end.defTeamTimeouts',
-            'end.shortDownDistanceText', 'end.possessionText', 'end.downDistanceText', 'end.pos_team_timeouts', 'end.def_pos_team_timeouts',
-            'expectedPoints.before', 'expectedPoints.after', 'expectedPoints.added',
-            'winProbability.before', 'winProbability.after', 'winProbability.added',
-            'scoringType.displayName', 'scoringType.name', 'scoringType.abbreviation'
-        ]
-        # clean records back into ESPN format
-        for record in jsonified_df:
-            record["clock"] = {
-                "displayValue" : record["clock.displayValue"],
-                "minutes" : record["clock.minutes"],
-                "seconds" : record["clock.seconds"]
-            }
+            processed_data = CFBPlayProcess(gameId = gameId)
+            pbp = processed_data.espn_cfb_pbp()
+            processed_data.run_processing_pipeline()
+            tmp_json = processed_data.plays_json.to_json(orient="records")
+            jsonified_df = json.loads(tmp_json)
 
-            record["type"] = {
-                "id" : record["type.id"],
-                "text" : record["type.text"],
-                "abbreviation" : record["type.abbreviation"],
-            }
-            record["modelInputs"] = {
-                "start" : {
-                    "down" : record["start.down"],
+            box = processed_data.create_box_score()
+            bad_cols = [
+                'start.distance', 'start.yardLine', 'start.team.id', 'start.down', 'start.yardsToEndzone', 'start.posTeamTimeouts', 'start.defTeamTimeouts',
+                'start.shortDownDistanceText', 'start.possessionText', 'start.downDistanceText', 'start.pos_team_timeouts', 'start.def_pos_team_timeouts',
+                'clock.displayValue',
+                'type.id', 'type.text', 'type.abbreviation',
+                'end.distance', 'end.yardLine', 'end.team.id','end.down', 'end.yardsToEndzone', 'end.posTeamTimeouts','end.defTeamTimeouts',
+                'end.shortDownDistanceText', 'end.possessionText', 'end.downDistanceText', 'end.pos_team_timeouts', 'end.def_pos_team_timeouts',
+                'expectedPoints.before', 'expectedPoints.after', 'expectedPoints.added',
+                'winProbability.before', 'winProbability.after', 'winProbability.added',
+                'scoringType.displayName', 'scoringType.name', 'scoringType.abbreviation'
+            ]
+            # clean records back into ESPN format
+            for record in jsonified_df:
+                record["clock"] = {
+                    "displayValue" : record["clock.displayValue"],
+                    "minutes" : record["clock.minutes"],
+                    "seconds" : record["clock.seconds"]
+                }
+
+                record["type"] = {
+                    "id" : record["type.id"],
+                    "text" : record["type.text"],
+                    "abbreviation" : record["type.abbreviation"],
+                }
+                record["modelInputs"] = {
+                    "start" : {
+                        "down" : record["start.down"],
+                        "distance" : record["start.distance"],
+                        "yardsToEndzone" : record["start.yardsToEndzone"],
+                        "TimeSecsRem": record["start.TimeSecsRem"],
+                        "adj_TimeSecsRem" : record["start.adj_TimeSecsRem"],
+                        "pos_score_diff" : record["pos_score_diff_start"],
+                        "posTeamTimeouts" : record["start.posTeamTimeouts"],
+                        "defTeamTimeouts" : record["start.defPosTeamTimeouts"],
+                        "ExpScoreDiff" : record["start.ExpScoreDiff"],
+                        "ExpScoreDiff_Time_Ratio" : record["start.ExpScoreDiff_Time_Ratio"],
+                        "spread_time" : record['start.spread_time'],
+                        "pos_team_receives_2H_kickoff": record["start.pos_team_receives_2H_kickoff"],
+                        "is_home": record["start.is_home"],
+                        "period": record["period"]
+                    },
+                    "end" : {
+                        "down" : record["end.down"],
+                        "distance" : record["end.distance"],
+                        "yardsToEndzone" : record["end.yardsToEndzone"],
+                        "TimeSecsRem": record["end.TimeSecsRem"],
+                        "adj_TimeSecsRem" : record["end.adj_TimeSecsRem"],
+                        "posTeamTimeouts" : record["end.posTeamTimeouts"],
+                        "defTeamTimeouts" : record["end.defPosTeamTimeouts"],
+                        "pos_score_diff" : record["pos_score_diff_end"],
+                        "ExpScoreDiff" : record["end.ExpScoreDiff"],
+                        "ExpScoreDiff_Time_Ratio" : record["end.ExpScoreDiff_Time_Ratio"],
+                        "spread_time" : record['end.spread_time'],
+                        "pos_team_receives_2H_kickoff": record["end.pos_team_receives_2H_kickoff"],
+                        "is_home": record["end.is_home"],
+                        "period": record["period"]
+                    }
+                }
+
+                record["expectedPoints"] = {
+                    "before" : record["EP_start"],
+                    "after" : record["EP_end"],
+                    "added" : record["EPA"]
+                }
+
+                record["winProbability"] = {
+                    "before" : record["wp_before"],
+                    "after" : record["wp_after"],
+                    "added" : record["wpa"]
+                }
+
+                record["start"] = {
+                    "team" : {
+                        "id" : record["start.team.id"],
+                    },
+                    "pos_team": {
+                        "id" : record["start.pos_team.id"],
+                        "name" : record["start.pos_team.name"]
+                    },
+                    "def_pos_team": {
+                        "id" : record["start.def_pos_team.id"],
+                        "name" : record["start.def_pos_team.name"],
+                    },
                     "distance" : record["start.distance"],
+                    "yardLine" : record["start.yardLine"],
+                    "down" : record["start.down"],
                     "yardsToEndzone" : record["start.yardsToEndzone"],
-                    "TimeSecsRem": record["start.TimeSecsRem"],
-                    "adj_TimeSecsRem" : record["start.adj_TimeSecsRem"],
+                    "homeScore" : record["start.homeScore"],
+                    "awayScore" : record["start.awayScore"],
+                    "pos_team_score" : record["start.pos_team_score"],
+                    "def_pos_team_score" : record["start.def_pos_team_score"],
                     "pos_score_diff" : record["pos_score_diff_start"],
                     "posTeamTimeouts" : record["start.posTeamTimeouts"],
                     "defTeamTimeouts" : record["start.defPosTeamTimeouts"],
                     "ExpScoreDiff" : record["start.ExpScoreDiff"],
                     "ExpScoreDiff_Time_Ratio" : record["start.ExpScoreDiff_Time_Ratio"],
-                    "spread_time" : record['start.spread_time'],
-                    "pos_team_receives_2H_kickoff": record["start.pos_team_receives_2H_kickoff"],
-                    "is_home": record["start.is_home"],
-                    "period": record["period"]
-                },
-                "end" : {
-                    "down" : record["end.down"],
+                    "shortDownDistanceText" : record["start.shortDownDistanceText"],
+                    "possessionText" : record["start.possessionText"],
+                    "downDistanceText" : record["start.downDistanceText"],
+                    "posTeamSpread" : record["start.pos_team_spread"]
+                }
+
+                record["end"] = {
+                    "team" : {
+                        "id" : record["end.team.id"],
+                    },
+                    "pos_team": {
+                        "id" : record["end.pos_team.id"],
+                        "name" : record["end.pos_team.name"],
+                    },
+                    "def_pos_team": {
+                        "id" : record["end.def_pos_team.id"],
+                        "name" : record["end.def_pos_team.name"],
+                    },
                     "distance" : record["end.distance"],
+                    "yardLine" : record["end.yardLine"],
+                    "down" : record["end.down"],
                     "yardsToEndzone" : record["end.yardsToEndzone"],
-                    "TimeSecsRem": record["end.TimeSecsRem"],
-                    "adj_TimeSecsRem" : record["end.adj_TimeSecsRem"],
-                    "posTeamTimeouts" : record["end.posTeamTimeouts"],
-                    "defTeamTimeouts" : record["end.defPosTeamTimeouts"],
+                    "homeScore" : record["end.homeScore"],
+                    "awayScore" : record["end.awayScore"],
+                    "pos_team_score" : record["end.pos_team_score"],
+                    "def_pos_team_score" : record["end.def_pos_team_score"],
                     "pos_score_diff" : record["pos_score_diff_end"],
+                    "posTeamTimeouts" : record["end.posTeamTimeouts"],
+                    "defPosTeamTimeouts" : record["end.defPosTeamTimeouts"],
                     "ExpScoreDiff" : record["end.ExpScoreDiff"],
                     "ExpScoreDiff_Time_Ratio" : record["end.ExpScoreDiff_Time_Ratio"],
-                    "spread_time" : record['end.spread_time'],
-                    "pos_team_receives_2H_kickoff": record["end.pos_team_receives_2H_kickoff"],
-                    "is_home": record["end.is_home"],
-                    "period": record["period"]
+                    "shortDownDistanceText" : record["end.shortDownDistanceText"],
+                    "possessionText" : record["end.possessionText"],
+                    "downDistanceText" : record["end.downDistanceText"]
                 }
+
+                record["players"] = {
+                    'passer_player_name' : record["passer_player_name"],
+                    'rusher_player_name' : record["rusher_player_name"],
+                    'receiver_player_name' : record["receiver_player_name"],
+                    'sack_player_name' : record["sack_player_name"],
+                    'sack_player_name2' : record["sack_player_name2"],
+                    'pass_breakup_player_name' : record["pass_breakup_player_name"],
+                    'interception_player_name' : record["interception_player_name"],
+                    'fg_kicker_player_name' : record["fg_kicker_player_name"],
+                    'fg_block_player_name' : record["fg_block_player_name"],
+                    'fg_return_player_name' : record["fg_return_player_name"],
+                    'kickoff_player_name' : record["kickoff_player_name"],
+                    'kickoff_return_player_name' : record["kickoff_return_player_name"],
+                    'punter_player_name' : record["punter_player_name"],
+                    'punt_block_player_name' : record["punt_block_player_name"],
+                    'punt_return_player_name' : record["punt_return_player_name"],
+                    'punt_block_return_player_name' : record["punt_block_return_player_name"],
+                    'fumble_player_name' : record["fumble_player_name"],
+                    'fumble_forced_player_name' : record["fumble_forced_player_name"],
+                    'fumble_recovered_player_name' : record["fumble_recovered_player_name"],
+                }
+                # remove added columns
+                for col in bad_cols:
+                    record.pop(col, None)
+
+            if pbp['header']['competitions'][0]['competitors'][0]['homeAway'] == 'home':
+                homeTeamId = pbp['header']['competitions'][0]['competitors'][0]['team']['id']
+                awayTeamId = pbp['header']['competitions'][0]['competitors'][1]['team']['id']
+            else:
+                homeTeamId = pbp['header']['competitions'][0]['competitors'][1]['team']['id']
+                awayTeamId = pbp['header']['competitions'][0]['competitors'][0]['team']['id']
+
+            pbp['scoringPlays'] = [play for play in jsonified_df if play['scoringPlay'] == True]
+            pbp['mostImportantPlays'] =  [play for play in jsonified_df if sorted(jsonified_df, key=lambda x: abs(x['wpa']), reverse=True).index(play) < 10]
+            pbp['bigPlays'] =  [play for play in jsonified_df if sorted(jsonified_df, key=lambda x: abs(x['EPA']), reverse=True).index(play) < 10]
+            year = pbp['header']['season']['year']
+            gei = calculateGEI(jsonified_df, homeTeamId)
+            percentiles = pd.read_csv(f"data/{year}/percentiles.csv").to_dict(orient="records")
+            result = {
+                "id": gameId,
+                "count" : len(jsonified_df),
+                "gei" : gei,
+                "mostImportantPlays": pbp['mostImportantPlays'],
+                "bigPlays": pbp['bigPlays'],
+                "plays" : jsonified_df,
+                "percentiles" :  percentiles,
+                "advBoxScore" : box,
+                "homeTeamId": homeTeamId,
+                "awayTeamId": awayTeamId,
+                # "drives" : pbp['drives'],
+                "scoringPlays" : pbp['scoringPlays'],
+                "winprobability" : np.array(pbp['winprobability']).tolist(),
+                "boxScore" : pbp['boxscore'],
+                "homeTeamSpread" : np.array(pbp['homeTeamSpread']).tolist(),
+                "overUnder" : np.array(pbp['overUnder']).tolist(),
+                "header" : pbp['header'],
+                "broadcasts" : np.array(pbp['broadcasts']).tolist(),
+                "pickcenter" : np.array(pbp['pickcenter']).tolist(),
+                "gameInfo" : np.array(pbp['gameInfo']).tolist(),
+                "season" : np.array(pbp['season']).tolist()
             }
+            return result
 
-            record["expectedPoints"] = {
-                "before" : record["EP_start"],
-                "after" : record["EP_end"],
-                "added" : record["EPA"]
-            }
+        result = cfb_game_in_play(gameId)
 
-            record["winProbability"] = {
-                "before" : record["wp_before"],
-                "after" : record["wp_after"],
-                "added" : record["wpa"]
-            }
-
-            record["start"] = {
-                "team" : {
-                    "id" : record["start.team.id"],
-                },
-                "pos_team": {
-                    "id" : record["start.pos_team.id"],
-                    "name" : record["start.pos_team.name"]
-                },
-                "def_pos_team": {
-                    "id" : record["start.def_pos_team.id"],
-                    "name" : record["start.def_pos_team.name"],
-                },
-                "distance" : record["start.distance"],
-                "yardLine" : record["start.yardLine"],
-                "down" : record["start.down"],
-                "yardsToEndzone" : record["start.yardsToEndzone"],
-                "homeScore" : record["start.homeScore"],
-                "awayScore" : record["start.awayScore"],
-                "pos_team_score" : record["start.pos_team_score"],
-                "def_pos_team_score" : record["start.def_pos_team_score"],
-                "pos_score_diff" : record["pos_score_diff_start"],
-                "posTeamTimeouts" : record["start.posTeamTimeouts"],
-                "defTeamTimeouts" : record["start.defPosTeamTimeouts"],
-                "ExpScoreDiff" : record["start.ExpScoreDiff"],
-                "ExpScoreDiff_Time_Ratio" : record["start.ExpScoreDiff_Time_Ratio"],
-                "shortDownDistanceText" : record["start.shortDownDistanceText"],
-                "possessionText" : record["start.possessionText"],
-                "downDistanceText" : record["start.downDistanceText"],
-                "posTeamSpread" : record["start.pos_team_spread"]
-            }
-
-            record["end"] = {
-                "team" : {
-                    "id" : record["end.team.id"],
-                },
-                "pos_team": {
-                    "id" : record["end.pos_team.id"],
-                    "name" : record["end.pos_team.name"],
-                },
-                "def_pos_team": {
-                    "id" : record["end.def_pos_team.id"],
-                    "name" : record["end.def_pos_team.name"],
-                },
-                "distance" : record["end.distance"],
-                "yardLine" : record["end.yardLine"],
-                "down" : record["end.down"],
-                "yardsToEndzone" : record["end.yardsToEndzone"],
-                "homeScore" : record["end.homeScore"],
-                "awayScore" : record["end.awayScore"],
-                "pos_team_score" : record["end.pos_team_score"],
-                "def_pos_team_score" : record["end.def_pos_team_score"],
-                "pos_score_diff" : record["pos_score_diff_end"],
-                "posTeamTimeouts" : record["end.posTeamTimeouts"],
-                "defPosTeamTimeouts" : record["end.defPosTeamTimeouts"],
-                "ExpScoreDiff" : record["end.ExpScoreDiff"],
-                "ExpScoreDiff_Time_Ratio" : record["end.ExpScoreDiff_Time_Ratio"],
-                "shortDownDistanceText" : record["end.shortDownDistanceText"],
-                "possessionText" : record["end.possessionText"],
-                "downDistanceText" : record["end.downDistanceText"]
-            }
-
-            record["players"] = {
-                'passer_player_name' : record["passer_player_name"],
-                'rusher_player_name' : record["rusher_player_name"],
-                'receiver_player_name' : record["receiver_player_name"],
-                'sack_player_name' : record["sack_player_name"],
-                'sack_player_name2' : record["sack_player_name2"],
-                'pass_breakup_player_name' : record["pass_breakup_player_name"],
-                'interception_player_name' : record["interception_player_name"],
-                'fg_kicker_player_name' : record["fg_kicker_player_name"],
-                'fg_block_player_name' : record["fg_block_player_name"],
-                'fg_return_player_name' : record["fg_return_player_name"],
-                'kickoff_player_name' : record["kickoff_player_name"],
-                'kickoff_return_player_name' : record["kickoff_return_player_name"],
-                'punter_player_name' : record["punter_player_name"],
-                'punt_block_player_name' : record["punt_block_player_name"],
-                'punt_return_player_name' : record["punt_return_player_name"],
-                'punt_block_return_player_name' : record["punt_block_return_player_name"],
-                'fumble_player_name' : record["fumble_player_name"],
-                'fumble_forced_player_name' : record["fumble_forced_player_name"],
-                'fumble_recovered_player_name' : record["fumble_recovered_player_name"],
-            }
-            # remove added columns
-            for col in bad_cols:
-                record.pop(col, None)
-
-        if pbp['header']['competitions'][0]['competitors'][0]['homeAway'] == 'home':
-            homeTeamId = pbp['header']['competitions'][0]['competitors'][0]['team']['id']
-            awayTeamId = pbp['header']['competitions'][0]['competitors'][1]['team']['id']
-        else:
-            homeTeamId = pbp['header']['competitions'][0]['competitors'][1]['team']['id']
-            awayTeamId = pbp['header']['competitions'][0]['competitors'][0]['team']['id']
-
-        pbp['scoringPlays'] = [play for play in jsonified_df if play['scoringPlay'] == True]
-        pbp['mostImportantPlays'] =  [play for play in jsonified_df if sorted(jsonified_df, key=lambda x: abs(x['wpa']), reverse=True).index(play) < 10]
-        pbp['bigPlays'] =  [play for play in jsonified_df if sorted(jsonified_df, key=lambda x: abs(x['EPA']), reverse=True).index(play) < 10]
-        year = pbp['header']['season']['year']
-        gei = calculateGEI(jsonified_df, homeTeamId)
-        percentiles = pd.read_csv(f"data/{year}/percentiles.csv").to_dict(orient="records")
-        result = {
-            "id": gameId,
-            "count" : len(jsonified_df),
-            "gei" : gei,
-            "mostImportantPlays": pbp['mostImportantPlays'],
-            "bigPlays": pbp['bigPlays'],
-            "plays" : jsonified_df,
-            "percentiles" :  percentiles,
-            "advBoxScore" : box,
-            "homeTeamId": homeTeamId,
-            "awayTeamId": awayTeamId,
-            # "drives" : pbp['drives'],
-            "scoringPlays" : pbp['scoringPlays'],
-            "winprobability" : np.array(pbp['winprobability']).tolist(),
-            "boxScore" : pbp['boxscore'],
-            "homeTeamSpread" : np.array(pbp['homeTeamSpread']).tolist(),
-            "overUnder" : np.array(pbp['overUnder']).tolist(),
-            "header" : pbp['header'],
-            "broadcasts" : np.array(pbp['broadcasts']).tolist(),
-            "pickcenter" : np.array(pbp['pickcenter']).tolist(),
-            "gameInfo" : np.array(pbp['gameInfo']).tolist(),
-            "season" : np.array(pbp['season']).tolist()
-        }
         # logging.getLogger("root").info(result)
-        logging.getLogger("root").info("Successfully processed game: " + gameId)
+        logging.info(f"Successfully processed cfb_game_in_play: {gameId}")
         return ORJSONResponse(result, status_code = 200, media_type="application/json")
-    except KeyError:
+    except KeyError as e:
+        logging.exception(f"KeyError: game_id =  game_id = {game}\n {traceback.format_exc()}")
         return ORJSONResponse(content = {
             "status" : "bad",
             "message" : "ESPN payload is malformed. Data not available."
         }, status_code = 404, media_type = "application/json")
     except:
+        logging.exception(f"Error: game_id =  game_id = {game}\n {traceback.format_exc()}")
         return ORJSONResponse(content = {
             "status" : "bad",
             "message" : "Unknown error occurred, check logs."
         }, status_code = 500, media_type = "application/json")
 
-@app.get("/py/cfb/percentiles/{year}", tags=["College Football"], response_class = ORJSONResponse)
-def get_cfb_percentiles_year(request: Request,
-                                   year: str) -> Optional[None]:
-    headers = {"accept": "application/json"}
-    result = pd.read_csv(f"data/{year}/percentiles.csv").to_dict(orient="records")
-    return ORJSONResponse(result, status_code = 200, media_type="application/json")
-
-@app.get("/py/cfb/percentiles/{year}/{teamId}", tags=["College Football"], response_class = ORJSONResponse)
-def get_cfb_percentiles_team(request: Request,
-                             year: str,
-                             teamId: str) -> Optional[None]:
-    result = cfb_percentiles_team(year, teamId)
-
-    return ORJSONResponse(result, status_code = 200, media_type="application/json")
 
 def cfb_percentiles_team(year, teamId):
     headers = {"accept": "application/json"}
@@ -511,7 +559,6 @@ def calculateGEI(plays, homeTeamId):
   #Normalization
   gei = normalize * win_prob_change.sum()
   return gei
-
 
 
 if __name__ == "__main__":
