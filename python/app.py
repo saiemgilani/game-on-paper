@@ -22,6 +22,7 @@ from fastapi import FastAPI, HTTPException, Request, Query, Response
 from fastapi.responses import ORJSONResponse, FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.base import BaseHTTPMiddleware
+from prometheus_client import make_asgi_app
 
 from sportsdataverse.cfb.cfb_pbp import CFBPlayProcess
 from sportsdataverse.cfb import espn_cfb_schedule
@@ -562,4 +563,9 @@ def calculateGEI(plays, homeTeamId):
 
 
 if __name__ == "__main__":
-  uvicorn.run("app:app", host='0.0.0.0', port=7000, reload=True )
+    loop = asyncio.get_event_loop()
+    config = uvicorn.Config(app=app, port = 7000, loop = loop, reload = True)
+    server = uvicorn.Server(config)
+    asyncio.run(server.serve())
+
+    # uvicorn.run("app:app", host='0.0.0.0', port=7000, reload=True )
