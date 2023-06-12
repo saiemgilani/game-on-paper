@@ -563,16 +563,16 @@ def calculateGEI(plays, homeTeamId):
   return gei
 
 
-async def main():
-    loop = asyncio.get_event_loop()
-    config = uvicorn.Config(app=app, port=7000, loop = loop)
-    server = uvicorn.Server(config)
-    await server.serve()
+# async def main():
+#     loop = asyncio.get_event_loop()
+#     config = uvicorn.Config(app=app, port=7000, loop = loop)
+#     server = uvicorn.Server(config)
+#     await server.serve()
 
 if __name__ == "__main__":
-    # loop = asyncio.get_event_loop()
-    # config = uvicorn.Config(app=app, port = 7000, loop = loop, reload = True)
-    # server = uvicorn.Server(config)
-    asyncio.run(main())
+    loop = asyncio.get_event_loop()
+    config = uvicorn.Config(app=app, port = 7000, loop = loop, reload = True)
+    server = uvicorn.Server(config)
+    asyncio.run(server.serve())
 
     # uvicorn.run("app:app", host='0.0.0.0', port=7000, reload=True )
