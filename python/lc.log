@@ -562,3 +562,672 @@
 [2023-06-12 13:01:56,991] SAIEMASUS-i7/DEBUG/locust.main: Running teardowns...
 [2023-06-12 13:01:56,991] SAIEMASUS-i7/INFO/locust.main: Shutting down (exit code 1)
 [2023-06-12 13:01:56,992] SAIEMASUS-i7/DEBUG/locust.main: Cleaning up runner...
+[2023-06-12 15:42:47,193] SAIEMASUS-i7/INFO/locust.main: Starting web interface at http://0.0.0.0:8089 (accepting connections from all network interfaces)
+[2023-06-12 15:42:47,204] SAIEMASUS-i7/INFO/locust.main: Starting Locust 2.15.1
+[2023-06-12 15:43:23,565] SAIEMASUS-i7/INFO/locust.runners: Ramping to 50 users at a rate of 1.00 per second
+[2023-06-12 15:43:23,565] SAIEMASUS-i7/DEBUG/locust.runners: Ramping to {"PerformanceTests": 1} (1 total users)
+[2023-06-12 15:43:23,565] SAIEMASUS-i7/DEBUG/locust.runners: Spawning additional {"PerformanceTests": 1} ({"PerformanceTests": 0} already running)...
+[2023-06-12 15:43:23,565] SAIEMASUS-i7/DEBUG/locust.runners: 1 users spawned
+[2023-06-12 15:43:23,565] SAIEMASUS-i7/DEBUG/locust.runners: All users of class PerformanceTests spawned
+[2023-06-12 15:43:23,565] SAIEMASUS-i7/DEBUG/locust.runners: 0 users have been stopped, 1 still running
+[2023-06-12 15:43:23,820] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: Starting new HTTPS connection (1): thegameonpaper.com:443
+[2023-06-12 15:43:24,570] SAIEMASUS-i7/DEBUG/locust.runners: Ramping to {"PerformanceTests": 2} (2 total users)
+[2023-06-12 15:43:24,570] SAIEMASUS-i7/DEBUG/locust.runners: Spawning additional {"PerformanceTests": 1} ({"PerformanceTests": 1} already running)...
+[2023-06-12 15:43:24,570] SAIEMASUS-i7/DEBUG/locust.runners: 2 users spawned
+[2023-06-12 15:43:24,570] SAIEMASUS-i7/DEBUG/locust.runners: All users of class PerformanceTests spawned
+[2023-06-12 15:43:24,570] SAIEMASUS-i7/DEBUG/locust.runners: 0 users have been stopped, 2 still running
+[2023-06-12 15:43:24,720] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: Starting new HTTPS connection (1): thegameonpaper.com:443
+[2023-06-12 15:43:25,577] SAIEMASUS-i7/DEBUG/locust.runners: Ramping to {"PerformanceTests": 3} (3 total users)
+[2023-06-12 15:43:25,577] SAIEMASUS-i7/DEBUG/locust.runners: Spawning additional {"PerformanceTests": 1} ({"PerformanceTests": 2} already running)...
+[2023-06-12 15:43:25,577] SAIEMASUS-i7/DEBUG/locust.runners: 3 users spawned
+[2023-06-12 15:43:25,577] SAIEMASUS-i7/DEBUG/locust.runners: All users of class PerformanceTests spawned
+[2023-06-12 15:43:25,577] SAIEMASUS-i7/DEBUG/locust.runners: 0 users have been stopped, 3 still running
+[2023-06-12 15:43:25,736] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: Starting new HTTPS connection (1): thegameonpaper.com:443
+[2023-06-12 15:43:26,592] SAIEMASUS-i7/DEBUG/locust.runners: Ramping to {"PerformanceTests": 4} (4 total users)
+[2023-06-12 15:43:26,592] SAIEMASUS-i7/DEBUG/locust.runners: Spawning additional {"PerformanceTests": 1} ({"PerformanceTests": 3} already running)...
+[2023-06-12 15:43:26,593] SAIEMASUS-i7/DEBUG/locust.runners: 4 users spawned
+[2023-06-12 15:43:26,593] SAIEMASUS-i7/DEBUG/locust.runners: All users of class PerformanceTests spawned
+[2023-06-12 15:43:26,593] SAIEMASUS-i7/DEBUG/locust.runners: 0 users have been stopped, 4 still running
+[2023-06-12 15:43:26,755] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: Starting new HTTPS connection (1): thegameonpaper.com:443
+[2023-06-12 15:43:27,606] SAIEMASUS-i7/DEBUG/locust.runners: Ramping to {"PerformanceTests": 5} (5 total users)
+[2023-06-12 15:43:27,606] SAIEMASUS-i7/DEBUG/locust.runners: Spawning additional {"PerformanceTests": 1} ({"PerformanceTests": 4} already running)...
+[2023-06-12 15:43:27,606] SAIEMASUS-i7/DEBUG/locust.runners: 5 users spawned
+[2023-06-12 15:43:27,606] SAIEMASUS-i7/DEBUG/locust.runners: All users of class PerformanceTests spawned
+[2023-06-12 15:43:27,606] SAIEMASUS-i7/DEBUG/locust.runners: 0 users have been stopped, 5 still running
+[2023-06-12 15:43:27,756] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: Starting new HTTPS connection (1): thegameonpaper.com:443
+[2023-06-12 15:43:28,610] SAIEMASUS-i7/DEBUG/locust.runners: Ramping to {"PerformanceTests": 6} (6 total users)
+[2023-06-12 15:43:28,610] SAIEMASUS-i7/DEBUG/locust.runners: Spawning additional {"PerformanceTests": 1} ({"PerformanceTests": 5} already running)...
+[2023-06-12 15:43:28,611] SAIEMASUS-i7/DEBUG/locust.runners: 6 users spawned
+[2023-06-12 15:43:28,611] SAIEMASUS-i7/DEBUG/locust.runners: All users of class PerformanceTests spawned
+[2023-06-12 15:43:28,611] SAIEMASUS-i7/DEBUG/locust.runners: 0 users have been stopped, 6 still running
+[2023-06-12 15:43:28,853] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: Starting new HTTPS connection (1): thegameonpaper.com:443
+[2023-06-12 15:43:29,620] SAIEMASUS-i7/DEBUG/locust.runners: Ramping to {"PerformanceTests": 7} (7 total users)
+[2023-06-12 15:43:29,620] SAIEMASUS-i7/DEBUG/locust.runners: Spawning additional {"PerformanceTests": 1} ({"PerformanceTests": 6} already running)...
+[2023-06-12 15:43:29,620] SAIEMASUS-i7/DEBUG/locust.runners: 7 users spawned
+[2023-06-12 15:43:29,620] SAIEMASUS-i7/DEBUG/locust.runners: All users of class PerformanceTests spawned
+[2023-06-12 15:43:29,621] SAIEMASUS-i7/DEBUG/locust.runners: 0 users have been stopped, 7 still running
+[2023-06-12 15:43:29,761] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: Starting new HTTPS connection (1): thegameonpaper.com:443
+[2023-06-12 15:43:30,634] SAIEMASUS-i7/DEBUG/locust.runners: Ramping to {"PerformanceTests": 8} (8 total users)
+[2023-06-12 15:43:30,635] SAIEMASUS-i7/DEBUG/locust.runners: Spawning additional {"PerformanceTests": 1} ({"PerformanceTests": 7} already running)...
+[2023-06-12 15:43:30,636] SAIEMASUS-i7/DEBUG/locust.runners: 8 users spawned
+[2023-06-12 15:43:30,636] SAIEMASUS-i7/DEBUG/locust.runners: All users of class PerformanceTests spawned
+[2023-06-12 15:43:30,636] SAIEMASUS-i7/DEBUG/locust.runners: 0 users have been stopped, 8 still running
+[2023-06-12 15:43:30,796] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: Starting new HTTPS connection (1): thegameonpaper.com:443
+[2023-06-12 15:43:31,635] SAIEMASUS-i7/DEBUG/locust.runners: Ramping to {"PerformanceTests": 9} (9 total users)
+[2023-06-12 15:43:31,635] SAIEMASUS-i7/DEBUG/locust.runners: Spawning additional {"PerformanceTests": 1} ({"PerformanceTests": 8} already running)...
+[2023-06-12 15:43:31,636] SAIEMASUS-i7/DEBUG/locust.runners: 9 users spawned
+[2023-06-12 15:43:31,636] SAIEMASUS-i7/DEBUG/locust.runners: All users of class PerformanceTests spawned
+[2023-06-12 15:43:31,636] SAIEMASUS-i7/DEBUG/locust.runners: 0 users have been stopped, 9 still running
+[2023-06-12 15:43:31,786] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: Starting new HTTPS connection (1): thegameonpaper.com:443
+[2023-06-12 15:43:32,648] SAIEMASUS-i7/DEBUG/locust.runners: Ramping to {"PerformanceTests": 10} (10 total users)
+[2023-06-12 15:43:32,648] SAIEMASUS-i7/DEBUG/locust.runners: Spawning additional {"PerformanceTests": 1} ({"PerformanceTests": 9} already running)...
+[2023-06-12 15:43:32,648] SAIEMASUS-i7/DEBUG/locust.runners: 10 users spawned
+[2023-06-12 15:43:32,648] SAIEMASUS-i7/DEBUG/locust.runners: All users of class PerformanceTests spawned
+[2023-06-12 15:43:32,648] SAIEMASUS-i7/DEBUG/locust.runners: 0 users have been stopped, 10 still running
+[2023-06-12 15:43:32,791] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: Starting new HTTPS connection (1): thegameonpaper.com:443
+[2023-06-12 15:43:33,649] SAIEMASUS-i7/DEBUG/locust.runners: Ramping to {"PerformanceTests": 11} (11 total users)
+[2023-06-12 15:43:33,649] SAIEMASUS-i7/DEBUG/locust.runners: Spawning additional {"PerformanceTests": 1} ({"PerformanceTests": 10} already running)...
+[2023-06-12 15:43:33,650] SAIEMASUS-i7/DEBUG/locust.runners: 11 users spawned
+[2023-06-12 15:43:33,650] SAIEMASUS-i7/DEBUG/locust.runners: All users of class PerformanceTests spawned
+[2023-06-12 15:43:33,651] SAIEMASUS-i7/DEBUG/locust.runners: 0 users have been stopped, 11 still running
+[2023-06-12 15:43:33,810] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: Starting new HTTPS connection (1): thegameonpaper.com:443
+[2023-06-12 15:43:34,315] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401403922 HTTP/1.1" 200 2636315
+[2023-06-12 15:43:34,662] SAIEMASUS-i7/DEBUG/locust.runners: Ramping to {"PerformanceTests": 12} (12 total users)
+[2023-06-12 15:43:34,662] SAIEMASUS-i7/DEBUG/locust.runners: Spawning additional {"PerformanceTests": 1} ({"PerformanceTests": 11} already running)...
+[2023-06-12 15:43:34,662] SAIEMASUS-i7/DEBUG/locust.runners: 12 users spawned
+[2023-06-12 15:43:34,662] SAIEMASUS-i7/DEBUG/locust.runners: All users of class PerformanceTests spawned
+[2023-06-12 15:43:34,662] SAIEMASUS-i7/DEBUG/locust.runners: 0 users have been stopped, 12 still running
+[2023-06-12 15:43:34,804] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: Starting new HTTPS connection (1): thegameonpaper.com:443
+[2023-06-12 15:43:35,674] SAIEMASUS-i7/DEBUG/locust.runners: Ramping to {"PerformanceTests": 13} (13 total users)
+[2023-06-12 15:43:35,674] SAIEMASUS-i7/DEBUG/locust.runners: Spawning additional {"PerformanceTests": 1} ({"PerformanceTests": 12} already running)...
+[2023-06-12 15:43:35,675] SAIEMASUS-i7/DEBUG/locust.runners: 13 users spawned
+[2023-06-12 15:43:35,675] SAIEMASUS-i7/DEBUG/locust.runners: All users of class PerformanceTests spawned
+[2023-06-12 15:43:35,675] SAIEMASUS-i7/DEBUG/locust.runners: 0 users have been stopped, 13 still running
+[2023-06-12 15:43:35,756] SAIEMASUS-i7/INFO/root: 200
+[2023-06-12 15:43:35,821] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: Starting new HTTPS connection (1): thegameonpaper.com:443
+[2023-06-12 15:43:36,557] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401426615 HTTP/1.1" 200 1460302
+[2023-06-12 15:43:36,676] SAIEMASUS-i7/DEBUG/locust.runners: Ramping to {"PerformanceTests": 14} (14 total users)
+[2023-06-12 15:43:36,676] SAIEMASUS-i7/DEBUG/locust.runners: Spawning additional {"PerformanceTests": 1} ({"PerformanceTests": 13} already running)...
+[2023-06-12 15:43:36,676] SAIEMASUS-i7/DEBUG/locust.runners: 14 users spawned
+[2023-06-12 15:43:36,676] SAIEMASUS-i7/DEBUG/locust.runners: All users of class PerformanceTests spawned
+[2023-06-12 15:43:36,677] SAIEMASUS-i7/DEBUG/locust.runners: 0 users have been stopped, 14 still running
+[2023-06-12 15:43:36,832] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: Starting new HTTPS connection (1): thegameonpaper.com:443
+[2023-06-12 15:43:37,478] SAIEMASUS-i7/INFO/root: 200
+[2023-06-12 15:43:37,690] SAIEMASUS-i7/DEBUG/locust.runners: Ramping to {"PerformanceTests": 15} (15 total users)
+[2023-06-12 15:43:37,690] SAIEMASUS-i7/DEBUG/locust.runners: Spawning additional {"PerformanceTests": 1} ({"PerformanceTests": 14} already running)...
+[2023-06-12 15:43:37,690] SAIEMASUS-i7/DEBUG/locust.runners: 15 users spawned
+[2023-06-12 15:43:37,690] SAIEMASUS-i7/DEBUG/locust.runners: All users of class PerformanceTests spawned
+[2023-06-12 15:43:37,690] SAIEMASUS-i7/DEBUG/locust.runners: 0 users have been stopped, 15 still running
+[2023-06-12 15:43:37,865] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: Starting new HTTPS connection (1): thegameonpaper.com:443
+[2023-06-12 15:43:38,696] SAIEMASUS-i7/DEBUG/locust.runners: Ramping to {"PerformanceTests": 16} (16 total users)
+[2023-06-12 15:43:38,696] SAIEMASUS-i7/DEBUG/locust.runners: Spawning additional {"PerformanceTests": 1} ({"PerformanceTests": 15} already running)...
+[2023-06-12 15:43:38,697] SAIEMASUS-i7/DEBUG/locust.runners: 16 users spawned
+[2023-06-12 15:43:38,697] SAIEMASUS-i7/DEBUG/locust.runners: All users of class PerformanceTests spawned
+[2023-06-12 15:43:38,697] SAIEMASUS-i7/DEBUG/locust.runners: 0 users have been stopped, 16 still running
+[2023-06-12 15:43:38,902] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: Starting new HTTPS connection (1): thegameonpaper.com:443
+[2023-06-12 15:43:39,700] SAIEMASUS-i7/DEBUG/locust.runners: Ramping to {"PerformanceTests": 17} (17 total users)
+[2023-06-12 15:43:39,700] SAIEMASUS-i7/DEBUG/locust.runners: Spawning additional {"PerformanceTests": 1} ({"PerformanceTests": 16} already running)...
+[2023-06-12 15:43:39,700] SAIEMASUS-i7/DEBUG/locust.runners: 17 users spawned
+[2023-06-12 15:43:39,700] SAIEMASUS-i7/DEBUG/locust.runners: All users of class PerformanceTests spawned
+[2023-06-12 15:43:39,700] SAIEMASUS-i7/DEBUG/locust.runners: 0 users have been stopped, 17 still running
+[2023-06-12 15:43:39,839] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: Starting new HTTPS connection (1): thegameonpaper.com:443
+[2023-06-12 15:43:40,710] SAIEMASUS-i7/DEBUG/locust.runners: Ramping to {"PerformanceTests": 18} (18 total users)
+[2023-06-12 15:43:40,710] SAIEMASUS-i7/DEBUG/locust.runners: Spawning additional {"PerformanceTests": 1} ({"PerformanceTests": 17} already running)...
+[2023-06-12 15:43:40,711] SAIEMASUS-i7/DEBUG/locust.runners: 18 users spawned
+[2023-06-12 15:43:40,711] SAIEMASUS-i7/DEBUG/locust.runners: All users of class PerformanceTests spawned
+[2023-06-12 15:43:40,711] SAIEMASUS-i7/DEBUG/locust.runners: 0 users have been stopped, 18 still running
+[2023-06-12 15:43:40,870] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: Starting new HTTPS connection (1): thegameonpaper.com:443
+[2023-06-12 15:43:41,725] SAIEMASUS-i7/DEBUG/locust.runners: Ramping to {"PerformanceTests": 19} (19 total users)
+[2023-06-12 15:43:41,725] SAIEMASUS-i7/DEBUG/locust.runners: Spawning additional {"PerformanceTests": 1} ({"PerformanceTests": 18} already running)...
+[2023-06-12 15:43:41,725] SAIEMASUS-i7/DEBUG/locust.runners: 19 users spawned
+[2023-06-12 15:43:41,725] SAIEMASUS-i7/DEBUG/locust.runners: All users of class PerformanceTests spawned
+[2023-06-12 15:43:41,725] SAIEMASUS-i7/DEBUG/locust.runners: 0 users have been stopped, 19 still running
+[2023-06-12 15:43:41,873] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: Starting new HTTPS connection (1): thegameonpaper.com:443
+[2023-06-12 15:43:42,740] SAIEMASUS-i7/DEBUG/locust.runners: Ramping to {"PerformanceTests": 20} (20 total users)
+[2023-06-12 15:43:42,740] SAIEMASUS-i7/DEBUG/locust.runners: Spawning additional {"PerformanceTests": 1} ({"PerformanceTests": 19} already running)...
+[2023-06-12 15:43:42,740] SAIEMASUS-i7/DEBUG/locust.runners: 20 users spawned
+[2023-06-12 15:43:42,740] SAIEMASUS-i7/DEBUG/locust.runners: All users of class PerformanceTests spawned
+[2023-06-12 15:43:42,740] SAIEMASUS-i7/DEBUG/locust.runners: 0 users have been stopped, 20 still running
+[2023-06-12 15:43:42,892] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: Starting new HTTPS connection (1): thegameonpaper.com:443
+[2023-06-12 15:43:43,746] SAIEMASUS-i7/DEBUG/locust.runners: Ramping to {"PerformanceTests": 21} (21 total users)
+[2023-06-12 15:43:43,746] SAIEMASUS-i7/DEBUG/locust.runners: Spawning additional {"PerformanceTests": 1} ({"PerformanceTests": 20} already running)...
+[2023-06-12 15:43:43,746] SAIEMASUS-i7/DEBUG/locust.runners: 21 users spawned
+[2023-06-12 15:43:43,746] SAIEMASUS-i7/DEBUG/locust.runners: All users of class PerformanceTests spawned
+[2023-06-12 15:43:43,746] SAIEMASUS-i7/DEBUG/locust.runners: 0 users have been stopped, 21 still running
+[2023-06-12 15:43:43,916] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: Starting new HTTPS connection (1): thegameonpaper.com:443
+[2023-06-12 15:43:44,761] SAIEMASUS-i7/DEBUG/locust.runners: Ramping to {"PerformanceTests": 22} (22 total users)
+[2023-06-12 15:43:44,762] SAIEMASUS-i7/DEBUG/locust.runners: Spawning additional {"PerformanceTests": 1} ({"PerformanceTests": 21} already running)...
+[2023-06-12 15:43:44,764] SAIEMASUS-i7/DEBUG/locust.runners: 22 users spawned
+[2023-06-12 15:43:44,764] SAIEMASUS-i7/DEBUG/locust.runners: All users of class PerformanceTests spawned
+[2023-06-12 15:43:44,765] SAIEMASUS-i7/DEBUG/locust.runners: 0 users have been stopped, 22 still running
+[2023-06-12 15:43:44,943] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: Starting new HTTPS connection (1): thegameonpaper.com:443
+[2023-06-12 15:43:45,776] SAIEMASUS-i7/DEBUG/locust.runners: Ramping to {"PerformanceTests": 23} (23 total users)
+[2023-06-12 15:43:45,776] SAIEMASUS-i7/DEBUG/locust.runners: Spawning additional {"PerformanceTests": 1} ({"PerformanceTests": 22} already running)...
+[2023-06-12 15:43:45,776] SAIEMASUS-i7/DEBUG/locust.runners: 23 users spawned
+[2023-06-12 15:43:45,776] SAIEMASUS-i7/DEBUG/locust.runners: All users of class PerformanceTests spawned
+[2023-06-12 15:43:45,776] SAIEMASUS-i7/DEBUG/locust.runners: 0 users have been stopped, 23 still running
+[2023-06-12 15:43:45,941] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: Starting new HTTPS connection (1): thegameonpaper.com:443
+[2023-06-12 15:43:46,788] SAIEMASUS-i7/DEBUG/locust.runners: Ramping to {"PerformanceTests": 24} (24 total users)
+[2023-06-12 15:43:46,790] SAIEMASUS-i7/DEBUG/locust.runners: Spawning additional {"PerformanceTests": 1} ({"PerformanceTests": 23} already running)...
+[2023-06-12 15:43:46,792] SAIEMASUS-i7/DEBUG/locust.runners: 24 users spawned
+[2023-06-12 15:43:46,793] SAIEMASUS-i7/DEBUG/locust.runners: All users of class PerformanceTests spawned
+[2023-06-12 15:43:46,793] SAIEMASUS-i7/DEBUG/locust.runners: 0 users have been stopped, 24 still running
+[2023-06-12 15:43:46,953] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: Starting new HTTPS connection (1): thegameonpaper.com:443
+[2023-06-12 15:43:47,788] SAIEMASUS-i7/DEBUG/locust.runners: Ramping to {"PerformanceTests": 25} (25 total users)
+[2023-06-12 15:43:47,789] SAIEMASUS-i7/DEBUG/locust.runners: Spawning additional {"PerformanceTests": 1} ({"PerformanceTests": 24} already running)...
+[2023-06-12 15:43:47,790] SAIEMASUS-i7/DEBUG/locust.runners: 25 users spawned
+[2023-06-12 15:43:47,790] SAIEMASUS-i7/DEBUG/locust.runners: All users of class PerformanceTests spawned
+[2023-06-12 15:43:47,790] SAIEMASUS-i7/DEBUG/locust.runners: 0 users have been stopped, 25 still running
+[2023-06-12 15:43:47,983] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: Starting new HTTPS connection (1): thegameonpaper.com:443
+[2023-06-12 15:43:48,796] SAIEMASUS-i7/DEBUG/locust.runners: Ramping to {"PerformanceTests": 26} (26 total users)
+[2023-06-12 15:43:48,796] SAIEMASUS-i7/DEBUG/locust.runners: Spawning additional {"PerformanceTests": 1} ({"PerformanceTests": 25} already running)...
+[2023-06-12 15:43:48,796] SAIEMASUS-i7/DEBUG/locust.runners: 26 users spawned
+[2023-06-12 15:43:48,796] SAIEMASUS-i7/DEBUG/locust.runners: All users of class PerformanceTests spawned
+[2023-06-12 15:43:48,796] SAIEMASUS-i7/DEBUG/locust.runners: 0 users have been stopped, 26 still running
+[2023-06-12 15:43:48,937] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: Starting new HTTPS connection (1): thegameonpaper.com:443
+[2023-06-12 15:43:49,809] SAIEMASUS-i7/DEBUG/locust.runners: Ramping to {"PerformanceTests": 27} (27 total users)
+[2023-06-12 15:43:49,809] SAIEMASUS-i7/DEBUG/locust.runners: Spawning additional {"PerformanceTests": 1} ({"PerformanceTests": 26} already running)...
+[2023-06-12 15:43:49,810] SAIEMASUS-i7/DEBUG/locust.runners: 27 users spawned
+[2023-06-12 15:43:49,810] SAIEMASUS-i7/DEBUG/locust.runners: All users of class PerformanceTests spawned
+[2023-06-12 15:43:49,810] SAIEMASUS-i7/DEBUG/locust.runners: 0 users have been stopped, 27 still running
+[2023-06-12 15:43:49,961] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: Starting new HTTPS connection (1): thegameonpaper.com:443
+[2023-06-12 15:43:50,808] SAIEMASUS-i7/DEBUG/locust.runners: Ramping to {"PerformanceTests": 28} (28 total users)
+[2023-06-12 15:43:50,808] SAIEMASUS-i7/DEBUG/locust.runners: Spawning additional {"PerformanceTests": 1} ({"PerformanceTests": 27} already running)...
+[2023-06-12 15:43:50,808] SAIEMASUS-i7/DEBUG/locust.runners: 28 users spawned
+[2023-06-12 15:43:50,809] SAIEMASUS-i7/DEBUG/locust.runners: All users of class PerformanceTests spawned
+[2023-06-12 15:43:50,809] SAIEMASUS-i7/DEBUG/locust.runners: 0 users have been stopped, 28 still running
+[2023-06-12 15:43:50,969] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: Starting new HTTPS connection (1): thegameonpaper.com:443
+[2023-06-12 15:43:51,822] SAIEMASUS-i7/DEBUG/locust.runners: Ramping to {"PerformanceTests": 29} (29 total users)
+[2023-06-12 15:43:51,822] SAIEMASUS-i7/DEBUG/locust.runners: Spawning additional {"PerformanceTests": 1} ({"PerformanceTests": 28} already running)...
+[2023-06-12 15:43:51,823] SAIEMASUS-i7/DEBUG/locust.runners: 29 users spawned
+[2023-06-12 15:43:51,823] SAIEMASUS-i7/DEBUG/locust.runners: All users of class PerformanceTests spawned
+[2023-06-12 15:43:51,823] SAIEMASUS-i7/DEBUG/locust.runners: 0 users have been stopped, 29 still running
+[2023-06-12 15:43:51,972] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: Starting new HTTPS connection (1): thegameonpaper.com:443
+[2023-06-12 15:43:52,835] SAIEMASUS-i7/DEBUG/locust.runners: Ramping to {"PerformanceTests": 30} (30 total users)
+[2023-06-12 15:43:52,836] SAIEMASUS-i7/DEBUG/locust.runners: Spawning additional {"PerformanceTests": 1} ({"PerformanceTests": 29} already running)...
+[2023-06-12 15:43:52,838] SAIEMASUS-i7/DEBUG/locust.runners: 30 users spawned
+[2023-06-12 15:43:52,839] SAIEMASUS-i7/DEBUG/locust.runners: All users of class PerformanceTests spawned
+[2023-06-12 15:43:52,839] SAIEMASUS-i7/DEBUG/locust.runners: 0 users have been stopped, 30 still running
+[2023-06-12 15:43:53,038] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: Starting new HTTPS connection (1): thegameonpaper.com:443
+[2023-06-12 15:43:53,850] SAIEMASUS-i7/DEBUG/locust.runners: Ramping to {"PerformanceTests": 31} (31 total users)
+[2023-06-12 15:43:53,850] SAIEMASUS-i7/DEBUG/locust.runners: Spawning additional {"PerformanceTests": 1} ({"PerformanceTests": 30} already running)...
+[2023-06-12 15:43:53,850] SAIEMASUS-i7/DEBUG/locust.runners: 31 users spawned
+[2023-06-12 15:43:53,850] SAIEMASUS-i7/DEBUG/locust.runners: All users of class PerformanceTests spawned
+[2023-06-12 15:43:53,850] SAIEMASUS-i7/DEBUG/locust.runners: 0 users have been stopped, 31 still running
+[2023-06-12 15:43:53,989] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: Starting new HTTPS connection (1): thegameonpaper.com:443
+[2023-06-12 15:43:54,853] SAIEMASUS-i7/DEBUG/locust.runners: Ramping to {"PerformanceTests": 32} (32 total users)
+[2023-06-12 15:43:54,853] SAIEMASUS-i7/DEBUG/locust.runners: Spawning additional {"PerformanceTests": 1} ({"PerformanceTests": 31} already running)...
+[2023-06-12 15:43:54,854] SAIEMASUS-i7/DEBUG/locust.runners: 32 users spawned
+[2023-06-12 15:43:54,854] SAIEMASUS-i7/DEBUG/locust.runners: All users of class PerformanceTests spawned
+[2023-06-12 15:43:54,854] SAIEMASUS-i7/DEBUG/locust.runners: 0 users have been stopped, 32 still running
+[2023-06-12 15:43:55,004] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: Starting new HTTPS connection (1): thegameonpaper.com:443
+[2023-06-12 15:43:55,867] SAIEMASUS-i7/DEBUG/locust.runners: Ramping to {"PerformanceTests": 33} (33 total users)
+[2023-06-12 15:43:55,867] SAIEMASUS-i7/DEBUG/locust.runners: Spawning additional {"PerformanceTests": 1} ({"PerformanceTests": 32} already running)...
+[2023-06-12 15:43:55,868] SAIEMASUS-i7/DEBUG/locust.runners: 33 users spawned
+[2023-06-12 15:43:55,868] SAIEMASUS-i7/DEBUG/locust.runners: All users of class PerformanceTests spawned
+[2023-06-12 15:43:55,868] SAIEMASUS-i7/DEBUG/locust.runners: 0 users have been stopped, 33 still running
+[2023-06-12 15:43:56,027] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: Starting new HTTPS connection (1): thegameonpaper.com:443
+[2023-06-12 15:43:56,870] SAIEMASUS-i7/DEBUG/locust.runners: Ramping to {"PerformanceTests": 34} (34 total users)
+[2023-06-12 15:43:56,870] SAIEMASUS-i7/DEBUG/locust.runners: Spawning additional {"PerformanceTests": 1} ({"PerformanceTests": 33} already running)...
+[2023-06-12 15:43:56,870] SAIEMASUS-i7/DEBUG/locust.runners: 34 users spawned
+[2023-06-12 15:43:56,871] SAIEMASUS-i7/DEBUG/locust.runners: All users of class PerformanceTests spawned
+[2023-06-12 15:43:56,871] SAIEMASUS-i7/DEBUG/locust.runners: 0 users have been stopped, 34 still running
+[2023-06-12 15:43:57,017] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: Starting new HTTPS connection (1): thegameonpaper.com:443
+[2023-06-12 15:43:57,883] SAIEMASUS-i7/DEBUG/locust.runners: Ramping to {"PerformanceTests": 35} (35 total users)
+[2023-06-12 15:43:57,884] SAIEMASUS-i7/DEBUG/locust.runners: Spawning additional {"PerformanceTests": 1} ({"PerformanceTests": 34} already running)...
+[2023-06-12 15:43:57,886] SAIEMASUS-i7/DEBUG/locust.runners: 35 users spawned
+[2023-06-12 15:43:57,886] SAIEMASUS-i7/DEBUG/locust.runners: All users of class PerformanceTests spawned
+[2023-06-12 15:43:57,887] SAIEMASUS-i7/DEBUG/locust.runners: 0 users have been stopped, 35 still running
+[2023-06-12 15:43:58,055] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: Starting new HTTPS connection (1): thegameonpaper.com:443
+[2023-06-12 15:43:58,890] SAIEMASUS-i7/DEBUG/locust.runners: Ramping to {"PerformanceTests": 36} (36 total users)
+[2023-06-12 15:43:58,890] SAIEMASUS-i7/DEBUG/locust.runners: Spawning additional {"PerformanceTests": 1} ({"PerformanceTests": 35} already running)...
+[2023-06-12 15:43:58,890] SAIEMASUS-i7/DEBUG/locust.runners: 36 users spawned
+[2023-06-12 15:43:58,890] SAIEMASUS-i7/DEBUG/locust.runners: All users of class PerformanceTests spawned
+[2023-06-12 15:43:58,890] SAIEMASUS-i7/DEBUG/locust.runners: 0 users have been stopped, 36 still running
+[2023-06-12 15:43:59,035] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: Starting new HTTPS connection (1): thegameonpaper.com:443
+[2023-06-12 15:43:59,900] SAIEMASUS-i7/DEBUG/locust.runners: Ramping to {"PerformanceTests": 37} (37 total users)
+[2023-06-12 15:43:59,900] SAIEMASUS-i7/DEBUG/locust.runners: Spawning additional {"PerformanceTests": 1} ({"PerformanceTests": 36} already running)...
+[2023-06-12 15:43:59,901] SAIEMASUS-i7/DEBUG/locust.runners: 37 users spawned
+[2023-06-12 15:43:59,901] SAIEMASUS-i7/DEBUG/locust.runners: All users of class PerformanceTests spawned
+[2023-06-12 15:43:59,901] SAIEMASUS-i7/DEBUG/locust.runners: 0 users have been stopped, 37 still running
+[2023-06-12 15:44:00,048] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: Starting new HTTPS connection (1): thegameonpaper.com:443
+[2023-06-12 15:44:00,910] SAIEMASUS-i7/DEBUG/locust.runners: Ramping to {"PerformanceTests": 38} (38 total users)
+[2023-06-12 15:44:00,910] SAIEMASUS-i7/DEBUG/locust.runners: Spawning additional {"PerformanceTests": 1} ({"PerformanceTests": 37} already running)...
+[2023-06-12 15:44:00,910] SAIEMASUS-i7/DEBUG/locust.runners: 38 users spawned
+[2023-06-12 15:44:00,910] SAIEMASUS-i7/DEBUG/locust.runners: All users of class PerformanceTests spawned
+[2023-06-12 15:44:00,910] SAIEMASUS-i7/DEBUG/locust.runners: 0 users have been stopped, 38 still running
+[2023-06-12 15:44:01,056] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: Starting new HTTPS connection (1): thegameonpaper.com:443
+[2023-06-12 15:44:01,911] SAIEMASUS-i7/DEBUG/locust.runners: Ramping to {"PerformanceTests": 39} (39 total users)
+[2023-06-12 15:44:01,912] SAIEMASUS-i7/DEBUG/locust.runners: Spawning additional {"PerformanceTests": 1} ({"PerformanceTests": 38} already running)...
+[2023-06-12 15:44:01,912] SAIEMASUS-i7/DEBUG/locust.runners: 39 users spawned
+[2023-06-12 15:44:01,912] SAIEMASUS-i7/DEBUG/locust.runners: All users of class PerformanceTests spawned
+[2023-06-12 15:44:01,912] SAIEMASUS-i7/DEBUG/locust.runners: 0 users have been stopped, 39 still running
+[2023-06-12 15:44:01,973] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401403992 HTTP/1.1" 200 2478243
+[2023-06-12 15:44:02,064] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: Starting new HTTPS connection (1): thegameonpaper.com:443
+[2023-06-12 15:44:02,917] SAIEMASUS-i7/DEBUG/locust.runners: Ramping to {"PerformanceTests": 40} (40 total users)
+[2023-06-12 15:44:02,917] SAIEMASUS-i7/DEBUG/locust.runners: Spawning additional {"PerformanceTests": 1} ({"PerformanceTests": 39} already running)...
+[2023-06-12 15:44:02,917] SAIEMASUS-i7/DEBUG/locust.runners: 40 users spawned
+[2023-06-12 15:44:02,917] SAIEMASUS-i7/DEBUG/locust.runners: All users of class PerformanceTests spawned
+[2023-06-12 15:44:02,917] SAIEMASUS-i7/DEBUG/locust.runners: 0 users have been stopped, 40 still running
+[2023-06-12 15:44:03,063] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: Starting new HTTPS connection (1): thegameonpaper.com:443
+[2023-06-12 15:44:03,278] SAIEMASUS-i7/INFO/root: 200
+[2023-06-12 15:44:03,924] SAIEMASUS-i7/DEBUG/locust.runners: Ramping to {"PerformanceTests": 41} (41 total users)
+[2023-06-12 15:44:03,924] SAIEMASUS-i7/DEBUG/locust.runners: Spawning additional {"PerformanceTests": 1} ({"PerformanceTests": 40} already running)...
+[2023-06-12 15:44:03,925] SAIEMASUS-i7/DEBUG/locust.runners: 41 users spawned
+[2023-06-12 15:44:03,925] SAIEMASUS-i7/DEBUG/locust.runners: All users of class PerformanceTests spawned
+[2023-06-12 15:44:03,925] SAIEMASUS-i7/DEBUG/locust.runners: 0 users have been stopped, 41 still running
+[2023-06-12 15:44:04,072] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: Starting new HTTPS connection (1): thegameonpaper.com:443
+[2023-06-12 15:44:04,339] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401423439 HTTP/1.1" 200 1923964
+[2023-06-12 15:44:04,929] SAIEMASUS-i7/DEBUG/locust.runners: Ramping to {"PerformanceTests": 42} (42 total users)
+[2023-06-12 15:44:04,929] SAIEMASUS-i7/DEBUG/locust.runners: Spawning additional {"PerformanceTests": 1} ({"PerformanceTests": 41} already running)...
+[2023-06-12 15:44:04,929] SAIEMASUS-i7/DEBUG/locust.runners: 42 users spawned
+[2023-06-12 15:44:04,929] SAIEMASUS-i7/DEBUG/locust.runners: All users of class PerformanceTests spawned
+[2023-06-12 15:44:04,929] SAIEMASUS-i7/DEBUG/locust.runners: 0 users have been stopped, 42 still running
+[2023-06-12 15:44:05,082] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: Starting new HTTPS connection (1): thegameonpaper.com:443
+[2023-06-12 15:44:05,471] SAIEMASUS-i7/INFO/root: 200
+[2023-06-12 15:44:05,934] SAIEMASUS-i7/DEBUG/locust.runners: Ramping to {"PerformanceTests": 43} (43 total users)
+[2023-06-12 15:44:05,934] SAIEMASUS-i7/DEBUG/locust.runners: Spawning additional {"PerformanceTests": 1} ({"PerformanceTests": 42} already running)...
+[2023-06-12 15:44:05,934] SAIEMASUS-i7/DEBUG/locust.runners: 43 users spawned
+[2023-06-12 15:44:05,934] SAIEMASUS-i7/DEBUG/locust.runners: All users of class PerformanceTests spawned
+[2023-06-12 15:44:05,935] SAIEMASUS-i7/DEBUG/locust.runners: 0 users have been stopped, 43 still running
+[2023-06-12 15:44:06,079] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: Starting new HTTPS connection (1): thegameonpaper.com:443
+[2023-06-12 15:44:06,934] SAIEMASUS-i7/DEBUG/locust.runners: Ramping to {"PerformanceTests": 44} (44 total users)
+[2023-06-12 15:44:06,934] SAIEMASUS-i7/DEBUG/locust.runners: Spawning additional {"PerformanceTests": 1} ({"PerformanceTests": 43} already running)...
+[2023-06-12 15:44:06,934] SAIEMASUS-i7/DEBUG/locust.runners: 44 users spawned
+[2023-06-12 15:44:06,934] SAIEMASUS-i7/DEBUG/locust.runners: All users of class PerformanceTests spawned
+[2023-06-12 15:44:06,935] SAIEMASUS-i7/DEBUG/locust.runners: 0 users have been stopped, 44 still running
+[2023-06-12 15:44:07,081] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: Starting new HTTPS connection (1): thegameonpaper.com:443
+[2023-06-12 15:44:07,935] SAIEMASUS-i7/DEBUG/locust.runners: Ramping to {"PerformanceTests": 45} (45 total users)
+[2023-06-12 15:44:07,936] SAIEMASUS-i7/DEBUG/locust.runners: Spawning additional {"PerformanceTests": 1} ({"PerformanceTests": 44} already running)...
+[2023-06-12 15:44:07,936] SAIEMASUS-i7/DEBUG/locust.runners: 45 users spawned
+[2023-06-12 15:44:07,937] SAIEMASUS-i7/DEBUG/locust.runners: All users of class PerformanceTests spawned
+[2023-06-12 15:44:07,937] SAIEMASUS-i7/DEBUG/locust.runners: 0 users have been stopped, 45 still running
+[2023-06-12 15:44:08,090] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: Starting new HTTPS connection (1): thegameonpaper.com:443
+[2023-06-12 15:44:08,951] SAIEMASUS-i7/DEBUG/locust.runners: Ramping to {"PerformanceTests": 46} (46 total users)
+[2023-06-12 15:44:08,951] SAIEMASUS-i7/DEBUG/locust.runners: Spawning additional {"PerformanceTests": 1} ({"PerformanceTests": 45} already running)...
+[2023-06-12 15:44:08,951] SAIEMASUS-i7/DEBUG/locust.runners: 46 users spawned
+[2023-06-12 15:44:08,951] SAIEMASUS-i7/DEBUG/locust.runners: All users of class PerformanceTests spawned
+[2023-06-12 15:44:08,952] SAIEMASUS-i7/DEBUG/locust.runners: 0 users have been stopped, 46 still running
+[2023-06-12 15:44:09,095] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: Starting new HTTPS connection (1): thegameonpaper.com:443
+[2023-06-12 15:44:09,958] SAIEMASUS-i7/DEBUG/locust.runners: Ramping to {"PerformanceTests": 47} (47 total users)
+[2023-06-12 15:44:09,959] SAIEMASUS-i7/DEBUG/locust.runners: Spawning additional {"PerformanceTests": 1} ({"PerformanceTests": 46} already running)...
+[2023-06-12 15:44:09,959] SAIEMASUS-i7/DEBUG/locust.runners: 47 users spawned
+[2023-06-12 15:44:09,960] SAIEMASUS-i7/DEBUG/locust.runners: All users of class PerformanceTests spawned
+[2023-06-12 15:44:09,960] SAIEMASUS-i7/DEBUG/locust.runners: 0 users have been stopped, 47 still running
+[2023-06-12 15:44:10,128] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: Starting new HTTPS connection (1): thegameonpaper.com:443
+[2023-06-12 15:44:10,966] SAIEMASUS-i7/DEBUG/locust.runners: Ramping to {"PerformanceTests": 48} (48 total users)
+[2023-06-12 15:44:10,966] SAIEMASUS-i7/DEBUG/locust.runners: Spawning additional {"PerformanceTests": 1} ({"PerformanceTests": 47} already running)...
+[2023-06-12 15:44:10,966] SAIEMASUS-i7/DEBUG/locust.runners: 48 users spawned
+[2023-06-12 15:44:10,967] SAIEMASUS-i7/DEBUG/locust.runners: All users of class PerformanceTests spawned
+[2023-06-12 15:44:10,967] SAIEMASUS-i7/DEBUG/locust.runners: 0 users have been stopped, 48 still running
+[2023-06-12 15:44:11,115] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: Starting new HTTPS connection (1): thegameonpaper.com:443
+[2023-06-12 15:44:11,974] SAIEMASUS-i7/DEBUG/locust.runners: Ramping to {"PerformanceTests": 49} (49 total users)
+[2023-06-12 15:44:11,974] SAIEMASUS-i7/DEBUG/locust.runners: Spawning additional {"PerformanceTests": 1} ({"PerformanceTests": 48} already running)...
+[2023-06-12 15:44:11,974] SAIEMASUS-i7/DEBUG/locust.runners: 49 users spawned
+[2023-06-12 15:44:11,974] SAIEMASUS-i7/DEBUG/locust.runners: All users of class PerformanceTests spawned
+[2023-06-12 15:44:11,974] SAIEMASUS-i7/DEBUG/locust.runners: 0 users have been stopped, 49 still running
+[2023-06-12 15:44:12,984] SAIEMASUS-i7/DEBUG/locust.runners: Ramping to {"PerformanceTests": 50} (50 total users)
+[2023-06-12 15:44:12,984] SAIEMASUS-i7/DEBUG/locust.runners: Spawning additional {"PerformanceTests": 1} ({"PerformanceTests": 49} already running)...
+[2023-06-12 15:44:12,984] SAIEMASUS-i7/DEBUG/locust.runners: 50 users spawned
+[2023-06-12 15:44:12,984] SAIEMASUS-i7/DEBUG/locust.runners: All users of class PerformanceTests spawned
+[2023-06-12 15:44:12,984] SAIEMASUS-i7/DEBUG/locust.runners: 0 users have been stopped, 50 still running
+[2023-06-12 15:44:12,984] SAIEMASUS-i7/INFO/locust.runners: All users spawned: {"PerformanceTests": 50} (50 total users)
+[2023-06-12 15:44:13,172] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: Starting new HTTPS connection (1): thegameonpaper.com:443
+[2023-06-12 15:44:13,182] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: Starting new HTTPS connection (1): thegameonpaper.com:443
+[2023-06-12 15:44:20,320] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401403932 HTTP/1.1" 200 2518776
+[2023-06-12 15:44:21,680] SAIEMASUS-i7/INFO/root: 200
+[2023-06-12 15:44:29,070] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401415215 HTTP/1.1" 504 176
+[2023-06-12 15:44:29,072] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:44:29,956] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401415631 HTTP/1.1" 504 176
+[2023-06-12 15:44:29,958] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:44:30,997] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401426372 HTTP/1.1" 504 176
+[2023-06-12 15:44:30,998] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:44:31,985] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401411115 HTTP/1.1" 504 176
+[2023-06-12 15:44:31,985] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:44:32,995] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401426567 HTTP/1.1" 504 176
+[2023-06-12 15:44:32,995] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:44:34,595] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401404148 HTTP/1.1" 504 176
+[2023-06-12 15:44:34,595] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:44:35,027] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401416632 HTTP/1.1" 504 176
+[2023-06-12 15:44:35,028] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:44:36,025] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401411099 HTTP/1.1" 504 176
+[2023-06-12 15:44:36,025] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:44:36,368] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401409242 HTTP/1.1" 504 176
+[2023-06-12 15:44:36,368] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:44:37,032] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401403878 HTTP/1.1" 504 176
+[2023-06-12 15:44:37,032] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:44:38,068] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401426569 HTTP/1.1" 504 176
+[2023-06-12 15:44:38,069] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:44:38,080] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401411152 HTTP/1.1" 504 176
+[2023-06-12 15:44:38,080] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:44:39,113] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401405063 HTTP/1.1" 504 176
+[2023-06-12 15:44:39,114] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:44:40,033] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401416590 HTTP/1.1" 504 176
+[2023-06-12 15:44:40,034] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:44:41,064] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401411105 HTTP/1.1" 504 176
+[2023-06-12 15:44:41,065] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:44:42,084] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401426587 HTTP/1.1" 504 176
+[2023-06-12 15:44:42,085] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:44:43,015] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401409240 HTTP/1.1" 404 75
+[2023-06-12 15:44:43,015] SAIEMASUS-i7/INFO/root: 404
+[2023-06-12 15:44:43,116] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401404049 HTTP/1.1" 504 176
+[2023-06-12 15:44:43,117] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:44:44,126] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401411131 HTTP/1.1" 504 176
+[2023-06-12 15:44:44,127] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:44:45,139] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401404112 HTTP/1.1" 504 176
+[2023-06-12 15:44:45,140] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:44:46,149] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401404044 HTTP/1.1" 504 176
+[2023-06-12 15:44:46,150] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:44:47,148] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401416604 HTTP/1.1" 504 176
+[2023-06-12 15:44:47,148] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:44:48,194] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401403861 HTTP/1.1" 504 176
+[2023-06-12 15:44:48,195] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:44:49,139] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401426389 HTTP/1.1" 504 176
+[2023-06-12 15:44:49,140] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:44:50,156] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401426360 HTTP/1.1" 504 176
+[2023-06-12 15:44:50,158] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:44:51,161] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401403959 HTTP/1.1" 504 176
+[2023-06-12 15:44:51,162] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:44:52,170] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401405092 HTTP/1.1" 504 176
+[2023-06-12 15:44:52,171] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:44:53,235] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401411166 HTTP/1.1" 504 176
+[2023-06-12 15:44:53,236] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:44:54,206] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401404104 HTTP/1.1" 504 176
+[2023-06-12 15:44:54,207] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:44:55,206] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401404112 HTTP/1.1" 504 176
+[2023-06-12 15:44:55,207] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:44:56,238] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401405093 HTTP/1.1" 504 176
+[2023-06-12 15:44:56,239] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:44:58,244] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401415620 HTTP/1.1" 504 176
+[2023-06-12 15:44:58,245] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:44:58,271] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401426532 HTTP/1.1" 504 176
+[2023-06-12 15:44:58,271] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:44:59,262] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401415267 HTTP/1.1" 504 176
+[2023-06-12 15:44:59,262] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:45:00,242] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401411144 HTTP/1.1" 504 176
+[2023-06-12 15:45:00,243] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:45:01,254] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401411123 HTTP/1.1" 504 176
+[2023-06-12 15:45:01,256] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:45:02,265] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401404007 HTTP/1.1" 504 176
+[2023-06-12 15:45:02,266] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:45:03,260] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401404142 HTTP/1.1" 504 176
+[2023-06-12 15:45:03,261] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:45:03,726] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401411145 HTTP/1.1" 504 176
+[2023-06-12 15:45:03,727] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:45:04,280] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401415241 HTTP/1.1" 504 176
+[2023-06-12 15:45:04,281] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:45:05,298] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401437036 HTTP/1.1" 504 176
+[2023-06-12 15:45:05,298] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:45:06,102] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401404059 HTTP/1.1" 504 176
+[2023-06-12 15:45:06,103] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:45:07,281] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401404081 HTTP/1.1" 504 176
+[2023-06-12 15:45:07,283] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:45:08,285] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401415269 HTTP/1.1" 504 176
+[2023-06-12 15:45:08,285] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:45:09,303] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401403929 HTTP/1.1" 504 176
+[2023-06-12 15:45:09,304] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:45:10,331] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401403943 HTTP/1.1" 504 176
+[2023-06-12 15:45:10,332] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:45:11,313] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401404140 HTTP/1.1" 504 176
+[2023-06-12 15:45:11,313] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:45:13,376] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401415638 HTTP/1.1" 504 176
+[2023-06-12 15:45:13,376] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:45:13,389] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401403887 HTTP/1.1" 504 176
+[2023-06-12 15:45:13,389] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:45:22,353] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401426555 HTTP/1.1" 504 176
+[2023-06-12 15:45:22,354] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:45:29,547] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401426334 HTTP/1.1" 504 176
+[2023-06-12 15:45:29,548] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:45:30,511] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401411152 HTTP/1.1" 504 176
+[2023-06-12 15:45:30,512] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:45:31,665] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401411164 HTTP/1.1" 504 176
+[2023-06-12 15:45:31,666] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:45:32,678] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401405087 HTTP/1.1" 504 176
+[2023-06-12 15:45:32,679] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:45:33,722] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401411140 HTTP/1.1" 504 176
+[2023-06-12 15:45:33,723] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:45:35,284] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401426594 HTTP/1.1" 504 176
+[2023-06-12 15:45:35,285] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:45:35,581] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401415257 HTTP/1.1" 504 176
+[2023-06-12 15:45:35,581] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:45:36,460] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401426367 HTTP/1.1" 504 176
+[2023-06-12 15:45:36,461] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:45:37,006] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401411140 HTTP/1.1" 504 176
+[2023-06-12 15:45:37,007] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:45:37,747] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401414781 HTTP/1.1" 504 176
+[2023-06-12 15:45:37,748] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:45:38,656] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401404039 HTTP/1.1" 504 176
+[2023-06-12 15:45:38,657] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:45:38,705] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401415264 HTTP/1.1" 504 176
+[2023-06-12 15:45:38,706] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:45:39,577] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401405141 HTTP/1.1" 504 176
+[2023-06-12 15:45:39,578] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:45:40,528] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401403970 HTTP/1.1" 504 176
+[2023-06-12 15:45:40,529] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:45:41,560] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401416619 HTTP/1.1" 504 176
+[2023-06-12 15:45:41,561] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:45:42,670] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401411099 HTTP/1.1" 504 176
+[2023-06-12 15:45:42,670] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:45:43,701] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401404083 HTTP/1.1" 504 176
+[2023-06-12 15:45:43,701] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:45:43,709] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401405109 HTTP/1.1" 504 176
+[2023-06-12 15:45:43,709] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:45:44,812] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401411128 HTTP/1.1" 504 176
+[2023-06-12 15:45:44,814] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:45:45,880] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401416620 HTTP/1.1" 504 176
+[2023-06-12 15:45:45,881] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:45:46,846] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401416626 HTTP/1.1" 504 176
+[2023-06-12 15:45:46,847] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:45:47,790] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401405112 HTTP/1.1" 504 176
+[2023-06-12 15:45:47,791] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:45:48,655] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401404164 HTTP/1.1" 504 176
+[2023-06-12 15:45:48,657] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:45:49,857] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401507088 HTTP/1.1" 504 176
+[2023-06-12 15:45:49,859] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:45:50,852] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401416651 HTTP/1.1" 504 176
+[2023-06-12 15:45:50,852] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:45:51,691] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401411135 HTTP/1.1" 504 176
+[2023-06-12 15:45:51,692] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:45:52,720] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401405140 HTTP/1.1" 504 176
+[2023-06-12 15:45:52,721] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:45:53,933] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401426585 HTTP/1.1" 504 176
+[2023-06-12 15:45:53,934] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:45:54,781] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401404071 HTTP/1.1" 504 176
+[2023-06-12 15:45:54,782] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:45:55,794] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401404130 HTTP/1.1" 504 176
+[2023-06-12 15:45:55,794] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:45:56,717] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401411115 HTTP/1.1" 504 176
+[2023-06-12 15:45:56,717] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:45:58,766] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401426610 HTTP/1.1" 504 176
+[2023-06-12 15:45:58,767] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:45:58,884] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401426545 HTTP/1.1" 504 176
+[2023-06-12 15:45:58,885] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:45:59,957] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401405099 HTTP/1.1" 504 176
+[2023-06-12 15:45:59,958] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:46:00,910] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401403861 HTTP/1.1" 504 176
+[2023-06-12 15:46:00,911] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:46:01,939] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401404126 HTTP/1.1" 504 176
+[2023-06-12 15:46:01,940] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:46:02,973] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401403916 HTTP/1.1" 504 176
+[2023-06-12 15:46:02,975] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:46:03,984] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401416604 HTTP/1.1" 504 176
+[2023-06-12 15:46:03,984] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:46:04,256] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401405132 HTTP/1.1" 504 176
+[2023-06-12 15:46:04,256] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:46:05,756] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401404136 HTTP/1.1" 504 176
+[2023-06-12 15:46:05,757] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:46:05,793] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401415664 HTTP/1.1" 504 176
+[2023-06-12 15:46:05,793] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:46:06,654] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401416612 HTTP/1.1" 504 176
+[2023-06-12 15:46:06,656] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:46:07,885] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401420777 HTTP/1.1" 504 176
+[2023-06-12 15:46:07,886] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:46:08,724] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401403926 HTTP/1.1" 504 176
+[2023-06-12 15:46:08,724] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:46:09,778] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401403886 HTTP/1.1" 504 176
+[2023-06-12 15:46:09,778] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:46:10,906] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401426335 HTTP/1.1" 504 176
+[2023-06-12 15:46:10,907] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:46:11,810] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401415230 HTTP/1.1" 504 176
+[2023-06-12 15:46:11,810] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:46:13,823] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401426546 HTTP/1.1" 504 176
+[2023-06-12 15:46:13,824] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:46:13,978] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401414784 HTTP/1.1" 504 176
+[2023-06-12 15:46:13,979] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:46:22,970] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401403909 HTTP/1.1" 504 176
+[2023-06-12 15:46:22,971] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:46:30,080] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401403858 HTTP/1.1" 504 176
+[2023-06-12 15:46:30,081] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:46:30,931] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401420863 HTTP/1.1" 504 176
+[2023-06-12 15:46:30,933] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:46:32,233] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401411155 HTTP/1.1" 504 176
+[2023-06-12 15:46:32,234] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:46:33,325] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401426382 HTTP/1.1" 504 176
+[2023-06-12 15:46:33,325] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:46:34,395] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401415245 HTTP/1.1" 504 176
+[2023-06-12 15:46:34,396] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:46:35,874] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401415660 HTTP/1.1" 504 176
+[2023-06-12 15:46:35,874] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:46:36,299] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401411103 HTTP/1.1" 504 176
+[2023-06-12 15:46:36,299] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:46:36,934] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401403875 HTTP/1.1" 504 176
+[2023-06-12 15:46:36,935] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:46:37,536] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401411093 HTTP/1.1" 504 176
+[2023-06-12 15:46:37,537] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:46:38,279] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401404055 HTTP/1.1" 504 176
+[2023-06-12 15:46:38,279] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:46:39,269] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401426575 HTTP/1.1" 504 176
+[2023-06-12 15:46:39,270] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:46:39,286] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401404105 HTTP/1.1" 504 176
+[2023-06-12 15:46:39,286] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:46:40,091] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401405072 HTTP/1.1" 504 176
+[2023-06-12 15:46:40,091] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:46:41,055] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401416621 HTTP/1.1" 504 176
+[2023-06-12 15:46:41,056] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:46:42,211] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401426603 HTTP/1.1" 504 176
+[2023-06-12 15:46:42,212] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:46:43,408] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401416647 HTTP/1.1" 504 176
+[2023-06-12 15:46:43,409] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:46:44,213] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401403968 HTTP/1.1" 504 176
+[2023-06-12 15:46:44,214] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:46:44,225] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401404039 HTTP/1.1" 504 176
+[2023-06-12 15:46:44,226] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:46:45,375] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401403876 HTTP/1.1" 504 176
+[2023-06-12 15:46:45,376] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:46:46,387] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401411138 HTTP/1.1" 504 176
+[2023-06-12 15:46:46,387] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:46:47,484] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401403940 HTTP/1.1" 504 176
+[2023-06-12 15:46:47,485] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:46:48,456] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401411121 HTTP/1.1" 504 176
+[2023-06-12 15:46:48,457] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:46:49,111] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401404141 HTTP/1.1" 504 176
+[2023-06-12 15:46:49,112] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:46:50,384] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401441990 HTTP/1.1" 504 176
+[2023-06-12 15:46:50,384] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:46:51,377] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401426564 HTTP/1.1" 504 176
+[2023-06-12 15:46:51,377] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:46:52,436] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401404111 HTTP/1.1" 504 176
+[2023-06-12 15:46:52,436] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:46:53,381] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401437035 HTTP/1.1" 504 176
+[2023-06-12 15:46:53,382] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:46:54,646] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401404038 HTTP/1.1" 504 176
+[2023-06-12 15:46:54,647] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:46:55,470] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401416620 HTTP/1.1" 504 176
+[2023-06-12 15:46:55,470] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:46:56,302] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401426344 HTTP/1.1" 504 176
+[2023-06-12 15:46:56,303] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:46:57,145] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401403923 HTTP/1.1" 504 176
+[2023-06-12 15:46:57,146] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:46:59,263] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401426549 HTTP/1.1" 504 176
+[2023-06-12 15:46:59,264] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:46:59,571] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401421129 HTTP/1.1" 504 176
+[2023-06-12 15:46:59,571] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:47:00,579] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401411137 HTTP/1.1" 504 176
+[2023-06-12 15:47:00,580] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:47:01,514] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401404120 HTTP/1.1" 504 176
+[2023-06-12 15:47:01,515] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:47:02,663] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401426552 HTTP/1.1" 504 176
+[2023-06-12 15:47:02,664] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:47:03,603] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401415641 HTTP/1.1" 504 176
+[2023-06-12 15:47:03,603] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:47:04,485] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401404070 HTTP/1.1" 504 176
+[2023-06-12 15:47:04,486] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:47:04,773] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401415237 HTTP/1.1" 504 176
+[2023-06-12 15:47:04,774] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:47:06,231] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401404033 HTTP/1.1" 504 176
+[2023-06-12 15:47:06,232] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:47:06,334] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401405097 HTTP/1.1" 504 176
+[2023-06-12 15:47:06,335] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:47:07,098] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401404160 HTTP/1.1" 504 176
+[2023-06-12 15:47:07,098] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:47:08,428] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401416607 HTTP/1.1" 504 176
+[2023-06-12 15:47:08,429] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:47:09,309] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401415037 HTTP/1.1" 504 176
+[2023-06-12 15:47:09,310] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:47:10,365] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401413256 HTTP/1.1" 504 176
+[2023-06-12 15:47:10,366] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:47:11,575] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401415244 HTTP/1.1" 504 176
+[2023-06-12 15:47:11,577] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:47:12,369] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401411141 HTTP/1.1" 504 176
+[2023-06-12 15:47:12,369] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:47:14,481] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401404074 HTTP/1.1" 504 176
+[2023-06-12 15:47:14,482] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:47:14,500] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401437009 HTTP/1.1" 504 176
+[2023-06-12 15:47:14,501] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:47:23,587] SAIEMASUS-i7/DEBUG/urllib3.connectionpool: https://thegameonpaper.com:443 "GET /py/cfb/game/401416624 HTTP/1.1" 504 176
+[2023-06-12 15:47:23,587] SAIEMASUS-i7/INFO/root: 504
+[2023-06-12 15:47:25,633] SAIEMASUS-i7/DEBUG/locust.main: Running teardowns...
+[2023-06-12 15:47:25,633] SAIEMASUS-i7/INFO/locust.main: Shutting down (exit code 1)
+[2023-06-12 15:47:25,633] SAIEMASUS-i7/DEBUG/locust.main: Cleaning up runner...
+[2023-06-12 15:47:25,633] SAIEMASUS-i7/DEBUG/locust.runners: Stopping all users
+[2023-06-12 15:47:25,634] SAIEMASUS-i7/DEBUG/locust.runners: Stopping Greenlet-0
+[2023-06-12 15:47:25,634] SAIEMASUS-i7/DEBUG/locust.runners: Stopping Greenlet-1
+[2023-06-12 15:47:25,634] SAIEMASUS-i7/DEBUG/locust.runners: Stopping Greenlet-2
+[2023-06-12 15:47:25,634] SAIEMASUS-i7/DEBUG/locust.runners: Stopping Greenlet-3
+[2023-06-12 15:47:25,634] SAIEMASUS-i7/DEBUG/locust.runners: Stopping Greenlet-4
+[2023-06-12 15:47:25,634] SAIEMASUS-i7/DEBUG/locust.runners: Stopping Greenlet-5
+[2023-06-12 15:47:25,634] SAIEMASUS-i7/DEBUG/locust.runners: Stopping Greenlet-6
+[2023-06-12 15:47:25,634] SAIEMASUS-i7/DEBUG/locust.runners: Stopping Greenlet-7
+[2023-06-12 15:47:25,634] SAIEMASUS-i7/DEBUG/locust.runners: Stopping Greenlet-8
+[2023-06-12 15:47:25,634] SAIEMASUS-i7/DEBUG/locust.runners: Stopping Greenlet-9
+[2023-06-12 15:47:25,635] SAIEMASUS-i7/DEBUG/locust.runners: Stopping Greenlet-10
+[2023-06-12 15:47:25,635] SAIEMASUS-i7/DEBUG/locust.runners: Stopping Greenlet-11
+[2023-06-12 15:47:25,635] SAIEMASUS-i7/DEBUG/locust.runners: Stopping Greenlet-12
+[2023-06-12 15:47:25,635] SAIEMASUS-i7/DEBUG/locust.runners: Stopping Greenlet-13
+[2023-06-12 15:47:25,635] SAIEMASUS-i7/DEBUG/locust.runners: Stopping Greenlet-14
+[2023-06-12 15:47:25,635] SAIEMASUS-i7/DEBUG/locust.runners: Stopping Greenlet-15
+[2023-06-12 15:47:25,635] SAIEMASUS-i7/DEBUG/locust.runners: Stopping Greenlet-16
+[2023-06-12 15:47:25,635] SAIEMASUS-i7/DEBUG/locust.runners: Stopping Greenlet-17
+[2023-06-12 15:47:25,635] SAIEMASUS-i7/DEBUG/locust.runners: Stopping Greenlet-18
+[2023-06-12 15:47:25,635] SAIEMASUS-i7/DEBUG/locust.runners: Stopping Greenlet-19
+[2023-06-12 15:47:25,635] SAIEMASUS-i7/DEBUG/locust.runners: Stopping Greenlet-20
+[2023-06-12 15:47:25,636] SAIEMASUS-i7/DEBUG/locust.runners: Stopping Greenlet-21
+[2023-06-12 15:47:25,636] SAIEMASUS-i7/DEBUG/locust.runners: Stopping Greenlet-22
+[2023-06-12 15:47:25,636] SAIEMASUS-i7/DEBUG/locust.runners: Stopping Greenlet-23
+[2023-06-12 15:47:25,636] SAIEMASUS-i7/DEBUG/locust.runners: Stopping Greenlet-24
+[2023-06-12 15:47:25,636] SAIEMASUS-i7/DEBUG/locust.runners: Stopping Greenlet-25
+[2023-06-12 15:47:25,636] SAIEMASUS-i7/DEBUG/locust.runners: Stopping Greenlet-26
+[2023-06-12 15:47:25,636] SAIEMASUS-i7/DEBUG/locust.runners: Stopping Greenlet-27
+[2023-06-12 15:47:25,636] SAIEMASUS-i7/DEBUG/locust.runners: Stopping Greenlet-28
+[2023-06-12 15:47:25,636] SAIEMASUS-i7/DEBUG/locust.runners: Stopping Greenlet-29
+[2023-06-12 15:47:25,636] SAIEMASUS-i7/DEBUG/locust.runners: Stopping Greenlet-30
+[2023-06-12 15:47:25,636] SAIEMASUS-i7/DEBUG/locust.runners: Stopping Greenlet-31
+[2023-06-12 15:47:25,636] SAIEMASUS-i7/DEBUG/locust.runners: Stopping Greenlet-32
+[2023-06-12 15:47:25,636] SAIEMASUS-i7/DEBUG/locust.runners: Stopping Greenlet-33
+[2023-06-12 15:47:25,636] SAIEMASUS-i7/DEBUG/locust.runners: Stopping Greenlet-34
+[2023-06-12 15:47:25,637] SAIEMASUS-i7/DEBUG/locust.runners: Stopping Greenlet-35
+[2023-06-12 15:47:25,637] SAIEMASUS-i7/DEBUG/locust.runners: Stopping Greenlet-36
+[2023-06-12 15:47:25,637] SAIEMASUS-i7/DEBUG/locust.runners: Stopping Greenlet-37
+[2023-06-12 15:47:25,637] SAIEMASUS-i7/DEBUG/locust.runners: Stopping Greenlet-38
+[2023-06-12 15:47:25,637] SAIEMASUS-i7/DEBUG/locust.runners: Stopping Greenlet-39
+[2023-06-12 15:47:25,637] SAIEMASUS-i7/DEBUG/locust.runners: Stopping Greenlet-40
+[2023-06-12 15:47:25,637] SAIEMASUS-i7/DEBUG/locust.runners: Stopping Greenlet-41
+[2023-06-12 15:47:25,637] SAIEMASUS-i7/DEBUG/locust.runners: Stopping Greenlet-42
+[2023-06-12 15:47:25,637] SAIEMASUS-i7/DEBUG/locust.runners: Stopping Greenlet-43
+[2023-06-12 15:47:25,637] SAIEMASUS-i7/DEBUG/locust.runners: Stopping Greenlet-44
+[2023-06-12 15:47:25,637] SAIEMASUS-i7/DEBUG/locust.runners: Stopping Greenlet-45
+[2023-06-12 15:47:25,637] SAIEMASUS-i7/DEBUG/locust.runners: Stopping Greenlet-46
+[2023-06-12 15:47:25,637] SAIEMASUS-i7/DEBUG/locust.runners: Stopping Greenlet-47
+[2023-06-12 15:47:25,638] SAIEMASUS-i7/DEBUG/locust.runners: Stopping Greenlet-48
+[2023-06-12 15:47:25,638] SAIEMASUS-i7/DEBUG/locust.runners: Stopping Greenlet-49
+[2023-06-12 15:47:25,723] SAIEMASUS-i7/DEBUG/locust.runners: 50 users have been stopped, 0 still running

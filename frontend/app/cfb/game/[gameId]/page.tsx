@@ -3,7 +3,6 @@ import Link from 'next/link';
 import { Metadata, ResolvingMetadata } from 'next';
 import { DateTime } from "luxon"
 import {pyApiOrigin} from '@/lib/urlConfig';
-import PageTop from '@/components/page-top';
 import { CFBGame, Header, Competitor, Breakdown, Away, TeamData } from '@/lib/cfb/types';
 import CFBGameHeader from '@/components/CFB/cfb-game-header';
 import CFBPlayTable from '@/components/CFB/cfb-play-table';
@@ -24,94 +23,93 @@ import CFBSummaryPlayerStatsTable from '@/components/CFB/cfb-summary-player-stat
 async function getCFBGame(params: any) {
     const endpoint = new URL(pyApiOrigin+'/cfb/game/'+params.gameId);
 
-    const data = await fetch(endpoint, { cache: 'no-store' ,
-        headers: { 'Content-Type': 'application/json' }}).then((res) => res.json());
-    return data;
+    return await fetch(endpoint, { cache: 'no-store' ,
+            headers: { 'Content-Type': 'application/json' }}).then((res) => res.json());
 }
 
-export async function generateMetadata(
-    { params }: { params: { gameId: string } },
-    parent: ResolvingMetadata,
-  ): Promise<Metadata> {
-    // read route params
-    const gameId = params.gameId;
+// export async function generateMetadata(
+//     { params }: { params: { gameId: string } },
+//     parent: ResolvingMetadata,
+//   ): Promise<Metadata> {
+//     // read route params
+//     const gameId = params.gameId;
 
-    // fetch data
-    const endpoint = new URL(pyApiOrigin+'/cfb/game/'+ params.gameId);
+//     // fetch data
+//     const endpoint = new URL(pyApiOrigin+'/cfb/game/'+ params.gameId);
 
-    const data = await fetch(endpoint, { cache: 'no-store' ,
-                                          headers: { 'Content-Type': 'application/json' }}).then((res) => res.json());
+//     const data = await fetch(endpoint, { cache: 'no-store' ,
+//                                           headers: { 'Content-Type': 'application/json' }}).then((res) => res.json());
 
 
-    // optionally access and extend (rather than replace) parent metadata
-    var title = ""
-    var subtitle = ""
-    if (data.header.competitions[0].status.type.completed == true || data.header.competitions[0].status.type.name.includes("STATUS_IN_PROGRESS")) {
-        title = `Game: ${cleanName(data.header.competitions[0].competitors[1].team)} ${data.header.competitions[0].competitors[1].score}, ${cleanName(data.header.competitions[0].competitors[0].team)} ${data.header.competitions[0].competitors[0].score} | the Game on Paper`
-    } else {
-        title = `Game: ${cleanName(data.header.competitions[0].competitors[1].team)} vs ${cleanName(data.header.competitions[0].competitors[0].team)} | the Game on Paper`
-    }
-    subtitle = `${cleanName(data.header.competitions[0].competitors[1].team)} vs ${cleanName(data.header.competitions[0].competitors[0].team)}`;
-    let statusDetail = data.header.competitions[0].status.type.detail;
-    let statusText;
-    let statusActive: boolean = false;
-    if (data.header.competitions[0].status.type.completed == true || statusDetail.includes("Cancel") || statusDetail.includes("Postpone") || statusDetail.includes("Delay")) {
-        statusText = statusDetail + " - " + DateTime.fromISO(data.header.competitions[0].date, {zone: 'utc'}).setZone("America/New_York").toLocaleString(DateTime.DATETIME_FULL);
-    } else if (data.header.competitions[0].status.type.state !== 'pre'){
-        statusText = "LIVE - " + statusDetail
-        statusActive = true
-    } else if (data.header.competitions[0].status.type.state === 'pre') {
-        statusText = "Pre-game - " + statusDetail
-        statusActive = false
-    }
+//     // optionally access and extend (rather than replace) parent metadata
+//     var title = ""
+//     var subtitle = ""
+//     if (data.header.competitions[0].status.type.completed == true || data.header.competitions[0].status.type.name.includes("STATUS_IN_PROGRESS")) {
+//         title = `Game: ${cleanName(data.header.competitions[0].competitors[1].team)} ${data.header.competitions[0].competitors[1].score}, ${cleanName(data.header.competitions[0].competitors[0].team)} ${data.header.competitions[0].competitors[0].score} | the Game on Paper`
+//     } else {
+//         title = `Game: ${cleanName(data.header.competitions[0].competitors[1].team)} vs ${cleanName(data.header.competitions[0].competitors[0].team)} | the Game on Paper`
+//     }
+//     subtitle = `${cleanName(data.header.competitions[0].competitors[1].team)} vs ${cleanName(data.header.competitions[0].competitors[0].team)}`;
+//     let statusDetail = data.header.competitions[0].status.type.detail;
+//     let statusText;
+//     let statusActive: boolean = false;
+//     if (data.header.competitions[0].status.type.completed == true || statusDetail.includes("Cancel") || statusDetail.includes("Postpone") || statusDetail.includes("Delay")) {
+//         statusText = statusDetail + " - " + DateTime.fromISO(data.header.competitions[0].date, {zone: 'utc'}).setZone("America/New_York").toLocaleString(DateTime.DATETIME_FULL);
+//     } else if (data.header.competitions[0].status.type.state !== 'pre'){
+//         statusText = "LIVE - " + statusDetail
+//         statusActive = true
+//     } else if (data.header.competitions[0].status.type.state === 'pre') {
+//         statusText = "Pre-game - " + statusDetail
+//         statusActive = false
+//     }
 
-    return {
-        title: title,
-        description: `Advanced stats for ${subtitle} - ${statusText}`,
-        metadataBase: new URL('https://thegameonpaper.com/'),
-        referrer: 'origin-when-cross-origin',
-        viewport: {
-            width: 'device-width',
-            initialScale: 1.0,
-            maximumScale: 1.0,
-            userScalable: false,
-        },
-        authors: [{ name: 'Akshay Easwaran' }, { name: 'Saiem Gilani'}],
-        creator: 'Akshay Easwaran'+', '+'Saiem Gilani',
-        themeColor: [
-            { media: "(prefers-color-scheme: light)", color: "white" },
-            { media: "(prefers-color-scheme: dark)", color: "black" },
-        ],
-        twitter: {
-            card: 'summary',
-            creator: '@SportsDataverse',
-            title: title,
-            description: `Advanced stats for ${subtitle} - ${statusText}`,
-            images: {
-                url: `https://s.espncdn.com/stitcher/sports/football/college-football/events/${params.gameId}.png?templateId=espn.com.share.1`,
-                alt: title,
-            },
-        },
-        openGraph: {
-            title: title,
-            description: `Advanced stats for ${subtitle} - ${statusText}`,
-            url: `https://thegameonpaper.com/cfb/game/${params.gameId}`,
-            siteName: 'theGameOnPaper.com',
-            images: [
-                {
-                    url: `https://s.espncdn.com/stitcher/sports/football/college-football/events/${params.gameId}.png?templateId=espn.com.share.1`,
-                    width: 1200,
-                    height: 630,
-                },
-            ],
-            locale: 'en_US',
-            type: 'website',
-        },
-        other: {
-            medium: 'website',
-        }
-    };
-}
+//     return {
+//         title: title,
+//         description: `Advanced stats for ${subtitle} - ${statusText}`,
+//         metadataBase: new URL('https://thegameonpaper.com/'),
+//         referrer: 'origin-when-cross-origin',
+//         viewport: {
+//             width: 'device-width',
+//             initialScale: 1.0,
+//             maximumScale: 1.0,
+//             userScalable: false,
+//         },
+//         authors: [{ name: 'Akshay Easwaran' }, { name: 'Saiem Gilani'}],
+//         creator: 'Akshay Easwaran'+', '+'Saiem Gilani',
+//         themeColor: [
+//             { media: "(prefers-color-scheme: light)", color: "white" },
+//             { media: "(prefers-color-scheme: dark)", color: "black" },
+//         ],
+//         twitter: {
+//             card: 'summary',
+//             creator: '@SportsDataverse',
+//             title: title,
+//             description: `Advanced stats for ${subtitle} - ${statusText}`,
+//             images: {
+//                 url: `https://s.espncdn.com/stitcher/sports/football/college-football/events/${params.gameId}.png?templateId=espn.com.share.1`,
+//                 alt: title,
+//             },
+//         },
+//         openGraph: {
+//             title: title,
+//             description: `Advanced stats for ${subtitle} - ${statusText}`,
+//             url: `https://thegameonpaper.com/cfb/game/${params.gameId}`,
+//             siteName: 'theGameOnPaper.com',
+//             images: [
+//                 {
+//                     url: `https://s.espncdn.com/stitcher/sports/football/college-football/events/${params.gameId}.png?templateId=espn.com.share.1`,
+//                     width: 1200,
+//                     height: 630,
+//                 },
+//             ],
+//             locale: 'en_US',
+//             type: 'website',
+//         },
+//         other: {
+//             medium: 'website',
+//         }
+//     };
+// }
 
 
 function getTeamInfo(header: Header) {
@@ -121,45 +119,6 @@ function getTeamInfo(header: Header) {
     const season = header.season?.year
 
     return { homeTeam, awayTeam, competitions, season }
-}
-function date(date: string) {
-    let dt = new Date(date);
-    let dtString = dt.toLocaleDateString()
-    return dtString;
-}
-
-const CLEAN_LIST = [61]
-function cleanAbbreviation(team: Away) {
-    if (team.abbreviation !== undefined) {
-        if (CLEAN_LIST.includes(parseInt(team.id))) {
-            return team?.abbreviation.toLocaleLowerCase()
-        }
-        return team?.abbreviation
-    } else {
-        return team?.location
-    }
-}
-
-function cleanName(team: Away) {
-    if (team.nickname !== undefined) {
-        if (CLEAN_LIST.includes(parseInt(team.id))) {
-            return team?.nickname.toLocaleLowerCase()
-        }
-        return team?.nickname
-    } else {
-        return team?.location
-    }
-}
-
-function cleanLocation(team: Away) {
-    if (team.location !== undefined) {
-        if (CLEAN_LIST.includes(parseInt(team.id))) {
-            return team?.location.toLocaleLowerCase()
-        }
-        return team?.location
-    } else {
-        return team?.location
-    }
 }
 
 function parseSummary(content: Breakdown[]){
