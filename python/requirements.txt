@@ -1,4 +1,4 @@
-sportsdataverse==0.0.36
+sportsdataverse==0.0.37
 fastapi==0.95.1
 orjson==3.9.0
 pathspec==0.8.1
