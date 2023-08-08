@@ -6,14 +6,14 @@ import { ScoreboardEvent } from '@/lib/types';
 import { CfbScheduleSelect } from '@/components/CFB/cfb-schedule-select';
 
 async function getCFBScoreboard() {
-    // console.log(pyApiOrigin+'/cfb/scoreboard')
+    console.log(pyApiOrigin+'/cfb/scoreboard')
 
     const endpoint = new URL(pyApiOrigin+'/cfb/scoreboard');
     // console.log(endpoint)
-    return await fetch(endpoint, {
-        next: { revalidate: 10},
-        headers: { 'Content-Type': 'application/json' }
-    }).then((res) => res.json());
+    const data = await fetch(endpoint, {
+        next: {revalidate: 10},
+        headers: { 'Content-Type': 'application/json' }}).then((res) => res.json());
+    return data
 
 }
 
@@ -24,9 +24,8 @@ export async function generateMetadata(): Promise<Metadata> {
     const endpoint = new URL(pyApiOrigin+'/cfb/scoreboard');
     // console.log(endpoint)
     const data = await fetch(endpoint, {
-        next: { revalidate: 10},
-        headers: { 'Content-Type': 'application/json' }
-    }).then((res) => res.json());
+        next: {revalidate: 10},
+        headers: { 'Content-Type': 'application/json' }}).then((res) => res.json());
 
 
     // optionally access and extend (rather than replace) parent metadata

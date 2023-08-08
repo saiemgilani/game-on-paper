@@ -157,14 +157,12 @@ async def cfb_game(request: Request, gameId: str) -> Optional[None]:
 
 
 @app.get("/py/cfb/percentiles/{year}", tags=["College Football"], response_class=ORJSONResponse)
-@cache_one_day
 def get_cfb_percentiles_year(request: Request, year: str) -> Optional[None]:
     result = pl.read_csv(f"data/{year}/percentiles.csv").to_dicts()
     return ORJSONResponse(result, status_code=200, media_type="application/json")
 
 
 @app.get("/py/cfb/percentiles/{year}/{teamId}", tags=["College Football"], response_class=ORJSONResponse)
-@cache_one_day
 async def get_cfb_percentiles_team(request: Request, year: str, teamId: str) -> Optional[None]:
     result = await asyncify(cfb_percentiles_team)(year, teamId)
 

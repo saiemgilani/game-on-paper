@@ -60,14 +60,14 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
       args:
-        RDATA_BASE_URL: http://python:7000/py
+        RDATA_BASE_URL: http://127.0.0.1:7000/py
     restart: unless-stopped
     networks:
       - game-on-paper-site
     labels:
       com.datadoghq.ad.logs: '[{"source": "next.js", "service": "next.js"}]'
     environment:
-      RDATA_BASE_URL: http://python:7000/py
+      RDATA_BASE_URL: http://127.0.0.1:7000/py
     healthcheck:
       test: curl --fail http://node:8000/cfb/scoreboard || exit 1
       interval: 60s

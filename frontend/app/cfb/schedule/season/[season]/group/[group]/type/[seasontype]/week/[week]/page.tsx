@@ -13,10 +13,11 @@ async function getCFBSchedule(params: any) {
         `&seasontype=${params.seasontype}` +
         `&week=${params.week}`);
 
-    return await fetch(endpoint, {
-        next: { revalidate: 10},
-        headers: { 'Content-Type': 'application/json' }
-    }).then((res) => res.json());
+    const data = await fetch(endpoint, {
+        next: {revalidate: 10},
+        headers: { 'Content-Type': 'application/json' }}).then((res) => res.json());
+
+    return data
 
 }
 
@@ -35,9 +36,8 @@ export async function generateMetadata(
         `&week=${params.week}`);
 
     const data = await fetch(endpoint, {
-        next: { revalidate: 10},
-        headers: { 'Content-Type': 'application/json' }
-    }).then((res) => res.json());
+            next: {revalidate: 10},
+            headers: { 'Content-Type': 'application/json' }}).then((res) => res.json());
 
     let title = "College Football | Game on Paper"
     let subtitle = `College Football Schedule -  ${year} season, week ${params.week}, group ${params.group}`
