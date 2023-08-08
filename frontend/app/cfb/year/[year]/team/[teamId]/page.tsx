@@ -15,9 +15,9 @@ async function getCFBTeamYear(params: any) {
 
     const endpoint = new URL(pyApiOrigin+'/cfb/percentiles/'+params.year+'/'+params.teamId);
 
-    const data = await fetch(endpoint, { cache: 'no-store' ,
+    return await fetch(endpoint, {
+        next: { revalidate: 3600},
         headers: { 'Content-Type': 'application/json' }}).then((res) => res.json());
-    return data;
 }
 
 export async function generateMetadata(
@@ -30,13 +30,14 @@ export async function generateMetadata(
     // fetch data
     const endpoint = new URL(pyApiOrigin+'/cfb/percentiles/'+params.year+'/'+params.teamId);
 
-    const data = await fetch(endpoint, { cache: 'no-store' ,
-                                          headers: { 'Content-Type': 'application/json' }}).then((res) => res.json());
+    const data = await fetch(endpoint, {
+        next: { revalidate: 3600},
+        headers: { 'Content-Type': 'application/json' }}).then((res) => res.json());
 
 
     // optionally access and extend (rather than replace) parent metadata
-    var title = params.year + " team season stats for " + data.teamData.location
-    var subtitle = params.year + " season"
+    let title = params.year + " team season stats for " + data.teamData.location
+    let subtitle = params.year + " season"
 
     return {
         title: title,

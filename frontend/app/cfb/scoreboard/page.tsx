@@ -10,9 +10,10 @@ async function getCFBScoreboard() {
 
     const endpoint = new URL(pyApiOrigin+'/cfb/scoreboard');
     // console.log(endpoint)
-    const data = await fetch(endpoint, { cache: 'no-store' ,
-                                          headers: { 'Content-Type': 'application/json' }}).then((res) => res.json());
-    return data
+    return await fetch(endpoint, {
+        next: { revalidate: 10},
+        headers: { 'Content-Type': 'application/json' }
+    }).then((res) => res.json());
 
 }
 
@@ -22,13 +23,15 @@ export async function generateMetadata(): Promise<Metadata> {
 
     const endpoint = new URL(pyApiOrigin+'/cfb/scoreboard');
     // console.log(endpoint)
-    const data = await fetch(endpoint, { cache: 'no-store' ,
-                                          headers: { 'Content-Type': 'application/json' }}).then((res) => res.json());
+    const data = await fetch(endpoint, {
+        next: { revalidate: 10},
+        headers: { 'Content-Type': 'application/json' }
+    }).then((res) => res.json());
 
 
     // optionally access and extend (rather than replace) parent metadata
-    var title = "College Football | Game on Paper"
-    var subtitle = "College Football Scoreboard"
+    let title = "College Football | Game on Paper"
+    let subtitle = "College Football Scoreboard"
 
     return {
         title: title,

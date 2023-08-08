@@ -13,10 +13,10 @@ async function getCFBSchedule(params: any) {
         `&seasontype=${params.seasontype}` +
         `&week=${params.week}`);
 
-    const data = await fetch(endpoint, { cache: 'no-store' ,
-        headers: { 'Content-Type': 'application/json' }}).then((res) => res.json());
-
-    return data
+    return await fetch(endpoint, {
+        next: { revalidate: 10},
+        headers: { 'Content-Type': 'application/json' }
+    }).then((res) => res.json());
 
 }
 
@@ -34,11 +34,13 @@ export async function generateMetadata(
         `&seasontype=${params.seasontype}` +
         `&week=${params.week}`);
 
-    const data = await fetch(endpoint, { cache: 'no-store' ,
-                                          headers: { 'Content-Type': 'application/json' }}).then((res) => res.json());
+    const data = await fetch(endpoint, {
+        next: { revalidate: 10},
+        headers: { 'Content-Type': 'application/json' }
+    }).then((res) => res.json());
 
-    var title = "College Football | Game on Paper"
-    var subtitle = `College Football Schedule -  ${year} season, week ${params.week}, group ${params.group}`
+    let title = "College Football | Game on Paper"
+    let subtitle = `College Football Schedule -  ${year} season, week ${params.week}, group ${params.group}`
 
     return {
         title: title,

@@ -19,97 +19,112 @@ import CFBSummaryTeamCard from '@/components/CFB/cfb-summary-team-card';
 import CFBSummaryTeamStatsTable from '@/components/CFB/cfb-summary-team-stats-table';
 import CFBSummaryPlayerStatsTable from '@/components/CFB/cfb-summary-player-stats-table';
 
+const CLEAN_LIST = [61]
+function cleanName(team: Away) {
+    if (team.nickname !== undefined) {
+        if (CLEAN_LIST.includes(parseInt(team.id))) {
+            return team?.nickname.toLocaleLowerCase()
+        }
+        return team?.nickname
+    } else {
+        return team?.location
+    }
+}
 
 async function getCFBGame(params: any) {
     const endpoint = new URL(pyApiOrigin+'/cfb/game/'+params.gameId);
 
-    return await fetch(endpoint, { cache: 'no-store' ,
-            headers: { 'Content-Type': 'application/json' }}).then((res) => res.json());
+    return await fetch(endpoint, {
+            next: { revalidate: 10},
+            headers: { 'Content-Type': 'application/json' }
+        }).then((res) => res.json());
 }
 
-// export async function generateMetadata(
-//     { params }: { params: { gameId: string } },
-//     parent: ResolvingMetadata,
-//   ): Promise<Metadata> {
-//     // read route params
-//     const gameId = params.gameId;
+export async function generateMetadata(
+    { params }: { params: { gameId: string } },
+    parent: ResolvingMetadata,
+  ): Promise<Metadata> {
+    // read route params
+    const gameId = params.gameId;
 
-//     // fetch data
-//     const endpoint = new URL(pyApiOrigin+'/cfb/game/'+ params.gameId);
+    // fetch data
+    const endpoint = new URL(pyApiOrigin+'/cfb/game/'+ params.gameId);
 
-//     const data = await fetch(endpoint, { cache: 'no-store' ,
-//                                           headers: { 'Content-Type': 'application/json' }}).then((res) => res.json());
+    const data = await fetch(endpoint, {
+        next: { revalidate: 10},
+        headers: { 'Content-Type': 'application/json' }
+    }).then((res) => res.json());
 
 
-//     // optionally access and extend (rather than replace) parent metadata
-//     var title = ""
-//     var subtitle = ""
-//     if (data.header.competitions[0].status.type.completed == true || data.header.competitions[0].status.type.name.includes("STATUS_IN_PROGRESS")) {
-//         title = `Game: ${cleanName(data.header.competitions[0].competitors[1].team)} ${data.header.competitions[0].competitors[1].score}, ${cleanName(data.header.competitions[0].competitors[0].team)} ${data.header.competitions[0].competitors[0].score} | the Game on Paper`
-//     } else {
-//         title = `Game: ${cleanName(data.header.competitions[0].competitors[1].team)} vs ${cleanName(data.header.competitions[0].competitors[0].team)} | the Game on Paper`
-//     }
-//     subtitle = `${cleanName(data.header.competitions[0].competitors[1].team)} vs ${cleanName(data.header.competitions[0].competitors[0].team)}`;
-//     let statusDetail = data.header.competitions[0].status.type.detail;
-//     let statusText;
-//     let statusActive: boolean = false;
-//     if (data.header.competitions[0].status.type.completed == true || statusDetail.includes("Cancel") || statusDetail.includes("Postpone") || statusDetail.includes("Delay")) {
-//         statusText = statusDetail + " - " + DateTime.fromISO(data.header.competitions[0].date, {zone: 'utc'}).setZone("America/New_York").toLocaleString(DateTime.DATETIME_FULL);
-//     } else if (data.header.competitions[0].status.type.state !== 'pre'){
-//         statusText = "LIVE - " + statusDetail
-//         statusActive = true
-//     } else if (data.header.competitions[0].status.type.state === 'pre') {
-//         statusText = "Pre-game - " + statusDetail
-//         statusActive = false
-//     }
+    // optionally access and extend (rather than replace) parent metadata
+    let title = ""
+    let subtitle = ""
+    if (data.header.competitions[0].status.type.completed == true || data.header.competitions[0].status.type.name.includes("STATUS_IN_PROGRESS")) {
+        title = `Game: ${cleanName(data.header.competitions[0].competitors[1].team)} ${data.header.competitions[0].competitors[1].score}, ${cleanName(data.header.competitions[0].competitors[0].team)} ${data.header.competitions[0].competitors[0].score} | the Game on Paper`
+    } else {
+        title = `Game: ${cleanName(data.header.competitions[0].competitors[1].team)} vs ${cleanName(data.header.competitions[0].competitors[0].team)} | the Game on Paper`
+    }
+    subtitle = `${cleanName(data.header.competitions[0].competitors[1].team)} vs ${cleanName(data.header.competitions[0].competitors[0].team)}`;
+    let statusDetail = data.header.competitions[0].status.type.detail;
+    let statusText;
+    let statusActive: boolean = false;
+    if (data.header.competitions[0].status.type.completed == true || statusDetail.includes("Cancel") || statusDetail.includes("Postpone") || statusDetail.includes("Delay")) {
+        statusText = statusDetail + " - " + DateTime.fromISO(data.header.competitions[0].date, {zone: 'utc'}).setZone("America/New_York").toLocaleString(DateTime.DATETIME_FULL);
+    } else if (data.header.competitions[0].status.type.state !== 'pre'){
+        statusText = "LIVE - " + statusDetail
+        statusActive = true
+    } else if (data.header.competitions[0].status.type.state === 'pre') {
+        statusText = "Pre-game - " + statusDetail
+        statusActive = false
+    }
 
-//     return {
-//         title: title,
-//         description: `Advanced stats for ${subtitle} - ${statusText}`,
-//         metadataBase: new URL('https://thegameonpaper.com/'),
-//         referrer: 'origin-when-cross-origin',
-//         viewport: {
-//             width: 'device-width',
-//             initialScale: 1.0,
-//             maximumScale: 1.0,
-//             userScalable: false,
-//         },
-//         authors: [{ name: 'Akshay Easwaran' }, { name: 'Saiem Gilani'}],
-//         creator: 'Akshay Easwaran'+', '+'Saiem Gilani',
-//         themeColor: [
-//             { media: "(prefers-color-scheme: light)", color: "white" },
-//             { media: "(prefers-color-scheme: dark)", color: "black" },
-//         ],
-//         twitter: {
-//             card: 'summary',
-//             creator: '@SportsDataverse',
-//             title: title,
-//             description: `Advanced stats for ${subtitle} - ${statusText}`,
-//             images: {
-//                 url: `https://s.espncdn.com/stitcher/sports/football/college-football/events/${params.gameId}.png?templateId=espn.com.share.1`,
-//                 alt: title,
-//             },
-//         },
-//         openGraph: {
-//             title: title,
-//             description: `Advanced stats for ${subtitle} - ${statusText}`,
-//             url: `https://thegameonpaper.com/cfb/game/${params.gameId}`,
-//             siteName: 'theGameOnPaper.com',
-//             images: [
-//                 {
-//                     url: `https://s.espncdn.com/stitcher/sports/football/college-football/events/${params.gameId}.png?templateId=espn.com.share.1`,
-//                     width: 1200,
-//                     height: 630,
-//                 },
-//             ],
-//             locale: 'en_US',
-//             type: 'website',
-//         },
-//         other: {
-//             medium: 'website',
-//         }
-//     };
-// }
+    return {
+        title: title,
+        description: `Advanced stats for ${subtitle} - ${statusText}`,
+        metadataBase: new URL('https://thegameonpaper.com/'),
+        referrer: 'origin-when-cross-origin',
+        viewport: {
+            width: 'device-width',
+            initialScale: 1.0,
+            maximumScale: 1.0,
+            userScalable: false,
+        },
+        authors: [{ name: 'Akshay Easwaran' }, { name: 'Saiem Gilani'}],
+        creator: 'Akshay Easwaran'+', '+'Saiem Gilani',
+        themeColor: [
+            { media: "(prefers-color-scheme: light)", color: "white" },
+            { media: "(prefers-color-scheme: dark)", color: "black" },
+        ],
+        twitter: {
+            card: 'summary',
+            creator: '@SportsDataverse',
+            title: title,
+            description: `Advanced stats for ${subtitle} - ${statusText}`,
+            images: {
+                url: `https://s.espncdn.com/stitcher/sports/football/college-football/events/${params.gameId}.png?templateId=espn.com.share.1`,
+                alt: title,
+            },
+        },
+        openGraph: {
+            title: title,
+            description: `Advanced stats for ${subtitle} - ${statusText}`,
+            url: `https://thegameonpaper.com/cfb/game/${params.gameId}`,
+            siteName: 'theGameOnPaper.com',
+            images: [
+                {
+                    url: `https://s.espncdn.com/stitcher/sports/football/college-football/events/${params.gameId}.png?templateId=espn.com.share.1`,
+                    width: 1200,
+                    height: 630,
+                },
+            ],
+            locale: 'en_US',
+            type: 'website',
+        },
+        other: {
+            medium: 'website',
+        }
+    };
+}
 
 
 function getTeamInfo(header: Header) {
