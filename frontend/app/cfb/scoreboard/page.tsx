@@ -6,10 +6,7 @@ import { ScoreboardEvent } from '@/lib/types';
 import { CfbScheduleSelect } from '@/components/CFB/cfb-schedule-select';
 
 async function getCFBScoreboard() {
-    console.log(pyApiOrigin+'/cfb/scoreboard')
-
     const endpoint = new URL(pyApiOrigin+'/cfb/scoreboard');
-    // console.log(endpoint)
 
     const data = await fetch(endpoint, {
         cache: 'no-store',
