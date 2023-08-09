@@ -28,8 +28,7 @@ function dateTime(date: string) {
 
   function date(date: string) {
     let dt = new Date(date);
-    let dtString = dt.toLocaleDateString()
-    return dtString;
+    return dt.toLocaleDateString();
   }
 
 function myLoader({ src  }: {src: string}) {
