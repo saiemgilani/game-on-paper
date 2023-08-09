@@ -1,6 +1,5 @@
 import { Variants } from "framer-motion";
 import React from "react";
-import { IconType } from "react-icons/lib";
 
 
 
@@ -169,11 +168,7 @@ export type TableOfContents = {
   heading: string;
 };
 
-export type SupportMe = {
-  name: string;
-  url: string;
-  Icon: IconType;
-};
+
 
 export type FormInput = {
   to_name: string;
