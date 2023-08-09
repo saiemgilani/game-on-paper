@@ -49,7 +49,7 @@ services:
     env_file:
       - .env
     environment:
-      RDATA_BASE_URL: http://localhost:7000/py
+      RDATA_BASE_URL: http://python:7000/py
     ports:
       - 8000:8000
     depends_on:
@@ -80,7 +80,7 @@ services:
     ports:
       - 7000:7000
     healthcheck:
-      test: curl --fail http://localhost:7000/py || exit 1
+      test: curl --fail http://python:7000/py || exit 1
       interval: 120s
       retries: 5
       start_period: 20s
