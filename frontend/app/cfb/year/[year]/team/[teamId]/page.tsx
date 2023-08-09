@@ -11,6 +11,7 @@ import ScoreCard from '@/components/score-card';
 import { Competitor, Breakdown, Away } from '@/lib/cfb/types';
 
 
+
 async function getCFBTeamYear(params: any) {
 
     const endpoint = new URL(pyApiOrigin+'/cfb/percentiles/'+params.year+'/'+params.teamId);
@@ -87,39 +88,7 @@ export async function generateMetadata(
         }
     };
 }
-const CLEAN_LIST = [61]
-function cleanAbbreviation(team: Away) {
-    if (team.abbreviation !== undefined) {
-        if (CLEAN_LIST.includes(parseInt(team.id))) {
-            return team?.abbreviation.toLocaleLowerCase()
-        }
-        return team?.abbreviation
-    } else {
-        return team?.location
-    }
-}
 
-function cleanName(team: Away) {
-    if (team.nickname !== undefined) {
-        if (CLEAN_LIST.includes(parseInt(team.id))) {
-            return team?.nickname.toLocaleLowerCase()
-        }
-        return team?.nickname
-    } else {
-        return team?.location
-    }
-}
-
-function cleanLocation(team: Away) {
-    if (team.location !== undefined) {
-        if (CLEAN_LIST.includes(parseInt(team.id))) {
-            return team?.location.toLocaleLowerCase()
-        }
-        return team?.location
-    } else {
-        return team?.location
-    }
-}
 function parseSummary(content: Breakdown[]){
     let result = [];
     for (const item of content) {
