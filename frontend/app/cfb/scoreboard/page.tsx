@@ -8,10 +8,9 @@ import { CfbScheduleSelect } from '@/components/CFB/cfb-schedule-select';
 async function getCFBScoreboard() {
     const endpoint = new URL(pyApiOrigin+'/cfb/scoreboard');
 
-    const data = await fetch(endpoint, {
+    return await fetch(endpoint, {
         cache: 'no-store',
         headers: { 'Content-Type': 'application/json' }}).then((res) => res.json());
-    return data
 
 }
 

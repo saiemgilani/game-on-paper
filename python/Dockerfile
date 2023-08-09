@@ -1,3 +1,19 @@
+FROM rocker/tidyverse:4.1.0 as rbase
+
+WORKDIR /src
+
+# Install R packages
+RUN install2.r --error \
+    stringr \
+    glue \
+    devtools
+
+RUN Rscript -e 'devtools::install_github(repo = "sportsdataverse/cfbfastR")'
+
+COPY ./team_agg.R .
+
+RUN Rscript ./team_agg.R skipcache
+
 FROM python:3.10 as base
 
 WORKDIR /root/src
@@ -12,7 +28,7 @@ FROM base
 WORKDIR /code
 
 COPY --from=pybuilder /root/.local /root/.local
-# COPY --from=rbase /src/data ./data
+COPY --from=rbase /src/data ./data
 
 COPY . ./
 

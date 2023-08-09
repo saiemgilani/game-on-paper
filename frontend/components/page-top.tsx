@@ -21,7 +21,7 @@ export default function PageTop({
     >
       <AnimatedHeading
         variants={fromLeftVariant}
-        className={`text-3xl sm:text-4xl md:text-5xl justify-center font-chivo text-neutral-900 dark:text-neutral-200 ${headingClass}`}
+        className={`text-xl sm:text-3xl md:text-4xl justify-center font-chivo text-neutral-900 dark:text-neutral-200 ${headingClass}`}
       >
         {pageTitle}
       </AnimatedHeading>
