@@ -4,6 +4,7 @@ import { Metadata, ResolvingMetadata } from 'next';
 import { DateTime } from "luxon"
 import {pyApiOrigin} from '@/lib/urlConfig';
 import { CFBGame, Header, Competitor, Breakdown, Away, TeamData } from '@/lib/cfb/types';
+import { CLEAN_LIST, cleanName } from '@/lib/utils';
 import CFBGameHeader from '@/components/CFB/cfb-game-header';
 import CFBPlayTable from '@/components/CFB/cfb-play-table';
 import CFBPlayTableHeader from '@/components/CFB/cfb-play-table-header';
@@ -19,17 +20,6 @@ import CFBSummaryTeamCard from '@/components/CFB/cfb-summary-team-card';
 import CFBSummaryTeamStatsTable from '@/components/CFB/cfb-summary-team-stats-table';
 import CFBSummaryPlayerStatsTable from '@/components/CFB/cfb-summary-player-stats-table';
 
-const CLEAN_LIST = [61]
-function cleanName(team: Away) {
-    if (team.nickname !== undefined) {
-        if (CLEAN_LIST.includes(parseInt(team.id))) {
-            return team?.nickname.toLocaleLowerCase()
-        }
-        return team?.nickname
-    } else {
-        return team?.location
-    }
-}
 
 async function getCFBGame(params: any) {
     const endpoint = new URL(pyApiOrigin+'/cfb/game/'+params.gameId);
@@ -596,7 +586,7 @@ export default async function CFBGamePage({ params }: {
                     <div className="px-2 py-2">
 
                     {data && data.advBoxScore ? (
-                        <CFBPlayerStatsHeader team={awayTeam} season={season} href={`cfb/game/${params.gameId}#awayTeamCollapse`}>
+                        <CFBPlayerStatsHeader team={awayTeam} season={season} href={`${params.gameId}#awayTeamCollapse`}>
                             <CFBPlayerStatsTable
                             title={"Big Plays"}
                             advBoxScore={data?.advBoxScore ?? []}
@@ -606,7 +596,7 @@ export default async function CFBGamePage({ params }: {
                     </div>
                     <div className="justify-around px-2 py-2">
                     {data && data.advBoxScore ? (
-                        <CFBPlayerStatsHeader team={homeTeam} season={season} href={`cfb/game/${params.gameId}#homeTeamCollapse`}>
+                        <CFBPlayerStatsHeader team={homeTeam} season={season} href={`${params.gameId}#homeTeamCollapse`}>
                             <CFBPlayerStatsTable
                             title={"Big Plays"}
                             advBoxScore={data?.advBoxScore ?? []}
@@ -620,7 +610,7 @@ export default async function CFBGamePage({ params }: {
                 <div className="grid grid-cols-1 md:grid-cols-2 justify-around py-2">
                     <div className="justify-around px-2 py-2">
                         {data && data.bigPlays ? (
-                            <CFBPlayTableHeader title ={'Big Plays '} href={`cfb/game/${params.gameId}#big-plays`} >
+                            <CFBPlayTableHeader title ={'Big Plays '} href={`${params.gameId}#big-plays`} >
                                 <CFBPlayTable
                                     plays={data?.bigPlays ?? []}
                                     prefix={'big'}
@@ -636,7 +626,7 @@ export default async function CFBGamePage({ params }: {
                     </div>
                     <div className="justify-around px-2 py-2">
                         {data && data.mostImportantPlays ? (
-                            <CFBPlayTableHeader title ={'Most Important Plays '}  href={`cfb/game/${params.gameId}#most-imp-plays`} >
+                            <CFBPlayTableHeader title ={'Most Important Plays '}  href={`${params.gameId}#most-imp-plays`} >
                                 <CFBPlayTable
                                     plays={data?.mostImportantPlays ?? []}
                                     prefix={'mip'}
@@ -653,7 +643,7 @@ export default async function CFBGamePage({ params }: {
                 </div>
                 <div className="justify-around px-2 py-2">
                     {data && data.scoringPlays ? (
-                        <CFBPlayTableHeader title ={'Scoring Plays '} href={`cfb/game/${params.gameId}#scoring-plays`} >
+                        <CFBPlayTableHeader title ={'Scoring Plays '} href={`${params.gameId}#scoring-plays`} >
                             <CFBPlayTable
                                 plays={data?.scoringPlays ?? []}
                                 prefix={'scoring'}
@@ -669,7 +659,7 @@ export default async function CFBGamePage({ params }: {
                 </div>
                 <div className="justify-around px-2 py-2">
                     {data && data.plays ? (
-                        <CFBPlayTableHeader title ={'All Plays '} href={`cfb/game/${params.gameId}#all-plays`} >
+                        <CFBPlayTableHeader title ={'All Plays '} href={`${params.gameId}#all-plays`} >
                             <CFBPlayTable
                                 plays={data?.plays ?? []}
                                 prefix={'all'}
@@ -720,7 +710,7 @@ export default async function CFBGamePage({ params }: {
                 </div>
             </div>
             <div className="px-2 py-2">
-                <CFBTeamStatsHeader title={"Breakdown"} href={`cfb/game/${params.gameId}#breakdown`}>
+                <CFBTeamStatsHeader title={"Breakdown"} href={`${params.gameId}#breakdown`}>
                 <div className="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-3 gap-2 mb-4">
                     <CFBSummaryTeamStatsTable
                         breakdown={awayTeamBreakdown}
