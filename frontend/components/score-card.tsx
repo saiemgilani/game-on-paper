@@ -52,7 +52,7 @@ function TeamRow({ team, teamAbbreviation, linescores, record, logo, darkLogo, g
                     showRecords: boolean }) {
     return (
       <div className="flex px-2 py-2 items-center">
-        <div className="w-7/12 md:w-8/12 flex">
+        <div className="w-8/12 md:w-8/12 flex">
           <Image className="w-10 mr-2 self-center inline-block dark:hidden" src={logo} width={30} height={30} alt={team} />
           <Image className="w-10 mr-2 self-center hidden dark:inline-block" src={darkLogo} width={30} height={30} alt={team} />
           <div className="flex flex-col self-center">

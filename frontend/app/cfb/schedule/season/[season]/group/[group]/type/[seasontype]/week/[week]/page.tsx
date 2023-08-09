@@ -28,17 +28,6 @@ export async function generateMetadata(
     // read route params
     const year = params.season;
 
-    // fetch data
-    // const endpoint = new URL(pyApiOrigin+'/cfb/scoreboard' + '?' +
-    //     `groups=${params.group}` +
-    //     `&dates=${params.season}` +
-    //     `&seasontype=${params.seasontype}` +
-    //     `&week=${params.week}`);
-
-    // const data = await fetch(endpoint, {
-    //         next: {revalidate: 10},
-    //         headers: { 'Content-Type': 'application/json' }}).then((res) => res.json());
-
     let title = "College Football | Game on Paper"
     let subtitle = `College Football Schedule -  ${year} season, week ${params.week}, group ${params.group}`
 
@@ -110,8 +99,12 @@ export default async function Schedule({ params }: {
     return (
         <>
         <div>
-            <PageTop pageTitle="College Football Scoreboard" headingClass='h1'></PageTop>
+            <PageTop pageTitle="College Football Schedule" headingClass='h1'></PageTop>
         </div>
+        <div className="text-lg text-gray-600 dark:text-gray-400 text-center ">
+            {`${params.season} Season, Week ${params.week}`}
+        </div>
+
         <div className="flex flex-row justify-center">
             <CfbScheduleSelect />
         </div>
