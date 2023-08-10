@@ -4,7 +4,7 @@ const nextConfig = {
   experimental: {
     appDir: true,
     serverActions: true,
-    outputFileTracingRoot: path.join(__dirname, '../../'),
+    outputFileTracingRoot: path.join(__dirname, '../'),
   },
   reactStrictMode: true,
   output: 'standalone',
