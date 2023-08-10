@@ -115,6 +115,11 @@ origins = [
     "http://127.0.0.1:7000",
     "http://127.0.0.1",
     "http://127.0.0.1:*",
+    "http://127.0.0.1*",
+    "127.0.0.1*",
+    "http://127.0.0.1:8000",
+    "http://127.0.0.1:3000",
+    "http://127.0.0.1:7000",
 ]
 app.add_middleware(
     CORSMiddleware,
@@ -123,9 +128,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-
-favicon_path = "favicon.ico"
 
 
 @app.on_event("startup")
@@ -152,7 +154,12 @@ async def get_cfb_scoreboard(
     week: Optional[str] = Query(None),
     seasontype: Optional[str] = Query(None),
 ) -> Optional[None]:
-    schedule = await asyncify(espn_cfb_schedule)(groups=groups, dates=dates, week=week, season_type=seasontype)
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36"
+    }
+    schedule = await asyncify(espn_cfb_schedule)(
+        groups=groups, dates=dates, week=week, season_type=seasontype, headers=headers
+    )
     if "home_logo" in schedule.columns:
         schedule = schedule.with_columns(
             home_dark_logo=pl.col("home_logo").str.replace(
@@ -167,7 +174,6 @@ async def get_cfb_scoreboard(
 
 
 @app.get("/py/cfb/game/{gameId}", tags=["College Football"], response_class=ORJSONResponse)
-@cache(expire=15, namespace="cfb_game", coder=ORJsonCoder)
 async def cfb_game(request: Request, gameId: str) -> Optional[None]:
     return await asyncify(get_cfb_game)(request, gameId)
 
