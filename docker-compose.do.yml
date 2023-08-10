@@ -56,7 +56,8 @@ services:
     env_file:
       - .env
     environment:
-      RDATA_BASE_URL: http://python:7000/py
+      NODE_ENV: production
+      RDATA_BASE_URL: "${RDATA_BASE_URL}"
     ports:
       - 3000:3000
     depends_on:
@@ -70,7 +71,7 @@ services:
       - cache
       - dd_agent
     healthcheck:
-      test: curl --fail http://node:3000/cfb/scoreboard || exit 1
+      test: curl --fail http://localhost:3000/cfb/scoreboard || exit 1
       interval: 180s
       retries: 5
       start_period: 20s
@@ -80,9 +81,12 @@ services:
     restart: always
     networks:
       - game-on-paper-site
-    container_name: python
     labels:
       com.datadoghq.ad.logs: '[{"source": "fastapi", "service": "fastapi"}]'
+    env_file:
+      - .env
+    environment:
+      REDIS_URL: "${REDIS_URL}"
     expose:
       - 7000
     ports:

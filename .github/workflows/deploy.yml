@@ -20,12 +20,13 @@ jobs:
         uses: mr-smithers-excellent/docker-build-push@v6
         env:
             RDATA_BASE_URL: ${{ secrets.RDATA_BASE_URL }}
+            NODE_ENV: ${{ secrets.NODE_ENV }}
         with:
           image: saiemgilani/gp-node
           registry: ghcr.io
           username: ${{ secrets.GH_USERNAME }}
           password: ${{ secrets.GITHUB_TOKEN }}
-          buildArgs: RDATA_BASE_URL=${{ env.RDATA_BASE_URL }}
+          buildArgs: RDATA_BASE_URL=${{ env.RDATA_BASE_URL }} NODE_ENV=${{ env.NODE_ENV }}
           directory: ./frontend
           dockerfile: ./frontend/Dockerfile
           tags: latest
@@ -98,14 +99,16 @@ jobs:
             DOCKER_COMPOSE_FILE: ${{ env.DOCKER_COMPOSE_FILE }}
             DOCKER_COMPOSE_OVERRIDE_FILE: ${{ env.DOCKER_COMPOSE_OVERRIDE_FILE }}
             DD_API_KEY: ${{ secrets.DD_API_KEY }}
+            NODE_ENV: ${{ secrets.NODE_ENV }}
             RDATA_BASE_URL: ${{ secrets.RDATA_BASE_URL }}
+            REDIS_URL: ${{ secrets.REDIS_URL }}
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           command_timeout: 15m
-          envs: GITHUB_USERNAME, GITHUB_TOKEN, DOCKER_COMPOSE_FILE, DOCKER_COMPOSE_OVERRIDE_FILE, DD_API_KEY, RDATA_BASE_URL
+          envs: GITHUB_USERNAME, GITHUB_TOKEN, DOCKER_COMPOSE_FILE, DOCKER_COMPOSE_OVERRIDE_FILE, DD_API_KEY, RDATA_BASE_URL, NODE_ENV, REDIS_URL
           script: |
             docker stop $(docker ps -a -q)
             docker system prune --force
