@@ -26,7 +26,7 @@ jobs:
           registry: ghcr.io
           username: ${{ secrets.GH_USERNAME }}
           password: ${{ secrets.GITHUB_TOKEN }}
-          buildArgs: RDATA_BASE_URL=${{ env.RDATA_BASE_URL }} NODE_ENV=${{ env.NODE_ENV }}
+          buildArgs: RDATA_BASE_URL=${{ env.RDATA_BASE_URL }}, NODE_ENV=${{ env.NODE_ENV }}
           directory: ./frontend
           dockerfile: ./frontend/Dockerfile
           tags: latest
