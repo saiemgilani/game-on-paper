@@ -83,10 +83,6 @@ services:
       - game-on-paper-site
     labels:
       com.datadoghq.ad.logs: '[{"source": "fastapi", "service": "fastapi"}]'
-    env_file:
-      - .env
-    environment:
-      REDIS_URL: "${REDIS_URL}"
     expose:
       - 7000
     ports:
