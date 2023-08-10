@@ -84,7 +84,7 @@ COPY --from=builder --chown=nextjs:nodejs /app/tailwind.config.js ./tailwind.con
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 COPY --from=builder --chown=nextjs:nodejs /app/.next/public ./.next/public
-COPY --from=builder --chown=nextjs:nodejs /app/.next/public/favicon.ico ./.next/favicon.ico
+COPY --from=builder --chown=nextjs:nodejs /app/public/favicon.ico ./.next/favicon.ico
 
 # Environment variables must be redefined at run time
 ARG ENV_VARIABLE
