@@ -2,9 +2,11 @@ import asyncio
 import logging
 import os
 import warnings
-from typing import Optional
+from typing import Any, Optional
 
+import orjson
 import polars as pl
+import redis.asyncio as redis
 import uvicorn
 from asyncer import asyncify
 from cfb.helpers_cfb import (
@@ -17,17 +19,35 @@ from cfb.helpers_cfb import (
     get_cfb_game,
     no_plays_or_broken,
 )
-from fastapi import FastAPI, Query, Request, Response
+from fastapi import FastAPI, Query, Request
+from fastapi.encoders import jsonable_encoder
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import ORJSONResponse
-from fastapi_redis_cache import FastApiRedisCache, cache, cache_one_day
+from fastapi_cache import Coder, FastAPICache
+from fastapi_cache.backends.redis import RedisBackend
+from fastapi_cache.decorator import cache
+
+# from fastapi_redis_cache import FastApiRedisCache, cache
 from prometheus_client import make_asgi_app
+from redis.asyncio.connection import ConnectionPool
 from sportsdataverse.cfb import espn_cfb_schedule
-from starlette.middleware.base import BaseHTTPMiddleware
 
-import redis
+# from sqlalchemy.orm import Session
+# from starlette.middleware.base import BaseHTTPMiddleware
 
-# from aioify import aioify
+
+class ORJsonCoder(Coder):
+    @classmethod
+    def encode(cls, value: Any) -> bytes:
+        return orjson.dumps(
+            value,
+            default=jsonable_encoder,
+            option=orjson.OPT_NON_STR_KEYS | orjson.OPT_SERIALIZE_NUMPY,
+        )
+
+    @classmethod
+    def decode(cls, value: bytes) -> Any:
+        return orjson.loads(value)
 
 
 warnings.filterwarnings("ignore")
@@ -109,15 +129,11 @@ favicon_path = "favicon.ico"
 
 
 @app.on_event("startup")
-def startup():
-    LOCAL_REDIS_URL = os.environ.get("REDIS_URL", "redis://redis:6379")
-    redis_cache = FastApiRedisCache()
-    redis_cache.init(
-        host_url=os.environ.get("REDIS_URL", LOCAL_REDIS_URL),
-        prefix="gp-cache",
-        response_header="X-GP-Cache",
-        ignore_arg_types=[Request, Response],
-    )
+async def startup():
+    LOCAL_REDIS_URL = os.environ.get("REDIS_URL", "redis://127.0.0.1:6379")
+    pool = ConnectionPool.from_url(url=os.environ.get("REDIS_URL", LOCAL_REDIS_URL))
+    r = redis.Redis(connection_pool=pool)
+    FastAPICache.init(RedisBackend(r), prefix="gp-cache")
 
 
 @app.get("/py", response_class=ORJSONResponse)
@@ -128,7 +144,7 @@ async def healthcheck():
 
 
 @app.get("/py/cfb/scoreboard", tags=["College Football"], response_class=ORJSONResponse)
-@cache(expire=15)
+@cache(expire=15, namespace="cfb_scoreboard", coder=ORJsonCoder)
 async def get_cfb_scoreboard(
     request: Request,
     groups: Optional[str] = Query(None),
@@ -151,18 +167,20 @@ async def get_cfb_scoreboard(
 
 
 @app.get("/py/cfb/game/{gameId}", tags=["College Football"], response_class=ORJSONResponse)
-@cache(expire=15)
+@cache(expire=15, namespace="cfb_game", coder=ORJsonCoder)
 async def cfb_game(request: Request, gameId: str) -> Optional[None]:
     return await asyncify(get_cfb_game)(request, gameId)
 
 
 @app.get("/py/cfb/percentiles/{year}", tags=["College Football"], response_class=ORJSONResponse)
+@cache(expire=86400, namespace="cfb_percentiles_year", coder=ORJsonCoder)
 def get_cfb_percentiles_year(request: Request, year: str) -> Optional[None]:
     result = pl.read_csv(f"data/{year}/percentiles.csv").to_dicts()
     return ORJSONResponse(result, status_code=200, media_type="application/json")
 
 
 @app.get("/py/cfb/percentiles/{year}/{teamId}", tags=["College Football"], response_class=ORJSONResponse)
+@cache(expire=86400, namespace="cfb_percentiles_team", coder=ORJsonCoder)
 async def get_cfb_percentiles_team(request: Request, year: str, teamId: str) -> Optional[None]:
     result = await asyncify(cfb_percentiles_team)(year, teamId)
 

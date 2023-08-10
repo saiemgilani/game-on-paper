@@ -19,6 +19,7 @@ FROM python:3.10 as base
 WORKDIR /root/src
 
 COPY ./requirements.txt ./requirements.txt
+# COPY ./data ./data
 
 # ---- Dependencies ----
 FROM base AS pybuilder
