@@ -83,10 +83,14 @@ COPY --from=builder --chown=nextjs:nodejs /app/tailwind.config.js ./tailwind.con
 # https://nextjs.org/docs/advanced-features/output-file-tracing
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+COPY --from=builder --chown=nextjs:nodejs /app/.next/public ./.next/public
+COPY --from=builder --chown=nextjs:nodejs /app/.next/public/favicon.ico ./.next/favicon.ico
 
 # Environment variables must be redefined at run time
 ARG ENV_VARIABLE
 ENV ENV_VARIABLE=${ENV_VARIABLE}
+ARG NODE_ENV
+ENV NODE_ENV=${NODE_ENV}
 ARG RDATA_BASE_URL
 ENV RDATA_BASE_URL=${RDATA_BASE_URL}
 ARG NEXT_PUBLIC_ENV_VARIABLE
@@ -99,5 +103,6 @@ ENV NEXT_PUBLIC_ENV_VARIABLE=${NEXT_PUBLIC_ENV_VARIABLE}
 
 
 ENV PORT 3000
+ENV HOST=0.0.0.0
 
 CMD ["node", "server.js"]

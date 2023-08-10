@@ -6,10 +6,11 @@ import { ScoreboardEvent } from '@/lib/types';
 import { CfbScheduleSelect } from '@/components/CFB/cfb-schedule-select';
 
 async function getCFBScoreboard() {
+    // console.log(pyApiOrigin+'/cfb/scoreboard')
     const endpoint = new URL(pyApiOrigin+'/cfb/scoreboard');
 
     return await fetch(endpoint, {
-        next: { revalidate: 0},
+        cache: 'no-store' ,
         headers: { 'Content-Type': 'application/json' }}).then((res) => res.json());
 
 }

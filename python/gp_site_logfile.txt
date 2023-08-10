@@ -7103,3 +7103,4 @@ INFO:root:Successfully processed cfb_game_in_play: 401415254
 INFO:root:Successfully processed cfb_game_in_play: 401441990
 INFO:root:Successfully processed cfb_game_in_play: 401405059
 INFO:root:Successfully processed cfb_game_in_play: 401405059
+INFO:root:Successfully pulled cfb game from gp_cfb_raw (GH): 401403867
