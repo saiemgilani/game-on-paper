@@ -70,7 +70,7 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
       args:
-        RDATA_BASE_URL: $RDATA_BASE_URL
+        RDATA_BASE_URL: http://python:7000/py
     restart: unless-stopped
     networks:
       - game-on-paper-site
