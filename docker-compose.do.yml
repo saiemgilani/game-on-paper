@@ -5,10 +5,13 @@ services:
     restart: always
     networks:
       - game-on-paper-site
+    container_name: redis
     labels:
       com.datadoghq.ad.logs: '[{"source": "redis", "service": "redis"}]'
     expose:
       - 6379
+    ports:
+      - 6379:6379
     healthcheck:
       test: redis-cli ping || exit 1
       interval: 60s
@@ -24,10 +27,13 @@ services:
     restart: always
     networks:
       - game-on-paper-site
+    container_name: cache
     labels:
       com.datadoghq.ad.logs: '[{"source": "cache", "service": "cache"}]'
     expose:
       - 6380
+    ports:
+      - 6380:6380
     healthcheck:
       test: redis-cli ping || exit 1
       interval: 60s
@@ -43,6 +49,7 @@ services:
     restart: always
     networks:
       - game-on-paper-site
+    container_name: node
     labels:
       com.datadoghq.ad.logs: '[{"source": "next.js", "service": "next.js"}]'
     command: ["node","server.js"]
@@ -51,7 +58,7 @@ services:
     environment:
       RDATA_BASE_URL: http://python:7000/py
     ports:
-      - 8000:8000
+      - 3000:3000
     depends_on:
       - python
       - redis
@@ -63,7 +70,7 @@ services:
       - cache
       - dd_agent
     healthcheck:
-      test: curl --fail http://localhost:8000/cfb/scoreboard || exit 1
+      test: curl --fail http://node:3000/cfb/scoreboard || exit 1
       interval: 180s
       retries: 5
       start_period: 20s
@@ -73,6 +80,7 @@ services:
     restart: always
     networks:
       - game-on-paper-site
+    container_name: python
     labels:
       com.datadoghq.ad.logs: '[{"source": "fastapi", "service": "fastapi"}]'
     expose:
