@@ -57,32 +57,32 @@ export async function generateMetadata(
             { media: "(prefers-color-scheme: light)", color: "white" },
             { media: "(prefers-color-scheme: dark)", color: "black" },
         ],
-        twitter: {
-            card: 'summary',
-            creator: '@SportsDataverse',
-            title: title,
-            description: `Advanced stats for ${subtitle}`,
-            images: {
-                url: `${data.teamData.logos[0].href}`,
-                alt: title,
-            },
-        },
-        openGraph: {
-            title: title,
-            description: `Advanced stats for ${subtitle}`,
-            url: `https://thegameonpaper.com/cfb/year/${params.year}/team/${params.teamId}`,
-            siteName: 'theGameOnPaper.com',
-            images: [
-                {
-                    url: `${data.teamData.logos[0].href}`,
-                    width: 50,
-                    height: 50,
-                    alt: title,
-                },
-            ],
-            locale: 'en_US',
-            type: 'website',
-        },
+        // twitter: {
+        //     card: 'summary',
+        //     creator: '@SportsDataverse',
+        //     title: title,
+        //     description: `Advanced stats for ${subtitle}`,
+        //     images: {
+        //         url: `${data.teamData.logos[0].href}`,
+        //         alt: title,
+        //     },
+        // },
+        // openGraph: {
+        //     title: title,
+        //     description: `Advanced stats for ${subtitle}`,
+        //     url: `https://thegameonpaper.com/cfb/year/${params.year}/team/${params.teamId}`,
+        //     siteName: 'theGameOnPaper.com',
+        //     images: [
+        //         {
+        //             url: `${data.teamData.logos[0].href}`,
+        //             width: 50,
+        //             height: 50,
+        //             alt: title,
+        //         },
+        //     ],
+        //     locale: 'en_US',
+        //     type: 'website',
+        // },
         other: {
             medium: 'website',
         }
