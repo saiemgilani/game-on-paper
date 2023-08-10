@@ -9,21 +9,13 @@ async function getCFBScoreboard() {
     const endpoint = new URL(pyApiOrigin+'/cfb/scoreboard');
 
     return await fetch(endpoint, {
-        cache: 'no-store',
+        next: { revalidate: 0},
         headers: { 'Content-Type': 'application/json' }}).then((res) => res.json());
 
 }
 
 export async function generateMetadata(): Promise<Metadata> {
     // read route params
-
-
-    // const endpoint = new URL(pyApiOrigin+'/cfb/scoreboard');
-    // // console.log(endpoint)
-    // const data = await fetch(endpoint, {
-    //     cache: 'no-store',
-    //     headers: { 'Content-Type': 'application/json' }}).then((res) => res.json());
-
 
     // optionally access and extend (rather than replace) parent metadata
     let title = "College Football | Game on Paper"

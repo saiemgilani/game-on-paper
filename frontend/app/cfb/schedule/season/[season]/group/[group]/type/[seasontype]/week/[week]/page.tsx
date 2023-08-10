@@ -13,11 +13,9 @@ async function getCFBSchedule(params: any) {
         `&seasontype=${params.seasontype}` +
         `&week=${params.week}`);
 
-    const data = await fetch(endpoint, {
-        cache: 'no-store',
+    return await fetch(endpoint, {
+        next: { revalidate: 10},
         headers: { 'Content-Type': 'application/json' }}).then((res) => res.json());
-
-    return data
 
 }
 
