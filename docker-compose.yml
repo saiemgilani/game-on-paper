@@ -61,7 +61,6 @@ services:
       start_period: 20s
       timeout: 10s
   node:
-    command: ["node","server.js"]
     container_name: node
     build:
       context: ./frontend
@@ -69,6 +68,7 @@ services:
       args:
         NODE_ENV: production
         RDATA_BASE_URL: "${RDATA_BASE_URL}"
+    command: ["node","server.js"]
     restart: unless-stopped
     networks:
       - game-on-paper-site

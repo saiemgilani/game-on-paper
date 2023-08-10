@@ -33,6 +33,7 @@ COPY tailwind.config.js .
 
 # Environment variables must be present at build time
 # https://github.com/vercel/next.js/discussions/14030
+WORKDIR /app
 ARG ENV_VARIABLE
 ENV ENV_VARIABLE=${ENV_VARIABLE}
 ARG RDATA_BASE_URL
