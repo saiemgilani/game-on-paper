@@ -66,9 +66,9 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
       args:
-        NODE_ENV: production
+        NODE_ENV: "production"
         RDATA_BASE_URL: "${RDATA_BASE_URL}"
-    command: ["node","server.js"]
+    command: node server.js
     restart: unless-stopped
     networks:
       - game-on-paper-site
@@ -77,7 +77,7 @@ services:
     env_file:
       - .env
     environment:
-      NODE_ENV: production
+      NODE_ENV: "production"
       RDATA_BASE_URL: "${RDATA_BASE_URL}"
     healthcheck:
       test: curl --fail http://localhost:3000/cfb/scoreboard || exit 1

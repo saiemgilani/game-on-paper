@@ -7,7 +7,7 @@ export const localPyApiOrigin =  new URL('http://127.0.0.1:7000/py');
 
 
 export const apiOrigin =
-  process.env.NODE_ENV === 'development' ? localApiOrigin : origin;
+  process.env.NODE_ENV === 'production' ?  origin : localApiOrigin;
 
 export const pyApiOrigin =
-process.env.NODE_ENV === 'development' ? localPyApiOrigin: pyOrigin ;
+process.env.NODE_ENV === 'production' ? pyOrigin : localPyApiOrigin ;

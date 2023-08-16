@@ -3,7 +3,7 @@ library(dplyr)
 library(glue)
 library(stringr)
 
-max_season <- cfbfastR:::most_recent_cfb_season()
+max_season <- cfbfastR:::most_recent_cfb_season()-1
 seasons <- 2014:max_season
 valid_fbs_teams <- cfbfastR::load_cfb_teams() %>%
     filter(classification == 'fbs') %>%
@@ -14,7 +14,7 @@ valid_fbs_teams <- cfbfastR::load_cfb_teams() %>%
     )
 
 write_team_csvs <- function (data, team, yr, type) {
-    print(glue("Creating folder /data/{yr}/{team} if necessary"))
+    # print(glue("Creating folder /data/{yr}/{team} if necessary"))
     dir.create(file.path(glue('./data/{yr}'), team), showWarnings = FALSE)
 
     write.csv(data, glue("./data/{yr}/{team}/{type}.csv"), row.names = FALSE)

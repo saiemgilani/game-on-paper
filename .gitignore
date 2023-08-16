@@ -12,6 +12,7 @@ node_modules
 */.env
 .env
 env
+.env*
 Procfile
 .Rproj.user
 .Rhistory
@@ -24,3 +25,4 @@ cfb-api
 __pycache__
 */__pycache__
 python/data
+.github/workflows/deploy_backend.yml
