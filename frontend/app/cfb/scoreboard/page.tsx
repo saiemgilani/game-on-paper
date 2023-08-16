@@ -10,7 +10,7 @@ async function getCFBScoreboard() {
     const endpoint = new URL(pyApiOrigin+'/cfb/scoreboard');
 
     return await fetch(endpoint, {
-        cache: 'no-store' ,
+        next: { revalidate: 30},
         headers: { 'Content-Type': 'application/json' }}).then((res) => res.json());
 
 }
