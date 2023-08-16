@@ -55,7 +55,7 @@ export type ScoreboardEvent = {
     home_conference_id:        string;
     home_score:                string;
     home_score_value?:          number;
-    home_current_rank?:         number;
+    home_current_rank?:         string;
     home_linescores:           any[];
     home_records:              any[];
     away_id?:                   string;

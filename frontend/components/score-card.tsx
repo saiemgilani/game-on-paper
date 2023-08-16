@@ -31,15 +31,12 @@ function dateTime(date: string) {
     return dt.toLocaleDateString();
   }
 
-function myLoader({ src  }: {src: string}) {
-    return src
-  }
 
 type linescore = {
     value: string
 }
 
-function TeamRow({ team, teamAbbreviation, linescores, record, logo, darkLogo, gameStatus, score, showRecords }:
+function TeamRow({ team, teamAbbreviation, linescores, record, logo, darkLogo, gameStatus, score, rank, showRecords }:
                  {  team: string,
                     teamAbbreviation: string,
                     linescores: linescore[],
@@ -48,6 +45,7 @@ function TeamRow({ team, teamAbbreviation, linescores, record, logo, darkLogo, g
                     darkLogo: string,
                     gameStatus: string,
                     score: string,
+                    rank: string,
                     showRecords: boolean }) {
     return (
       <div className="flex px-2 py-2 items-center">
@@ -55,7 +53,7 @@ function TeamRow({ team, teamAbbreviation, linescores, record, logo, darkLogo, g
           <Image className="w-10 mr-2 self-center inline-block dark:hidden" src={logo} width={30} height={30} alt={team} />
           <Image className="w-10 mr-2 self-center hidden dark:inline-block" src={darkLogo} width={30} height={30} alt={team} />
           <div className="flex flex-col self-center">
-            <p className="text-lg font-bold">{teamAbbreviation}</p>
+            <p className="text-lg font-bold">{rank + " "+ teamAbbreviation}</p>
             {showRecords ? <p className="block text-xs  text-gray-600 dark:text-gray-400">{record}</p>: ""}
           </div>
         </div>
@@ -87,12 +85,14 @@ export default function ScoreCard({ showRecords = true, props }: {showRecords: b
     const awayLinescores = props.away_linescores
     const awayScore = `${props.away_score || props.away_score_value }`
     const awayAbbrev = props.away_id === '61' ? props.away_abbreviation.toLocaleLowerCase() : props.away_abbreviation
+    const awayCurrentRank = parseInt(props.away_current_rank || '99') <= 25 ? `#${props.away_current_rank}` : ""
     const homeConferenceId = parseInt(props.home_conference_id)
     const homeConference = ConferenceMap[homeConferenceId] || "CONF"
     const homeRecord = props.home_records.length === 0 ? `(0-0, 0-0 ${homeConference})` : `(${props.home_records[0].summary || props.home_records[0].displayValue}, ${props.home_records[props.home_records.length-1].summary || props.home_records[props.home_records.length-1].displayValue} ${homeConference})`
     const homeLinescores = props.home_linescores
     const homeScore = `${props.home_score || props.home_score_value }`
     const homeAbbrev = props.home_id === '61' ? props.home_abbreviation.toLocaleLowerCase() : props.home_abbreviation
+    const homeCurrentRank = parseInt(props.home_current_rank || '99') <= 25 ? `#${props.home_current_rank}` : ""
     const pbpAvailable = props.play_by_play_available || props.boxscore_available
     const broadcastName = props.broadcast_name || ""
     const broadcastUrl = NetworkMap[broadcastName]
@@ -102,7 +102,7 @@ export default function ScoreCard({ showRecords = true, props }: {showRecords: b
             {/* Card Header */}
             <div className="flex px-2 py-2">
               <div className="xs:text-xs sm:text-sm xs:w-7/12 sm:w-7/12 lg:flex text-blue-500 text-left ">
-                {gameStatus === 'pre' ? gameDateTime : props.status_type_detail + " - " + gameDate}
+                {gameStatus === 'pre' ? props.status_type_short_detail : props.status_type_detail + " - " + gameDate}
               </div>
               {/* Line Score */}
 
@@ -124,6 +124,7 @@ export default function ScoreCard({ showRecords = true, props }: {showRecords: b
               darkLogo={props.away_dark_logo}
               gameStatus={gameStatus}
               score={awayScore}
+              rank={awayCurrentRank}
               showRecords={showRecords} />
             {/* Home Team */}
             <TeamRow
@@ -136,6 +137,7 @@ export default function ScoreCard({ showRecords = true, props }: {showRecords: b
               darkLogo={props.home_dark_logo}
               gameStatus={gameStatus}
               score={homeScore}
+              rank={homeCurrentRank}
               showRecords={showRecords} />
             {/* Card Footer */}
             <div className="flex px-2 py-2 justify-between">
@@ -144,7 +146,7 @@ export default function ScoreCard({ showRecords = true, props }: {showRecords: b
                   <Link href={`/cfb/game/${gameId}`}>Preview</Link>
                 </Button> :  (pbpAvailable ?
                 <Button variant="outline" className="text-lg md:text-lg border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-gray-100">
-                  <Link href={`/cfb/game/${gameId}`}>Stats</Link>
+                  <a href={`/cfb/game/${gameId}`}>Stats</a>
                 </Button> :
                 <Button variant="outline" className="text-lg md:text-lg disabled border-blue-200 text-blue-200  hover:bg-none">
                   Stats
