@@ -46,36 +46,36 @@ export async function generateMetadata(
             { media: "(prefers-color-scheme: light)", color: "white" },
             { media: "(prefers-color-scheme: dark)", color: "black" },
         ],
-        // icons: {
-        //     icon: "/favicon.ico",
-        //     shortcut: "/favicon-16x16.png",
-        //     apple: "/apple-touch-icon.png",
-        // },
-        // twitter: {
-        //     card: 'summary',
-        //     creator: '@SportsDataverse',
-        //     title: title,
-        //     description: `${subtitle}`,
-        //     images: {
-        //         url: '/twitter-image.png',
-        //         alt: title,
-        //     },
-        // },
-        // openGraph: {
-        //     title: title,
-        //     description: `${subtitle}`,
-        //     url: `https://thegameonpaper.com/cfb/schedule/season/${params.season}/group/${params.group}/type/${params.seasontype}/week/${params.week}`,
-        //     siteName: 'theGameOnPaper.com',
-        //     images: [
-        //         {
-        //             url: '/opengraph-image.png',
-        //             width: 1200,
-        //             height: 630,
-        //         },
-        //     ],
-        //     locale: 'en_US',
-        //     type: 'website',
-        // },
+        icons: {
+            icon: "/favicon.ico",
+            shortcut: "/favicon-16x16.png",
+            apple: "/apple-touch-icon.png",
+        },
+        twitter: {
+            card: 'summary',
+            creator: '@SportsDataverse',
+            title: title,
+            description: `${subtitle}`,
+            images: {
+                url: '/twitter-image.png',
+                alt: title,
+            },
+        },
+        openGraph: {
+            title: title,
+            description: `${subtitle}`,
+            url: `https://thegameonpaper.com/cfb/schedule/season/${params.season}/group/${params.group}/type/${params.seasontype}/week/${params.week}`,
+            siteName: 'theGameOnPaper.com',
+            images: [
+                {
+                    url: '/opengraph-image.png',
+                    width: 1200,
+                    height: 630,
+                },
+            ],
+            locale: 'en_US',
+            type: 'website',
+        },
         other: {
             medium: 'website',
         }

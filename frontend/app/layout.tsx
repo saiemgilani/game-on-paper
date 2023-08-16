@@ -34,39 +34,39 @@ export const metadata: Metadata = {
       { media: "(prefers-color-scheme: light)", color: "white" },
       { media: "(prefers-color-scheme: dark)", color: "black" },
   ],
-  // icons: {
-  //     icon: "/favicon.ico",
-  //     shortcut: "/favicon-16x16.png",
-  //     apple: "/apple-touch-icon.png",
-  // },
-  // twitter: {
-  //     card: 'summary',
-  //     creator: '@SportsDataverse',
-  //     title: siteConfig.name,
-  //     description: siteConfig.description,
-  //     images: {
-  //         url: `/twitter-image.png`,
-  //         alt: siteConfig.name,
-  //     },
-  // },
-  // openGraph: {
-  //     title: siteConfig.name,
-  //     description: siteConfig.description,
-  //     url: `https://thegameonpaper.com/`,
-  //     siteName: 'theGameOnPaper.com',
-  //     images: [
-  //         {
-  //             url: '/opengraph-image.png',
-  //             width: 1200,
-  //             height: 630,
-  //         },
-  //     ],
-  //     locale: 'en_US',
-  //     type: 'website',
-  // },
-  // other: {
-  //     medium: 'website',
-  // }
+  icons: {
+      icon: "/favicon.ico",
+      shortcut: "/favicon-16x16.png",
+      apple: "/apple-touch-icon.png",
+  },
+  twitter: {
+      card: 'summary',
+      creator: '@SportsDataverse',
+      title: siteConfig.name,
+      description: siteConfig.description,
+      images: {
+          url: `/twitter-image.png`,
+          alt: siteConfig.name,
+      },
+  },
+  openGraph: {
+      title: siteConfig.name,
+      description: siteConfig.description,
+      url: `https://thegameonpaper.com/`,
+      siteName: 'theGameOnPaper.com',
+      images: [
+          {
+              url: '/opengraph-image.png',
+              width: 1200,
+              height: 630,
+          },
+      ],
+      locale: 'en_US',
+      type: 'website',
+  },
+  other: {
+      medium: 'website',
+  }
 
 }
 

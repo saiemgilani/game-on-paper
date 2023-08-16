@@ -56,8 +56,10 @@ services:
     env_file:
       - .env
     environment:
-      NODE_ENV: production
+      NODE_ENV: "production"
       RDATA_BASE_URL: "${RDATA_BASE_URL}"
+    expose:
+      - 3000
     ports:
       - 3000:3000
     depends_on:
