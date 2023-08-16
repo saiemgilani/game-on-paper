@@ -28,32 +28,29 @@
       "@/components/*": [
         "components/*"
       ],
-      "@lib/*": [
-        "lib/*"
-      ],
-      "@utils/*": [
-        "utils/*"
-      ],
-      "@content/*": [
-        "content/*"
-      ],
-      "@styles/*": [
-        "styles/*"
-      ],
-      "@context/*": [
-        "context/*"
-      ],
-      "@layout/*": [
-        "layout/*"
+      "@config/*": [
+        "config/*"
       ],
       "@hooks/*": [
         "hooks/*"
+      ],
+      "@lib/*": [
+        "lib/*"
+      ],
+      "@logging/*": [
+        "logging/*"
       ],
       "@public/*": [
         "public/*"
       ],
       "@posts/*": [
         "posts/*"
+      ],
+      "@styles/*": [
+        "styles/*"
+      ],
+      "@utils/*": [
+        "utils/*"
       ]
     }
   },

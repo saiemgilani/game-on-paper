@@ -1,6 +1,10 @@
 import Image from 'next/image'
+import { getLogger } from '@/logging/log-util'
 
 export default function Home() {
+  const logger = getLogger("home")
+  logger.info("game on paper home page requested");
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-between">
       <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">

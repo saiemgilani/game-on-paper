@@ -24,6 +24,7 @@ COPY public ./public
 COPY components ./components
 COPY config ./config
 COPY lib ./lib
+COPY logging ./logging
 COPY styles ./styles
 COPY utils ./utils
 COPY next.config.js .
@@ -70,6 +71,7 @@ COPY --from=builder --chown=nextjs:nodejs /app/app ./app
 COPY --from=builder --chown=nextjs:nodejs /app/components ./components
 COPY --from=builder --chown=nextjs:nodejs /app/config ./config
 COPY --from=builder --chown=nextjs:nodejs /app/lib ./lib
+COPY --from=builder --chown=nextjs:nodejs /app/logging ./logging
 COPY --from=builder --chown=nextjs:nodejs /app/node_modules ./node_modules
 COPY --from=builder --chown=nextjs:nodejs /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/styles ./styles
