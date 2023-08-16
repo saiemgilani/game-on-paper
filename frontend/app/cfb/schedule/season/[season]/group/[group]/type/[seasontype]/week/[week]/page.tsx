@@ -14,7 +14,7 @@ async function getCFBSchedule(params: any) {
         `&week=${params.week}`);
 
     return await fetch(endpoint, {
-        cache: 'no-store' ,
+        next: { revalidate: 3600},
         headers: { 'Content-Type': 'application/json' }}).then((res) => res.json());
 
 }
