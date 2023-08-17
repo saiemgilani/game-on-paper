@@ -32,7 +32,24 @@ WORKDIR /code
 COPY --from=pybuilder /root/.local /root/.local
 COPY --from=rbase /src/data ./data
 
-COPY . ./
+COPY ./cfb ./cfb
+COPY ./utils ./utils
+COPY ./__init__.py ./__init__.py
+COPY ./app.py ./app.py
+COPY ./favicon.ico  ./favicon.ico
+COPY ./requirements.txt ./requirements.txt
+
+
+ARG REDIS_URL
+ENV REDIS_URL=${REDIS_URL}
+ARG DD_API_KEY
+ENV DD_API_KEY=${DD_API_KEY}
+ARG DD_LOGGING_ENV
+ENV DD_LOGGING_ENV=${DD_LOGGING_ENV}
+ARG DD_HOSTNAME
+ENV DD_HOSTNAME=${DD_HOSTNAME}
+ARG DD_PY_SERVICE
+ENV DD_PY_SERVICE=${DD_PY_SERVICE}
 
 ENV PORT=7000
 CMD python app.py

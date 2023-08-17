@@ -16,3 +16,4 @@ fastapi-redis-cache==0.2.5
 sqlalchemy>=2.0.19
 asyncer==0.0.2
 prometheus-client>=0.17.0
+datadog-api-client==2.15.0

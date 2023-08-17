@@ -1,5 +1,3 @@
-import logging
-import time
 import traceback
 from typing import Optional
 
@@ -12,6 +10,7 @@ from fastapi.responses import ORJSONResponse
 from sportsdataverse.cfb import espn_cfb_schedule
 from sportsdataverse.cfb.cfb_pbp import CFBPlayProcess
 from sportsdataverse.dl_utils import download, underscore
+from utils.logging_dd import logger
 
 
 def calculateGEI(plays, homeTeamId):
@@ -372,7 +371,7 @@ def get_cfb_game(request: Request, gameId: str) -> Optional[None]:
             f"https://raw.githubusercontent.com/sportsdataverse/gp-cfb-raw/main/cfb/json/final/{gameId}.json"
         )
         if game_resp.status_code == 200:
-            logging.info(f"Successfully pulled cfb game from gp_cfb_raw (GH): {gameId}")
+            logger.info(f"Successfully pulled cfb game from gp_cfb_raw (GH): {gameId}")
             return ORJSONResponse(content=game_resp.json(), status_code=200, media_type="application/json")
         # cacheBuster = str(int(time.time() * 1000))
         headers = {
@@ -404,7 +403,7 @@ def get_cfb_game(request: Request, gameId: str) -> Optional[None]:
                 "awayTeamMatchup": awayPercentiles,
                 "homeTeamMatchup": homePercentiles,
             }
-            logging.info(f"Successfully processed cfb_game_pre-game: {gameId}")
+            logger.info(f"Successfully processed cfb_game_pre-game: {gameId}")
             return ORJSONResponse(content=result, status_code=200, media_type="application/json")
 
         def cfb_game_in_play(gameId):
@@ -516,18 +515,18 @@ def get_cfb_game(request: Request, gameId: str) -> Optional[None]:
 
         result = cfb_game_in_play(gameId)
 
-        # logging.getLogger("root").info(result)
-        logging.info(f"Successfully processed cfb_game_in_play: {gameId}")
+        # logger.getLogger("root").info(result)
+        logger.info(f"Successfully processed cfb_game_in_play: {gameId}")
         return ORJSONResponse(result, status_code=200, media_type="application/json")
     except KeyError:
-        logging.exception(f"KeyError: game_id =  game_id = {gameId}\n {traceback.format_exc()}")
+        logger.exception(f"KeyError: game_id =  game_id = {gameId}\n {traceback.format_exc()}")
         return ORJSONResponse(
             content={"status": "bad", "message": "ESPN payload is malformed. Data not available."},
             status_code=404,
             media_type="application/json",
         )
     except Exception:
-        logging.exception(f"Error: game_id =  game_id = {gameId}\n {traceback.format_exc()}")
+        logger.exception(f"Error: game_id =  game_id = {gameId}\n {traceback.format_exc()}")
         return ORJSONResponse(
             content={"status": "bad", "message": "Unknown error occurred, check logs."},
             status_code=500,
