@@ -73,7 +73,7 @@ services:
       - cache
       - dd_agent
     healthcheck:
-      test: curl --fail http://localhost:3000/cfb/scoreboard || exit 1
+      test: curl --fail http://node:3000/cfb/scoreboard || exit 1
       interval: 180s
       retries: 5
       start_period: 20s
@@ -85,13 +85,21 @@ services:
       - game-on-paper-site
     labels:
       com.datadoghq.ad.logs: '[{"source": "fastapi", "service": "fastapi"}]'
+    env_file:
+      - .env
+    environment:
+      REDIS_URL: "${REDIS_URL}"
+      DD_LOGGING_ENV: "${DD_LOGGING_ENV}"
+      DD_HOSTNAME: "${DD_HOSTNAME}"
+      DD_PY_SERVICE: "${DD_PY_SERVICE}"
+      DD_API_KEY: "${DD_API_KEY}"
     expose:
       - 7000
     ports:
       - 7000:7000
     healthcheck:
       test: curl --fail http://python:7000/py || exit 1
-      interval: 120s
+      interval: 180s
       retries: 5
       start_period: 20s
       timeout: 10s
