@@ -15,7 +15,7 @@ export default function CFBGameHeader({ awayTeam, homeTeam, competitions, showSc
         <>
         <div className="grid grid-flow-row auto-rows-auto justify-center  ">
             <div className="flex px-2 py-2 justify-center items-center gap-3">
-                <h2 className="text-xl sm:text-2xl md:text-3xl justify-center font-chivo">
+                <h2 className="text-md sm:text-xl md:text-2xl justify-center font-chivo">
                     {showScores ? (awayTeamLocation + ' ' + awayTeam.score + ' @ ' + homeTeamLocation + ' ' + homeTeam.score):
                       (awayTeamLocation + ' @ ' + homeTeamLocation )}
                 </h2>

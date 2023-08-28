@@ -32,7 +32,6 @@ export function CfbScheduleSelect() {
             group: group,
             seasontype: week === "Bowls" ? "3" : "2"
         };
-        console.log(data)
         let baseUrl = "/cfb/schedule/"
         if (data.year != "-1" && data.week != "-1") {
             baseUrl += `season/${data.year}/group/${data.group}/type/`
@@ -41,13 +40,13 @@ export function CfbScheduleSelect() {
         }
         router.push(baseUrl)
 
-      };
+    };
     return (
         <>
             <form className="flex justify-between" id="dropdown-form" onSubmit={handleSubmit}>
                 <div className="grid grid-flow-row auto-rows-auto">
                     <div className="grid grid-cols-4 px-4">
-                        <select className="form-select form-select-lg h-9 px-3 border rounded-md" id="yearSelect" onChange={(event) => setYear(event?.target.value)}>
+                        <select className="form-select form-select-lg h-9 px-1 sm:px-3 border rounded-md" id="yearSelect" onChange={(event) => setYear(event?.target.value)}>
                             <option value="-1">Year</option>
                             {yrRange.reverse().map((year) => (
                                 <option key={year}  value={year}>
@@ -55,7 +54,7 @@ export function CfbScheduleSelect() {
                                 </option>
                             ))}
                         </select>
-                        <select className="form-select form-select-lg h-9 px-3 border rounded-md" id="weekSelect" onChange={(event) => setWeek(event?.target.value)}>
+                        <select className="form-select form-select-lg h-9 px-1 sm:px-3 border rounded-md" id="weekSelect" onChange={(event) => setWeek(event?.target.value)}>
                             <option value="-1">Week</option>
                             {weeks.map((week) => (
                                 <option key={week}  value={week}>
@@ -64,7 +63,7 @@ export function CfbScheduleSelect() {
                             ))}
                         </select>
 
-                        <select className="form-select form-select-lg h-9 px-3 border rounded-md" id="groupSelect" onChange={(event) => setGroup(event?.target.value)}>
+                        <select className="form-select form-select-lg h-9 px-1 sm:px-3 border rounded-md" id="groupSelect" onChange={(event) => setGroup(event?.target.value)}>
                             <option value="80">FBS (I-A)</option>
                             {Conferences.map((group) => (
                                 <option key={group.id}  value={group.id}>
@@ -72,7 +71,7 @@ export function CfbScheduleSelect() {
                                 </option>
                             ))}
                         </select>
-                        <button type="submit" className="h-9 px-3 border bg-blue-500 hover:bg-blue-600 rounded-md">View</button>
+                        <button type="submit" className="h-9 px-1 sm:px-3 border bg-blue-500 hover:bg-blue-600 rounded-md">View</button>
                     </div>
                 </div>
             </form>
