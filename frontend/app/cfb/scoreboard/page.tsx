@@ -1,4 +1,4 @@
-import {pyApiOrigin} from '@/lib/urlConfig';
+import { pyApiOrigin } from '@/lib/urlConfig';
 import { Metadata, ResolvingMetadata } from 'next';
 import PageTop from '@/components/page-top';
 import ScoreCard from '@/components/score-card';
@@ -7,11 +7,12 @@ import { CfbScheduleSelect } from '@/components/CFB/cfb-schedule-select';
 
 async function getCFBScoreboard() {
     // console.log(pyApiOrigin+'/cfb/scoreboard')
-    const endpoint = new URL(pyApiOrigin+'/cfb/scoreboard');
+    const endpoint = new URL(pyApiOrigin + '/cfb/scoreboard');
 
     return await fetch(endpoint, {
-        next: { revalidate: 30},
-        headers: { 'Content-Type': 'application/json' }}).then((res) => res.json());
+        cache: 'no-cache',
+        headers: { 'Content-Type': 'application/json' }
+    }).then((res) => res.json());
 
 }
 
@@ -33,8 +34,8 @@ export async function generateMetadata(): Promise<Metadata> {
             maximumScale: 1.0,
             userScalable: false,
         },
-        authors: [{ name: 'Akshay Easwaran' }, { name: 'Saiem Gilani'}],
-        creator: 'Akshay Easwaran'+', '+'Saiem Gilani',
+        authors: [{ name: 'Akshay Easwaran' }, { name: 'Saiem Gilani' }],
+        creator: 'Akshay Easwaran' + ', ' + 'Saiem Gilani',
         themeColor: [
             { media: "(prefers-color-scheme: light)", color: "white" },
             { media: "(prefers-color-scheme: dark)", color: "black" },
@@ -77,24 +78,24 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function Scoreboard() {
     const data: ScoreboardEvent[] = await getCFBScoreboard();
-    const filtered = data?.filter((x: any) => ( x.status_type_name !== 'STATUS_CANCELED' && x.status_type_name !== 'STATUS_POSTPONED') )
+    const filtered = data?.filter((x: any) => (x.status_type_name !== 'STATUS_CANCELED' && x.status_type_name !== 'STATUS_POSTPONED'))
     // console.log(filtered)
     return (
         <>
-        <div>
-            <PageTop pageTitle="College Football Scoreboard" headingClass='h1'></PageTop>
-        </div>
-        <div className="flex flex-row justify-center">
-            <CfbScheduleSelect />
-        </div>
-        {filtered !== undefined && filtered.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 ">
-                {filtered?.map((score: any, i: number) => (
-                    <ScoreCard key={i} showRecords={true} props={score} />
-                ))}
-            </div>) :
-            <div className="flex justify-center items-center h-24"><p className="text-2xl text-center">No Games Found</p></div>
-        }
+            <div>
+                <PageTop pageTitle="College Football Scoreboard" headingClass='h1'></PageTop>
+            </div>
+            <div className="flex flex-row justify-center">
+                <CfbScheduleSelect />
+            </div>
+            {filtered !== undefined && filtered.length > 0 ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 ">
+                    {filtered?.map((score: any, i: number) => (
+                        <ScoreCard key={i} showRecords={true} props={score} />
+                    ))}
+                </div>) :
+                <div className="flex justify-center items-center h-24"><p className="text-2xl text-center">No Games Found</p></div>
+            }
         </>
     )
 }

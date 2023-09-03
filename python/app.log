@@ -1,0 +1,1905 @@
+2023-09-02 22:38:42,407 [13236] [INFO] Starting the app logging...
+2023-09-02 22:38:42,437 [13236] [DEBUG] <class 'ddtrace.internal.module.ModuleWatchdog'> installed
+2023-09-02 22:38:42,851 [13236] [DEBUG] initialized RateSampler, sample 100.0% of traces
+2023-09-02 22:38:42,852 [13236] [DEBUG] initialized DatadogSampler(agent_rates={}, limiter=RateLimiter(rate_limit=100, tokens=100, last_update_ns=293724484000000, effective_rate=1.0), rules=[])
+2023-09-02 22:38:42,853 [13236] [DEBUG] initialized RateSampler, sample 100.0% of traces
+2023-09-02 22:38:42,855 [13236] [DEBUG] initialized processor EndpointCallCounterProcessor()
+2023-09-02 22:38:42,856 [13236] [DEBUG] initialized trace processor TraceTagsProcessor()
+2023-09-02 22:38:42,859 [13236] [DEBUG] initialized trace processor TraceSamplingProcessor(_compute_stats_enabled=False)
+2023-09-02 22:38:42,860 [13236] [DEBUG] initialized processor TopLevelSpanProcessor()
+2023-09-02 22:38:42,861 [13236] [DEBUG] initialized processor SpanAggregator(_partial_flush_enabled=True, _partial_flush_min_spans=500, _trace_processors=[TraceTagsProcessor(), TraceSamplingProcessor(_compute_stats_enabled=False)], _writer=AgentWriter(status=<ServiceStatus.STOPPED: 'stopped'>, _interval=1.0))
+2023-09-02 22:38:43,221 [13236] [INFO] patched 1/1 modules (fastapi)
+2023-09-02 22:38:43,400 [13236] [INFO] Started server process [13236]
+2023-09-02 22:38:43,582 [13236] [INFO] Waiting for application startup.
+2023-09-02 22:38:43,616 [13236] [INFO] Application startup complete.
+2023-09-02 22:38:43,661 [13236] [INFO] Uvicorn running on http://0.0.0.0:7000 (Press CTRL+C to quit)
+2023-09-02 22:40:38,554 [13236] [INFO] Handling /py/cfb/game/:gameId request
+2023-09-02 22:40:40,614 [13236] [INFO] 127.0.0.1:54817 - "GET /py/cfb/game/401520169 HTTP/1.1" 500
+2023-09-02 22:40:44,623 [13236] [ERROR] Task exception was never retrieved
+future: <Task finished name='Task-7' coro=<RequestResponseCycle.run_asgi() done, defined at D:\Python\lib\site-packages\uvicorn\protocols\http\h11_impl.py:406> exception=TypeError('Object of type type is not JSON serializable')>
+Traceback (most recent call last):
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\cfb\helpers_cfb.py", line 516, in get_cfb_game
+    result = cfb_game_in_play(gameId)
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\cfb\helpers_cfb.py", line 427, in cfb_game_in_play
+    processed_data.run_processing_pipeline()
+  File "D:\GitHub-Data\sdv-dev\sdv-py\sportsdataverse\cfb\cfb_pbp.py", line 4501, in run_processing_pipeline
+    pbp_txt = self.__helper_cfb_pbp_drives(self.json)
+  File "D:\GitHub-Data\sdv-dev\sdv-py\sportsdataverse\cfb\cfb_pbp.py", line 187, in __helper_cfb_pbp_drives
+    pbp_txt = self.__helper_cfb_pbp_features(pbp_txt, init)
+  File "D:\GitHub-Data\sdv-dev\sdv-py\sportsdataverse\cfb\cfb_pbp.py", line 468, in __helper_cfb_pbp_features
+    - pl.struct(pl.col(["id", "period.number"])).map_elements(
+  File "D:\Python\lib\site-packages\polars\expr\expr.py", line 3919, in map_elements
+    return self.map_batches(wrap_f, agg_list=True, return_dtype=return_dtype)
+  File "D:\Python\lib\site-packages\polars\expr\expr.py", line 3734, in map_batches
+    self._pyexpr.map_batches(function, return_dtype, agg_list)
+AttributeError: 'builtins.PyExpr' object has no attribute 'map_batches'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Python\lib\site-packages\uvicorn\protocols\http\h11_impl.py", line 408, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "D:\Python\lib\site-packages\uvicorn\middleware\proxy_headers.py", line 84, in __call__
+    return await self.app(scope, receive, send)
+  File "D:\Python\lib\site-packages\fastapi\applications.py", line 292, in __call__
+    await super().__call__(scope, receive, send)
+  File "D:\Python\lib\site-packages\starlette\applications.py", line 122, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\Python\lib\site-packages\ddtrace\contrib\asgi\middleware.py", line 265, in __call__
+    reraise(exc_type, exc_val, exc_tb)
+  File "C:\Users\saiem\AppData\Roaming\Python\Python310\site-packages\six.py", line 719, in reraise
+    raise value
+  File "D:\Python\lib\site-packages\ddtrace\contrib\asgi\middleware.py", line 260, in __call__
+    return await self.app(scope, receive, wrapped_send)
+  File "D:\Python\lib\site-packages\starlette\middleware\errors.py", line 184, in __call__
+    raise exc
+  File "D:\Python\lib\site-packages\starlette\middleware\errors.py", line 162, in __call__
+    await self.app(scope, receive, _send)
+  File "D:\Python\lib\site-packages\starlette\middleware\cors.py", line 83, in __call__
+    await self.app(scope, receive, send)
+  File "D:\Python\lib\site-packages\starlette\middleware\exceptions.py", line 79, in __call__
+    raise exc
+  File "D:\Python\lib\site-packages\starlette\middleware\exceptions.py", line 68, in __call__
+    await self.app(scope, receive, sender)
+  File "D:\Python\lib\site-packages\fastapi\middleware\asyncexitstack.py", line 20, in __call__
+    raise e
+  File "D:\Python\lib\site-packages\fastapi\middleware\asyncexitstack.py", line 17, in __call__
+    await self.app(scope, receive, send)
+  File "D:\Python\lib\site-packages\starlette\routing.py", line 718, in __call__
+    await route.handle(scope, receive, send)
+  File "D:\Python\lib\site-packages\starlette\routing.py", line 276, in handle
+    await self.app(scope, receive, send)
+  File "D:\Python\lib\site-packages\starlette\routing.py", line 66, in app
+    response = await func(request)
+  File "D:\Python\lib\site-packages\fastapi\routing.py", line 273, in app
+    raw_response = await run_endpoint_function(
+  File "D:\Python\lib\site-packages\fastapi\routing.py", line 190, in run_endpoint_function
+    return await dependant.call(**values)
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\app.py", line 208, in cfb_game
+    return await asyncify(get_cfb_game)(request, gameId)
+  File "D:\Python\lib\site-packages\asyncer\_main.py", line 358, in wrapper
+    return await anyio.to_thread.run_sync(
+  File "D:\Python\lib\site-packages\anyio\to_thread.py", line 33, in run_sync
+    return await get_asynclib().run_sync_in_worker_thread(
+  File "D:\Python\lib\site-packages\anyio\_backends\_asyncio.py", line 877, in run_sync_in_worker_thread
+    return await future
+  File "D:\Python\lib\site-packages\anyio\_backends\_asyncio.py", line 807, in run
+    result = context.run(func, *args)
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\cfb\helpers_cfb.py", line 529, in get_cfb_game
+    logger.exception(f"Error: game_id =  game_id = {gameId}\n {traceback.format_exc()}")
+  File "D:\Python\lib\logging\__init__.py", line 1512, in exception
+    self.error(msg, *args, exc_info=exc_info, **kwargs)
+  File "D:\Python\lib\logging\__init__.py", line 1506, in error
+    self._log(ERROR, msg, args, **kwargs)
+  File "D:\Python\lib\logging\__init__.py", line 1624, in _log
+    self.handle(record)
+  File "D:\Python\lib\logging\__init__.py", line 1634, in handle
+    self.callHandlers(record)
+  File "D:\Python\lib\logging\__init__.py", line 1696, in callHandlers
+    hdlr.handle(record)
+  File "D:\Python\lib\logging\__init__.py", line 968, in handle
+    self.emit(record)
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\utils\logging_dd.py", line 39, in emit
+    toJson = json.dumps(
+  File "D:\Python\lib\json\__init__.py", line 231, in dumps
+    return _default_encoder.encode(obj)
+  File "D:\Python\lib\json\encoder.py", line 199, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "D:\Python\lib\json\encoder.py", line 257, in iterencode
+    return _iterencode(o, 0)
+  File "D:\Python\lib\json\encoder.py", line 179, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type type is not JSON serializable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Python\lib\site-packages\uvicorn\protocols\http\h11_impl.py", line 413, in run_asgi
+    self.logger.error(msg, exc_info=exc)
+  File "D:\Python\lib\logging\__init__.py", line 1506, in error
+    self._log(ERROR, msg, args, **kwargs)
+  File "D:\Python\lib\logging\__init__.py", line 1624, in _log
+    self.handle(record)
+  File "D:\Python\lib\logging\__init__.py", line 1634, in handle
+    self.callHandlers(record)
+  File "D:\Python\lib\logging\__init__.py", line 1696, in callHandlers
+    hdlr.handle(record)
+  File "D:\Python\lib\logging\__init__.py", line 968, in handle
+    self.emit(record)
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\utils\logging_dd.py", line 39, in emit
+    toJson = json.dumps(
+  File "D:\Python\lib\json\__init__.py", line 231, in dumps
+    return _default_encoder.encode(obj)
+  File "D:\Python\lib\json\encoder.py", line 199, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "D:\Python\lib\json\encoder.py", line 257, in iterencode
+    return _iterencode(o, 0)
+  File "D:\Python\lib\json\encoder.py", line 179, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type type is not JSON serializable
+2023-09-02 22:40:44,820 [13236] [WARNING] Error retrieving cache key 'gp-cache:cfb_scoreboard:42d2007cc62fbde836fcb846a04a1999' from backend:
+Traceback (most recent call last):
+  File "D:\Python\lib\site-packages\redis\asyncio\connection.py", line 608, in connect
+    await self.retry.call_with_retry(
+  File "D:\Python\lib\site-packages\redis\asyncio\retry.py", line 59, in call_with_retry
+    return await do()
+  File "D:\Python\lib\site-packages\redis\asyncio\connection.py", line 645, in _connect
+    reader, writer = await asyncio.open_connection(
+  File "D:\Python\lib\asyncio\streams.py", line 48, in open_connection
+    transport, _ = await loop.create_connection(
+  File "D:\Python\lib\asyncio\base_events.py", line 1036, in create_connection
+    infos = await self._ensure_resolved(
+  File "D:\Python\lib\asyncio\base_events.py", line 1418, in _ensure_resolved
+    return await loop.getaddrinfo(host, port, family=family, type=type,
+  File "D:\Python\lib\asyncio\base_events.py", line 863, in getaddrinfo
+    return await self.run_in_executor(
+  File "D:\Python\lib\concurrent\futures\thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "D:\Python\lib\socket.py", line 955, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Python\lib\site-packages\fastapi_cache\decorator.py", line 137, in inner
+    ttl, ret = await backend.get_with_ttl(cache_key)
+  File "D:\Python\lib\site-packages\fastapi_cache\backends\redis.py", line 16, in get_with_ttl
+    return await pipe.ttl(key).get(key).execute()
+  File "D:\Python\lib\site-packages\redis\asyncio\client.py", line 1392, in execute
+    conn = await self.connection_pool.get_connection("MULTI", self.shard_hint)
+  File "D:\Python\lib\site-packages\redis\asyncio\connection.py", line 1413, in get_connection
+    await connection.connect()
+  File "D:\Python\lib\site-packages\redis\asyncio\connection.py", line 616, in connect
+    raise ConnectionError(self._error_message(e))
+redis.exceptions.ConnectionError: Error 11001 connecting to redis:6379. 11001.
+2023-09-02 22:40:44,980 [13236] [INFO] Handling /py/cfb/scoreboard request
+2023-09-02 22:40:45,021 [13236] [WARNING] Error retrieving cache key 'gp-cache:cfb_scoreboard:42d2007cc62fbde836fcb846a04a1999' from backend:
+Traceback (most recent call last):
+  File "D:\Python\lib\site-packages\redis\asyncio\connection.py", line 608, in connect
+    await self.retry.call_with_retry(
+  File "D:\Python\lib\site-packages\redis\asyncio\retry.py", line 59, in call_with_retry
+    return await do()
+  File "D:\Python\lib\site-packages\redis\asyncio\connection.py", line 645, in _connect
+    reader, writer = await asyncio.open_connection(
+  File "D:\Python\lib\asyncio\streams.py", line 48, in open_connection
+    transport, _ = await loop.create_connection(
+  File "D:\Python\lib\asyncio\base_events.py", line 1036, in create_connection
+    infos = await self._ensure_resolved(
+  File "D:\Python\lib\asyncio\base_events.py", line 1418, in _ensure_resolved
+    return await loop.getaddrinfo(host, port, family=family, type=type,
+  File "D:\Python\lib\asyncio\base_events.py", line 863, in getaddrinfo
+    return await self.run_in_executor(
+  File "D:\Python\lib\concurrent\futures\thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "D:\Python\lib\socket.py", line 955, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Python\lib\site-packages\fastapi_cache\decorator.py", line 137, in inner
+    ttl, ret = await backend.get_with_ttl(cache_key)
+  File "D:\Python\lib\site-packages\fastapi_cache\backends\redis.py", line 16, in get_with_ttl
+    return await pipe.ttl(key).get(key).execute()
+  File "D:\Python\lib\site-packages\redis\asyncio\client.py", line 1392, in execute
+    conn = await self.connection_pool.get_connection("MULTI", self.shard_hint)
+  File "D:\Python\lib\site-packages\redis\asyncio\connection.py", line 1413, in get_connection
+    await connection.connect()
+  File "D:\Python\lib\site-packages\redis\asyncio\connection.py", line 616, in connect
+    raise ConnectionError(self._error_message(e))
+redis.exceptions.ConnectionError: Error 11001 connecting to redis:6379. 11001.
+2023-09-02 22:40:45,027 [13236] [INFO] Handling /py/cfb/scoreboard request
+2023-09-02 22:40:45,262 [13236] [INFO] Handling /py/cfb/game/:gameId request
+2023-09-02 22:40:46,753 [13236] [INFO] Handling /py/cfb/game/:gameId request
+2023-09-02 22:40:47,105 [13236] [INFO] Handling /py/cfb/game/:gameId request
+2023-09-02 22:40:48,890 [13236] [INFO] 127.0.0.1:54872 - "GET /py/cfb/game/401520167 HTTP/1.1" 500
+2023-09-02 22:40:49,002 [13236] [ERROR] Task exception was never retrieved
+future: <Task finished name='Task-14' coro=<RequestResponseCycle.run_asgi() done, defined at D:\Python\lib\site-packages\uvicorn\protocols\http\h11_impl.py:406> exception=TypeError('Object of type type is not JSON serializable')>
+Traceback (most recent call last):
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\cfb\helpers_cfb.py", line 516, in get_cfb_game
+    result = cfb_game_in_play(gameId)
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\cfb\helpers_cfb.py", line 427, in cfb_game_in_play
+    processed_data.run_processing_pipeline()
+  File "D:\GitHub-Data\sdv-dev\sdv-py\sportsdataverse\cfb\cfb_pbp.py", line 4501, in run_processing_pipeline
+    pbp_txt = self.__helper_cfb_pbp_drives(self.json)
+  File "D:\GitHub-Data\sdv-dev\sdv-py\sportsdataverse\cfb\cfb_pbp.py", line 187, in __helper_cfb_pbp_drives
+    pbp_txt = self.__helper_cfb_pbp_features(pbp_txt, init)
+  File "D:\GitHub-Data\sdv-dev\sdv-py\sportsdataverse\cfb\cfb_pbp.py", line 468, in __helper_cfb_pbp_features
+    - pl.struct(pl.col(["id", "period.number"])).map_elements(
+  File "D:\Python\lib\site-packages\polars\expr\expr.py", line 3919, in map_elements
+    return self.map_batches(wrap_f, agg_list=True, return_dtype=return_dtype)
+  File "D:\Python\lib\site-packages\polars\expr\expr.py", line 3734, in map_batches
+    self._pyexpr.map_batches(function, return_dtype, agg_list)
+AttributeError: 'builtins.PyExpr' object has no attribute 'map_batches'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Python\lib\site-packages\uvicorn\protocols\http\h11_impl.py", line 408, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "D:\Python\lib\site-packages\uvicorn\middleware\proxy_headers.py", line 84, in __call__
+    return await self.app(scope, receive, send)
+  File "D:\Python\lib\site-packages\fastapi\applications.py", line 292, in __call__
+    await super().__call__(scope, receive, send)
+  File "D:\Python\lib\site-packages\starlette\applications.py", line 122, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\Python\lib\site-packages\ddtrace\contrib\asgi\middleware.py", line 265, in __call__
+    reraise(exc_type, exc_val, exc_tb)
+  File "C:\Users\saiem\AppData\Roaming\Python\Python310\site-packages\six.py", line 719, in reraise
+    raise value
+  File "D:\Python\lib\site-packages\ddtrace\contrib\asgi\middleware.py", line 260, in __call__
+    return await self.app(scope, receive, wrapped_send)
+  File "D:\Python\lib\site-packages\starlette\middleware\errors.py", line 184, in __call__
+    raise exc
+  File "D:\Python\lib\site-packages\starlette\middleware\errors.py", line 162, in __call__
+    await self.app(scope, receive, _send)
+  File "D:\Python\lib\site-packages\starlette\middleware\cors.py", line 83, in __call__
+    await self.app(scope, receive, send)
+  File "D:\Python\lib\site-packages\starlette\middleware\exceptions.py", line 79, in __call__
+    raise exc
+  File "D:\Python\lib\site-packages\starlette\middleware\exceptions.py", line 68, in __call__
+    await self.app(scope, receive, sender)
+  File "D:\Python\lib\site-packages\fastapi\middleware\asyncexitstack.py", line 20, in __call__
+    raise e
+  File "D:\Python\lib\site-packages\fastapi\middleware\asyncexitstack.py", line 17, in __call__
+    await self.app(scope, receive, send)
+  File "D:\Python\lib\site-packages\starlette\routing.py", line 718, in __call__
+    await route.handle(scope, receive, send)
+  File "D:\Python\lib\site-packages\starlette\routing.py", line 276, in handle
+    await self.app(scope, receive, send)
+  File "D:\Python\lib\site-packages\starlette\routing.py", line 66, in app
+    response = await func(request)
+  File "D:\Python\lib\site-packages\fastapi\routing.py", line 273, in app
+    raw_response = await run_endpoint_function(
+  File "D:\Python\lib\site-packages\fastapi\routing.py", line 190, in run_endpoint_function
+    return await dependant.call(**values)
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\app.py", line 208, in cfb_game
+    return await asyncify(get_cfb_game)(request, gameId)
+  File "D:\Python\lib\site-packages\asyncer\_main.py", line 358, in wrapper
+    return await anyio.to_thread.run_sync(
+  File "D:\Python\lib\site-packages\anyio\to_thread.py", line 33, in run_sync
+    return await get_asynclib().run_sync_in_worker_thread(
+  File "D:\Python\lib\site-packages\anyio\_backends\_asyncio.py", line 877, in run_sync_in_worker_thread
+    return await future
+  File "D:\Python\lib\site-packages\anyio\_backends\_asyncio.py", line 807, in run
+    result = context.run(func, *args)
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\cfb\helpers_cfb.py", line 529, in get_cfb_game
+    logger.exception(f"Error: game_id =  game_id = {gameId}\n {traceback.format_exc()}")
+  File "D:\Python\lib\logging\__init__.py", line 1512, in exception
+    self.error(msg, *args, exc_info=exc_info, **kwargs)
+  File "D:\Python\lib\logging\__init__.py", line 1506, in error
+    self._log(ERROR, msg, args, **kwargs)
+  File "D:\Python\lib\logging\__init__.py", line 1624, in _log
+    self.handle(record)
+  File "D:\Python\lib\logging\__init__.py", line 1634, in handle
+    self.callHandlers(record)
+  File "D:\Python\lib\logging\__init__.py", line 1696, in callHandlers
+    hdlr.handle(record)
+  File "D:\Python\lib\logging\__init__.py", line 968, in handle
+    self.emit(record)
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\utils\logging_dd.py", line 39, in emit
+    toJson = json.dumps(
+  File "D:\Python\lib\json\__init__.py", line 231, in dumps
+    return _default_encoder.encode(obj)
+  File "D:\Python\lib\json\encoder.py", line 199, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "D:\Python\lib\json\encoder.py", line 257, in iterencode
+    return _iterencode(o, 0)
+  File "D:\Python\lib\json\encoder.py", line 179, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type type is not JSON serializable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Python\lib\site-packages\uvicorn\protocols\http\h11_impl.py", line 413, in run_asgi
+    self.logger.error(msg, exc_info=exc)
+  File "D:\Python\lib\logging\__init__.py", line 1506, in error
+    self._log(ERROR, msg, args, **kwargs)
+  File "D:\Python\lib\logging\__init__.py", line 1624, in _log
+    self.handle(record)
+  File "D:\Python\lib\logging\__init__.py", line 1634, in handle
+    self.callHandlers(record)
+  File "D:\Python\lib\logging\__init__.py", line 1696, in callHandlers
+    hdlr.handle(record)
+  File "D:\Python\lib\logging\__init__.py", line 968, in handle
+    self.emit(record)
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\utils\logging_dd.py", line 39, in emit
+    toJson = json.dumps(
+  File "D:\Python\lib\json\__init__.py", line 231, in dumps
+    return _default_encoder.encode(obj)
+  File "D:\Python\lib\json\encoder.py", line 199, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "D:\Python\lib\json\encoder.py", line 257, in iterencode
+    return _iterencode(o, 0)
+  File "D:\Python\lib\json\encoder.py", line 179, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type type is not JSON serializable
+2023-09-02 22:40:49,127 [13236] [INFO] Handling /py/cfb/game/:gameId request
+2023-09-02 22:40:49,317 [13236] [INFO] Handling /py/cfb/game/:gameId request
+2023-09-02 22:40:49,645 [13236] [INFO] 127.0.0.1:54875 - "GET /py/cfb/game/401520169 HTTP/1.1" 500
+2023-09-02 22:40:50,651 [13236] [ERROR] Task exception was never retrieved
+future: <Task finished name='Task-17' coro=<RequestResponseCycle.run_asgi() done, defined at D:\Python\lib\site-packages\uvicorn\protocols\http\h11_impl.py:406> exception=TypeError('Object of type type is not JSON serializable')>
+Traceback (most recent call last):
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\cfb\helpers_cfb.py", line 516, in get_cfb_game
+    result = cfb_game_in_play(gameId)
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\cfb\helpers_cfb.py", line 427, in cfb_game_in_play
+    processed_data.run_processing_pipeline()
+  File "D:\GitHub-Data\sdv-dev\sdv-py\sportsdataverse\cfb\cfb_pbp.py", line 4501, in run_processing_pipeline
+    pbp_txt = self.__helper_cfb_pbp_drives(self.json)
+  File "D:\GitHub-Data\sdv-dev\sdv-py\sportsdataverse\cfb\cfb_pbp.py", line 187, in __helper_cfb_pbp_drives
+    pbp_txt = self.__helper_cfb_pbp_features(pbp_txt, init)
+  File "D:\GitHub-Data\sdv-dev\sdv-py\sportsdataverse\cfb\cfb_pbp.py", line 468, in __helper_cfb_pbp_features
+    - pl.struct(pl.col(["id", "period.number"])).map_elements(
+  File "D:\Python\lib\site-packages\polars\expr\expr.py", line 3919, in map_elements
+    return self.map_batches(wrap_f, agg_list=True, return_dtype=return_dtype)
+  File "D:\Python\lib\site-packages\polars\expr\expr.py", line 3734, in map_batches
+    self._pyexpr.map_batches(function, return_dtype, agg_list)
+AttributeError: 'builtins.PyExpr' object has no attribute 'map_batches'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Python\lib\site-packages\uvicorn\protocols\http\h11_impl.py", line 408, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "D:\Python\lib\site-packages\uvicorn\middleware\proxy_headers.py", line 84, in __call__
+    return await self.app(scope, receive, send)
+  File "D:\Python\lib\site-packages\fastapi\applications.py", line 292, in __call__
+    await super().__call__(scope, receive, send)
+  File "D:\Python\lib\site-packages\starlette\applications.py", line 122, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\Python\lib\site-packages\ddtrace\contrib\asgi\middleware.py", line 265, in __call__
+    reraise(exc_type, exc_val, exc_tb)
+  File "C:\Users\saiem\AppData\Roaming\Python\Python310\site-packages\six.py", line 719, in reraise
+    raise value
+  File "D:\Python\lib\site-packages\ddtrace\contrib\asgi\middleware.py", line 260, in __call__
+    return await self.app(scope, receive, wrapped_send)
+  File "D:\Python\lib\site-packages\starlette\middleware\errors.py", line 184, in __call__
+    raise exc
+  File "D:\Python\lib\site-packages\starlette\middleware\errors.py", line 162, in __call__
+    await self.app(scope, receive, _send)
+  File "D:\Python\lib\site-packages\starlette\middleware\cors.py", line 83, in __call__
+    await self.app(scope, receive, send)
+  File "D:\Python\lib\site-packages\starlette\middleware\exceptions.py", line 79, in __call__
+    raise exc
+  File "D:\Python\lib\site-packages\starlette\middleware\exceptions.py", line 68, in __call__
+    await self.app(scope, receive, sender)
+  File "D:\Python\lib\site-packages\fastapi\middleware\asyncexitstack.py", line 20, in __call__
+    raise e
+  File "D:\Python\lib\site-packages\fastapi\middleware\asyncexitstack.py", line 17, in __call__
+    await self.app(scope, receive, send)
+  File "D:\Python\lib\site-packages\starlette\routing.py", line 718, in __call__
+    await route.handle(scope, receive, send)
+  File "D:\Python\lib\site-packages\starlette\routing.py", line 276, in handle
+    await self.app(scope, receive, send)
+  File "D:\Python\lib\site-packages\starlette\routing.py", line 66, in app
+    response = await func(request)
+  File "D:\Python\lib\site-packages\fastapi\routing.py", line 273, in app
+    raw_response = await run_endpoint_function(
+  File "D:\Python\lib\site-packages\fastapi\routing.py", line 190, in run_endpoint_function
+    return await dependant.call(**values)
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\app.py", line 208, in cfb_game
+    return await asyncify(get_cfb_game)(request, gameId)
+  File "D:\Python\lib\site-packages\asyncer\_main.py", line 358, in wrapper
+    return await anyio.to_thread.run_sync(
+  File "D:\Python\lib\site-packages\anyio\to_thread.py", line 33, in run_sync
+    return await get_asynclib().run_sync_in_worker_thread(
+  File "D:\Python\lib\site-packages\anyio\_backends\_asyncio.py", line 877, in run_sync_in_worker_thread
+    return await future
+  File "D:\Python\lib\site-packages\anyio\_backends\_asyncio.py", line 807, in run
+    result = context.run(func, *args)
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\cfb\helpers_cfb.py", line 529, in get_cfb_game
+    logger.exception(f"Error: game_id =  game_id = {gameId}\n {traceback.format_exc()}")
+  File "D:\Python\lib\logging\__init__.py", line 1512, in exception
+    self.error(msg, *args, exc_info=exc_info, **kwargs)
+  File "D:\Python\lib\logging\__init__.py", line 1506, in error
+    self._log(ERROR, msg, args, **kwargs)
+  File "D:\Python\lib\logging\__init__.py", line 1624, in _log
+    self.handle(record)
+  File "D:\Python\lib\logging\__init__.py", line 1634, in handle
+    self.callHandlers(record)
+  File "D:\Python\lib\logging\__init__.py", line 1696, in callHandlers
+    hdlr.handle(record)
+  File "D:\Python\lib\logging\__init__.py", line 968, in handle
+    self.emit(record)
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\utils\logging_dd.py", line 39, in emit
+    toJson = json.dumps(
+  File "D:\Python\lib\json\__init__.py", line 231, in dumps
+    return _default_encoder.encode(obj)
+  File "D:\Python\lib\json\encoder.py", line 199, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "D:\Python\lib\json\encoder.py", line 257, in iterencode
+    return _iterencode(o, 0)
+  File "D:\Python\lib\json\encoder.py", line 179, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type type is not JSON serializable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Python\lib\site-packages\uvicorn\protocols\http\h11_impl.py", line 413, in run_asgi
+    self.logger.error(msg, exc_info=exc)
+  File "D:\Python\lib\logging\__init__.py", line 1506, in error
+    self._log(ERROR, msg, args, **kwargs)
+  File "D:\Python\lib\logging\__init__.py", line 1624, in _log
+    self.handle(record)
+  File "D:\Python\lib\logging\__init__.py", line 1634, in handle
+    self.callHandlers(record)
+  File "D:\Python\lib\logging\__init__.py", line 1696, in callHandlers
+    hdlr.handle(record)
+  File "D:\Python\lib\logging\__init__.py", line 968, in handle
+    self.emit(record)
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\utils\logging_dd.py", line 39, in emit
+    toJson = json.dumps(
+  File "D:\Python\lib\json\__init__.py", line 231, in dumps
+    return _default_encoder.encode(obj)
+  File "D:\Python\lib\json\encoder.py", line 199, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "D:\Python\lib\json\encoder.py", line 257, in iterencode
+    return _iterencode(o, 0)
+  File "D:\Python\lib\json\encoder.py", line 179, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type type is not JSON serializable
+2023-09-02 22:40:51,926 [13236] [INFO] 127.0.0.1:54872 - "GET /py/cfb/game/401520167 HTTP/1.1" 500
+2023-09-02 22:40:52,080 [13236] [ERROR] Task exception was never retrieved
+future: <Task finished name='Task-20' coro=<RequestResponseCycle.run_asgi() done, defined at D:\Python\lib\site-packages\uvicorn\protocols\http\h11_impl.py:406> exception=TypeError('Object of type type is not JSON serializable')>
+Traceback (most recent call last):
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\cfb\helpers_cfb.py", line 516, in get_cfb_game
+    result = cfb_game_in_play(gameId)
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\cfb\helpers_cfb.py", line 427, in cfb_game_in_play
+    processed_data.run_processing_pipeline()
+  File "D:\GitHub-Data\sdv-dev\sdv-py\sportsdataverse\cfb\cfb_pbp.py", line 4501, in run_processing_pipeline
+    pbp_txt = self.__helper_cfb_pbp_drives(self.json)
+  File "D:\GitHub-Data\sdv-dev\sdv-py\sportsdataverse\cfb\cfb_pbp.py", line 187, in __helper_cfb_pbp_drives
+    pbp_txt = self.__helper_cfb_pbp_features(pbp_txt, init)
+  File "D:\GitHub-Data\sdv-dev\sdv-py\sportsdataverse\cfb\cfb_pbp.py", line 468, in __helper_cfb_pbp_features
+    - pl.struct(pl.col(["id", "period.number"])).map_elements(
+  File "D:\Python\lib\site-packages\polars\expr\expr.py", line 3919, in map_elements
+    return self.map_batches(wrap_f, agg_list=True, return_dtype=return_dtype)
+  File "D:\Python\lib\site-packages\polars\expr\expr.py", line 3734, in map_batches
+    self._pyexpr.map_batches(function, return_dtype, agg_list)
+AttributeError: 'builtins.PyExpr' object has no attribute 'map_batches'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Python\lib\site-packages\uvicorn\protocols\http\h11_impl.py", line 408, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "D:\Python\lib\site-packages\uvicorn\middleware\proxy_headers.py", line 84, in __call__
+    return await self.app(scope, receive, send)
+  File "D:\Python\lib\site-packages\fastapi\applications.py", line 292, in __call__
+    await super().__call__(scope, receive, send)
+  File "D:\Python\lib\site-packages\starlette\applications.py", line 122, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\Python\lib\site-packages\ddtrace\contrib\asgi\middleware.py", line 265, in __call__
+    reraise(exc_type, exc_val, exc_tb)
+  File "C:\Users\saiem\AppData\Roaming\Python\Python310\site-packages\six.py", line 719, in reraise
+    raise value
+  File "D:\Python\lib\site-packages\ddtrace\contrib\asgi\middleware.py", line 260, in __call__
+    return await self.app(scope, receive, wrapped_send)
+  File "D:\Python\lib\site-packages\starlette\middleware\errors.py", line 184, in __call__
+    raise exc
+  File "D:\Python\lib\site-packages\starlette\middleware\errors.py", line 162, in __call__
+    await self.app(scope, receive, _send)
+  File "D:\Python\lib\site-packages\starlette\middleware\cors.py", line 83, in __call__
+    await self.app(scope, receive, send)
+  File "D:\Python\lib\site-packages\starlette\middleware\exceptions.py", line 79, in __call__
+    raise exc
+  File "D:\Python\lib\site-packages\starlette\middleware\exceptions.py", line 68, in __call__
+    await self.app(scope, receive, sender)
+  File "D:\Python\lib\site-packages\fastapi\middleware\asyncexitstack.py", line 20, in __call__
+    raise e
+  File "D:\Python\lib\site-packages\fastapi\middleware\asyncexitstack.py", line 17, in __call__
+    await self.app(scope, receive, send)
+  File "D:\Python\lib\site-packages\starlette\routing.py", line 718, in __call__
+    await route.handle(scope, receive, send)
+  File "D:\Python\lib\site-packages\starlette\routing.py", line 276, in handle
+    await self.app(scope, receive, send)
+  File "D:\Python\lib\site-packages\starlette\routing.py", line 66, in app
+    response = await func(request)
+  File "D:\Python\lib\site-packages\fastapi\routing.py", line 273, in app
+    raw_response = await run_endpoint_function(
+  File "D:\Python\lib\site-packages\fastapi\routing.py", line 190, in run_endpoint_function
+    return await dependant.call(**values)
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\app.py", line 208, in cfb_game
+    return await asyncify(get_cfb_game)(request, gameId)
+  File "D:\Python\lib\site-packages\asyncer\_main.py", line 358, in wrapper
+    return await anyio.to_thread.run_sync(
+  File "D:\Python\lib\site-packages\anyio\to_thread.py", line 33, in run_sync
+    return await get_asynclib().run_sync_in_worker_thread(
+  File "D:\Python\lib\site-packages\anyio\_backends\_asyncio.py", line 877, in run_sync_in_worker_thread
+    return await future
+  File "D:\Python\lib\site-packages\anyio\_backends\_asyncio.py", line 807, in run
+    result = context.run(func, *args)
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\cfb\helpers_cfb.py", line 529, in get_cfb_game
+    logger.exception(f"Error: game_id =  game_id = {gameId}\n {traceback.format_exc()}")
+  File "D:\Python\lib\logging\__init__.py", line 1512, in exception
+    self.error(msg, *args, exc_info=exc_info, **kwargs)
+  File "D:\Python\lib\logging\__init__.py", line 1506, in error
+    self._log(ERROR, msg, args, **kwargs)
+  File "D:\Python\lib\logging\__init__.py", line 1624, in _log
+    self.handle(record)
+  File "D:\Python\lib\logging\__init__.py", line 1634, in handle
+    self.callHandlers(record)
+  File "D:\Python\lib\logging\__init__.py", line 1696, in callHandlers
+    hdlr.handle(record)
+  File "D:\Python\lib\logging\__init__.py", line 968, in handle
+    self.emit(record)
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\utils\logging_dd.py", line 39, in emit
+    toJson = json.dumps(
+  File "D:\Python\lib\json\__init__.py", line 231, in dumps
+    return _default_encoder.encode(obj)
+  File "D:\Python\lib\json\encoder.py", line 199, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "D:\Python\lib\json\encoder.py", line 257, in iterencode
+    return _iterencode(o, 0)
+  File "D:\Python\lib\json\encoder.py", line 179, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type type is not JSON serializable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Python\lib\site-packages\uvicorn\protocols\http\h11_impl.py", line 413, in run_asgi
+    self.logger.error(msg, exc_info=exc)
+  File "D:\Python\lib\logging\__init__.py", line 1506, in error
+    self._log(ERROR, msg, args, **kwargs)
+  File "D:\Python\lib\logging\__init__.py", line 1624, in _log
+    self.handle(record)
+  File "D:\Python\lib\logging\__init__.py", line 1634, in handle
+    self.callHandlers(record)
+  File "D:\Python\lib\logging\__init__.py", line 1696, in callHandlers
+    hdlr.handle(record)
+  File "D:\Python\lib\logging\__init__.py", line 968, in handle
+    self.emit(record)
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\utils\logging_dd.py", line 39, in emit
+    toJson = json.dumps(
+  File "D:\Python\lib\json\__init__.py", line 231, in dumps
+    return _default_encoder.encode(obj)
+  File "D:\Python\lib\json\encoder.py", line 199, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "D:\Python\lib\json\encoder.py", line 257, in iterencode
+    return _iterencode(o, 0)
+  File "D:\Python\lib\json\encoder.py", line 179, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type type is not JSON serializable
+2023-09-02 22:40:52,171 [13236] [INFO] 127.0.0.1:54876 - "GET /py/cfb/game/401520169 HTTP/1.1" 500
+2023-09-02 22:40:52,236 [13236] [ERROR] Task exception was never retrieved
+future: <Task finished name='Task-18' coro=<RequestResponseCycle.run_asgi() done, defined at D:\Python\lib\site-packages\uvicorn\protocols\http\h11_impl.py:406> exception=TypeError('Object of type type is not JSON serializable')>
+Traceback (most recent call last):
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\cfb\helpers_cfb.py", line 516, in get_cfb_game
+    result = cfb_game_in_play(gameId)
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\cfb\helpers_cfb.py", line 427, in cfb_game_in_play
+    processed_data.run_processing_pipeline()
+  File "D:\GitHub-Data\sdv-dev\sdv-py\sportsdataverse\cfb\cfb_pbp.py", line 4501, in run_processing_pipeline
+    pbp_txt = self.__helper_cfb_pbp_drives(self.json)
+  File "D:\GitHub-Data\sdv-dev\sdv-py\sportsdataverse\cfb\cfb_pbp.py", line 187, in __helper_cfb_pbp_drives
+    pbp_txt = self.__helper_cfb_pbp_features(pbp_txt, init)
+  File "D:\GitHub-Data\sdv-dev\sdv-py\sportsdataverse\cfb\cfb_pbp.py", line 468, in __helper_cfb_pbp_features
+    - pl.struct(pl.col(["id", "period.number"])).map_elements(
+  File "D:\Python\lib\site-packages\polars\expr\expr.py", line 3919, in map_elements
+    return self.map_batches(wrap_f, agg_list=True, return_dtype=return_dtype)
+  File "D:\Python\lib\site-packages\polars\expr\expr.py", line 3734, in map_batches
+    self._pyexpr.map_batches(function, return_dtype, agg_list)
+AttributeError: 'builtins.PyExpr' object has no attribute 'map_batches'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Python\lib\site-packages\uvicorn\protocols\http\h11_impl.py", line 408, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "D:\Python\lib\site-packages\uvicorn\middleware\proxy_headers.py", line 84, in __call__
+    return await self.app(scope, receive, send)
+  File "D:\Python\lib\site-packages\fastapi\applications.py", line 292, in __call__
+    await super().__call__(scope, receive, send)
+  File "D:\Python\lib\site-packages\starlette\applications.py", line 122, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\Python\lib\site-packages\ddtrace\contrib\asgi\middleware.py", line 265, in __call__
+    reraise(exc_type, exc_val, exc_tb)
+  File "C:\Users\saiem\AppData\Roaming\Python\Python310\site-packages\six.py", line 719, in reraise
+    raise value
+  File "D:\Python\lib\site-packages\ddtrace\contrib\asgi\middleware.py", line 260, in __call__
+    return await self.app(scope, receive, wrapped_send)
+  File "D:\Python\lib\site-packages\starlette\middleware\errors.py", line 184, in __call__
+    raise exc
+  File "D:\Python\lib\site-packages\starlette\middleware\errors.py", line 162, in __call__
+    await self.app(scope, receive, _send)
+  File "D:\Python\lib\site-packages\starlette\middleware\cors.py", line 83, in __call__
+    await self.app(scope, receive, send)
+  File "D:\Python\lib\site-packages\starlette\middleware\exceptions.py", line 79, in __call__
+    raise exc
+  File "D:\Python\lib\site-packages\starlette\middleware\exceptions.py", line 68, in __call__
+    await self.app(scope, receive, sender)
+  File "D:\Python\lib\site-packages\fastapi\middleware\asyncexitstack.py", line 20, in __call__
+    raise e
+  File "D:\Python\lib\site-packages\fastapi\middleware\asyncexitstack.py", line 17, in __call__
+    await self.app(scope, receive, send)
+  File "D:\Python\lib\site-packages\starlette\routing.py", line 718, in __call__
+    await route.handle(scope, receive, send)
+  File "D:\Python\lib\site-packages\starlette\routing.py", line 276, in handle
+    await self.app(scope, receive, send)
+  File "D:\Python\lib\site-packages\starlette\routing.py", line 66, in app
+    response = await func(request)
+  File "D:\Python\lib\site-packages\fastapi\routing.py", line 273, in app
+    raw_response = await run_endpoint_function(
+  File "D:\Python\lib\site-packages\fastapi\routing.py", line 190, in run_endpoint_function
+    return await dependant.call(**values)
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\app.py", line 208, in cfb_game
+    return await asyncify(get_cfb_game)(request, gameId)
+  File "D:\Python\lib\site-packages\asyncer\_main.py", line 358, in wrapper
+    return await anyio.to_thread.run_sync(
+  File "D:\Python\lib\site-packages\anyio\to_thread.py", line 33, in run_sync
+    return await get_asynclib().run_sync_in_worker_thread(
+  File "D:\Python\lib\site-packages\anyio\_backends\_asyncio.py", line 877, in run_sync_in_worker_thread
+    return await future
+  File "D:\Python\lib\site-packages\anyio\_backends\_asyncio.py", line 807, in run
+    result = context.run(func, *args)
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\cfb\helpers_cfb.py", line 529, in get_cfb_game
+    logger.exception(f"Error: game_id =  game_id = {gameId}\n {traceback.format_exc()}")
+  File "D:\Python\lib\logging\__init__.py", line 1512, in exception
+    self.error(msg, *args, exc_info=exc_info, **kwargs)
+  File "D:\Python\lib\logging\__init__.py", line 1506, in error
+    self._log(ERROR, msg, args, **kwargs)
+  File "D:\Python\lib\logging\__init__.py", line 1624, in _log
+    self.handle(record)
+  File "D:\Python\lib\logging\__init__.py", line 1634, in handle
+    self.callHandlers(record)
+  File "D:\Python\lib\logging\__init__.py", line 1696, in callHandlers
+    hdlr.handle(record)
+  File "D:\Python\lib\logging\__init__.py", line 968, in handle
+    self.emit(record)
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\utils\logging_dd.py", line 39, in emit
+    toJson = json.dumps(
+  File "D:\Python\lib\json\__init__.py", line 231, in dumps
+    return _default_encoder.encode(obj)
+  File "D:\Python\lib\json\encoder.py", line 199, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "D:\Python\lib\json\encoder.py", line 257, in iterencode
+    return _iterencode(o, 0)
+  File "D:\Python\lib\json\encoder.py", line 179, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type type is not JSON serializable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Python\lib\site-packages\uvicorn\protocols\http\h11_impl.py", line 413, in run_asgi
+    self.logger.error(msg, exc_info=exc)
+  File "D:\Python\lib\logging\__init__.py", line 1506, in error
+    self._log(ERROR, msg, args, **kwargs)
+  File "D:\Python\lib\logging\__init__.py", line 1624, in _log
+    self.handle(record)
+  File "D:\Python\lib\logging\__init__.py", line 1634, in handle
+    self.callHandlers(record)
+  File "D:\Python\lib\logging\__init__.py", line 1696, in callHandlers
+    hdlr.handle(record)
+  File "D:\Python\lib\logging\__init__.py", line 968, in handle
+    self.emit(record)
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\utils\logging_dd.py", line 39, in emit
+    toJson = json.dumps(
+  File "D:\Python\lib\json\__init__.py", line 231, in dumps
+    return _default_encoder.encode(obj)
+  File "D:\Python\lib\json\encoder.py", line 199, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "D:\Python\lib\json\encoder.py", line 257, in iterencode
+    return _iterencode(o, 0)
+  File "D:\Python\lib\json\encoder.py", line 179, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type type is not JSON serializable
+2023-09-02 22:40:53,363 [13236] [INFO] 127.0.0.1:54902 - "GET /py/cfb/game/401520167 HTTP/1.1" 500
+2023-09-02 22:40:53,410 [13236] [ERROR] Task exception was never retrieved
+future: <Task finished name='Task-21' coro=<RequestResponseCycle.run_asgi() done, defined at D:\Python\lib\site-packages\uvicorn\protocols\http\h11_impl.py:406> exception=TypeError('Object of type type is not JSON serializable')>
+Traceback (most recent call last):
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\cfb\helpers_cfb.py", line 516, in get_cfb_game
+    result = cfb_game_in_play(gameId)
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\cfb\helpers_cfb.py", line 427, in cfb_game_in_play
+    processed_data.run_processing_pipeline()
+  File "D:\GitHub-Data\sdv-dev\sdv-py\sportsdataverse\cfb\cfb_pbp.py", line 4501, in run_processing_pipeline
+    pbp_txt = self.__helper_cfb_pbp_drives(self.json)
+  File "D:\GitHub-Data\sdv-dev\sdv-py\sportsdataverse\cfb\cfb_pbp.py", line 187, in __helper_cfb_pbp_drives
+    pbp_txt = self.__helper_cfb_pbp_features(pbp_txt, init)
+  File "D:\GitHub-Data\sdv-dev\sdv-py\sportsdataverse\cfb\cfb_pbp.py", line 468, in __helper_cfb_pbp_features
+    - pl.struct(pl.col(["id", "period.number"])).map_elements(
+  File "D:\Python\lib\site-packages\polars\expr\expr.py", line 3919, in map_elements
+    return self.map_batches(wrap_f, agg_list=True, return_dtype=return_dtype)
+  File "D:\Python\lib\site-packages\polars\expr\expr.py", line 3734, in map_batches
+    self._pyexpr.map_batches(function, return_dtype, agg_list)
+AttributeError: 'builtins.PyExpr' object has no attribute 'map_batches'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Python\lib\site-packages\uvicorn\protocols\http\h11_impl.py", line 408, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "D:\Python\lib\site-packages\uvicorn\middleware\proxy_headers.py", line 84, in __call__
+    return await self.app(scope, receive, send)
+  File "D:\Python\lib\site-packages\fastapi\applications.py", line 292, in __call__
+    await super().__call__(scope, receive, send)
+  File "D:\Python\lib\site-packages\starlette\applications.py", line 122, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\Python\lib\site-packages\ddtrace\contrib\asgi\middleware.py", line 265, in __call__
+    reraise(exc_type, exc_val, exc_tb)
+  File "C:\Users\saiem\AppData\Roaming\Python\Python310\site-packages\six.py", line 719, in reraise
+    raise value
+  File "D:\Python\lib\site-packages\ddtrace\contrib\asgi\middleware.py", line 260, in __call__
+    return await self.app(scope, receive, wrapped_send)
+  File "D:\Python\lib\site-packages\starlette\middleware\errors.py", line 184, in __call__
+    raise exc
+  File "D:\Python\lib\site-packages\starlette\middleware\errors.py", line 162, in __call__
+    await self.app(scope, receive, _send)
+  File "D:\Python\lib\site-packages\starlette\middleware\cors.py", line 83, in __call__
+    await self.app(scope, receive, send)
+  File "D:\Python\lib\site-packages\starlette\middleware\exceptions.py", line 79, in __call__
+    raise exc
+  File "D:\Python\lib\site-packages\starlette\middleware\exceptions.py", line 68, in __call__
+    await self.app(scope, receive, sender)
+  File "D:\Python\lib\site-packages\fastapi\middleware\asyncexitstack.py", line 20, in __call__
+    raise e
+  File "D:\Python\lib\site-packages\fastapi\middleware\asyncexitstack.py", line 17, in __call__
+    await self.app(scope, receive, send)
+  File "D:\Python\lib\site-packages\starlette\routing.py", line 718, in __call__
+    await route.handle(scope, receive, send)
+  File "D:\Python\lib\site-packages\starlette\routing.py", line 276, in handle
+    await self.app(scope, receive, send)
+  File "D:\Python\lib\site-packages\starlette\routing.py", line 66, in app
+    response = await func(request)
+  File "D:\Python\lib\site-packages\fastapi\routing.py", line 273, in app
+    raw_response = await run_endpoint_function(
+  File "D:\Python\lib\site-packages\fastapi\routing.py", line 190, in run_endpoint_function
+    return await dependant.call(**values)
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\app.py", line 208, in cfb_game
+    return await asyncify(get_cfb_game)(request, gameId)
+  File "D:\Python\lib\site-packages\asyncer\_main.py", line 358, in wrapper
+    return await anyio.to_thread.run_sync(
+  File "D:\Python\lib\site-packages\anyio\to_thread.py", line 33, in run_sync
+    return await get_asynclib().run_sync_in_worker_thread(
+  File "D:\Python\lib\site-packages\anyio\_backends\_asyncio.py", line 877, in run_sync_in_worker_thread
+    return await future
+  File "D:\Python\lib\site-packages\anyio\_backends\_asyncio.py", line 807, in run
+    result = context.run(func, *args)
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\cfb\helpers_cfb.py", line 529, in get_cfb_game
+    logger.exception(f"Error: game_id =  game_id = {gameId}\n {traceback.format_exc()}")
+  File "D:\Python\lib\logging\__init__.py", line 1512, in exception
+    self.error(msg, *args, exc_info=exc_info, **kwargs)
+  File "D:\Python\lib\logging\__init__.py", line 1506, in error
+    self._log(ERROR, msg, args, **kwargs)
+  File "D:\Python\lib\logging\__init__.py", line 1624, in _log
+    self.handle(record)
+  File "D:\Python\lib\logging\__init__.py", line 1634, in handle
+    self.callHandlers(record)
+  File "D:\Python\lib\logging\__init__.py", line 1696, in callHandlers
+    hdlr.handle(record)
+  File "D:\Python\lib\logging\__init__.py", line 968, in handle
+    self.emit(record)
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\utils\logging_dd.py", line 39, in emit
+    toJson = json.dumps(
+  File "D:\Python\lib\json\__init__.py", line 231, in dumps
+    return _default_encoder.encode(obj)
+  File "D:\Python\lib\json\encoder.py", line 199, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "D:\Python\lib\json\encoder.py", line 257, in iterencode
+    return _iterencode(o, 0)
+  File "D:\Python\lib\json\encoder.py", line 179, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type type is not JSON serializable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Python\lib\site-packages\uvicorn\protocols\http\h11_impl.py", line 413, in run_asgi
+    self.logger.error(msg, exc_info=exc)
+  File "D:\Python\lib\logging\__init__.py", line 1506, in error
+    self._log(ERROR, msg, args, **kwargs)
+  File "D:\Python\lib\logging\__init__.py", line 1624, in _log
+    self.handle(record)
+  File "D:\Python\lib\logging\__init__.py", line 1634, in handle
+    self.callHandlers(record)
+  File "D:\Python\lib\logging\__init__.py", line 1696, in callHandlers
+    hdlr.handle(record)
+  File "D:\Python\lib\logging\__init__.py", line 968, in handle
+    self.emit(record)
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\utils\logging_dd.py", line 39, in emit
+    toJson = json.dumps(
+  File "D:\Python\lib\json\__init__.py", line 231, in dumps
+    return _default_encoder.encode(obj)
+  File "D:\Python\lib\json\encoder.py", line 199, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "D:\Python\lib\json\encoder.py", line 257, in iterencode
+    return _iterencode(o, 0)
+  File "D:\Python\lib\json\encoder.py", line 179, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type type is not JSON serializable
+2023-09-02 22:40:57,418 [13236] [ERROR] failed to send, dropping 1 traces to intake at http://localhost:8126/v0.4/traces after 3 retries (timed out)
+2023-09-02 22:41:04,083 [13236] [INFO] Handling /py/cfb/game/:gameId request
+2023-09-02 22:41:04,259 [13236] [WARNING] Error setting cache key 'gp-cache:cfb_scoreboard:42d2007cc62fbde836fcb846a04a1999' in backend:
+Traceback (most recent call last):
+  File "D:\Python\lib\site-packages\redis\asyncio\connection.py", line 608, in connect
+    await self.retry.call_with_retry(
+  File "D:\Python\lib\site-packages\redis\asyncio\retry.py", line 59, in call_with_retry
+    return await do()
+  File "D:\Python\lib\site-packages\redis\asyncio\connection.py", line 645, in _connect
+    reader, writer = await asyncio.open_connection(
+  File "D:\Python\lib\asyncio\streams.py", line 48, in open_connection
+    transport, _ = await loop.create_connection(
+  File "D:\Python\lib\asyncio\base_events.py", line 1036, in create_connection
+    infos = await self._ensure_resolved(
+  File "D:\Python\lib\asyncio\base_events.py", line 1418, in _ensure_resolved
+    return await loop.getaddrinfo(host, port, family=family, type=type,
+  File "D:\Python\lib\asyncio\base_events.py", line 863, in getaddrinfo
+    return await self.run_in_executor(
+  File "D:\Python\lib\concurrent\futures\thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "D:\Python\lib\socket.py", line 955, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Python\lib\site-packages\fastapi_cache\decorator.py", line 173, in inner
+    await backend.set(cache_key, encoded_ret, expire)
+  File "D:\Python\lib\site-packages\fastapi_cache\backends\redis.py", line 22, in set
+    return await self.redis.set(key, value, ex=expire)
+  File "D:\Python\lib\site-packages\redis\asyncio\client.py", line 513, in execute_command
+    conn = self.connection or await pool.get_connection(command_name, **options)
+  File "D:\Python\lib\site-packages\redis\asyncio\connection.py", line 1413, in get_connection
+    await connection.connect()
+  File "D:\Python\lib\site-packages\redis\asyncio\connection.py", line 616, in connect
+    raise ConnectionError(self._error_message(e))
+redis.exceptions.ConnectionError: Error 11001 connecting to redis:6379. 11001.
+2023-09-02 22:41:04,265 [13236] [INFO] 127.0.0.1:54835 - "GET /py/cfb/scoreboard HTTP/1.1" 200
+2023-09-02 22:41:05,862 [13236] [WARNING] Error setting cache key 'gp-cache:cfb_scoreboard:42d2007cc62fbde836fcb846a04a1999' in backend:
+Traceback (most recent call last):
+  File "D:\Python\lib\site-packages\redis\asyncio\connection.py", line 608, in connect
+    await self.retry.call_with_retry(
+  File "D:\Python\lib\site-packages\redis\asyncio\retry.py", line 59, in call_with_retry
+    return await do()
+  File "D:\Python\lib\site-packages\redis\asyncio\connection.py", line 645, in _connect
+    reader, writer = await asyncio.open_connection(
+  File "D:\Python\lib\asyncio\streams.py", line 48, in open_connection
+    transport, _ = await loop.create_connection(
+  File "D:\Python\lib\asyncio\base_events.py", line 1036, in create_connection
+    infos = await self._ensure_resolved(
+  File "D:\Python\lib\asyncio\base_events.py", line 1418, in _ensure_resolved
+    return await loop.getaddrinfo(host, port, family=family, type=type,
+  File "D:\Python\lib\asyncio\base_events.py", line 863, in getaddrinfo
+    return await self.run_in_executor(
+  File "D:\Python\lib\concurrent\futures\thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "D:\Python\lib\socket.py", line 955, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Python\lib\site-packages\fastapi_cache\decorator.py", line 173, in inner
+    await backend.set(cache_key, encoded_ret, expire)
+  File "D:\Python\lib\site-packages\fastapi_cache\backends\redis.py", line 22, in set
+    return await self.redis.set(key, value, ex=expire)
+  File "D:\Python\lib\site-packages\redis\asyncio\client.py", line 513, in execute_command
+    conn = self.connection or await pool.get_connection(command_name, **options)
+  File "D:\Python\lib\site-packages\redis\asyncio\connection.py", line 1413, in get_connection
+    await connection.connect()
+  File "D:\Python\lib\site-packages\redis\asyncio\connection.py", line 616, in connect
+    raise ConnectionError(self._error_message(e))
+redis.exceptions.ConnectionError: Error 11001 connecting to redis:6379. 11001.
+2023-09-02 22:41:05,913 [13236] [INFO] 127.0.0.1:54837 - "GET /py/cfb/scoreboard HTTP/1.1" 200
+2023-09-02 22:41:06,178 [13236] [INFO] 127.0.0.1:54970 - "GET /py/cfb/game/401520167 HTTP/1.1" 500
+2023-09-02 22:41:06,313 [13236] [ERROR] Task exception was never retrieved
+future: <Task finished name='Task-23' coro=<RequestResponseCycle.run_asgi() done, defined at D:\Python\lib\site-packages\uvicorn\protocols\http\h11_impl.py:406> exception=TypeError('Object of type type is not JSON serializable')>
+Traceback (most recent call last):
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\cfb\helpers_cfb.py", line 516, in get_cfb_game
+    result = cfb_game_in_play(gameId)
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\cfb\helpers_cfb.py", line 427, in cfb_game_in_play
+    processed_data.run_processing_pipeline()
+  File "D:\GitHub-Data\sdv-dev\sdv-py\sportsdataverse\cfb\cfb_pbp.py", line 4501, in run_processing_pipeline
+    pbp_txt = self.__helper_cfb_pbp_drives(self.json)
+  File "D:\GitHub-Data\sdv-dev\sdv-py\sportsdataverse\cfb\cfb_pbp.py", line 187, in __helper_cfb_pbp_drives
+    pbp_txt = self.__helper_cfb_pbp_features(pbp_txt, init)
+  File "D:\GitHub-Data\sdv-dev\sdv-py\sportsdataverse\cfb\cfb_pbp.py", line 468, in __helper_cfb_pbp_features
+    - pl.struct(pl.col(["id", "period.number"])).map_elements(
+  File "D:\Python\lib\site-packages\polars\expr\expr.py", line 3919, in map_elements
+    return self.map_batches(wrap_f, agg_list=True, return_dtype=return_dtype)
+  File "D:\Python\lib\site-packages\polars\expr\expr.py", line 3734, in map_batches
+    self._pyexpr.map_batches(function, return_dtype, agg_list)
+AttributeError: 'builtins.PyExpr' object has no attribute 'map_batches'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Python\lib\site-packages\uvicorn\protocols\http\h11_impl.py", line 408, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "D:\Python\lib\site-packages\uvicorn\middleware\proxy_headers.py", line 84, in __call__
+    return await self.app(scope, receive, send)
+  File "D:\Python\lib\site-packages\fastapi\applications.py", line 292, in __call__
+    await super().__call__(scope, receive, send)
+  File "D:\Python\lib\site-packages\starlette\applications.py", line 122, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\Python\lib\site-packages\ddtrace\contrib\asgi\middleware.py", line 265, in __call__
+    reraise(exc_type, exc_val, exc_tb)
+  File "C:\Users\saiem\AppData\Roaming\Python\Python310\site-packages\six.py", line 719, in reraise
+    raise value
+  File "D:\Python\lib\site-packages\ddtrace\contrib\asgi\middleware.py", line 260, in __call__
+    return await self.app(scope, receive, wrapped_send)
+  File "D:\Python\lib\site-packages\starlette\middleware\errors.py", line 184, in __call__
+    raise exc
+  File "D:\Python\lib\site-packages\starlette\middleware\errors.py", line 162, in __call__
+    await self.app(scope, receive, _send)
+  File "D:\Python\lib\site-packages\starlette\middleware\cors.py", line 83, in __call__
+    await self.app(scope, receive, send)
+  File "D:\Python\lib\site-packages\starlette\middleware\exceptions.py", line 79, in __call__
+    raise exc
+  File "D:\Python\lib\site-packages\starlette\middleware\exceptions.py", line 68, in __call__
+    await self.app(scope, receive, sender)
+  File "D:\Python\lib\site-packages\fastapi\middleware\asyncexitstack.py", line 20, in __call__
+    raise e
+  File "D:\Python\lib\site-packages\fastapi\middleware\asyncexitstack.py", line 17, in __call__
+    await self.app(scope, receive, send)
+  File "D:\Python\lib\site-packages\starlette\routing.py", line 718, in __call__
+    await route.handle(scope, receive, send)
+  File "D:\Python\lib\site-packages\starlette\routing.py", line 276, in handle
+    await self.app(scope, receive, send)
+  File "D:\Python\lib\site-packages\starlette\routing.py", line 66, in app
+    response = await func(request)
+  File "D:\Python\lib\site-packages\fastapi\routing.py", line 273, in app
+    raw_response = await run_endpoint_function(
+  File "D:\Python\lib\site-packages\fastapi\routing.py", line 190, in run_endpoint_function
+    return await dependant.call(**values)
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\app.py", line 208, in cfb_game
+    return await asyncify(get_cfb_game)(request, gameId)
+  File "D:\Python\lib\site-packages\asyncer\_main.py", line 358, in wrapper
+    return await anyio.to_thread.run_sync(
+  File "D:\Python\lib\site-packages\anyio\to_thread.py", line 33, in run_sync
+    return await get_asynclib().run_sync_in_worker_thread(
+  File "D:\Python\lib\site-packages\anyio\_backends\_asyncio.py", line 877, in run_sync_in_worker_thread
+    return await future
+  File "D:\Python\lib\site-packages\anyio\_backends\_asyncio.py", line 807, in run
+    result = context.run(func, *args)
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\cfb\helpers_cfb.py", line 529, in get_cfb_game
+    logger.exception(f"Error: game_id =  game_id = {gameId}\n {traceback.format_exc()}")
+  File "D:\Python\lib\logging\__init__.py", line 1512, in exception
+    self.error(msg, *args, exc_info=exc_info, **kwargs)
+  File "D:\Python\lib\logging\__init__.py", line 1506, in error
+    self._log(ERROR, msg, args, **kwargs)
+  File "D:\Python\lib\logging\__init__.py", line 1624, in _log
+    self.handle(record)
+  File "D:\Python\lib\logging\__init__.py", line 1634, in handle
+    self.callHandlers(record)
+  File "D:\Python\lib\logging\__init__.py", line 1696, in callHandlers
+    hdlr.handle(record)
+  File "D:\Python\lib\logging\__init__.py", line 968, in handle
+    self.emit(record)
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\utils\logging_dd.py", line 39, in emit
+    toJson = json.dumps(
+  File "D:\Python\lib\json\__init__.py", line 231, in dumps
+    return _default_encoder.encode(obj)
+  File "D:\Python\lib\json\encoder.py", line 199, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "D:\Python\lib\json\encoder.py", line 257, in iterencode
+    return _iterencode(o, 0)
+  File "D:\Python\lib\json\encoder.py", line 179, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type type is not JSON serializable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Python\lib\site-packages\uvicorn\protocols\http\h11_impl.py", line 413, in run_asgi
+    self.logger.error(msg, exc_info=exc)
+  File "D:\Python\lib\logging\__init__.py", line 1506, in error
+    self._log(ERROR, msg, args, **kwargs)
+  File "D:\Python\lib\logging\__init__.py", line 1624, in _log
+    self.handle(record)
+  File "D:\Python\lib\logging\__init__.py", line 1634, in handle
+    self.callHandlers(record)
+  File "D:\Python\lib\logging\__init__.py", line 1696, in callHandlers
+    hdlr.handle(record)
+  File "D:\Python\lib\logging\__init__.py", line 968, in handle
+    self.emit(record)
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\utils\logging_dd.py", line 39, in emit
+    toJson = json.dumps(
+  File "D:\Python\lib\json\__init__.py", line 231, in dumps
+    return _default_encoder.encode(obj)
+  File "D:\Python\lib\json\encoder.py", line 199, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "D:\Python\lib\json\encoder.py", line 257, in iterencode
+    return _iterencode(o, 0)
+  File "D:\Python\lib\json\encoder.py", line 179, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type type is not JSON serializable
+2023-09-02 22:41:07,290 [13236] [INFO] Handling /py/cfb/game/:gameId request
+2023-09-02 22:41:07,323 [13236] [INFO] Handling /py/cfb/game/:gameId request
+2023-09-02 22:41:09,434 [13236] [INFO] 127.0.0.1:54837 - "GET /py/cfb/game/401520167 HTTP/1.1" 500
+2023-09-02 22:41:09,564 [13236] [ERROR] Task exception was never retrieved
+future: <Task finished name='Task-25' coro=<RequestResponseCycle.run_asgi() done, defined at D:\Python\lib\site-packages\uvicorn\protocols\http\h11_impl.py:406> exception=TypeError('Object of type type is not JSON serializable')>
+Traceback (most recent call last):
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\cfb\helpers_cfb.py", line 516, in get_cfb_game
+    result = cfb_game_in_play(gameId)
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\cfb\helpers_cfb.py", line 427, in cfb_game_in_play
+    processed_data.run_processing_pipeline()
+  File "D:\GitHub-Data\sdv-dev\sdv-py\sportsdataverse\cfb\cfb_pbp.py", line 4501, in run_processing_pipeline
+    pbp_txt = self.__helper_cfb_pbp_drives(self.json)
+  File "D:\GitHub-Data\sdv-dev\sdv-py\sportsdataverse\cfb\cfb_pbp.py", line 187, in __helper_cfb_pbp_drives
+    pbp_txt = self.__helper_cfb_pbp_features(pbp_txt, init)
+  File "D:\GitHub-Data\sdv-dev\sdv-py\sportsdataverse\cfb\cfb_pbp.py", line 468, in __helper_cfb_pbp_features
+    - pl.struct(pl.col(["id", "period.number"])).map_elements(
+  File "D:\Python\lib\site-packages\polars\expr\expr.py", line 3919, in map_elements
+    return self.map_batches(wrap_f, agg_list=True, return_dtype=return_dtype)
+  File "D:\Python\lib\site-packages\polars\expr\expr.py", line 3734, in map_batches
+    self._pyexpr.map_batches(function, return_dtype, agg_list)
+AttributeError: 'builtins.PyExpr' object has no attribute 'map_batches'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Python\lib\site-packages\uvicorn\protocols\http\h11_impl.py", line 408, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "D:\Python\lib\site-packages\uvicorn\middleware\proxy_headers.py", line 84, in __call__
+    return await self.app(scope, receive, send)
+  File "D:\Python\lib\site-packages\fastapi\applications.py", line 292, in __call__
+    await super().__call__(scope, receive, send)
+  File "D:\Python\lib\site-packages\starlette\applications.py", line 122, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\Python\lib\site-packages\ddtrace\contrib\asgi\middleware.py", line 265, in __call__
+    reraise(exc_type, exc_val, exc_tb)
+  File "C:\Users\saiem\AppData\Roaming\Python\Python310\site-packages\six.py", line 719, in reraise
+    raise value
+  File "D:\Python\lib\site-packages\ddtrace\contrib\asgi\middleware.py", line 260, in __call__
+    return await self.app(scope, receive, wrapped_send)
+  File "D:\Python\lib\site-packages\starlette\middleware\errors.py", line 184, in __call__
+    raise exc
+  File "D:\Python\lib\site-packages\starlette\middleware\errors.py", line 162, in __call__
+    await self.app(scope, receive, _send)
+  File "D:\Python\lib\site-packages\starlette\middleware\cors.py", line 83, in __call__
+    await self.app(scope, receive, send)
+  File "D:\Python\lib\site-packages\starlette\middleware\exceptions.py", line 79, in __call__
+    raise exc
+  File "D:\Python\lib\site-packages\starlette\middleware\exceptions.py", line 68, in __call__
+    await self.app(scope, receive, sender)
+  File "D:\Python\lib\site-packages\fastapi\middleware\asyncexitstack.py", line 20, in __call__
+    raise e
+  File "D:\Python\lib\site-packages\fastapi\middleware\asyncexitstack.py", line 17, in __call__
+    await self.app(scope, receive, send)
+  File "D:\Python\lib\site-packages\starlette\routing.py", line 718, in __call__
+    await route.handle(scope, receive, send)
+  File "D:\Python\lib\site-packages\starlette\routing.py", line 276, in handle
+    await self.app(scope, receive, send)
+  File "D:\Python\lib\site-packages\starlette\routing.py", line 66, in app
+    response = await func(request)
+  File "D:\Python\lib\site-packages\fastapi\routing.py", line 273, in app
+    raw_response = await run_endpoint_function(
+  File "D:\Python\lib\site-packages\fastapi\routing.py", line 190, in run_endpoint_function
+    return await dependant.call(**values)
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\app.py", line 208, in cfb_game
+    return await asyncify(get_cfb_game)(request, gameId)
+  File "D:\Python\lib\site-packages\asyncer\_main.py", line 358, in wrapper
+    return await anyio.to_thread.run_sync(
+  File "D:\Python\lib\site-packages\anyio\to_thread.py", line 33, in run_sync
+    return await get_asynclib().run_sync_in_worker_thread(
+  File "D:\Python\lib\site-packages\anyio\_backends\_asyncio.py", line 877, in run_sync_in_worker_thread
+    return await future
+  File "D:\Python\lib\site-packages\anyio\_backends\_asyncio.py", line 807, in run
+    result = context.run(func, *args)
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\cfb\helpers_cfb.py", line 529, in get_cfb_game
+    logger.exception(f"Error: game_id =  game_id = {gameId}\n {traceback.format_exc()}")
+  File "D:\Python\lib\logging\__init__.py", line 1512, in exception
+    self.error(msg, *args, exc_info=exc_info, **kwargs)
+  File "D:\Python\lib\logging\__init__.py", line 1506, in error
+    self._log(ERROR, msg, args, **kwargs)
+  File "D:\Python\lib\logging\__init__.py", line 1624, in _log
+    self.handle(record)
+  File "D:\Python\lib\logging\__init__.py", line 1634, in handle
+    self.callHandlers(record)
+  File "D:\Python\lib\logging\__init__.py", line 1696, in callHandlers
+    hdlr.handle(record)
+  File "D:\Python\lib\logging\__init__.py", line 968, in handle
+    self.emit(record)
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\utils\logging_dd.py", line 39, in emit
+    toJson = json.dumps(
+  File "D:\Python\lib\json\__init__.py", line 231, in dumps
+    return _default_encoder.encode(obj)
+  File "D:\Python\lib\json\encoder.py", line 199, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "D:\Python\lib\json\encoder.py", line 257, in iterencode
+    return _iterencode(o, 0)
+  File "D:\Python\lib\json\encoder.py", line 179, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type type is not JSON serializable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Python\lib\site-packages\uvicorn\protocols\http\h11_impl.py", line 413, in run_asgi
+    self.logger.error(msg, exc_info=exc)
+  File "D:\Python\lib\logging\__init__.py", line 1506, in error
+    self._log(ERROR, msg, args, **kwargs)
+  File "D:\Python\lib\logging\__init__.py", line 1624, in _log
+    self.handle(record)
+  File "D:\Python\lib\logging\__init__.py", line 1634, in handle
+    self.callHandlers(record)
+  File "D:\Python\lib\logging\__init__.py", line 1696, in callHandlers
+    hdlr.handle(record)
+  File "D:\Python\lib\logging\__init__.py", line 968, in handle
+    self.emit(record)
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\utils\logging_dd.py", line 39, in emit
+    toJson = json.dumps(
+  File "D:\Python\lib\json\__init__.py", line 231, in dumps
+    return _default_encoder.encode(obj)
+  File "D:\Python\lib\json\encoder.py", line 199, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "D:\Python\lib\json\encoder.py", line 257, in iterencode
+    return _iterencode(o, 0)
+  File "D:\Python\lib\json\encoder.py", line 179, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type type is not JSON serializable
+2023-09-02 22:41:09,582 [13236] [INFO] 127.0.0.1:54835 - "GET /py/cfb/game/401520167 HTTP/1.1" 500
+2023-09-02 22:41:09,618 [13236] [ERROR] Task exception was never retrieved
+future: <Task finished name='Task-24' coro=<RequestResponseCycle.run_asgi() done, defined at D:\Python\lib\site-packages\uvicorn\protocols\http\h11_impl.py:406> exception=TypeError('Object of type type is not JSON serializable')>
+Traceback (most recent call last):
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\cfb\helpers_cfb.py", line 516, in get_cfb_game
+    result = cfb_game_in_play(gameId)
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\cfb\helpers_cfb.py", line 427, in cfb_game_in_play
+    processed_data.run_processing_pipeline()
+  File "D:\GitHub-Data\sdv-dev\sdv-py\sportsdataverse\cfb\cfb_pbp.py", line 4501, in run_processing_pipeline
+    pbp_txt = self.__helper_cfb_pbp_drives(self.json)
+  File "D:\GitHub-Data\sdv-dev\sdv-py\sportsdataverse\cfb\cfb_pbp.py", line 187, in __helper_cfb_pbp_drives
+    pbp_txt = self.__helper_cfb_pbp_features(pbp_txt, init)
+  File "D:\GitHub-Data\sdv-dev\sdv-py\sportsdataverse\cfb\cfb_pbp.py", line 468, in __helper_cfb_pbp_features
+    - pl.struct(pl.col(["id", "period.number"])).map_elements(
+  File "D:\Python\lib\site-packages\polars\expr\expr.py", line 3919, in map_elements
+    return self.map_batches(wrap_f, agg_list=True, return_dtype=return_dtype)
+  File "D:\Python\lib\site-packages\polars\expr\expr.py", line 3734, in map_batches
+    self._pyexpr.map_batches(function, return_dtype, agg_list)
+AttributeError: 'builtins.PyExpr' object has no attribute 'map_batches'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Python\lib\site-packages\uvicorn\protocols\http\h11_impl.py", line 408, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "D:\Python\lib\site-packages\uvicorn\middleware\proxy_headers.py", line 84, in __call__
+    return await self.app(scope, receive, send)
+  File "D:\Python\lib\site-packages\fastapi\applications.py", line 292, in __call__
+    await super().__call__(scope, receive, send)
+  File "D:\Python\lib\site-packages\starlette\applications.py", line 122, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\Python\lib\site-packages\ddtrace\contrib\asgi\middleware.py", line 265, in __call__
+    reraise(exc_type, exc_val, exc_tb)
+  File "C:\Users\saiem\AppData\Roaming\Python\Python310\site-packages\six.py", line 719, in reraise
+    raise value
+  File "D:\Python\lib\site-packages\ddtrace\contrib\asgi\middleware.py", line 260, in __call__
+    return await self.app(scope, receive, wrapped_send)
+  File "D:\Python\lib\site-packages\starlette\middleware\errors.py", line 184, in __call__
+    raise exc
+  File "D:\Python\lib\site-packages\starlette\middleware\errors.py", line 162, in __call__
+    await self.app(scope, receive, _send)
+  File "D:\Python\lib\site-packages\starlette\middleware\cors.py", line 83, in __call__
+    await self.app(scope, receive, send)
+  File "D:\Python\lib\site-packages\starlette\middleware\exceptions.py", line 79, in __call__
+    raise exc
+  File "D:\Python\lib\site-packages\starlette\middleware\exceptions.py", line 68, in __call__
+    await self.app(scope, receive, sender)
+  File "D:\Python\lib\site-packages\fastapi\middleware\asyncexitstack.py", line 20, in __call__
+    raise e
+  File "D:\Python\lib\site-packages\fastapi\middleware\asyncexitstack.py", line 17, in __call__
+    await self.app(scope, receive, send)
+  File "D:\Python\lib\site-packages\starlette\routing.py", line 718, in __call__
+    await route.handle(scope, receive, send)
+  File "D:\Python\lib\site-packages\starlette\routing.py", line 276, in handle
+    await self.app(scope, receive, send)
+  File "D:\Python\lib\site-packages\starlette\routing.py", line 66, in app
+    response = await func(request)
+  File "D:\Python\lib\site-packages\fastapi\routing.py", line 273, in app
+    raw_response = await run_endpoint_function(
+  File "D:\Python\lib\site-packages\fastapi\routing.py", line 190, in run_endpoint_function
+    return await dependant.call(**values)
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\app.py", line 208, in cfb_game
+    return await asyncify(get_cfb_game)(request, gameId)
+  File "D:\Python\lib\site-packages\asyncer\_main.py", line 358, in wrapper
+    return await anyio.to_thread.run_sync(
+  File "D:\Python\lib\site-packages\anyio\to_thread.py", line 33, in run_sync
+    return await get_asynclib().run_sync_in_worker_thread(
+  File "D:\Python\lib\site-packages\anyio\_backends\_asyncio.py", line 877, in run_sync_in_worker_thread
+    return await future
+  File "D:\Python\lib\site-packages\anyio\_backends\_asyncio.py", line 807, in run
+    result = context.run(func, *args)
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\cfb\helpers_cfb.py", line 529, in get_cfb_game
+    logger.exception(f"Error: game_id =  game_id = {gameId}\n {traceback.format_exc()}")
+  File "D:\Python\lib\logging\__init__.py", line 1512, in exception
+    self.error(msg, *args, exc_info=exc_info, **kwargs)
+  File "D:\Python\lib\logging\__init__.py", line 1506, in error
+    self._log(ERROR, msg, args, **kwargs)
+  File "D:\Python\lib\logging\__init__.py", line 1624, in _log
+    self.handle(record)
+  File "D:\Python\lib\logging\__init__.py", line 1634, in handle
+    self.callHandlers(record)
+  File "D:\Python\lib\logging\__init__.py", line 1696, in callHandlers
+    hdlr.handle(record)
+  File "D:\Python\lib\logging\__init__.py", line 968, in handle
+    self.emit(record)
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\utils\logging_dd.py", line 39, in emit
+    toJson = json.dumps(
+  File "D:\Python\lib\json\__init__.py", line 231, in dumps
+    return _default_encoder.encode(obj)
+  File "D:\Python\lib\json\encoder.py", line 199, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "D:\Python\lib\json\encoder.py", line 257, in iterencode
+    return _iterencode(o, 0)
+  File "D:\Python\lib\json\encoder.py", line 179, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type type is not JSON serializable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Python\lib\site-packages\uvicorn\protocols\http\h11_impl.py", line 413, in run_asgi
+    self.logger.error(msg, exc_info=exc)
+  File "D:\Python\lib\logging\__init__.py", line 1506, in error
+    self._log(ERROR, msg, args, **kwargs)
+  File "D:\Python\lib\logging\__init__.py", line 1624, in _log
+    self.handle(record)
+  File "D:\Python\lib\logging\__init__.py", line 1634, in handle
+    self.callHandlers(record)
+  File "D:\Python\lib\logging\__init__.py", line 1696, in callHandlers
+    hdlr.handle(record)
+  File "D:\Python\lib\logging\__init__.py", line 968, in handle
+    self.emit(record)
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\utils\logging_dd.py", line 39, in emit
+    toJson = json.dumps(
+  File "D:\Python\lib\json\__init__.py", line 231, in dumps
+    return _default_encoder.encode(obj)
+  File "D:\Python\lib\json\encoder.py", line 199, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "D:\Python\lib\json\encoder.py", line 257, in iterencode
+    return _iterencode(o, 0)
+  File "D:\Python\lib\json\encoder.py", line 179, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type type is not JSON serializable
+2023-09-02 22:41:09,707 [13236] [INFO] Handling /py/cfb/game/:gameId request
+2023-09-02 22:41:10,684 [13236] [ERROR] failed to send, dropping 5 traces to intake at http://localhost:8126/v0.4/traces after 3 retries (timed out)
+2023-09-02 22:41:11,145 [13236] [INFO] 127.0.0.1:54835 - "GET /py/cfb/game/401520167 HTTP/1.1" 500
+2023-09-02 22:41:11,178 [13236] [ERROR] Task exception was never retrieved
+future: <Task finished name='Task-26' coro=<RequestResponseCycle.run_asgi() done, defined at D:\Python\lib\site-packages\uvicorn\protocols\http\h11_impl.py:406> exception=TypeError('Object of type type is not JSON serializable')>
+Traceback (most recent call last):
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\cfb\helpers_cfb.py", line 516, in get_cfb_game
+    result = cfb_game_in_play(gameId)
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\cfb\helpers_cfb.py", line 427, in cfb_game_in_play
+    processed_data.run_processing_pipeline()
+  File "D:\GitHub-Data\sdv-dev\sdv-py\sportsdataverse\cfb\cfb_pbp.py", line 4501, in run_processing_pipeline
+    pbp_txt = self.__helper_cfb_pbp_drives(self.json)
+  File "D:\GitHub-Data\sdv-dev\sdv-py\sportsdataverse\cfb\cfb_pbp.py", line 187, in __helper_cfb_pbp_drives
+    pbp_txt = self.__helper_cfb_pbp_features(pbp_txt, init)
+  File "D:\GitHub-Data\sdv-dev\sdv-py\sportsdataverse\cfb\cfb_pbp.py", line 468, in __helper_cfb_pbp_features
+    - pl.struct(pl.col(["id", "period.number"])).map_elements(
+  File "D:\Python\lib\site-packages\polars\expr\expr.py", line 3919, in map_elements
+    return self.map_batches(wrap_f, agg_list=True, return_dtype=return_dtype)
+  File "D:\Python\lib\site-packages\polars\expr\expr.py", line 3734, in map_batches
+    self._pyexpr.map_batches(function, return_dtype, agg_list)
+AttributeError: 'builtins.PyExpr' object has no attribute 'map_batches'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Python\lib\site-packages\uvicorn\protocols\http\h11_impl.py", line 408, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "D:\Python\lib\site-packages\uvicorn\middleware\proxy_headers.py", line 84, in __call__
+    return await self.app(scope, receive, send)
+  File "D:\Python\lib\site-packages\fastapi\applications.py", line 292, in __call__
+    await super().__call__(scope, receive, send)
+  File "D:\Python\lib\site-packages\starlette\applications.py", line 122, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\Python\lib\site-packages\ddtrace\contrib\asgi\middleware.py", line 265, in __call__
+    reraise(exc_type, exc_val, exc_tb)
+  File "C:\Users\saiem\AppData\Roaming\Python\Python310\site-packages\six.py", line 719, in reraise
+    raise value
+  File "D:\Python\lib\site-packages\ddtrace\contrib\asgi\middleware.py", line 260, in __call__
+    return await self.app(scope, receive, wrapped_send)
+  File "D:\Python\lib\site-packages\starlette\middleware\errors.py", line 184, in __call__
+    raise exc
+  File "D:\Python\lib\site-packages\starlette\middleware\errors.py", line 162, in __call__
+    await self.app(scope, receive, _send)
+  File "D:\Python\lib\site-packages\starlette\middleware\cors.py", line 83, in __call__
+    await self.app(scope, receive, send)
+  File "D:\Python\lib\site-packages\starlette\middleware\exceptions.py", line 79, in __call__
+    raise exc
+  File "D:\Python\lib\site-packages\starlette\middleware\exceptions.py", line 68, in __call__
+    await self.app(scope, receive, sender)
+  File "D:\Python\lib\site-packages\fastapi\middleware\asyncexitstack.py", line 20, in __call__
+    raise e
+  File "D:\Python\lib\site-packages\fastapi\middleware\asyncexitstack.py", line 17, in __call__
+    await self.app(scope, receive, send)
+  File "D:\Python\lib\site-packages\starlette\routing.py", line 718, in __call__
+    await route.handle(scope, receive, send)
+  File "D:\Python\lib\site-packages\starlette\routing.py", line 276, in handle
+    await self.app(scope, receive, send)
+  File "D:\Python\lib\site-packages\starlette\routing.py", line 66, in app
+    response = await func(request)
+  File "D:\Python\lib\site-packages\fastapi\routing.py", line 273, in app
+    raw_response = await run_endpoint_function(
+  File "D:\Python\lib\site-packages\fastapi\routing.py", line 190, in run_endpoint_function
+    return await dependant.call(**values)
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\app.py", line 208, in cfb_game
+    return await asyncify(get_cfb_game)(request, gameId)
+  File "D:\Python\lib\site-packages\asyncer\_main.py", line 358, in wrapper
+    return await anyio.to_thread.run_sync(
+  File "D:\Python\lib\site-packages\anyio\to_thread.py", line 33, in run_sync
+    return await get_asynclib().run_sync_in_worker_thread(
+  File "D:\Python\lib\site-packages\anyio\_backends\_asyncio.py", line 877, in run_sync_in_worker_thread
+    return await future
+  File "D:\Python\lib\site-packages\anyio\_backends\_asyncio.py", line 807, in run
+    result = context.run(func, *args)
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\cfb\helpers_cfb.py", line 529, in get_cfb_game
+    logger.exception(f"Error: game_id =  game_id = {gameId}\n {traceback.format_exc()}")
+  File "D:\Python\lib\logging\__init__.py", line 1512, in exception
+    self.error(msg, *args, exc_info=exc_info, **kwargs)
+  File "D:\Python\lib\logging\__init__.py", line 1506, in error
+    self._log(ERROR, msg, args, **kwargs)
+  File "D:\Python\lib\logging\__init__.py", line 1624, in _log
+    self.handle(record)
+  File "D:\Python\lib\logging\__init__.py", line 1634, in handle
+    self.callHandlers(record)
+  File "D:\Python\lib\logging\__init__.py", line 1696, in callHandlers
+    hdlr.handle(record)
+  File "D:\Python\lib\logging\__init__.py", line 968, in handle
+    self.emit(record)
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\utils\logging_dd.py", line 39, in emit
+    toJson = json.dumps(
+  File "D:\Python\lib\json\__init__.py", line 231, in dumps
+    return _default_encoder.encode(obj)
+  File "D:\Python\lib\json\encoder.py", line 199, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "D:\Python\lib\json\encoder.py", line 257, in iterencode
+    return _iterencode(o, 0)
+  File "D:\Python\lib\json\encoder.py", line 179, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type type is not JSON serializable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Python\lib\site-packages\uvicorn\protocols\http\h11_impl.py", line 413, in run_asgi
+    self.logger.error(msg, exc_info=exc)
+  File "D:\Python\lib\logging\__init__.py", line 1506, in error
+    self._log(ERROR, msg, args, **kwargs)
+  File "D:\Python\lib\logging\__init__.py", line 1624, in _log
+    self.handle(record)
+  File "D:\Python\lib\logging\__init__.py", line 1634, in handle
+    self.callHandlers(record)
+  File "D:\Python\lib\logging\__init__.py", line 1696, in callHandlers
+    hdlr.handle(record)
+  File "D:\Python\lib\logging\__init__.py", line 968, in handle
+    self.emit(record)
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\utils\logging_dd.py", line 39, in emit
+    toJson = json.dumps(
+  File "D:\Python\lib\json\__init__.py", line 231, in dumps
+    return _default_encoder.encode(obj)
+  File "D:\Python\lib\json\encoder.py", line 199, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "D:\Python\lib\json\encoder.py", line 257, in iterencode
+    return _iterencode(o, 0)
+  File "D:\Python\lib\json\encoder.py", line 179, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type type is not JSON serializable
+2023-09-02 22:41:11,197 [13236] [INFO] Handling /py/cfb/game/:gameId request
+2023-09-02 22:41:12,557 [13236] [INFO] 127.0.0.1:54835 - "GET /py/cfb/game/401520167 HTTP/1.1" 500
+2023-09-02 22:41:12,591 [13236] [ERROR] Task exception was never retrieved
+future: <Task finished name='Task-27' coro=<RequestResponseCycle.run_asgi() done, defined at D:\Python\lib\site-packages\uvicorn\protocols\http\h11_impl.py:406> exception=TypeError('Object of type type is not JSON serializable')>
+Traceback (most recent call last):
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\cfb\helpers_cfb.py", line 516, in get_cfb_game
+    result = cfb_game_in_play(gameId)
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\cfb\helpers_cfb.py", line 427, in cfb_game_in_play
+    processed_data.run_processing_pipeline()
+  File "D:\GitHub-Data\sdv-dev\sdv-py\sportsdataverse\cfb\cfb_pbp.py", line 4501, in run_processing_pipeline
+    pbp_txt = self.__helper_cfb_pbp_drives(self.json)
+  File "D:\GitHub-Data\sdv-dev\sdv-py\sportsdataverse\cfb\cfb_pbp.py", line 187, in __helper_cfb_pbp_drives
+    pbp_txt = self.__helper_cfb_pbp_features(pbp_txt, init)
+  File "D:\GitHub-Data\sdv-dev\sdv-py\sportsdataverse\cfb\cfb_pbp.py", line 468, in __helper_cfb_pbp_features
+    - pl.struct(pl.col(["id", "period.number"])).map_elements(
+  File "D:\Python\lib\site-packages\polars\expr\expr.py", line 3919, in map_elements
+    return self.map_batches(wrap_f, agg_list=True, return_dtype=return_dtype)
+  File "D:\Python\lib\site-packages\polars\expr\expr.py", line 3734, in map_batches
+    self._pyexpr.map_batches(function, return_dtype, agg_list)
+AttributeError: 'builtins.PyExpr' object has no attribute 'map_batches'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Python\lib\site-packages\uvicorn\protocols\http\h11_impl.py", line 408, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "D:\Python\lib\site-packages\uvicorn\middleware\proxy_headers.py", line 84, in __call__
+    return await self.app(scope, receive, send)
+  File "D:\Python\lib\site-packages\fastapi\applications.py", line 292, in __call__
+    await super().__call__(scope, receive, send)
+  File "D:\Python\lib\site-packages\starlette\applications.py", line 122, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\Python\lib\site-packages\ddtrace\contrib\asgi\middleware.py", line 265, in __call__
+    reraise(exc_type, exc_val, exc_tb)
+  File "C:\Users\saiem\AppData\Roaming\Python\Python310\site-packages\six.py", line 719, in reraise
+    raise value
+  File "D:\Python\lib\site-packages\ddtrace\contrib\asgi\middleware.py", line 260, in __call__
+    return await self.app(scope, receive, wrapped_send)
+  File "D:\Python\lib\site-packages\starlette\middleware\errors.py", line 184, in __call__
+    raise exc
+  File "D:\Python\lib\site-packages\starlette\middleware\errors.py", line 162, in __call__
+    await self.app(scope, receive, _send)
+  File "D:\Python\lib\site-packages\starlette\middleware\cors.py", line 83, in __call__
+    await self.app(scope, receive, send)
+  File "D:\Python\lib\site-packages\starlette\middleware\exceptions.py", line 79, in __call__
+    raise exc
+  File "D:\Python\lib\site-packages\starlette\middleware\exceptions.py", line 68, in __call__
+    await self.app(scope, receive, sender)
+  File "D:\Python\lib\site-packages\fastapi\middleware\asyncexitstack.py", line 20, in __call__
+    raise e
+  File "D:\Python\lib\site-packages\fastapi\middleware\asyncexitstack.py", line 17, in __call__
+    await self.app(scope, receive, send)
+  File "D:\Python\lib\site-packages\starlette\routing.py", line 718, in __call__
+    await route.handle(scope, receive, send)
+  File "D:\Python\lib\site-packages\starlette\routing.py", line 276, in handle
+    await self.app(scope, receive, send)
+  File "D:\Python\lib\site-packages\starlette\routing.py", line 66, in app
+    response = await func(request)
+  File "D:\Python\lib\site-packages\fastapi\routing.py", line 273, in app
+    raw_response = await run_endpoint_function(
+  File "D:\Python\lib\site-packages\fastapi\routing.py", line 190, in run_endpoint_function
+    return await dependant.call(**values)
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\app.py", line 208, in cfb_game
+    return await asyncify(get_cfb_game)(request, gameId)
+  File "D:\Python\lib\site-packages\asyncer\_main.py", line 358, in wrapper
+    return await anyio.to_thread.run_sync(
+  File "D:\Python\lib\site-packages\anyio\to_thread.py", line 33, in run_sync
+    return await get_asynclib().run_sync_in_worker_thread(
+  File "D:\Python\lib\site-packages\anyio\_backends\_asyncio.py", line 877, in run_sync_in_worker_thread
+    return await future
+  File "D:\Python\lib\site-packages\anyio\_backends\_asyncio.py", line 807, in run
+    result = context.run(func, *args)
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\cfb\helpers_cfb.py", line 529, in get_cfb_game
+    logger.exception(f"Error: game_id =  game_id = {gameId}\n {traceback.format_exc()}")
+  File "D:\Python\lib\logging\__init__.py", line 1512, in exception
+    self.error(msg, *args, exc_info=exc_info, **kwargs)
+  File "D:\Python\lib\logging\__init__.py", line 1506, in error
+    self._log(ERROR, msg, args, **kwargs)
+  File "D:\Python\lib\logging\__init__.py", line 1624, in _log
+    self.handle(record)
+  File "D:\Python\lib\logging\__init__.py", line 1634, in handle
+    self.callHandlers(record)
+  File "D:\Python\lib\logging\__init__.py", line 1696, in callHandlers
+    hdlr.handle(record)
+  File "D:\Python\lib\logging\__init__.py", line 968, in handle
+    self.emit(record)
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\utils\logging_dd.py", line 39, in emit
+    toJson = json.dumps(
+  File "D:\Python\lib\json\__init__.py", line 231, in dumps
+    return _default_encoder.encode(obj)
+  File "D:\Python\lib\json\encoder.py", line 199, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "D:\Python\lib\json\encoder.py", line 257, in iterencode
+    return _iterencode(o, 0)
+  File "D:\Python\lib\json\encoder.py", line 179, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type type is not JSON serializable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Python\lib\site-packages\uvicorn\protocols\http\h11_impl.py", line 413, in run_asgi
+    self.logger.error(msg, exc_info=exc)
+  File "D:\Python\lib\logging\__init__.py", line 1506, in error
+    self._log(ERROR, msg, args, **kwargs)
+  File "D:\Python\lib\logging\__init__.py", line 1624, in _log
+    self.handle(record)
+  File "D:\Python\lib\logging\__init__.py", line 1634, in handle
+    self.callHandlers(record)
+  File "D:\Python\lib\logging\__init__.py", line 1696, in callHandlers
+    hdlr.handle(record)
+  File "D:\Python\lib\logging\__init__.py", line 968, in handle
+    self.emit(record)
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\utils\logging_dd.py", line 39, in emit
+    toJson = json.dumps(
+  File "D:\Python\lib\json\__init__.py", line 231, in dumps
+    return _default_encoder.encode(obj)
+  File "D:\Python\lib\json\encoder.py", line 199, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "D:\Python\lib\json\encoder.py", line 257, in iterencode
+    return _iterencode(o, 0)
+  File "D:\Python\lib\json\encoder.py", line 179, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type type is not JSON serializable
+2023-09-02 22:41:26,479 [13236] [INFO] Handling /py/cfb/game/:gameId request
+2023-09-02 22:41:27,251 [13236] [INFO] Handling /py/cfb/game/:gameId request
+2023-09-02 22:41:28,231 [13236] [INFO] Handling /py/cfb/game/:gameId request
+2023-09-02 22:41:28,699 [13236] [INFO] 127.0.0.1:55041 - "GET /py/cfb/game/401520169 HTTP/1.1" 500
+2023-09-02 22:41:29,180 [13236] [ERROR] Task exception was never retrieved
+future: <Task finished name='Task-29' coro=<RequestResponseCycle.run_asgi() done, defined at D:\Python\lib\site-packages\uvicorn\protocols\http\h11_impl.py:406> exception=TypeError('Object of type type is not JSON serializable')>
+Traceback (most recent call last):
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\cfb\helpers_cfb.py", line 516, in get_cfb_game
+    result = cfb_game_in_play(gameId)
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\cfb\helpers_cfb.py", line 427, in cfb_game_in_play
+    processed_data.run_processing_pipeline()
+  File "D:\GitHub-Data\sdv-dev\sdv-py\sportsdataverse\cfb\cfb_pbp.py", line 4501, in run_processing_pipeline
+    pbp_txt = self.__helper_cfb_pbp_drives(self.json)
+  File "D:\GitHub-Data\sdv-dev\sdv-py\sportsdataverse\cfb\cfb_pbp.py", line 187, in __helper_cfb_pbp_drives
+    pbp_txt = self.__helper_cfb_pbp_features(pbp_txt, init)
+  File "D:\GitHub-Data\sdv-dev\sdv-py\sportsdataverse\cfb\cfb_pbp.py", line 468, in __helper_cfb_pbp_features
+    - pl.struct(pl.col(["id", "period.number"])).map_elements(
+  File "D:\Python\lib\site-packages\polars\expr\expr.py", line 3919, in map_elements
+    return self.map_batches(wrap_f, agg_list=True, return_dtype=return_dtype)
+  File "D:\Python\lib\site-packages\polars\expr\expr.py", line 3734, in map_batches
+    self._pyexpr.map_batches(function, return_dtype, agg_list)
+AttributeError: 'builtins.PyExpr' object has no attribute 'map_batches'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Python\lib\site-packages\uvicorn\protocols\http\h11_impl.py", line 408, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "D:\Python\lib\site-packages\uvicorn\middleware\proxy_headers.py", line 84, in __call__
+    return await self.app(scope, receive, send)
+  File "D:\Python\lib\site-packages\fastapi\applications.py", line 292, in __call__
+    await super().__call__(scope, receive, send)
+  File "D:\Python\lib\site-packages\starlette\applications.py", line 122, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\Python\lib\site-packages\ddtrace\contrib\asgi\middleware.py", line 265, in __call__
+    reraise(exc_type, exc_val, exc_tb)
+  File "C:\Users\saiem\AppData\Roaming\Python\Python310\site-packages\six.py", line 719, in reraise
+    raise value
+  File "D:\Python\lib\site-packages\ddtrace\contrib\asgi\middleware.py", line 260, in __call__
+    return await self.app(scope, receive, wrapped_send)
+  File "D:\Python\lib\site-packages\starlette\middleware\errors.py", line 184, in __call__
+    raise exc
+  File "D:\Python\lib\site-packages\starlette\middleware\errors.py", line 162, in __call__
+    await self.app(scope, receive, _send)
+  File "D:\Python\lib\site-packages\starlette\middleware\cors.py", line 83, in __call__
+    await self.app(scope, receive, send)
+  File "D:\Python\lib\site-packages\starlette\middleware\exceptions.py", line 79, in __call__
+    raise exc
+  File "D:\Python\lib\site-packages\starlette\middleware\exceptions.py", line 68, in __call__
+    await self.app(scope, receive, sender)
+  File "D:\Python\lib\site-packages\fastapi\middleware\asyncexitstack.py", line 20, in __call__
+    raise e
+  File "D:\Python\lib\site-packages\fastapi\middleware\asyncexitstack.py", line 17, in __call__
+    await self.app(scope, receive, send)
+  File "D:\Python\lib\site-packages\starlette\routing.py", line 718, in __call__
+    await route.handle(scope, receive, send)
+  File "D:\Python\lib\site-packages\starlette\routing.py", line 276, in handle
+    await self.app(scope, receive, send)
+  File "D:\Python\lib\site-packages\starlette\routing.py", line 66, in app
+    response = await func(request)
+  File "D:\Python\lib\site-packages\fastapi\routing.py", line 273, in app
+    raw_response = await run_endpoint_function(
+  File "D:\Python\lib\site-packages\fastapi\routing.py", line 190, in run_endpoint_function
+    return await dependant.call(**values)
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\app.py", line 208, in cfb_game
+    return await asyncify(get_cfb_game)(request, gameId)
+  File "D:\Python\lib\site-packages\asyncer\_main.py", line 358, in wrapper
+    return await anyio.to_thread.run_sync(
+  File "D:\Python\lib\site-packages\anyio\to_thread.py", line 33, in run_sync
+    return await get_asynclib().run_sync_in_worker_thread(
+  File "D:\Python\lib\site-packages\anyio\_backends\_asyncio.py", line 877, in run_sync_in_worker_thread
+    return await future
+  File "D:\Python\lib\site-packages\anyio\_backends\_asyncio.py", line 807, in run
+    result = context.run(func, *args)
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\cfb\helpers_cfb.py", line 529, in get_cfb_game
+    logger.exception(f"Error: game_id =  game_id = {gameId}\n {traceback.format_exc()}")
+  File "D:\Python\lib\logging\__init__.py", line 1512, in exception
+    self.error(msg, *args, exc_info=exc_info, **kwargs)
+  File "D:\Python\lib\logging\__init__.py", line 1506, in error
+    self._log(ERROR, msg, args, **kwargs)
+  File "D:\Python\lib\logging\__init__.py", line 1624, in _log
+    self.handle(record)
+  File "D:\Python\lib\logging\__init__.py", line 1634, in handle
+    self.callHandlers(record)
+  File "D:\Python\lib\logging\__init__.py", line 1696, in callHandlers
+    hdlr.handle(record)
+  File "D:\Python\lib\logging\__init__.py", line 968, in handle
+    self.emit(record)
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\utils\logging_dd.py", line 39, in emit
+    toJson = json.dumps(
+  File "D:\Python\lib\json\__init__.py", line 231, in dumps
+    return _default_encoder.encode(obj)
+  File "D:\Python\lib\json\encoder.py", line 199, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "D:\Python\lib\json\encoder.py", line 257, in iterencode
+    return _iterencode(o, 0)
+  File "D:\Python\lib\json\encoder.py", line 179, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type type is not JSON serializable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Python\lib\site-packages\uvicorn\protocols\http\h11_impl.py", line 413, in run_asgi
+    self.logger.error(msg, exc_info=exc)
+  File "D:\Python\lib\logging\__init__.py", line 1506, in error
+    self._log(ERROR, msg, args, **kwargs)
+  File "D:\Python\lib\logging\__init__.py", line 1624, in _log
+    self.handle(record)
+  File "D:\Python\lib\logging\__init__.py", line 1634, in handle
+    self.callHandlers(record)
+  File "D:\Python\lib\logging\__init__.py", line 1696, in callHandlers
+    hdlr.handle(record)
+  File "D:\Python\lib\logging\__init__.py", line 968, in handle
+    self.emit(record)
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\utils\logging_dd.py", line 39, in emit
+    toJson = json.dumps(
+  File "D:\Python\lib\json\__init__.py", line 231, in dumps
+    return _default_encoder.encode(obj)
+  File "D:\Python\lib\json\encoder.py", line 199, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "D:\Python\lib\json\encoder.py", line 257, in iterencode
+    return _iterencode(o, 0)
+  File "D:\Python\lib\json\encoder.py", line 179, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type type is not JSON serializable
+2023-09-02 22:41:29,212 [13236] [INFO] 127.0.0.1:55043 - "GET /py/cfb/game/401520169 HTTP/1.1" 500
+2023-09-02 22:41:29,330 [13236] [ERROR] Task exception was never retrieved
+future: <Task finished name='Task-31' coro=<RequestResponseCycle.run_asgi() done, defined at D:\Python\lib\site-packages\uvicorn\protocols\http\h11_impl.py:406> exception=TypeError('Object of type type is not JSON serializable')>
+Traceback (most recent call last):
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\cfb\helpers_cfb.py", line 516, in get_cfb_game
+    result = cfb_game_in_play(gameId)
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\cfb\helpers_cfb.py", line 427, in cfb_game_in_play
+    processed_data.run_processing_pipeline()
+  File "D:\GitHub-Data\sdv-dev\sdv-py\sportsdataverse\cfb\cfb_pbp.py", line 4501, in run_processing_pipeline
+    pbp_txt = self.__helper_cfb_pbp_drives(self.json)
+  File "D:\GitHub-Data\sdv-dev\sdv-py\sportsdataverse\cfb\cfb_pbp.py", line 187, in __helper_cfb_pbp_drives
+    pbp_txt = self.__helper_cfb_pbp_features(pbp_txt, init)
+  File "D:\GitHub-Data\sdv-dev\sdv-py\sportsdataverse\cfb\cfb_pbp.py", line 468, in __helper_cfb_pbp_features
+    - pl.struct(pl.col(["id", "period.number"])).map_elements(
+  File "D:\Python\lib\site-packages\polars\expr\expr.py", line 3919, in map_elements
+    return self.map_batches(wrap_f, agg_list=True, return_dtype=return_dtype)
+  File "D:\Python\lib\site-packages\polars\expr\expr.py", line 3734, in map_batches
+    self._pyexpr.map_batches(function, return_dtype, agg_list)
+AttributeError: 'builtins.PyExpr' object has no attribute 'map_batches'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Python\lib\site-packages\uvicorn\protocols\http\h11_impl.py", line 408, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "D:\Python\lib\site-packages\uvicorn\middleware\proxy_headers.py", line 84, in __call__
+    return await self.app(scope, receive, send)
+  File "D:\Python\lib\site-packages\fastapi\applications.py", line 292, in __call__
+    await super().__call__(scope, receive, send)
+  File "D:\Python\lib\site-packages\starlette\applications.py", line 122, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\Python\lib\site-packages\ddtrace\contrib\asgi\middleware.py", line 265, in __call__
+    reraise(exc_type, exc_val, exc_tb)
+  File "C:\Users\saiem\AppData\Roaming\Python\Python310\site-packages\six.py", line 719, in reraise
+    raise value
+  File "D:\Python\lib\site-packages\ddtrace\contrib\asgi\middleware.py", line 260, in __call__
+    return await self.app(scope, receive, wrapped_send)
+  File "D:\Python\lib\site-packages\starlette\middleware\errors.py", line 184, in __call__
+    raise exc
+  File "D:\Python\lib\site-packages\starlette\middleware\errors.py", line 162, in __call__
+    await self.app(scope, receive, _send)
+  File "D:\Python\lib\site-packages\starlette\middleware\cors.py", line 83, in __call__
+    await self.app(scope, receive, send)
+  File "D:\Python\lib\site-packages\starlette\middleware\exceptions.py", line 79, in __call__
+    raise exc
+  File "D:\Python\lib\site-packages\starlette\middleware\exceptions.py", line 68, in __call__
+    await self.app(scope, receive, sender)
+  File "D:\Python\lib\site-packages\fastapi\middleware\asyncexitstack.py", line 20, in __call__
+    raise e
+  File "D:\Python\lib\site-packages\fastapi\middleware\asyncexitstack.py", line 17, in __call__
+    await self.app(scope, receive, send)
+  File "D:\Python\lib\site-packages\starlette\routing.py", line 718, in __call__
+    await route.handle(scope, receive, send)
+  File "D:\Python\lib\site-packages\starlette\routing.py", line 276, in handle
+    await self.app(scope, receive, send)
+  File "D:\Python\lib\site-packages\starlette\routing.py", line 66, in app
+    response = await func(request)
+  File "D:\Python\lib\site-packages\fastapi\routing.py", line 273, in app
+    raw_response = await run_endpoint_function(
+  File "D:\Python\lib\site-packages\fastapi\routing.py", line 190, in run_endpoint_function
+    return await dependant.call(**values)
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\app.py", line 208, in cfb_game
+    return await asyncify(get_cfb_game)(request, gameId)
+  File "D:\Python\lib\site-packages\asyncer\_main.py", line 358, in wrapper
+    return await anyio.to_thread.run_sync(
+  File "D:\Python\lib\site-packages\anyio\to_thread.py", line 33, in run_sync
+    return await get_asynclib().run_sync_in_worker_thread(
+  File "D:\Python\lib\site-packages\anyio\_backends\_asyncio.py", line 877, in run_sync_in_worker_thread
+    return await future
+  File "D:\Python\lib\site-packages\anyio\_backends\_asyncio.py", line 807, in run
+    result = context.run(func, *args)
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\cfb\helpers_cfb.py", line 529, in get_cfb_game
+    logger.exception(f"Error: game_id =  game_id = {gameId}\n {traceback.format_exc()}")
+  File "D:\Python\lib\logging\__init__.py", line 1512, in exception
+    self.error(msg, *args, exc_info=exc_info, **kwargs)
+  File "D:\Python\lib\logging\__init__.py", line 1506, in error
+    self._log(ERROR, msg, args, **kwargs)
+  File "D:\Python\lib\logging\__init__.py", line 1624, in _log
+    self.handle(record)
+  File "D:\Python\lib\logging\__init__.py", line 1634, in handle
+    self.callHandlers(record)
+  File "D:\Python\lib\logging\__init__.py", line 1696, in callHandlers
+    hdlr.handle(record)
+  File "D:\Python\lib\logging\__init__.py", line 968, in handle
+    self.emit(record)
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\utils\logging_dd.py", line 39, in emit
+    toJson = json.dumps(
+  File "D:\Python\lib\json\__init__.py", line 231, in dumps
+    return _default_encoder.encode(obj)
+  File "D:\Python\lib\json\encoder.py", line 199, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "D:\Python\lib\json\encoder.py", line 257, in iterencode
+    return _iterencode(o, 0)
+  File "D:\Python\lib\json\encoder.py", line 179, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type type is not JSON serializable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Python\lib\site-packages\uvicorn\protocols\http\h11_impl.py", line 413, in run_asgi
+    self.logger.error(msg, exc_info=exc)
+  File "D:\Python\lib\logging\__init__.py", line 1506, in error
+    self._log(ERROR, msg, args, **kwargs)
+  File "D:\Python\lib\logging\__init__.py", line 1624, in _log
+    self.handle(record)
+  File "D:\Python\lib\logging\__init__.py", line 1634, in handle
+    self.callHandlers(record)
+  File "D:\Python\lib\logging\__init__.py", line 1696, in callHandlers
+    hdlr.handle(record)
+  File "D:\Python\lib\logging\__init__.py", line 968, in handle
+    self.emit(record)
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\utils\logging_dd.py", line 39, in emit
+    toJson = json.dumps(
+  File "D:\Python\lib\json\__init__.py", line 231, in dumps
+    return _default_encoder.encode(obj)
+  File "D:\Python\lib\json\encoder.py", line 199, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "D:\Python\lib\json\encoder.py", line 257, in iterencode
+    return _iterencode(o, 0)
+  File "D:\Python\lib\json\encoder.py", line 179, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type type is not JSON serializable
+2023-09-02 22:41:29,805 [13236] [INFO] 127.0.0.1:54818 - "GET /py/cfb/game/401520169 HTTP/1.1" 500
+2023-09-02 22:41:29,846 [13236] [ERROR] Task exception was never retrieved
+future: <Task finished name='Task-32' coro=<RequestResponseCycle.run_asgi() done, defined at D:\Python\lib\site-packages\uvicorn\protocols\http\h11_impl.py:406> exception=TypeError('Object of type type is not JSON serializable')>
+Traceback (most recent call last):
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\cfb\helpers_cfb.py", line 516, in get_cfb_game
+    result = cfb_game_in_play(gameId)
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\cfb\helpers_cfb.py", line 427, in cfb_game_in_play
+    processed_data.run_processing_pipeline()
+  File "D:\GitHub-Data\sdv-dev\sdv-py\sportsdataverse\cfb\cfb_pbp.py", line 4501, in run_processing_pipeline
+    pbp_txt = self.__helper_cfb_pbp_drives(self.json)
+  File "D:\GitHub-Data\sdv-dev\sdv-py\sportsdataverse\cfb\cfb_pbp.py", line 187, in __helper_cfb_pbp_drives
+    pbp_txt = self.__helper_cfb_pbp_features(pbp_txt, init)
+  File "D:\GitHub-Data\sdv-dev\sdv-py\sportsdataverse\cfb\cfb_pbp.py", line 468, in __helper_cfb_pbp_features
+    - pl.struct(pl.col(["id", "period.number"])).map_elements(
+  File "D:\Python\lib\site-packages\polars\expr\expr.py", line 3919, in map_elements
+    return self.map_batches(wrap_f, agg_list=True, return_dtype=return_dtype)
+  File "D:\Python\lib\site-packages\polars\expr\expr.py", line 3734, in map_batches
+    self._pyexpr.map_batches(function, return_dtype, agg_list)
+AttributeError: 'builtins.PyExpr' object has no attribute 'map_batches'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Python\lib\site-packages\uvicorn\protocols\http\h11_impl.py", line 408, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "D:\Python\lib\site-packages\uvicorn\middleware\proxy_headers.py", line 84, in __call__
+    return await self.app(scope, receive, send)
+  File "D:\Python\lib\site-packages\fastapi\applications.py", line 292, in __call__
+    await super().__call__(scope, receive, send)
+  File "D:\Python\lib\site-packages\starlette\applications.py", line 122, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\Python\lib\site-packages\ddtrace\contrib\asgi\middleware.py", line 265, in __call__
+    reraise(exc_type, exc_val, exc_tb)
+  File "C:\Users\saiem\AppData\Roaming\Python\Python310\site-packages\six.py", line 719, in reraise
+    raise value
+  File "D:\Python\lib\site-packages\ddtrace\contrib\asgi\middleware.py", line 260, in __call__
+    return await self.app(scope, receive, wrapped_send)
+  File "D:\Python\lib\site-packages\starlette\middleware\errors.py", line 184, in __call__
+    raise exc
+  File "D:\Python\lib\site-packages\starlette\middleware\errors.py", line 162, in __call__
+    await self.app(scope, receive, _send)
+  File "D:\Python\lib\site-packages\starlette\middleware\cors.py", line 83, in __call__
+    await self.app(scope, receive, send)
+  File "D:\Python\lib\site-packages\starlette\middleware\exceptions.py", line 79, in __call__
+    raise exc
+  File "D:\Python\lib\site-packages\starlette\middleware\exceptions.py", line 68, in __call__
+    await self.app(scope, receive, sender)
+  File "D:\Python\lib\site-packages\fastapi\middleware\asyncexitstack.py", line 20, in __call__
+    raise e
+  File "D:\Python\lib\site-packages\fastapi\middleware\asyncexitstack.py", line 17, in __call__
+    await self.app(scope, receive, send)
+  File "D:\Python\lib\site-packages\starlette\routing.py", line 718, in __call__
+    await route.handle(scope, receive, send)
+  File "D:\Python\lib\site-packages\starlette\routing.py", line 276, in handle
+    await self.app(scope, receive, send)
+  File "D:\Python\lib\site-packages\starlette\routing.py", line 66, in app
+    response = await func(request)
+  File "D:\Python\lib\site-packages\fastapi\routing.py", line 273, in app
+    raw_response = await run_endpoint_function(
+  File "D:\Python\lib\site-packages\fastapi\routing.py", line 190, in run_endpoint_function
+    return await dependant.call(**values)
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\app.py", line 208, in cfb_game
+    return await asyncify(get_cfb_game)(request, gameId)
+  File "D:\Python\lib\site-packages\asyncer\_main.py", line 358, in wrapper
+    return await anyio.to_thread.run_sync(
+  File "D:\Python\lib\site-packages\anyio\to_thread.py", line 33, in run_sync
+    return await get_asynclib().run_sync_in_worker_thread(
+  File "D:\Python\lib\site-packages\anyio\_backends\_asyncio.py", line 877, in run_sync_in_worker_thread
+    return await future
+  File "D:\Python\lib\site-packages\anyio\_backends\_asyncio.py", line 807, in run
+    result = context.run(func, *args)
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\cfb\helpers_cfb.py", line 529, in get_cfb_game
+    logger.exception(f"Error: game_id =  game_id = {gameId}\n {traceback.format_exc()}")
+  File "D:\Python\lib\logging\__init__.py", line 1512, in exception
+    self.error(msg, *args, exc_info=exc_info, **kwargs)
+  File "D:\Python\lib\logging\__init__.py", line 1506, in error
+    self._log(ERROR, msg, args, **kwargs)
+  File "D:\Python\lib\logging\__init__.py", line 1624, in _log
+    self.handle(record)
+  File "D:\Python\lib\logging\__init__.py", line 1634, in handle
+    self.callHandlers(record)
+  File "D:\Python\lib\logging\__init__.py", line 1696, in callHandlers
+    hdlr.handle(record)
+  File "D:\Python\lib\logging\__init__.py", line 968, in handle
+    self.emit(record)
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\utils\logging_dd.py", line 39, in emit
+    toJson = json.dumps(
+  File "D:\Python\lib\json\__init__.py", line 231, in dumps
+    return _default_encoder.encode(obj)
+  File "D:\Python\lib\json\encoder.py", line 199, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "D:\Python\lib\json\encoder.py", line 257, in iterencode
+    return _iterencode(o, 0)
+  File "D:\Python\lib\json\encoder.py", line 179, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type type is not JSON serializable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Python\lib\site-packages\uvicorn\protocols\http\h11_impl.py", line 413, in run_asgi
+    self.logger.error(msg, exc_info=exc)
+  File "D:\Python\lib\logging\__init__.py", line 1506, in error
+    self._log(ERROR, msg, args, **kwargs)
+  File "D:\Python\lib\logging\__init__.py", line 1624, in _log
+    self.handle(record)
+  File "D:\Python\lib\logging\__init__.py", line 1634, in handle
+    self.callHandlers(record)
+  File "D:\Python\lib\logging\__init__.py", line 1696, in callHandlers
+    hdlr.handle(record)
+  File "D:\Python\lib\logging\__init__.py", line 968, in handle
+    self.emit(record)
+  File "D:\GitHub-Data\game-on-paper-dev\game-on-paper\python\utils\logging_dd.py", line 39, in emit
+    toJson = json.dumps(
+  File "D:\Python\lib\json\__init__.py", line 231, in dumps
+    return _default_encoder.encode(obj)
+  File "D:\Python\lib\json\encoder.py", line 199, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "D:\Python\lib\json\encoder.py", line 257, in iterencode
+    return _iterencode(o, 0)
+  File "D:\Python\lib\json\encoder.py", line 179, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type type is not JSON serializable
+2023-09-02 22:48:08,007 [13236] [INFO] Shutting down
+2023-09-02 22:48:08,241 [13236] [INFO] Waiting for application shutdown.
+2023-09-02 22:48:08,272 [13236] [INFO] Application shutdown complete.
+2023-09-02 22:48:08,305 [13236] [INFO] Finished server process [13236]

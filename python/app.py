@@ -147,7 +147,7 @@ async def healthcheck():
 
 
 @app.get("/py/cfb/scoreboard", tags=["College Football"], response_class=ORJSONResponse)
-@cache(expire=60, namespace="cfb_scoreboard", coder=ORJsonCoder)
+@cache(expire=15, namespace="cfb_scoreboard", coder=ORJsonCoder)
 async def get_cfb_scoreboard(
     request: Request,
     groups: Optional[str] = Query(None),
@@ -156,6 +156,34 @@ async def get_cfb_scoreboard(
     seasontype: Optional[str] = Query(None),
 ) -> Optional[None]:
     logger.info("Handling /py/cfb/scoreboard request")
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36"
+    }
+    schedule = await asyncify(espn_cfb_schedule)(
+        groups=groups, dates=dates, week=week, season_type=seasontype, headers=headers
+    )
+    if "home_logo" in schedule.columns:
+        schedule = schedule.with_columns(
+            home_dark_logo=pl.col("home_logo").str.replace(
+                "https://a.espncdn.com/i/teamlogos/ncaa/500/", "https://a.espncdn.com/i/teamlogos/ncaa/500-dark/"
+            ),
+            away_dark_logo=pl.col("away_logo").str.replace(
+                "https://a.espncdn.com/i/teamlogos/ncaa/500/", "https://a.espncdn.com/i/teamlogos/ncaa/500-dark/"
+            ),
+        )
+    return ORJSONResponse(content=schedule.to_dicts(), status_code=200, media_type="application/json")
+
+
+@app.get("/py/cfb/schedule", tags=["College Football"], response_class=ORJSONResponse)
+@cache(expire=600, namespace="cfb_schedule", coder=ORJsonCoder)
+async def get_cfb_schedule(
+    request: Request,
+    groups: Optional[str] = Query(None),
+    dates: Optional[str] = Query(None),
+    week: Optional[str] = Query(None),
+    seasontype: Optional[str] = Query(None),
+) -> Optional[None]:
+    logger.info("Handling /py/cfb/schedule request")
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36"
     }

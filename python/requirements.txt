@@ -1,4 +1,4 @@
-sportsdataverse==0.0.37
+sportsdataverse>=0.0.39
 fastapi[all]>=0.100.1
 fastapi-profiler>=1.2.0
 pathspec>=0.8.1
